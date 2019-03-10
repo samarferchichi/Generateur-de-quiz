@@ -1,0 +1,534 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+
+{% set _content_title = 'Espace d administartion' %}
+
+{% block page_title -%}
+    {{ _content_title }}
+
+{%- endblock %}
+
+{% block content_header %}
+
+    <div class="form-group row">
+        <div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+        </div>
+        &nbsp; &nbsp;
+        <h1 class="title">{{ _content_title }}</h1>
+    </div>
+{% endblock %}
+{% block main %}
+
+    <style>
+        .aa {
+            width: 35px;
+            height: 4px;
+            background-color: #444444;
+            margin: 6px 0;
+        }
+        .slidecontainer {
+            width: 100%;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 30%;
+            height: 10px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        /* The container */
+        .container {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Hide the browser's default checkbox */
+        .container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .container:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        .container input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+        input[type=checkbox] {
+            position: relative;
+            cursor: pointer;
+        }
+        input[type=checkbox]:before {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            border: 2px solid #555555;
+            border-radius: 3px;
+            background-color: white;
+        }
+        input[type=checkbox]:checked:after {
+            content: "";
+            display: block;
+            width: 5px;
+            height: 10px;
+            border: solid black;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+            position: absolute;
+            top: 2px;
+            left: 6px;
+        }
+        .form-group label, .form-group legend.col-form-label {
+            align-self: self-start;
+            color: var(--text-color);
+            flex: 30% 0 0;
+            font-size: var(--font-size-base);
+            font-weight: 400;
+            margin: 5px 5px 0 0;
+            text-align: right;
+        }
+    </style>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <div class="panel panel-success">
+        <div class="card bg-info text-white">
+            <div class="card-body">QUIZ / Configuration et paramétrage de quiz</div>
+        </div>
+        <div class="panel-body">
+
+            {{ form_start(form) }}
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(form) }}
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ form_start(form, {'method': 'post' }) }}
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <table>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="form-group row">
+                                            <div class="col-xs-1">
+                                                <div>
+                                                    <label for="quiz_titre" class="required">&nbsp;Titre de votre quiz</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-1">
+                                                <div>
+                                                    <input class="form-control" type="text" id="quiz_titre" name="quiz[titre]" required="required" maxlength="300">
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-1">
+                                                <div>
+                                                    <label for="quiz_color_titre">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                         Couler de titre</label>
+                                                    <input value="#20B2AA" type="color" id="quiz_color_titre" name="quiz[color_titre]" maxlength="50">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+
+                                    <td colspan="2">
+                                        <div class="form-group row">
+
+                                            <div class="col-xs-2">
+                                                <label for="quiz_police">&nbsp;Police &nbsp;&nbsp;&nbsp;</label>
+                                            </div>
+                                        <div class="col-xs-2">
+                                        <select id="quiz_police" name="quiz[police]" class="form-control" >
+                                            <option value="Open sans conseille">Open sans conseillée</option>
+                                            <option value="volvo">Volvo</option>
+                                            <option value="saab">Saab</option>
+                                            <option value="opel">Opel</option>
+                                            <option value="audi">Audi</option>
+                                        </select>
+                                        </div>
+
+                                        <div class="col-xs-2">
+                                            <div>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label for="quiz_gras">Gras</label>
+                                                <input type="checkbox" id="quiz_gras" name="quiz[gras]" value="1">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-2">
+                                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label for="quiz_italique">Italique</label>
+                                                <input type="checkbox" id="quiz_italique" name="quiz[italique]" value="1">
+                                            </div>
+                                        </div>
+
+                                        </div>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" >
+                                        <div class="form-group col">
+                                            <div class="col-xs-2">
+                                                 <label>Choisissez un logo :</label>
+                                                      <div>
+                                                       <label for="quiz_image" class="required">Image/Logo à faire apparaitre en debut de votre quiz</label>
+                                                       <input type="text" id="quiz_image" name="quiz[image]" required="required" maxlength="255">
+                                                      </div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="1">
+                                        <div class="form-group col">
+                                            <div class="col-xs-2">
+                                            <label for="quiz_description">Description de votre quiz :</label>
+                                            </div>
+                                            <textarea class="form-control z-depth-1" style="resize:vertical" rows="2"  id="quiz_description" name="quiz[description]" required="required" maxlength="5000" cols="2"   placeholder="Write something here..."></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        &nbsp; <label style="cursor: default; font-size: 20px; color: #444444">&nbsp;&nbsp;Le type Quiz: modes correction et score :</label>
+                                            <div class="custom-control custom-switch">
+                                                &nbsp;  <input type="checkbox" class="custom-control-input" id="quiz_mode_correction" name="quiz[mode_correction]" value="1">
+                                                <label class="custom-control-label" for="quiz_mode_correction">
+                                                    <font size="2">
+                                                        &nbsp;          Activer le mode correction sur votre quiz: la bonne réponse sera affichée aux répondants aprés qu'ils aient réponduus
+                                                    </font>
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-switch">
+                                                &nbsp;     <input type="checkbox" class="custom-control-input" id="quiz_mode_score" name="quiz[mode_score]" value="1">
+                                                <label class="custom-control-label"  for="quiz_mode_score">
+                                                    <font size="2">
+                                                        &nbsp;             Activer le mode score sur votre quiz :le scrore des répondants sera calculé en fonction de leurs réponses
+                                                    </font>
+                                                </label>
+                                            </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="10">
+                                        <div class="form-group row" style=" height: 100px">
+                                            <div>
+                                             <label  for="quiz_temps_dispo">Temps disponible</label>
+                                                <input type="checkbox" name="dispo" >
+                                                &nbsp;
+                                                <input name="quiz[temps_dispo][minute]" type="range" max="59" min="0" value="0" class="slider" id="quiz_temps_dispo_minute">
+                                                Minute
+<br>
+                                                <span id="heurid"></span>: <span id="minuteid"></span>
+
+
+
+                                            <input name="quiz[temps_dispo][hour]" type="range" max="23" min="0" value="0" class="slider" id="quiz_temps_dispo_hour">
+                                            Heure
+
+
+                                        </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="form-group row">
+                                            <div class="col-xs-2">
+                                                <label for="nb_question">&nbsp;Nombre des questions par page &nbsp;&nbsp;</label>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <select id="quiz_nb_question" name="quiz[nb_question]" class="form-control" >
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="4">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="4">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="4">9</option>
+                                                    <option value="10">10</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-xs-2">
+                                                <label for="nb_page">&nbsp;&nbsp;&nbsp;Nombre des pages &nbsp;&nbsp;</label>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <select id="quiz_nb_page" name="quiz[nb_page]" class="form-control" >
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="4">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="4">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="4">9</option>
+                                                    <option value="10">10</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                                //oui et nn ne fonction pas
+
+
+                                <tr>
+                                    <td>
+                                        <div class="form-group row">
+                                            <div class="col-xs-2">
+                                                <label for="nb_tentative">&nbsp;Nombre des tentatives autorisées &nbsp;&nbsp;</label>
+                                            </div>
+                                            <div class="col-xs-9">
+                                                <select id="quiz_nb_tentative" name="quiz[nb_tentative]" class="form-control" style="width: 250px;">
+                                                    <option value="0">Nombre illimité de tentatives</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                    <option value="10">10</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group row">
+
+                                            <div class="custom-control custom-switch">
+
+                                                <input type="checkbox" class="custom-control-input" id="quiz_melange_question" name="quiz[melange_question]" value="1">
+                                                <label class="custom-control-label" for="quiz_melange_question">
+                                                      Mélanger les questions
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-switch">
+
+                                                &nbsp; &nbsp; &nbsp;
+                                                <input type="checkbox" class="custom-control-input" id="quiz_send_mail" name="quiz[send_mail]" value="1">
+                                                <label class="custom-control-label" for="quiz_send_mail">
+                                                      Envoyer par E-mail
+                                                </label>
+                                            </div>
+                                            <div class="custom-control custom-switch">
+                                                &nbsp; &nbsp; &nbsp;
+                                                <input type="checkbox" class="custom-control-input" id="quiz_imprime_pdf" name="quiz[imprime_pdf]" value="1">
+                                                <label class="custom-control-label" for="quiz_imprime_pdf">
+                                                         Imprimer en PDF
+                                                </label>
+                                            </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group row">
+
+                                                {{ form_row(form.ouvrire_quiz) }}
+                                                &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp;
+                                                &nbsp; &nbsp; &nbsp;
+
+                                            {{ form_row(form.fermer_quiz) }}
+                                            </div>
+
+                                        </td>
+                                    </tr>
+
+
+
+                            </table>
+
+
+                            <script>
+                                var slider = document.getElementById("quiz_temps_dispo_minute");
+                                var output = document.getElementById("minuteid");
+
+                                var sliderh = document.getElementById("quiz_temps_dispo_hour");
+                                var outputh = document.getElementById("heurid");
+
+                                output.innerHTML = slider.value;
+
+                                slider.oninput = function() {
+                                    output.innerHTML = this.value;
+                                }
+
+                                outputh.innerHTML = sliderh.value;
+
+                                sliderh.oninput = function() {
+                                    outputh.innerHTML = this.value;
+                                }
+                            </script>
+                    </div>
+
+                        <div class="col-sm-5">
+
+                            <div class="container">
+
+                                            <div class="form-group col">
+                                                <div class="col-xs-2">
+                                                    <label for="quiz_description">Entéte de votre quiz :</label>
+                                                </div>
+                                                <textarea class="form-control z-depth-1" id="quiz_entete"  name="quiz[entete]" required="required" maxlength="5000" cols="5" rows="9"  placeholder="Write something here..."></textarea>
+                                            </div>
+
+                                                <div class="form-group col">
+                                                    <div class="col-xs-2">
+                                                        <label for="quiz_pied">Pied de votre Quiz :</label>
+                                                    </div>
+                                                    <textarea class="form-control z-depth-1" id="quiz_pied"  name="quiz[pied]" required="required" maxlength="5000" cols="5" rows="9"  placeholder="Write something here..."></textarea>
+                                                </div>
+
+                                                <div class="form-group col">
+                                                    <div class="col-xs-2">
+                                                        <label for="quiz_pied">Message de succés :</label>
+                                                    </div>
+                                                    <textarea class="form-control z-depth-1" id="quiz_message_s"  name="quiz[message_s]" required="required" maxlength="5000" cols="5" rows="3"  placeholder="Write something here..."></textarea>
+                                                </div>
+
+                                                <div class="form-group col">
+                                                    <div class="col-xs-2">
+                                                        <label for="quiz_pied">Message d'erreur :</label>
+                                                    </div>
+                                                    <textarea class="form-control z-depth-1" id="quiz_message_e"  name="quiz[message_e]" required="required" maxlength="5000" cols="5" rows="3"  placeholder="Write something here..."></textarea>
+                                                </div>
+
+
+                                <div class="form-group col">
+                                    <center>
+                                        &nbsp; &nbsp; &nbsp;
+                                        &nbsp; &nbsp; &nbsp;
+                                        &nbsp; &nbsp; &nbsp;
+                                        &nbsp; &nbsp; &nbsp;
+                                        &nbsp; &nbsp; &nbsp;
+                                        &nbsp; &nbsp; &nbsp;
+
+                                        <button class="btn btn-primary mb-2">{{ button_label|default('Confirmer') }}</button>
+
+                                    </center>
+                                </div>
+                            </div>
+
+                        </div>
+
+                      </div>
+
+
+                </div>
+                {{ form_widget(form._token) }}
+            </div>
+    </div>
+    </div>
+{% endblock %}

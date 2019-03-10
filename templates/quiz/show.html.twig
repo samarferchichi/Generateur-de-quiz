@@ -1,0 +1,103 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+{% set _content_title = 'Espace d administartion' %}
+{% block title %}Quiz{% endblock %}
+
+{% block main %}
+    <h1>Quiz</h1>
+
+    <table class="table" border="1">
+        <tbody>
+
+            <tr>
+                <th>Titre</th>
+                <td>{{ quiz.titre }}</td>
+            </tr>
+            <tr>
+                <th>Color_titre</th>
+                <td>{{ quiz.colorTitre }}</td>
+            </tr>
+            <tr>
+                <th>Police</th>
+                <td>{{ quiz.police }}</td>
+            </tr>
+            <tr>
+                <th>Gras</th>
+                <td>{{ quiz.gras ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Italique</th>
+                <td>{{ quiz.italique ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Logo</th>
+                <td>{{ quiz.image }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ quiz.description }}</td>
+            </tr>
+            <tr>
+                <th>Mode_correction</th>
+                <td>{{ quiz.modeCorrection ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Mode_score</th>
+                <td>{{ quiz.modeScore ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Temps_dispo</th>
+                <td>{{ quiz.tempsDispo ? quiz.tempsDispo|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nb_question</th>
+                <td>{{ quiz.nbQuestion }}</td>
+            </tr>
+            <tr>
+                <th>Nb_page</th>
+                <td>{{ quiz.nbPage }}</td>
+            </tr>
+            <tr>
+                <th>Melange_question</th>
+                <td>{{ quiz.melangeQuestion ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Ouvrire_quiz</th>
+                <td>{{ quiz.ouvrireQuiz ? quiz.ouvrireQuiz|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fermer_quiz</th>
+                <td>{{ quiz.fermerQuiz ? quiz.fermerQuiz|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Send_mail</th>
+                <td>{{ quiz.sendMail ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Imprime_pdf</th>
+                <td>{{ quiz.imprimePdf ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Entete</th>
+                <td>{{ quiz.entete }}</td>
+            </tr>
+            <tr>
+                <th>Pied</th>
+                <td>{{ quiz.pied }}</td>
+            </tr>
+            <tr>
+                <th>Message_s</th>
+                <td>{{ quiz.messageS }}</td>
+            </tr>
+            <tr>
+                <th>Message_e</th>
+                <td>{{ quiz.messageE }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('quiz_index') }}">back to list</a>
+
+    <a href="{{ path('quiz_edit', {'id': quiz.id}) }}">edit</a>
+
+    {{ include('quiz/_delete_form.html.twig') }}
+{% endblock %}

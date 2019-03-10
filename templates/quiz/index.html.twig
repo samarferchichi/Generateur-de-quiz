@@ -1,0 +1,106 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+{% set _content_title = 'Espace d administartion' %}
+
+{% block title %}Quiz index{% endblock %}
+
+
+{% block content_header %}
+
+    <h1 class="title">{{ _content_title }}</h1>
+
+{% endblock %}
+
+
+
+{% block main %}
+
+    <h1>Quiz index</h1>
+
+    <table class="table" border="1">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Logo</th>
+                <th>Description</th>
+                <th>Mode_correction</th>
+                <th>Mode_score</th>
+
+                <th>Temps_dispo</th>
+
+                <th>Nb_question</th>
+                <th>Nb_page</th>
+
+                <th>Melange_question</th>
+
+                <th>Nb_tentative</th>
+
+
+                <th>Ouvrire_quiz</th>
+                <th>Fermer_quiz</th>
+
+                <th>Send_mail</th>
+
+                <th>Imprime_pdf</th>
+
+                <th>Entete</th>
+                <th>Pied</th>
+
+                <th>Message_s</th>
+                <th>Message_e</th>
+
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for quiz in quizzes %}
+            <tr>
+                <td>{{ quiz.titre }}</td>
+
+                <td>{{ quiz.image }}</td>
+
+                <td>{{ quiz.description }}</td>
+
+                <td>{{ quiz.modeCorrection ? 'Yes' : 'No' }}</td>
+                <td>{{ quiz.modeScore ? 'Yes' : 'No' }}</td>
+
+                <td>{{ quiz.tempsDispo ? quiz.tempsDispo|date('Y-m-d H:i:s') : '' }}</td>
+
+                <td>{{ quiz.nbQuestion }}</td>
+                <td>{{ quiz.nbPage }}</td>
+
+                <td>{{ quiz.melangeQuestion ? 'Yes' : 'No' }}</td>
+
+                <td>{{ quiz.nbTentative }}</td>
+
+
+                <td>{{ quiz.ouvrireQuiz ? quiz.ouvrireQuiz|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ quiz.fermerQuiz ? quiz.fermerQuiz|date('Y-m-d H:i:s') : '' }}</td>
+
+                <td>{{ quiz.sendMail ? 'Yes' : 'No' }}</td>
+
+                <td>{{ quiz.imprimePdf ? 'Yes' : 'No' }}</td>
+
+                <td>{{ quiz.entete }}</td>
+                <td>{{ quiz.pied }}</td>
+
+                <td>{{ quiz.messageS }}</td>
+                <td>{{ quiz.messageE }}</td>
+
+
+                <td>
+                    <a href="{{ path('quiz_show', {'id': quiz.id}) }}">show</a>
+                    <a href="{{ path('quiz_edit', {'id': quiz.id}) }}">edit</a>
+                    <a href="{{ path('quiz_delete', {'id': quiz.id}) }}">delete</a>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="23">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('quiz_new') }}">Create new</a>
+{% endblock %}

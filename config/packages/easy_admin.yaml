@@ -1,0 +1,89 @@
+easy_admin:
+  site_name: '<font color=#1FC5F3><em style="font-size: 80%;">Quiz Back-Office .</em></font>'
+  formats:
+    datetime:   'd/m/Y à H\hi e'
+    date:       'd/m/Y'
+    time:       'H\hi e'
+
+  list:
+    batch_actions: ['delete']
+    actions:
+      - { name: 'edit', icon: 'pencil' , label: false }
+      - { name: 'delete', icon: 'delete', label: 'Supprimer' }
+      - { name: 'new', label: 'Ajouter', icon: 'add' }
+      - { name: 'search', label: 'Rechercher' }
+
+
+  entities:
+
+    Quiz:
+      class: App\Entity\Quiz
+      label: 'Lister Quiz'
+      list:
+        fields:
+          - { property: 'titre', type: 'text' }
+          - { property: 'image', type: 'image', base_path: '%app.path.product_images%' }
+          - { property: 'description', type: 'text' }
+          - { property: 'mode_correction', type: 'boolean' }
+          - { property: 'mode_score', type: 'boolean' }
+          - { property: 'temps_dispo', type: 'datetime' }
+          - { property: 'melange_question', type: 'boolean' }
+          - { property: 'ouvrire_quiz', type: 'datetime' }
+          - { property: 'fermer_quiz', type: 'datetime' }
+          - { property: 'entete', type: 'text' }
+          - { property: 'pied', type: 'text' }
+          - { property: 'message_s', type: 'text' }
+          - { property: 'message_e', type: 'text' }
+          - { property: 'nb_tentative', type: 'integer' }
+
+        show:
+          fields:
+            - { property: 'image', type: 'image', base_path: '%app.path.product_images%' }
+    Test:
+      class: App\Entity\Test
+      label: 'Lister test'
+      list:
+          fields:
+            - { property: 'image', type: 'image', base_path: '%app.path.product_images%' }
+      show:
+          fields:
+            - { property: 'image', type: 'image', base_path: '%app.path.product_images%' }
+    User:
+      class: App\Entity\User
+      label: 'Admines'
+      list:
+          title: "Liste utilisateurs"
+          fields:
+            - { property: 'username', label: 'Nom utilisateur' }
+            - { property: 'email', label: 'Email' }
+            - enabled
+            - { property: 'lastLogin', label: 'Dernier login' }
+            - { property: 'confirmation_token', label: 'Confermation code' , type: 'text', type_options: { required: false } }
+
+      form:
+        fields:
+          - { type: 'group', columns: 4, label: 'Basic information' }
+
+            # if administrators are allowed to edit users' passwords and roles, add this:
+          - { property: 'username', label: 'Nom utilisateur' }
+          - { property: 'email', label: 'Email' }
+          - { property: 'plainPassword', type: 'text', type_options: { required: false } }
+
+          - { type: 'group', label: 'securite information', icon: 'phone', columns: 6 }
+          - enabled
+          - lastLogin
+          - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+
+  design:
+    menu:
+      - { label: 'Dashboard', route: 'admin_dashboard', default: true }
+      - { label: 'Utilisateurs' , icon: 'user', children: [ 'User', 'Quiz'] }
+      - label: 'Quiz'
+        children:
+          - { label: 'Créer Quiz', route: 'quiz_new', default: true }
+          - { label: 'Lister QUiz', route: 'quiz_index' }
+          - 'Test'
+    brand_color: '#1FC5F3'
+    assets:
+      css:
+        - 'css/admin.css'

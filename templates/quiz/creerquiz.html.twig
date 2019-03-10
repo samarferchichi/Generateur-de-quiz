@@ -1,0 +1,197 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+
+{% set _content_title = 'Espace d administartion' %}
+
+{% block page_title -%}
+    {{ _content_title }}
+
+{%- endblock %}
+
+{% block content_header %}
+
+    <div class="form-group row">
+        <div>
+
+            <div class="aa"></div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+        </div>
+        &nbsp; &nbsp;
+    <h1 class="title">{{ _content_title }}</h1>
+    </div>
+{% endblock %}
+{% block main %}
+    <style>
+        .aa {
+            width: 35px;
+            height: 4px;
+            background-color: #1f6377;
+            margin: 6px 0;
+        }
+        .vl {
+            border-left: 1.5px solid ;
+            color: #3a87ad;
+            height: 600px;
+        }
+
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <div class="panel panel-success">
+        <div class="card bg-info text-white">
+            <div class="card-body">QUIZ / Créer</div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col">
+                    <div class="row" style="background-color: ">
+                        <div class="col-sm-7">
+                       <br>     <table>
+                                <tr>
+                                    <td >
+                                        &nbsp; &nbsp; &nbsp;&nbsp;  <i>Question n° :</i>
+
+                                        &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                                        &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                                        &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                                        &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                                        &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+
+                                    </td>
+                                    <td>
+                                        <i> 1/5 questions</i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+
+                                        <div class="form-group row">
+
+                                            <div class="col-xs-2">
+                                                &nbsp;        <label>Importer un question d'un autre Quiz: </label>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <select id="" name="" class="form-control" >
+                                                    <option value="Open sans conseille">Parcourire les Quiz existants</option>
+                                                    <option value="volvo">Volvo</option>
+                                                    <option value="saab">Saab</option>
+                                                    <option value="opel">Opel</option>
+                                                    <option value="audi">Audi</option>
+                                                </select>
+
+                                            </div> &nbsp; &nbsp;
+                                            <i class="fa fa-repeat"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="form-group col">
+                                            <div >
+                                              <label for="">Votre Question :</label>
+                                            </div>
+                                               <textarea class="form-control z-depth-1" style="resize:vertical" rows="2" cols="5" id="" name="" required="required" maxlength="5000" placeholder="Write something here..."></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group row">
+
+                                            <div class="col-xs-2">
+                                                &nbsp;  <label>Type de question:  </label>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <select id="" name="" class="form-control" >
+                                                    <option value="Texte libre"> Texte libre</option>
+                                                    <option value="Cases à coucher">Cases à coucher</option>
+                                                    <option value="Réponse courte">Réponse courte</option>
+                                                    <option value="Vrai/faux">Vrai/faux</option>
+                                                    <option value="Liste déroulante">Liste déroulante</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+
+                                    <td colspan="3">
+                                        <div class="form-group row">
+
+                                        <div class="row">
+                                            <div class="column">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <label for="">Info bulle :</label>
+
+                                            </div>
+                                            <div class="column">
+
+                                                <textarea class="form-control z-depth-1" style="resize:vertical" rows="1" cols="75" required="required" maxlength="5000" placeholder="Write something here..."></textarea>
+                                            </div>
+                                                <div class="column">
+                                              &nbsp;
+                                              <font size="5"> <i class="fa fa-question-circle"></i></font>
+                                                </div></div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+
+                            </table>
+<br><br><br><br><br><br>
+                            <table>
+                                <tr>
+                                    <td>
+                                        &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp; <button type="button" style="width: 200px" class="btn btn-info">Ajouter à la page</button>
+
+                                        &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                                    </td>
+                                    <td>
+                                        &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+
+                                        &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;    &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                                        &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+
+                                        <button type="button" style="width: 220px" class="btn btn-success">Terminer la création de Quiz</button>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="vl"></div>
+
+                        <div class="row" style="background-color: red; width: 620px;">
+
+                        &nbsp;&nbsp;
+                            <div class="col-sm-4"><font size="50">
+                                    <i class="fa fa-file-image-o"></i></font>
+                            </div>
+
+                            &nbsp;&nbsp;   &nbsp;&nbsp;
+                            <div class="col-sm-6"><br><b>Titre de Quiz</b></div>
+
+                            <div style="width: 1000px; background-color: #3a87ad" >
+
+                                <table border="1" bgcolor="blue">
+                                    <tr>
+                                        <td>
+                                            jjjjj
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <label>nombre de page</label>
+                            </div>
+                        </div>
+
+
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}
