@@ -1,5 +1,7 @@
 <?php
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -16,9 +18,37 @@ class Quiz
      * @ORM\Column(type="integer")
      */
     private $id;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Page", mappedBy="quiz", cascade={"persist","remove"})
+     */
+    private $page;
+
+
+    public function __construct()
+    {
+        $this->page = new ArrayCollection();
+    }
+
+
+    /**
+     * @return Collection|Page[]
+     */
+    public function getPage(): Collection
+    {
+        return $this->page;
+    }
+
+
+
+
+
+
     /**
      * @ORM\Column(type="string", length=300)
      */
+
     private $titre;
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
@@ -124,6 +154,9 @@ class Quiz
      * @ORM\Column(type="string", length=1000)
      */
     private $message_e;
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -320,4 +353,5 @@ class Quiz
         $this->message_e = $message_e;
         return $this;
     }
+
 }

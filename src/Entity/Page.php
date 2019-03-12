@@ -17,9 +17,23 @@ class Page
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz",inversedBy="quiz", cascade={"persist","remove"})
+     *
      */
-    private $id_quiz;
+    private $quiz;
+
+    public function getQuiz(): ?Quiz
+    {
+        return $this->quiz;
+    }
+
+    public function setQuiz(?Quiz $quiz): self
+    {
+        $this->quiz = $quiz;
+
+        return $this;
+    }
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -41,17 +55,7 @@ class Page
         return $this->id;
     }
 
-    public function getIdQuiz(): ?int
-    {
-        return $this->id_quiz;
-    }
 
-    public function setIdQuiz(int $id_quiz): self
-    {
-        $this->id_quiz = $id_quiz;
-
-        return $this;
-    }
 
     public function getTitrePage(): ?string
     {

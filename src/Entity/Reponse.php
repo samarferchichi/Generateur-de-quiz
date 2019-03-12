@@ -17,7 +17,8 @@ class Reponse
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Question", cascade={"persist","remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $id_question;
 

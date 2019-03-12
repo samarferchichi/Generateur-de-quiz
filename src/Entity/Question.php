@@ -17,7 +17,8 @@ class Question
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Page", cascade={"persist","remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $id_page;
 
@@ -40,6 +41,32 @@ class Question
      * @ORM\Column(type="string", length=2000)
      */
     private $description_question;
+
+
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Parametre", cascade={"persist","remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $id_parametre;
+
+    /**
+     * @return mixed
+     */
+    public function getIdParametre()
+    {
+        return $this->id_parametre;
+    }
+
+    /**
+     * @param mixed $id_parametre
+     */
+    public function setIdParametre($id_parametre): void
+    {
+        $this->id_parametre = $id_parametre;
+    }
+
 
     public function getId(): ?int
     {
