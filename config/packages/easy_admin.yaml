@@ -39,15 +39,6 @@ easy_admin:
         show:
           fields:
             - { property: 'image', type: 'image', base_path: '%app.path.product_images%' }
-    Test:
-      class: App\Entity\Test
-      label: 'Lister test'
-      list:
-          fields:
-            - { property: 'image', type: 'image', base_path: '%app.path.product_images%' }
-      show:
-          fields:
-            - { property: 'image', type: 'image', base_path: '%app.path.product_images%' }
     User:
       class: App\Entity\User
       label: 'Admines'
@@ -82,7 +73,6 @@ easy_admin:
         children:
           - { label: 'Créer Quiz', route: 'quiz_new', default: true }
           - { label: 'Lister QUiz', route: 'quiz_index' }
-          - 'Test'
     brand_color: '#1FC5F3'
     assets:
       css:
