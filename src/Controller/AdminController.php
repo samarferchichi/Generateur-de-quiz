@@ -31,12 +31,23 @@ class AdminController extends EasyAdminController
 
 
     /**
-     * @Route("/creerquiz", name="creerquiz")
+     * @Route("/{id}/creerquiz", name="creerquiz", methods={"GET","POST"})
      */
-    public function creerquizAction()
+    public function creerquizAction(Quiz $quiz) : Response
     {
-        return $this->render('quiz/creerquiz.html.twig');
+
+
+        return $this->render('quiz/creerquiz.html.twig',[
+        'nbPage' => $quiz->getNbPage(),
+        'nbQuestion' => $quiz->getNbQuestion(),
+            'titre'=>$quiz->getTitre(),
+            'color'=>$quiz->getColorTitre(),
+            'image'=>$quiz->getImage(),
+            'entete'=>$quiz->getEntete(),
+            'pied'=>$quiz->getPied()]);
+
     }
+
 
 
     /**
@@ -53,12 +64,16 @@ class AdminController extends EasyAdminController
             $entityManager->persist($quiz);
             $entityManager->flush();
 
-            return $this->redirectToRoute('creerquiz');
+            $this->addFlash('good','Votre Quiz est bien configuré');
+
+
+            return $this->redirectToRoute('creerquiz',['id'=>$quiz->getId()] );
         }
 
         return $this->render('quiz/new.html.twig', [
             'quiz' => $quiz,
             'form' => $form->createView(),
+
         ]);
     }
 

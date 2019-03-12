@@ -4,9 +4,18 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+
     </head>
     <body>
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-bg {{ app.session.flashbag.peek('success')|length > 0 ? '' : 'mb-5' }}">
+
+            {% for messager in app.flashes('good') %}
+            <div class="alert alert-success">
+                 {{ message }}
+            </div>
+            {% endfor %}
+        </nav>
     </body>
 </html>

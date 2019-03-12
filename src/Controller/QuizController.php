@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Quiz;
+use App\Form\ProductType;
 use App\Form\QuizType;
 use App\Repository\QuizRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
@@ -20,6 +21,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class QuizController extends EasyAdminController
 {
+
+
+
     /**
      * @Route("/", name="quiz_index", methods={"GET"})
      */

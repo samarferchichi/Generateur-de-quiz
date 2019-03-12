@@ -201,6 +201,7 @@
                                     <td colspan="2">
                                         <div class="form-group row">
                                             <div class="col-xs-1">
+
                                                 <div>
                                                     <label for="quiz_titre" class="required">&nbsp;Titre de votre quiz</label>
                                                 </div>
@@ -251,7 +252,6 @@
                                                 <input type="checkbox" id="quiz_italique" name="quiz[italique]" value="1">
                                             </div>
                                         </div>
-
                                         </div>
                                 </tr>
                                 <tr>
@@ -265,10 +265,6 @@
                                                       </div>
                                             </div>
                                         </div>
-
-
-
-
                                     </td>
                                 </tr>
 
@@ -312,21 +308,14 @@
                                                 &nbsp;
                                                 <input name="quiz[temps_dispo][minute]" type="range" max="59" min="0" value="0" class="slider" id="quiz_temps_dispo_minute">
                                                 Minute
-<br>
+                                                <br>
                                                 <span id="heurid"></span>: <span id="minuteid"></span>
-
-
-
-                                            <input name="quiz[temps_dispo][hour]" type="range" max="23" min="0" value="0" class="slider" id="quiz_temps_dispo_hour">
+                                                <input name="quiz[temps_dispo][hour]" type="range" max="23" min="0" value="0" class="slider" id="quiz_temps_dispo_hour">
                                             Heure
-
-
                                         </div>
                                         </div>
-
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <td>
                                         <div class="form-group row">
@@ -347,7 +336,6 @@
                                                     <option value="10">10</option>
                                                 </select>
                                             </div>
-
                                             <div class="col-xs-2">
                                                 <label for="nb_page">&nbsp;&nbsp;&nbsp;Nombre des pages &nbsp;&nbsp;</label>
                                             </div>
@@ -365,15 +353,9 @@
                                                     <option value="10">10</option>
                                                 </select>
                                             </div>
-
                                         </div>
                                     </td>
                                 </tr>
-
-
-                                //oui et nn ne fonction pas
-
-
                                 <tr>
                                     <td>
                                         <div class="form-group row">
@@ -451,6 +433,7 @@
 
                             </table>
 
+                            {% block javascripts %}
 
                             <script>
                                 var slider = document.getElementById("quiz_temps_dispo_minute");
@@ -471,6 +454,7 @@
                                     outputh.innerHTML = this.value;
                                 }
                             </script>
+                            {% endblock %}
                     </div>
 
                         <div class="col-sm-5">
@@ -515,7 +499,7 @@
                                         &nbsp; &nbsp; &nbsp;
                                         &nbsp; &nbsp; &nbsp;
 
-                                        <button class="btn btn-primary mb-2">{{ button_label|default('Confirmer') }}</button>
+                                        <button class="btn btn-success">{{ button_label|default('Confirmer') }}</button>
 
                                     </center>
                                 </div>
