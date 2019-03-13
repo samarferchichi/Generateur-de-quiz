@@ -17,10 +17,22 @@ class Question
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Page", cascade={"persist","remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Page",inversedBy="page",  cascade={"persist","remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $id_page;
+    private $page;
+
+    public function getPage(): ?Page
+    {
+        return $this->page;
+    }
+
+    public function setPage(?Page $page): self
+    {
+        $this->page = $page;
+
+        return $this;
+    }
 
     /**
      * @ORM\Column(type="string", length=1000)

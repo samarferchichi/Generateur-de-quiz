@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PageRepository")
@@ -33,6 +35,30 @@ class Page
 
         return $this;
     }
+
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="page", cascade={"persist","remove"})
+     */
+    private $question;
+
+
+    public function __construct()
+    {
+        $this->question = new ArrayCollection();
+    }
+
+
+    /**
+     * @return Collection|Question[]
+     */
+    public function getQuestion(): Collection
+    {
+        return $this->question;
+    }
+
+
 
 
     /**

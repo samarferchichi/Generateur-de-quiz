@@ -44,12 +44,6 @@ class Parametre
     private $longueur_max;
 
 
-
-
-
-
-
-
     public function getId(): ?int
     {
         return $this->id;

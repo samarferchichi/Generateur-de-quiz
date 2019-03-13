@@ -80,17 +80,5 @@ class PageController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="page_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Page $page): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$page->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($page);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('page_index');
-    }
 }

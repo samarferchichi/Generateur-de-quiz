@@ -89,17 +89,8 @@ class QuizController extends EasyAdminController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="quiz_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Quiz $quiz): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$quiz->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($quiz);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('quiz_index');
-    }
+
+
+
 }
