@@ -57,27 +57,6 @@ class Question
 
 
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Parametre", cascade={"persist","remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $id_parametre;
-
-    /**
-     * @return mixed
-     */
-    public function getIdParametre()
-    {
-        return $this->id_parametre;
-    }
-
-    /**
-     * @param mixed $id_parametre
-     */
-    public function setIdParametre($id_parametre): void
-    {
-        $this->id_parametre = $id_parametre;
-    }
 
 
     public function getId(): ?int
@@ -85,17 +64,7 @@ class Question
         return $this->id;
     }
 
-    public function getIdPage(): ?int
-    {
-        return $this->id_page;
-    }
 
-    public function setIdPage(int $id_page): self
-    {
-        $this->id_page = $id_page;
-
-        return $this;
-    }
 
     public function getTextQuestion(): ?string
     {
@@ -143,5 +112,10 @@ class Question
         $this->description_question = $description_question;
 
         return $this;
+    }
+
+
+    public function __toString() {
+        return $this->text_question;
     }
 }

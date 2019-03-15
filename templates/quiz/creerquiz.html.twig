@@ -10,7 +10,7 @@
 
 {% block content_header %}
 
-    <div class="form-group row">
+    <div class="form-group row" xmlns="http://www.w3.org/1999/html">
         <div>
 
             <div class="aa"></div>
@@ -29,30 +29,31 @@
             background-color: #1f6377;
             margin: 6px 0;
         }
-        .vl {
-            border-left: 1.5px solid ;
-            color: #3a87ad;
-            height: 600px;
-        }
+
 
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <div class="panel panel-success">
         <div class="card bg-info text-white">
             <div class="card-body">QUIZ / Créer</div>
         </div>
         <div class="panel-body">
+
             <div class="row">
                 <div class="col">
                     <div class="row">
                         <div class="col-sm-7">
-                       <br>
-                            <table>
+
+
+
+                            <form name="question" method="post">
+                                <div id="question">
+                                    <table>
                                 <tr>
                                     <td>
                                         &nbsp;  <i>Question n°1 :</i>
@@ -69,6 +70,7 @@
                                 </tr>
                                 <tr>
                                     <td>
+
                                         <div class="form-group row">
 
                                             <div class="col-xs-2">
@@ -94,15 +96,16 @@
                                                 });
                                             </script>
                                         </div>
+
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
-                                        <div class="form-group col">
-                                            <div >
-                                              <label for="">Votre Question :</label>
+                                    <td>
+                                        <div class="form-group row">
+                                            <div class="col-xs-2">
+                                            <label for="question_text_question" class="required">Text question</label>
+                                            <input type="text" id="question_text_question" name="question[text_question]" required="required" maxlength="1000">
                                             </div>
-                                               <textarea class="form-control z-depth-1" style="resize:vertical" rows="2" cols="5" id="" name="" required="required" maxlength="5000" placeholder="Write something here..."></textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -111,10 +114,8 @@
                                         <div class="form-group row">
 
                                             <div class="col-xs-2">
-                                                &nbsp;  <label>Type de question:  </label>
-                                            </div>
-                                            <div class="col-xs-2">
-                                                <select id="" name="" class="form-control" >
+                                                <label for="question_type_question" class="required">Type question</label>
+                                                <select type="text" id="question_type_question" name="question[type_question]" required="required">
                                                     <option value="Texte libre"> Texte libre</option>
                                                     <option value="Cases à coucher">Cases à coucher</option>
                                                     <option value="Réponse courte">Réponse courte</option>
@@ -126,28 +127,43 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3">
+
+                                    <td colspan="2">
                                         <div class="form-group row">
-
-                                        <div class="row">
-                                            <div class="column">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <label for="">Info bulle :</label>
+                                            <div class="col-xs-2">
+                                            <label for="question_description_question" class="required">Description question</label>
+                                            <input type="text" id="question_description_question" name="question[description_question]" required="required" maxlength="2000">
                                             </div>
-                                            <div class="column">
-
-                                                <textarea class="form-control z-depth-1" style="resize:vertical" rows="1" cols="70" required="required" maxlength="5000" placeholder="Write something here..."></textarea>
-                                            </div>
-                                                <div class="column">
-                                                    &nbsp;
-                                              <font size="5"> <i class="fa fa-question-circle"></i></font>
-                                                </div></div>
                                         </div>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group row">
+                                            <div class="col-xs-2">
+                                            <label for="question_info_bulle" class="required">Info bulle</label>
+                                            <input type="text" id="question_info_bulle" name="question[info_bulle]" required="required" maxlength="2000">
+                                                <font size="5"> <i class="fa fa-question-circle"></i></font>
 
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                        <tr>
+                                            <td>
+                                                <label for="question_page" class="required">Page</label>
+                                                <select id="question_page" name="question[page]">
+                                                    <option value="{{ idpage }}"></option>
+                                                </select>
+                                            </td>
+                                        </tr>
                                 <tr>
                                     <td><br>
-                                        &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp; <button type="button" style="width: 200px" class="btn btn-info">Ajouter à la page</button>
+                                        &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;
+
+                                        <input type="hidden" id="question__token" name="question[_token]" value="Q5-5As-rytgzQaWkx6Z9BdZpQDfLQnxQphokVNDpu18">
+
+                                        <button  style="width: 200px" class="btn btn-info">Ajouter à la page</button>
 
                                         &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
                                     </td>
@@ -160,8 +176,9 @@
                                     </td>
                                 </tr>
                             </table>
+                                </div>
+                            </form>
                         </div>
-
                         <div class="row" style=" width: 620px; border-left: 1.5px solid ;
                              color: #3a87ad;
                              height: 600px; background-color:{{ bg_color }} ">
@@ -173,23 +190,29 @@
                             <div class="col-sm-6"><br><b>
                                     <font color="{{ color }}" >{{ titre }}</font></b><br>
                             </div>
-                            <div class="col-sm-12"  style="background-color: ">
+                            <div class="col-sm-12" >
                                 <div class="list-group">
                                     <label>
                                       <font color="black">
-                                          {{ entete }}
+                                         <i>
+                                             {{ entete }}
+                                         </i>
+
+
                                       </font>
                                     </label>
                                     <label>
                                      <font color="{{ titre_color }}" >
-                                         {{ titre_page }}
+                                       <b>
+                                           {{ titre_page }}
+                                       </b>
                                      </font>
                                     </label>
                                 </div>
                             </div>
 
                             {% for i in 1..nbQuestion %}
-                                <div class="col-sm-12"  style="background-color:">
+                                <div class="col-sm-12"  >
                                     <div class="list-group">
                                         <button type="button" class="list-group-item list-group-item-action ">
                                             Question n°{{ i }}
@@ -197,12 +220,14 @@
                                 </div>
                                  </div>
                                 {% endfor %}
-                            <div class="col-sm-12"  style="background-color: " >
+                            <div class="col-sm-12"   >
                                 <div class="list-group">
                                     <label>
                                         <font color="black">
 
-                                            {{ pied }}
+                                         <i>
+                                             {{ pied }}
+                                         </i>
                                         </font>
                                     </label>
                                 </div>
@@ -275,6 +300,7 @@
                         </div>
                 </div>
 
+                {{ form_widget(form._token) }}
 
 
 

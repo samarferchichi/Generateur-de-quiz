@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Page;
+use App\Entity\Question;
 use App\Form\PageType;
+use App\Form\QuestionType;
 use App\Repository\PageRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 
@@ -39,6 +41,8 @@ class AdminController extends EasyAdminController
      * @Route("/{id}/{page}/creerquiz", name="creerquiz", methods={"GET","POST"})
      * @ParamConverter("page", class="App:Page")
      * @ParamConverter("quiz", class="App:Quiz")
+     *
+     *
      */
     public function creerquizAction(Quiz $quiz, Page $page, Request $request) : Response
     {
@@ -48,6 +52,17 @@ class AdminController extends EasyAdminController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
+        }
+
+        $question = new Question();
+        $formq = $this->createForm(QuestionType::class, $question);
+        $formq->handleRequest($request);
+
+        if ($formq->isSubmitted() && $formq->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($question);
+            $entityManager->flush();
+
         }
 
         return $this->render('quiz/creerquiz.html.twig',[
@@ -60,15 +75,22 @@ class AdminController extends EasyAdminController
             'pied'=>$quiz->getPied(),
 
                 'page'=>$page,
+                'idpage'=>$page->getId(),
                 'titre_page'=>$page->getTitrePage(),
                 'titre_color'=>$page->getColorTitrePage(),
                 'bg_color'=>$page->getBgColor(),
                 'quiz'=>$page->getQuiz(),
                 'idquiz'=>$quiz->getId(),
-                'form'=>$form->createView()]
+                'form'=>$form->createView(),
+                'formq'=>$formq->createView(),
+                'question/new.html.twig',
+                'question' => $question,
 
+                ]
             );
     }
+
+
 
     /**
      * @Route("/{id}", name="page_delete", methods={"DELETE"})
@@ -126,6 +148,7 @@ class AdminController extends EasyAdminController
 
 
 
+
     /**
      * @Route("/quiz_index", name="quiz_index", methods={"GET"})
      */
@@ -154,6 +177,7 @@ class AdminController extends EasyAdminController
             'form' => $form->createView(),
         ]);
     }
+
 
 
 
@@ -195,5 +219,24 @@ class AdminController extends EasyAdminController
 
         return $this->redirectToRoute('page_index');
     }
+
+
+    /**
+     * @Route("/{id}", name="quiz_delete", methods={"DELETE"})
+     * @ParamConverter("quiz", class="App:Quiz")
+     */
+    public function deletequiz (Request $request, Quiz $quiz): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$quiz->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($quiz);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('quiz_index');
+    }
+
+
+
 
 }

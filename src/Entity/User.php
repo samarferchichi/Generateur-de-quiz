@@ -18,6 +18,30 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $numerotel;
+
+    /**
+     * @return mixed
+     */
+    public function getNumerotel()
+    {
+        return $this->numerotel;
+    }
+
+    /**
+     * @param mixed $numerotel
+     */
+    public function setNumerotel($numerotel): void
+    {
+        $this->numerotel = $numerotel;
+    }
+
+
+
+
     public function __construct()
     {
         parent::__construct();

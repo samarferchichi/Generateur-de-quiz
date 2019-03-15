@@ -4,6 +4,10 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <!DOCTYPE html>
 <html>
@@ -82,10 +86,12 @@
             color: white;
         }
 
-        .links a{
+        .links a {
             margin-left: 4px;
         }
+
     </style>
+
 </head>
 <body>
     <br><br><br><br>
@@ -103,10 +109,18 @@
             </div>
             <div class="card-body">
                 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'),'attr': {'class': 'fos_user_registration_register'}}) }}
-
                 <div class="input-group form-group">
 
                     <input type="email" id="fos_user_registration_form_email" name="fos_user_registration_form[email]" placeholder="Email" required="required" class="form-control">
+
+                </div>
+
+                <div class="input-group form-group">
+
+                    <div class="input-group">
+                        <input type="tel" id="fos_user_registration_form_numerotel" name="fos_user_registration_form[numerotel]" placeholder="Numéros de téléphone" required="required" class="form-control transparent-input">
+
+                    </div>
                 </div>
 
                 <div class="input-group form-group">
