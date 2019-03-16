@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Page;
 use App\Entity\Quiz;
 use App\Form\ProductType;
 use App\Form\QuizType;
@@ -88,6 +89,9 @@ class QuizController extends EasyAdminController
             'form' => $form->createView(),
         ]);
     }
+
+
+
 
 
 

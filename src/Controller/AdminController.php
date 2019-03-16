@@ -92,6 +92,12 @@ class AdminController extends EasyAdminController
 
 
 
+
+
+
+
+
+
     /**
      * @Route("/{id}", name="page_delete", methods={"DELETE"})
      */
