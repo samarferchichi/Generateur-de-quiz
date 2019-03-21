@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,6 +35,7 @@ class Question
         return $this;
     }
 
+
     /**
      * @ORM\Column(type="string", length=1000)
      */
@@ -45,12 +47,12 @@ class Question
     private $type_question;
 
     /**
-     * @ORM\Column(type="string", length=2000)
+     * @ORM\Column(type="string", length=2000, nullable=true)
      */
     private $info_bulle;
 
     /**
-     * @ORM\Column(type="string", length=2000)
+     * @ORM\Column(type="string", length=2000, nullable=true)
      */
     private $description_question;
 
@@ -95,7 +97,7 @@ class Question
         return $this->info_bulle;
     }
 
-    public function setInfoBulle(string $info_bulle): self
+    public function setInfoBulle(?string $info_bulle)
     {
         $this->info_bulle = $info_bulle;
 
@@ -107,7 +109,7 @@ class Question
         return $this->description_question;
     }
 
-    public function setDescriptionQuestion(string $description_question): self
+    public function setDescriptionQuestion(?string $description_question)
     {
         $this->description_question = $description_question;
 

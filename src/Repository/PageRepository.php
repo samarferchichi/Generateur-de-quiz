@@ -19,6 +19,20 @@ class PageRepository extends ServiceEntityRepository
         parent::__construct($registry, Page::class);
     }
 
+    public function getMaxOrdre($quiz)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('MAX(p.ordre) AS maxOrdre')
+            ->innerJoin('p.quiz', 'q')
+            ->where('q.id = ?1')
+            ->setParameter(1, $quiz)
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+
+
+
     // /**
     //  * @return Page[] Returns an array of Page objects
     //  */

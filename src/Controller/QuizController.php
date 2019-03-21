@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Page;
 use App\Entity\Quiz;
-use App\Form\ProductType;
 use App\Form\QuizType;
 use App\Repository\QuizRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;

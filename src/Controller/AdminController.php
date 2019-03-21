@@ -7,6 +7,7 @@ use App\Entity\Question;
 use App\Form\PageType;
 use App\Form\QuestionType;
 use App\Repository\PageRepository;
+use App\Repository\QuestionRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,8 +34,13 @@ class AdminController extends EasyAdminController
      */
     public function dashboardAction()
     {
-        return $this->render('bundles/easy_admin/dashboard.html.twig');
+        $em=$this->getDoctrine()->getManager();
+
+            $quiz = $em->getRepository('App:Quiz')->findAll();
+
+        return $this->render('bundles/easy_admin/dashboard.html.twig', array('quiz'=>$quiz));
     }
+
 
 
     /**
@@ -44,55 +50,109 @@ class AdminController extends EasyAdminController
      *
      *
      */
-    public function creerquizAction(Quiz $quiz, Page $page, Request $request) : Response
+    public function creerquizAction(Quiz $quiz, Page $page,QuestionRepository $questionRepository, Request $request) : Response
     {
-
+        $listquestion = $questionRepository->findBy(array('page' => $page->getId()));
 
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $page->setQuiz($quiz);
+            $entityManager->persist($page);
+
             $this->getDoctrine()->getManager()->flush();
         }
+
 
         $question = new Question();
         $formq = $this->createForm(QuestionType::class, $question);
         $formq->handleRequest($request);
 
+
         if ($formq->isSubmitted() && $formq->isValid()) {
+
             $entityManager = $this->getDoctrine()->getManager();
+            $question->setPage($page);
+
+
             $entityManager->persist($question);
-            $entityManager->flush();
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
 
         }
 
-        return $this->render('quiz/creerquiz.html.twig',[
-            'nbPage' => $quiz->getNbPage(),
-            'nbQuestion' => $quiz->getNbQuestion(),
-            'titre'=>$quiz->getTitre(),
-            'color'=>$quiz->getColorTitre(),
-            'image'=>$quiz->getImage(),
-            'entete'=>$quiz->getEntete(),
-            'pied'=>$quiz->getPied(),
-
-                'page'=>$page,
-                'idpage'=>$page->getId(),
-                'titre_page'=>$page->getTitrePage(),
-                'titre_color'=>$page->getColorTitrePage(),
-                'bg_color'=>$page->getBgColor(),
-                'quiz'=>$page->getQuiz(),
-                'idquiz'=>$quiz->getId(),
-                'form'=>$form->createView(),
-                'formq'=>$formq->createView(),
-                'question/new.html.twig',
-                'question' => $question,
+            return $this->render('quiz/creerquiz.html.twig', [
+                    'page' => $page,
+                    'quiz' => $quiz,
+                    'form' => $form->createView(),
+                    'formq' => $formq->createView(),
+                    'question' => $question,
+                    'listquestion' => $listquestion,
 
                 ]
             );
+        }
+
+
+    /**
+     * @Route("/{quiz}/creatnextpage", name="creatNextPage", methods={"GET","POST"})
+     */
+    public function creatnextpage(Request $request, PageRepository $pageRepository, Quiz $quiz): Response
+    {
+
+        if($quiz->getNbPage() > count($quiz->getPage())){
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($quiz);
+            $entityManager->flush();
+
+            $page = new Page();
+            $page->setQuiz($quiz);
+            $page->setBgColor('');
+            $page->setColorTitrePage('');
+            $page->setTitrePage('');
+            $ordre = $pageRepository->getMaxOrdre($quiz->getId());
+            $page->setOrdre(($ordre[0]['maxOrdre'])+1);
+
+            $entityManager->persist($page);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('creerquiz',['id'=>$quiz->getId(),'page'=>$page->getId()] );
+        }else{
+            // redirect to page show quiz
+            dump('vous avez atteint le nombre maximum des pages dans ce quiz');
+            exit();
+        }
     }
 
 
+    /**
+     * @Route("/{quiz}/{page}/precedentPage", name="precedentPage", methods={"GET","POST"})
+     */
+    public function precedentPage(Request $request, PageRepository $pageRepository, Quiz $quiz, Page $page): Response
+    {
+        $listpage = $pageRepository->findBy(array('quiz' => $page->getQuiz()));
+        $ordreActuel=$page->getOrdre();
+        foreach($listpage as $e)
+        {
+            if ($e->getOrdre() < $page->getOrdre() )
+                if(count($listpage)-1==true) {
+
+                        echo "terminer";
+                    dump($e);
+                }
+        }
+   //     dump($page);
+        dump($page->getOrdre());
+
+        exit;
 
 
+            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(),'page' => $page]);
+
+
+    }
 
 
 
@@ -114,7 +174,7 @@ class AdminController extends EasyAdminController
 
 
     /**
-     * @Route("/new", name="quiz_new", methods={"GET","POST"})
+     * @Route("/quiz/new", name="quiz_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -133,11 +193,10 @@ class AdminController extends EasyAdminController
             $page->setBgColor('');
             $page->setColorTitrePage('');
             $page->setTitrePage('');
+            $page->setOrdre(1);
 
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($page);
-            $em->flush();
+            $entityManager->persist($page);
+            $entityManager->flush();
 
             $this->addFlash('good','Votre Quiz est bien configuré');
 
@@ -154,7 +213,6 @@ class AdminController extends EasyAdminController
 
 
 
-
     /**
      * @Route("/quiz_index", name="quiz_index", methods={"GET"})
      */
@@ -165,34 +223,11 @@ class AdminController extends EasyAdminController
         ]);
     }
 
-    /**
-     * @Route("/{id}/{quiz}/edit", name="page_edit", methods={"GET","POST"})
-     * @ParamConverter("quiz", class="App:Quiz")
-     */
-    public function edit(Request $request, Page $page, Quiz $quiz): Response
-    {
-        $form = $this->createForm(PageType::class, $page);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-        }
-        return $this->render('page/edit.html.twig', [
-            'quiz'=>$quiz,
-            'page' => $page,
-            'form' => $form->createView(),
-        ]);
-    }
-
-
-
-
-
 
     /**
-     * @Route("/{id}/", name="quizplus", methods={"GET","POST"})
+     * @Route("/{id}/edit", name="quiz_edit", methods={"GET","POST"})
      */
-    public function editQuizPlus(Request $request, Quiz $quiz): Response
+    public function editq(Request $request, Quiz $quiz): Response
     {
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
@@ -205,26 +240,35 @@ class AdminController extends EasyAdminController
             ]);
         }
 
-        return $this->render('quiz/creerquiz.html.twig', [
+        return $this->render('quiz/edit.html.twig', [
             'quiz' => $quiz,
             'form' => $form->createView(),
         ]);
     }
 
+
     /**
-     * @Route("/{id}", name="page_delete", methods={"DELETE"})
-     * @ParamConverter("page", class="App:Page")
+     * @Route("/{id}/{quiz}/edit", name="page_edit", methods={"GET","POST"})
+     * @ParamConverter("quiz", class="App:Quiz")
      */
-    public function deletepage (Request $request, Page $page): Response
+    public function edit(Request $request, Page $page, Quiz $quiz): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$page->getId(), $request->request->get('_token'))) {
+        $form = $this->createForm(PageType::class, $page);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($page);
+            $page->setQuiz($quiz);
+            $entityManager->persist($page);
             $entityManager->flush();
         }
-
-        return $this->redirectToRoute('page_index');
+        return $this->render('page/edit.html.twig', [
+            'quiz'=>$quiz,
+            'page' => $page,
+            'form' => $form->createView(),
+        ]);
     }
+
 
 
     /**
@@ -241,7 +285,6 @@ class AdminController extends EasyAdminController
 
         return $this->redirectToRoute('quiz_index');
     }
-
 
 
 

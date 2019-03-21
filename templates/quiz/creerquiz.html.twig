@@ -10,7 +10,8 @@
 
 {% block content_header %}
 
-    <div class="form-group row" xmlns="http://www.w3.org/1999/html">
+    <div class="form-group row" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+         xmlns="http://www.w3.org/1999/html">
         <div>
 
             <div class="aa"></div>
@@ -31,6 +32,7 @@
         }
 
 
+
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -48,15 +50,18 @@
                 <div class="col">
                     <div class="row">
                         <div class="col-sm-7">
+                            {% if page.question|length < page.quiz.nbQuestion %}
+                            {{ form_start(formq, {'method': 'post' }) }}
 
-                            <form name="question" method="post">
-                                <div id="question">
-
-                             <table>
+                            <div id="question"  style="border-radius: 10px;">
+                             <table  >
                                 <tr>
                                     <td>
-                                        &nbsp;  <i>Question n°1 :</i>
-
+                                        {% if page.question|length < page.quiz.nbQuestion %}
+                                            <i>Question n° {{ (page.question|length)+1 }} : </i>
+                                        {% else %}
+                                            <i>Page n°{{ page.ordre }} est épuisé</i>
+                                        {% endif %}
                                         &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
                                         &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
                                         &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
@@ -64,7 +69,7 @@
                                         &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
                                     </td>
                                     <td colspan="">
-                                        <i> 1 / {{ nbQuestion }} questions</i>
+                                        <i> {{ page.question|length }} / {{ quiz.nbQuestion }} questions dans la page {{ page.ordre }}</i>
                                     </td>
                                 </tr>
                                 <tr>
@@ -102,36 +107,46 @@
                                     <td>
                                         <div class="form-group row">
                                             <div class="col-xs-2">
-                                                <label for="question_text_question" class="required">Text question</label>
-                                                <input type="text" id="question_text_question" name="question[text_question]" required="required" maxlength="1000">
+
+                                                {{ form_label(formq.text_question) }}
+                                                </div>
+                                                {{ form_widget(formq.text_question) }}
+                                                <small style="color: red">
+                                                    <font size="2">
+                                                        {{ form_errors(formq.text_question) }}
+                                                    </font>
+                                                </small>
                                             </div>
-                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <div class="form-group row">
-
                                             <div class="col-xs-2">
-                                                <label for="question_type_question" class="required">Type question</label>
-                                                <select type="text" id="question_type_question" name="question[type_question]" required="required">
-                                                    <option value="Texte libre"> Texte libre</option>
-                                                    <option value="Cases à coucher">Cases à coucher</option>
-                                                    <option value="Réponse courte">Réponse courte</option>
-                                                    <option value="Vrai/faux">Vrai/faux</option>
-                                                    <option value="Liste déroulante">Liste déroulante</option>
-                                                </select>
+                                                {{ form_label(formq.type_question) }}
+                                            </div>
+                                            <div class="col-xs-2">
+                                                {{ form_widget(formq.type_question) }}
+                                                <small style="color: red">
+                                                    <font size="2">
+                                                {{ form_errors(formq.type_question) }}
+                                                    </font>
+                                                </small>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
+
 
                                     <td colspan="2">
                                         <div class="form-group row">
                                             <div class="col-xs-2">
-                                            <label for="question_description_question" class="required">Description question</label>
-                                            <input type="text" id="question_description_question" name="question[description_question]" required="required" maxlength="2000">
+                                                {{ form_label(formq.description_question) }}
+                                            </div>
+                                            <div class="col-xs-2">
+                                                {{ form_widget(formq.description_question) }}
+                                                {{ form_errors(formq.description_question) }}
                                             </div>
                                         </div>
                                     </td>
@@ -140,27 +155,24 @@
                                     <td>
                                         <div class="form-group row">
                                             <div class="col-xs-2">
-                                            <label for="question_info_bulle" class="required">Info bulle</label>
-                                            <input type="text" id="question_info_bulle" name="question[info_bulle]" required="required" maxlength="2000">
-                                                <font size="5"> <i class="fa fa-question-circle"></i></font>
+                                                {{ form_label(formq.info_bulle) }}
+                                            </div>
+                                            <div class="col-xs-2">
+                                                {{ form_widget(formq.info_bulle) }}
+                                                {{ form_errors(formq.info_bulle) }}
+                                            </div>
+                                            <div class="col-xs-2">
+                                                &nbsp;     <font size="5"> <i class="fa fa-question-circle"></i></font>
 
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                                        <tr>
-                                            <td>
-                                                <label for="question_page" class="required">Page</label>
-                                                <select id="question_page" name="question[page]">
-                                                    <option value="{{ idpage }}"></option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                <tr>
+                                       <tr>
                                     <td><br>
                                         &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;
 
-                        <input type="hidden" id="question__token" name="question[_token]" value="qHjzxCdGaHj8jInv7F8QDXucRstvYQAXFPl5jop9kMw">
+
                     <button class="btn btn-info">Ajouter à la page</button>
 
                                         &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
@@ -175,64 +187,199 @@
                                 </tr>
                             </table>
                                 </div>
-                            </form>
+                            {{ form_end(formq) }}
+                            {% else %}
+                            {% if quiz.page|length == 1 %}
+                                <div style="border-radius: 10px;"><br><br><br>
+                                    <div style="background-color: 	#FF6347">
+                                        <br>Vous avez atteint le nombre maximum de question dans cette page !
+                                    </div>
+                                    <br>
+                                    <div class="text-center">
+                                        <button disabled="true" class="btn btn-primary"><i class="fa fa-chevron-circle-left"></i> Précédent</button>
+                                        <a href="{{ path('creatNextPage', {'quiz':quiz.id}) }}" type="button" class="btn btn-primary">Suivant <i class="fa fa-chevron-circle-right"></i></a>
+                                    </div>
+                                </div>
+                                {% else %}
+                                    {% if quiz.page|length > 1 %}
+
+                                        <div style="border-radius: 10px;"><br><br><br>
+                                        <div style="background-color: 	#FF6347">
+                                            <br>Vous avez atteint le nombre maximum de question dans cette page !
+                                        </div>
+                                        <br>
+                                        <div class="text-center">
+                                            <a href="{{ path('precedentPage', {'quiz':quiz.id ,'page': page.id}) }}" type="button"  class="btn btn-primary"><i class="fa fa-chevron-circle-left"></i> Précédent</a>
+                                            <a href="{{ path('creatNextPage', {'quiz':quiz.id }) }}" type="button" class="btn btn-primary">Suivant <i class="fa fa-chevron-circle-right"></i></a>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+
+                            {% endif %}
+
+                            {% endif %}
+
                         </div>
-                        <div class="row" style=" width: 620px; border-left: 1.5px solid ;
+
+                        <div class="row" style=" width: 629px;border-left: 1.5px solid ;
                              color: #3a87ad;
-                             height: 600px; background-color:{{ bg_color }} ">
+                                border-right: 1.5px solid ;
+                                border-bottom: 1.5px solid;
+                             height: 625px; background-color:{{ page.bgColor }};
+                                border-radius: 3px;">
                         &nbsp;&nbsp;
                             <div class="col-sm-4"><font size="50">
                                     <i class="fa fa-file-image-o"></i></font>
                             </div>
                             &nbsp;&nbsp;   &nbsp;&nbsp;
                             <div class="col-sm-6"><br><b>
-                                    <font color="{{ color }}" >{{ titre }}</font></b><br>
+                                    <font color="{{ quiz.colorTitre }}" >{{ quiz.titre }}</font></b><br>
                             </div>
                             <div class="col-sm-12" >
                                 <div class="list-group">
                                     <label>
                                       <font color="black">
                                          <i>
-                                             {{ entete }}
+                                             {{ quiz.entete }}
                                          </i>
 
 
                                       </font>
                                     </label>
                                     <label>
-                                     <font color="{{ titre_color }}" >
+                                     <font color="{{ page.colorTitrePage }}" >
                                        <b>
-                                           {{ titre_page }}
+                                           {{ page.titrePage }}
                                        </b>
                                      </font>
                                     </label>
+
                                 </div>
                             </div>
 
-                            {% for i in 1..nbQuestion %}
-                                <div class="col-sm-12"  >
-                                    <div class="list-group">
-                                        <button type="button" class="list-group-item list-group-item-action ">
-                                            Question n°{{ i }}
 
-                                        </button>
-                                </div>
-                                 </div>
-                                {% endfor %}
 
+                                    {% for j in listquestion %}
+                                            <div class="col-sm-11"  >
+                                            <div class="list-group">
+
+                                                <button  type="button" style="background-color: #c0e5d7" class="list-group-item list-group-item-action ">
+                                                  <b>
+                                                    <a data-target="#myModalDelete" data-toggle="modal">
+                                                        Question n°
+                                                    </a></b><br>
+                                                        {{ j.textQuestion }}<br>
+                                                 <label style="color:#4bb1cf;">Info :</label>
+                                                    {{ j.infoBulle }}
+
+                                                    {% if j.typeQuestion=='Vrai/faux' %}
+                                                        <label>Votre reponse :</label>
+                                                        <br>
+                                                        <label>Choix 1</label>  <input type="checkbox" value="1"><br>
+                                                        <label>Choix 2</label>  <input type="checkbox" value="2"><br>
+                                                        {{ j.descriptionQuestion }}
+                                                        {% else %}
+                                                        {% if j.typeQuestion=='Réponse courte' %}
+                                                            <label>Votre reponse :</label>
+                                                            <br>
+                                                            <input type="text" class="form-control">
+                                                            {{ j.descriptionQuestion }}
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                </button>
+                                                <div class="modal fade" id="editequestion-{{ j.id }}" role="dialog">
+                                                    <div class="modal-dialog">
+
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title"></h4>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                {{ render(controller(
+                                                                    'App\\Controller\\QuestionController::edit',
+                                                                    { 'id': j.id }
+                                                                )) }}
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="modal fade" id="removequestion-{{ j.id }}" role="dialog">
+                                                    <div class="modal-dialog">
+
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title"></h4>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                {{ render(controller(
+                                                                    'App\\Controller\\QuestionController::delete',
+                                                                    { 'id': j.id }
+                                                                )) }}
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="modal fade" id="dupliqQuestion" role="dialog">
+                                                    <div class="modal-dialog">
+
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title"></h4>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                {{ include('question/edit.html.twig') }}
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="form-group row">
+
+
+                                                </div>
+
+                                            </div>
+
+                                            </div>
+
+                                    {% endfor %}
+
+
+                            {% if quiz.page|length == page.quiz.nbPage  %}
                             <div class="col-sm-12"   >
                                 <div class="list-group">
                                     <label>
                                         <font color="black">
 
                                          <i>
-                                             {{ pied }}
+                                             {{ quiz.pied }}
                                          </i>
                                         </font>
                                     </label>
                                 </div>
                             </div>
-
+                        {% endif %}
 
                             <!-- Modal -->
                             <div class="modal fade" id="myModal" role="dialog">
@@ -241,7 +388,7 @@
                                     <!-- Modal content-->
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title">Page de quiz "{{ titre }}"</h4>
+                                            <h4 class="modal-title">Page de quiz "{{ quiz.titre }}"</h4>
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
 
                                         </div>
@@ -255,60 +402,62 @@
 
                             </div>
 
-                            <div class="modal fade" id="plusPage" role="dialog">
-                                <div class="modal-dialog">
+                        {% if page.question|length == 0 %}
 
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <label>
+                                Page vide !
+                            </label>
+                            {% endif %}
+<br>
 
-                                        <div class="modal-body">
-
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="container">
-                                <!-- Trigger the modal with a button -->
-                               <font size="4">
-                                   <i class="fa fa-chevron-circle-left"></i>
-                                   1 / {{ nbPage}} page
-                                   <i class="fa fa-chevron-circle-right"></i>                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                                   <a href="#" class="fa fa-paint-brush" data-target="#myModal" data-toggle="modal"></a>
-                                   &nbsp;
-                                   <a href="#" class="fa fa-plus-square-o" ></a>
-                                   &nbsp;
-                                   <a href="#"  class="fa fa-trash-o"></a>
-                               </font>
-                                </div>
-
-                            </div>
                         </div>
                 </div>
 
-                {{ form_widget(formq._token) }}
 
 
 
+                    <div class="container" style=" width: 632px; height:52px; border-left: 1.5px solid ;
+                             color: #3a87ad; background-color: #9acfea ; border-radius: 5px; " >
+                        <!-- Trigger the modal with a button -->
+                        <div class="form-group row">
+                            <div class="col-xs-2">
+                                <font size="3">
+                                    <a href="{{ path('precedentPage', {'quiz':quiz.id ,'page': page.id}) }}" class="fa fa-chevron-circle-left"></a>
+                                    {{ page.ordre }} / {{ quiz.nbPage}} page
+                                    <a class="fa fa-chevron-circle-right" href="{{ path('creatNextPage', {'quiz':quiz.id}) }}"></a>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="#" data-target="#myModal" data-toggle="modal" class="fa fa-pencil"></a>
+                                    &nbsp;
+                                    <a href="#" class="fa fa-plus-square-o" ></a>
+                                    &nbsp;
+                                    <a href="#"  class="fa fa-trash-o" data-target="#myModalDelete" data-toggle="modal"></a>
+                                </font>
+                            </div>
+                        </div>
+
+                    </div>
 
 
             </div>
+
         </div>
         </div>
     </div>
-
+<br>
+<br>
+<br>
+<br>
+<br>
 {% endblock %}

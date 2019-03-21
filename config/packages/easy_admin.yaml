@@ -16,6 +16,8 @@ easy_admin:
 
   entities:
 
+    Question:
+      class: App\Entity\Question
     Quiz:
       class: App\Entity\Quiz
       label: 'Lister Quiz'
@@ -71,8 +73,9 @@ easy_admin:
       - { label: 'Utilisateurs' , icon: 'user', children: [ 'User', 'Quiz'] }
       - label: 'Quiz'
         children:
-          - { label: 'Créer Quiz', route: 'quiz_new', default: true }
-          - { label: 'Lister QUiz', route: 'quiz_index' }
+          - { label: 'Créer Quiz', route: 'quiz_new' }
+          - 'Quiz'
+
     brand_color: '#1FC5F3'
     assets:
       css:

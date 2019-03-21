@@ -19,7 +19,15 @@ class QuestionRepository extends ServiceEntityRepository
         parent::__construct($registry, Question::class);
     }
 
-
+    public function byPage($page)
+    {
+        $qd=$this->createQueryBuilder('u')
+            ->select('u')
+            ->where('u.page = :page')
+            ->orderBy('u.id')
+            ->setParameter('page',$page);
+        return $qd->getQuery()->getResult();
+    }
 
 
 

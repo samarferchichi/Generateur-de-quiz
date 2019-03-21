@@ -1,0 +1,29 @@
+App\Entity\Quiz:
+  properties:
+    titre:
+      - NotBlank:
+          message: Titre obligatoire.
+    description:
+      - NotBlank:
+          message: Description obligatoire.
+    entete:
+      - NotBlank:
+          message: Description obligatoire.
+    pied:
+      - NotBlank:
+          message: Description obligatoire.
+    message_s:
+      - NotBlank:
+          message: Description obligatoire.
+    message_e:
+      - NotBlank:
+          message: Description obligatoire.
+
+App\Entity\Question:
+  properties:
+    text_question:
+      - NotBlank:
+          message: Question obligatoire.
+    type_question:
+      - NotBlank:
+          message: Type de question obligatoire

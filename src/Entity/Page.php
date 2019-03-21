@@ -36,6 +36,30 @@ class Page
         return $this;
     }
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ordre;
+
+    /**
+     * @return mixed
+     */
+    public function getOrdre()
+    {
+        return $this->ordre;
+    }
+
+    /**
+     * @param mixed $ordre
+     */
+    public function setOrdre($ordre): void
+    {
+        $this->ordre = $ordre;
+    }
+
+
+
+
 
 
     /**
@@ -88,7 +112,7 @@ class Page
         return $this->titre_page;
     }
 
-    public function setTitrePage(string $titre_page): self
+    public function setTitrePage(string $titre_page)
     {
         $this->titre_page = $titre_page;
 
@@ -100,7 +124,7 @@ class Page
         return $this->color_titre_page;
     }
 
-    public function setColorTitrePage(?string $color_titre_page): self
+    public function setColorTitrePage(?string $color_titre_page)
     {
         $this->color_titre_page = $color_titre_page;
 
@@ -112,7 +136,7 @@ class Page
         return $this->bg_color;
     }
 
-    public function setBgColor(?string $bg_color): self
+    public function setBgColor(?string $bg_color)
     {
         $this->bg_color = $bg_color;
 

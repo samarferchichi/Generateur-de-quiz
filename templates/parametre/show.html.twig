@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parametre{% endblock %}
+
+{% block body %}
+    <h1>Parametre</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ parametre.id }}</td>
+            </tr>
+            <tr>
+                <th>Rep_form_text</th>
+                <td>{{ parametre.repFormText }}</td>
+            </tr>
+            <tr>
+                <th>Rep_form_date</th>
+                <td>{{ parametre.repFormDate ? parametre.repFormDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Rep_form_nombre</th>
+                <td>{{ parametre.repFormNombre }}</td>
+            </tr>
+            <tr>
+                <th>Longueur_min</th>
+                <td>{{ parametre.longueurMin }}</td>
+            </tr>
+            <tr>
+                <th>Longueur_max</th>
+                <td>{{ parametre.longueurMax }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('parametre_index') }}">back to list</a>
+
+    <a href="{{ path('parametre_edit', {'id': parametre.id}) }}">edit</a>
+
+    {{ include('parametre/_delete_form.html.twig') }}
+{% endblock %}

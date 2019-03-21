@@ -187,10 +187,7 @@
         </div>
         <div class="panel-body">
 
-            {{ form_start(form) }}
-            <div class="my-custom-class-for-errors">
-                {{ form_errors(form) }}
-            </div>
+
             <div class="row">
                 <div class="col">
                     {{ form_start(form, {'method': 'post' }) }}
@@ -203,19 +200,25 @@
                                             <div class="col-xs-1">
 
                                                 <div>
-                                                    <label for="quiz_titre" class="required">&nbsp;Titre de votre quiz</label>
+                                                    {{ form_label(form.titre) }}
                                                 </div>
+
                                             </div>
                                             <div class="col-xs-1">
                                                 <div>
-                                                    <input class="form-control" type="text" id="quiz_titre" name="quiz[titre]" required="required" maxlength="300">
+                                                    {{ form_widget(form.titre) }}
+
                                                 </div>
+
+                                                <small style="color: red">
+                                                    {{ form_errors(form.titre) }}
+                                                </small>
+
                                             </div>
                                             <div class="col-xs-1">
-                                                <div>
-                                                    <label for="quiz_color_titre">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                         Couler de titre</label>
-                                                    <input value="#20B2AA" type="color" id="quiz_color_titre" name="quiz[color_titre]" maxlength="50">
+                                                <div>&nbsp;&nbsp;
+                                                    {{ form_label(form.color_titre) }}
+                                                    {{ form_widget(form.color_titre) }}
                                                 </div>
                                             </div>
                                         </div>
@@ -227,29 +230,23 @@
                                         <div class="form-group row">
 
                                             <div class="col-xs-2">
-                                                <label for="quiz_police">&nbsp;Police &nbsp;&nbsp;&nbsp;</label>
+                                                {{ form_label(form.police) }}
                                             </div>
                                         <div class="col-xs-2">
-                                        <select id="quiz_police" name="quiz[police]" class="form-control" >
-                                            <option value="Open sans conseille">Open sans conseillée</option>
-                                            <option value="volvo">Volvo</option>
-                                            <option value="saab">Saab</option>
-                                            <option value="opel">Opel</option>
-                                            <option value="audi">Audi</option>
-                                        </select>
+                                            {{ form_widget(form.police) }}
                                         </div>
 
                                         <div class="col-xs-2">
                                             <div>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <label for="quiz_gras">Gras</label>
-                                                <input type="checkbox" id="quiz_gras" name="quiz[gras]" value="1">
+                                                {{ form_label(form.gras) }}
+                                                {{ form_widget(form.gras) }}
                                             </div>
                                         </div>
 
                                         <div class="col-xs-2">
                                             <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <label for="quiz_italique">Italique</label>
-                                                <input type="checkbox" id="quiz_italique" name="quiz[italique]" value="1">
+                                                {{ form_label(form.italique) }}
+                                                {{ form_widget(form.italique) }}
                                             </div>
                                         </div>
                                         </div>
@@ -260,8 +257,8 @@
                                             <div class="col-xs-2">
                                                  <label>Choisissez un logo :</label>
                                                       <div>
-                                                       <label for="quiz_image" class="required">Image/Logo à faire apparaitre en debut de votre quiz</label>
-                                                       <input type="text" id="quiz_image" name="quiz[image]" required="required" maxlength="255">
+                                                          {{ form_label(form.image) }}
+                                                          {{ form_widget(form.image) }}
                                                       </div>
                                             </div>
                                         </div>
@@ -272,9 +269,15 @@
                                     <td colspan="1">
                                         <div class="form-group col">
                                             <div class="col-xs-2">
-                                            <label for="quiz_description">Description de votre quiz :</label>
+                                                {{ form_label(form.description) }}
                                             </div>
-                                            <textarea class="form-control z-depth-1" style="resize:vertical" rows="2"  id="quiz_description" name="quiz[description]" required="required" maxlength="5000" cols="2"   placeholder="Write something here..."></textarea>
+                                            <div class="col-xs-2">
+
+                                            {{ form_widget(form.description) }}
+                                            </div>
+                                            <small style="color: red">
+                                                {{ form_errors(form.description) }}
+                                            </small>
                                         </div>
                                     </td>
                                 </tr>
@@ -282,37 +285,35 @@
                                     <td colspan="2">
                                         &nbsp; <label style="cursor: default; font-size: 20px; color: #444444">&nbsp;&nbsp;Le type Quiz: modes correction et score :</label>
                                             <div class="custom-control custom-switch">
-                                                &nbsp;  <input type="checkbox" class="custom-control-input" id="quiz_mode_correction" name="quiz[mode_correction]" value="1">
-                                                <label class="custom-control-label" for="quiz_mode_correction">
-                                                    <font size="2">
-                                                        &nbsp;          Activer le mode correction sur votre quiz: la bonne réponse sera affichée aux répondants aprés qu'ils aient réponduus
-                                                    </font>
-                                                </label>
+
+                                                {{ form_widget(form.mode_correction) }}
+
+                                                {{ form_label(form.mode_correction) }}
+
+
                                             </div>
                                             <div class="custom-control custom-switch">
-                                                &nbsp;     <input type="checkbox" class="custom-control-input" id="quiz_mode_score" name="quiz[mode_score]" value="1">
-                                                <label class="custom-control-label"  for="quiz_mode_score">
-                                                    <font size="2">
-                                                        &nbsp;             Activer le mode score sur votre quiz :le scrore des répondants sera calculé en fonction de leurs réponses
-                                                    </font>
-                                                </label>
+                                                {{ form_widget(form.mode_score) }}
+
+                                                {{ form_label(form.mode_score) }}
+
                                             </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td height="10">
                                         <div class="form-group row" style=" height: 100px">
-                                            <div>
-                                             <label  for="quiz_temps_dispo">Temps disponible</label>
-                                                <input type="checkbox" name="dispo" >
-                                                &nbsp;
-                                                <input name="quiz[temps_dispo][minute]" type="range" max="59" min="0" value="0" class="slider" id="quiz_temps_dispo_minute">
-                                                Minute
-                                                <br>
-                                                <span id="heurid"></span>: <span id="minuteid"></span>
-                                                <input name="quiz[temps_dispo][hour]" type="range" max="23" min="0" value="0" class="slider" id="quiz_temps_dispo_hour">
-                                            Heure
-                                        </div>
+
+                                                <div class="col-xs-2">
+
+                                                {{ form_label(form.temps_dispo) }}
+                                                </div>
+                                                <div class="col-xs-2">
+<br>
+                                                {{ form_widget(form.temps_dispo) }}
+                                                    &nbsp;</div>
+
+
                                         </div>
                                     </td>
                                 </tr>
@@ -320,38 +321,18 @@
                                     <td>
                                         <div class="form-group row">
                                             <div class="col-xs-2">
-                                                <label for="nb_question">&nbsp;Nombre des questions par page &nbsp;&nbsp;</label>
+                                                {{ form_label(form.nb_question) }}
                                             </div>
                                             <div class="col-xs-2">
-                                                <select id="quiz_nb_question" name="quiz[nb_question]" class="form-control" >
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                </select>
+
+                                                {{ form_widget(form.nb_question) }}
+                                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <div class="col-xs-2">
+                                                {{ form_label(form.nb_page) }}
                                             </div>
                                             <div class="col-xs-2">
-                                                <label for="nb_page">&nbsp;&nbsp;&nbsp;Nombre des pages &nbsp;&nbsp;</label>
-                                            </div>
-                                            <div class="col-xs-2">
-                                                <select id="quiz_nb_page" name="quiz[nb_page]" class="form-control" >
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                </select>
+                                                {{ form_widget(form.nb_page) }}
+
                                             </div>
                                         </div>
                                     </td>
@@ -360,22 +341,11 @@
                                     <td>
                                         <div class="form-group row">
                                             <div class="col-xs-2">
-                                                <label for="nb_tentative">&nbsp;Nombre des tentatives autorisées &nbsp;&nbsp;</label>
+                                                {{ form_label(form.nb_tentative) }}
                                             </div>
                                             <div class="col-xs-9">
-                                                <select id="quiz_nb_tentative" name="quiz[nb_tentative]" class="form-control" style="width: 250px;">
-                                                    <option value="0">Nombre illimité de tentatives</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                </select>
+                                                    {{ form_widget(form.nb_tentative) }}
+
                                             </div>
                                         </div>
                                     </td>
@@ -384,27 +354,19 @@
                                         <td>
                                             <div class="form-group row">
 
-                                            <div class="custom-control custom-switch">
+                                                <div class="col-xs-2">
 
-                                                <input type="checkbox" class="custom-control-input" id="quiz_melange_question" name="quiz[melange_question]" value="1">
-                                                <label class="custom-control-label" for="quiz_melange_question">
-                                                      Mélanger les questions
-                                                </label>
-                                            </div>
-                                            <div class="custom-control custom-switch">
+                                                {{ form_widget(form.melange_question) }}
+                                                {{ form_label(form.melange_question) }}
 
-                                                &nbsp; &nbsp; &nbsp;
-                                                <input type="checkbox" class="custom-control-input" id="quiz_send_mail" name="quiz[send_mail]" value="1">
-                                                <label class="custom-control-label" for="quiz_send_mail">
-                                                      Envoyer par E-mail
-                                                </label>
-                                            </div>
-                                            <div class="custom-control custom-switch">
-                                                &nbsp; &nbsp; &nbsp;
-                                                <input type="checkbox" class="custom-control-input" id="quiz_imprime_pdf" name="quiz[imprime_pdf]" value="1">
-                                                <label class="custom-control-label" for="quiz_imprime_pdf">
-                                                         Imprimer en PDF
-                                                </label>
+
+
+                                                {{ form_widget(form.send_mail) }}
+                                                {{ form_label(form.send_mail) }}
+
+                                                {{ form_widget(form.imprime_pdf) }}
+                                                {{ form_label(form.imprime_pdf) }}
+
                                             </div>
                                             </div>
                                         </td>
@@ -412,18 +374,22 @@
                                     <tr>
                                         <td>
                                             <div class="form-group row">
+                                                <div class="col-xs-2">
 
-                                                {{ form_row(form.ouvrire_quiz) }}
-                                                &nbsp; &nbsp; &nbsp;
-                                                &nbsp; &nbsp; &nbsp;
-                                                &nbsp; &nbsp; &nbsp;
-                                                &nbsp; &nbsp; &nbsp;
-                                                &nbsp; &nbsp; &nbsp;
-                                                &nbsp; &nbsp; &nbsp;
-                                                &nbsp; &nbsp; &nbsp;
-                                                &nbsp; &nbsp; &nbsp;
+                                                {{ form_label(form.ouvrire_quiz) }}
+                                                </div>
+                                                <div class="col-xs-2">
+                                                {{ form_widget(form.ouvrire_quiz) }}
+                                                </div>
 
-                                            {{ form_row(form.fermer_quiz) }}
+                                                    <div class="col-xs-2">
+                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                {{ form_label(form.fermer_quiz) }}
+                                                    </div>
+                                                <div class="col-xs-2">
+                                                {{ form_widget(form.fermer_quiz) }}
+                                                </div>
                                             </div>
 
                                         </td>
@@ -463,33 +429,55 @@
 
                                             <div class="form-group col">
                                                 <div class="col-xs-2">
-                                                    <label for="quiz_description">Entéte de votre quiz :</label>
+                                                    {{ form_label(form.entete) }}
                                                 </div>
-                                                <textarea class="form-control z-depth-1" id="quiz_entete"  name="quiz[entete]" required="required" maxlength="5000" cols="5" rows="9"  placeholder="Write something here..."></textarea>
+                                                    {{ form_widget(form.entete) }}
+                                                <small style="color: red">
+                                                 <font size="2">
+                                                     {{ form_errors(form.entete) }}
+                                                 </font>
+                                                </small>
                                             </div>
 
                                                 <div class="form-group col">
                                                     <div class="col-xs-2">
-                                                        <label for="quiz_pied">Pied de votre Quiz :</label>
+                                                        {{ form_label(form.pied) }}
                                                     </div>
-                                                    <textarea class="form-control z-depth-1" id="quiz_pied"  name="quiz[pied]" required="required" maxlength="5000" cols="5" rows="9"  placeholder="Write something here..."></textarea>
+                                                    {{ form_widget(form.pied) }}
+                                                    <small style="color: red">
+                                                        <font size="2">
+                                                        {{ form_errors(form.pied) }}
+                                                        </font>
+                                                    </small>
+                                                </div>
+
+
+
+                                                <div class="form-group col">
+                                                    <div class="col-xs-2">
+                                                        {{ form_label(form.message_s) }}
+                                                    </div>
+                                                    {{ form_widget(form.message_s) }}
+                                                    <small style="color: red">
+                                                        <font size="2">
+                                                        {{ form_errors(form.message_s) }}
+                                                        </font>
+                                                    </small>
                                                 </div>
 
                                                 <div class="form-group col">
                                                     <div class="col-xs-2">
-                                                        <label for="quiz_pied">Message de succés :</label>
+                                                        {{ form_label(form.message_e) }}
                                                     </div>
-                                                    <textarea class="form-control z-depth-1" id="quiz_message_s"  name="quiz[message_s]" required="required" maxlength="5000" cols="5" rows="3"  placeholder="Write something here..."></textarea>
+                                                    {{ form_widget(form.message_e) }}
+                                                    <small style="color: red">
+                                                        <font size="2">
+                                                        {{ form_errors(form.message_e) }}
+                                                        </font>
+                                                    </small>
                                                 </div>
 
-                                                <div class="form-group col">
-                                                    <div class="col-xs-2">
-                                                        <label for="quiz_pied">Message d'erreur :</label>
-                                                    </div>
-                                                    <textarea class="form-control z-depth-1" id="quiz_message_e"  name="quiz[message_e]" required="required" maxlength="5000" cols="5" rows="3"  placeholder="Write something here..."></textarea>
-                                                </div>
-
-
+                            </div>
                                 <div class="form-group col">
                                     <center>
                                         &nbsp; &nbsp; &nbsp;

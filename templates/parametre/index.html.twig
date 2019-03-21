@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parametre index{% endblock %}
+
+{% block body %}
+    <h1>Parametre index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Rep_form_text</th>
+                <th>Rep_form_date</th>
+                <th>Rep_form_nombre</th>
+                <th>Longueur_min</th>
+                <th>Longueur_max</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for parametre in parametres %}
+            <tr>
+                <td>{{ parametre.id }}</td>
+                <td>{{ parametre.repFormText }}</td>
+                <td>{{ parametre.repFormDate ? parametre.repFormDate|date('Y-m-d') : '' }}</td>
+                <td>{{ parametre.repFormNombre }}</td>
+                <td>{{ parametre.longueurMin }}</td>
+                <td>{{ parametre.longueurMax }}</td>
+                <td>
+                    <a href="{{ path('parametre_show', {'id': parametre.id}) }}">show</a>
+                    <a href="{{ path('parametre_edit', {'id': parametre.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('parametre_new') }}">Create new</a>
+{% endblock %}

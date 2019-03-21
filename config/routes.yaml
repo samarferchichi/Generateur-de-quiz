@@ -1,3 +1,10 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+
+question_dep:
+    path: /question/{question}/duplication
+    controller: App\Controller\QuestionController::questionDepAction
+    requirements:
+        methods: GET

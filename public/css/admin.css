@@ -6,8 +6,9 @@
     /* make the base font size smaller */
     --font-size-base: 20px;
     /* remove all border radius to make corners straight */
-    --border-radius: 10px;
-    background-color: #F8F8F8;
+    --border-radius: 20px;
+    background-color: white;
+
     table-border-color-dark: #6b1f33;
     --border-color: #ADFFE1;
 }

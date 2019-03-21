@@ -18,33 +18,6 @@ class Parametre
     private $id;
 
 
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Question", cascade={"persist","remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $id_question;
-
-    /**
-     * @return mixed
-     */
-    public function getIdQuestion()
-    {
-        return $this->id_question;
-    }
-
-    /**
-     * @param mixed $id_question
-     */
-    public function setIdQuestion($id_question): void
-    {
-        $this->id_question = $id_question;
-    }
-
-
-
-
-
     /**
      * @ORM\Column(type="string", length=2000)
      */
@@ -136,7 +109,6 @@ class Parametre
 
         return $this;
     }
-    public function __toString() {
-        return $this->rep_form_text;
-    }
+
+
 }

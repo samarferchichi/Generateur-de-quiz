@@ -5,32 +5,28 @@
 {% block body %}
     <h1>Edit Page</h1>
 
-{{ page.id }}
+{{ page.ordre }}
 
-    <form name="page" method="post">
-        <div id="page">
+    {{ form_start(form) }}
+           <div id="page">
             <div>
-                <label for="page_titre_page" class="required">Titre page</label>
-                <input type="text" id="page_titre_page" name="page[titre_page]" required="required" maxlength="255" value="{{ titre_page }}">
+                {{ form_label(form.titre_page) }}
+                {{ form_widget(form.titre_page) }}
             </div>
             <div>
-                <label for="page_color_titre_page">Color titre page</label>
-                <input type="color" id="page_color_titre_page" name="page[color_titre_page]" maxlength="255" value="{{ titre_color }}">
+                {{ form_label(form.color_titre_page) }}
+                {{ form_widget(form.color_titre_page) }}
             </div>
             <div>
-                <label for="page_bg_color">Bg color</label>
-                <input type="color" id="page_bg_color" name="page[bg_color]" maxlength="255" value="{{ bg_color }}">
+                {{ form_label(form.bg_color) }}
+                {{ form_widget(form.bg_color) }}
             </div>
-            <div>
-                <label for="page_quiz">Quiz</label>
-                <select id="page_quiz" name="page[quiz]">
-                    <option value="{{ idquiz }}">{{ idquiz }}</option>
 
-                </select>
-            </div>
-            <input type="hidden" id="page__token" name="page[_token]" value="szHy3tZvZBKU3EKm4dkwu1qTG9nqJIRxqFABsFZWKPU">
-        </div>
+
+
+    </div>
         <button class="btn">Update</button>
+    {{ form_end(form) }}
     </form>
 
 {% endblock %}
