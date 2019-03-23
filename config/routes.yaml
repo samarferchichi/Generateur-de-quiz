@@ -8,3 +8,10 @@ question_dep:
     controller: App\Controller\QuestionController::questionDepAction
     requirements:
         methods: GET
+
+
+actif:
+    path: /question/{question}/activ
+    controller: App\Controller\QuestionController::questionActifAction
+    requirements:
+        methods: GET

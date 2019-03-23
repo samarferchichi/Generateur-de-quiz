@@ -37,14 +37,22 @@
 
 <div class="span9">
     {% if quiz|length != 0 %}
-
+<table>
         {% for p in quiz %}
+        <tr>
+         <td>
             {{ p.titre }}
+         </td>
 
-        {% endfor %}
+         </tr>
 
 
+    {% endfor %}
+
+</table>
             </div>
+    {% else %}
+    Aucun quiz exist
     {% endif %}
 
 {% endblock %}

@@ -60,7 +60,7 @@
                                         {% if page.question|length < page.quiz.nbQuestion %}
                                             <i>Question n° {{ (page.question|length)+1 }} : </i>
                                         {% else %}
-                                            <i>Page n°{{ page.ordre }} est épuisé</i>
+                                            <i>Page n°{{ pos }} est épuisé</i>
                                         {% endif %}
                                         &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
                                         &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
@@ -69,7 +69,7 @@
                                         &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
                                     </td>
                                     <td colspan="">
-                                        <i> {{ page.question|length }} / {{ quiz.nbQuestion }} questions dans la page {{ page.ordre }}</i>
+                                        <i> {{ page.question|length }} / {{ quiz.nbQuestion }} questions dans la page {{ pos }}</i>
                                     </td>
                                 </tr>
                                 <tr>
@@ -189,34 +189,24 @@
                                 </div>
                             {{ form_end(formq) }}
                             {% else %}
-                            {% if quiz.page|length == 1 %}
                                 <div style="border-radius: 10px;"><br><br><br>
                                     <div style="background-color: 	#FF6347">
-                                        <br>Vous avez atteint le nombre maximum de question dans cette page !
+                                        <br>Vous avez atteint le nombre maximum des question dans cette page !
                                     </div>
                                     <br>
                                     <div class="text-center">
-                                        <button disabled="true" class="btn btn-primary"><i class="fa fa-chevron-circle-left"></i> Précédent</button>
-                                        <a href="{{ path('creatNextPage', {'quiz':quiz.id}) }}" type="button" class="btn btn-primary">Suivant <i class="fa fa-chevron-circle-right"></i></a>
+                                        {% if pos == 1 %}
+                                            <a type="button"  class="btn btn-primary disabled"><i class="fa fa-chevron-circle-left"></i> Précédent</a>
+                                        {% else %}
+                                            <a href="{{ path('precedentPage', {'quiz':quiz.id ,'page': page.id}) }}" type="button"  class="btn btn-primary"><i class="fa fa-chevron-circle-left"></i> Précédent</a>
+                                        {% endif %}
+                                        {% if pos == quiz.page|length %}
+                                            <a type="button" class="btn btn-primary disabled">Suivant <i class="fa fa-chevron-circle-right"></i></a>
+                                        {% else %}
+                                            <a href="{{ path('creatNextPage', {'quiz':quiz.id, 'page': page.id }) }}" type="button" class="btn btn-primary">Suivant <i class="fa fa-chevron-circle-right"></i></a>
+                                        {% endif %}
                                     </div>
                                 </div>
-                                {% else %}
-                                    {% if quiz.page|length > 1 %}
-
-                                        <div style="border-radius: 10px;"><br><br><br>
-                                        <div style="background-color: 	#FF6347">
-                                            <br>Vous avez atteint le nombre maximum de question dans cette page !
-                                        </div>
-                                        <br>
-                                        <div class="text-center">
-                                            <a href="{{ path('precedentPage', {'quiz':quiz.id ,'page': page.id}) }}" type="button"  class="btn btn-primary"><i class="fa fa-chevron-circle-left"></i> Précédent</a>
-                                            <a href="{{ path('creatNextPage', {'quiz':quiz.id }) }}" type="button" class="btn btn-primary">Suivant <i class="fa fa-chevron-circle-right"></i></a>
-                                        </div>
-                                    </div>
-                                    {% endif %}
-
-                            {% endif %}
-
                             {% endif %}
 
                         </div>
@@ -226,12 +216,13 @@
                                 border-right: 1.5px solid ;
                                 border-bottom: 1.5px solid;
                              height: 625px; background-color:{{ page.bgColor }};
-                                border-radius: 3px;">
+                                border-radius: 3px;
+                                overflow: scroll;
+                                ">
                         &nbsp;&nbsp;
                             <div class="col-sm-4"><font size="50">
                                     <i class="fa fa-file-image-o"></i></font>
                             </div>
-                            &nbsp;&nbsp;   &nbsp;&nbsp;
                             <div class="col-sm-6"><br><b>
                                     <font color="{{ quiz.colorTitre }}" >{{ quiz.titre }}</font></b><br>
                             </div>
@@ -266,11 +257,10 @@
                                                 <button  type="button" style="background-color: #c0e5d7" class="list-group-item list-group-item-action ">
                                                   <b>
                                                     <a data-target="#myModalDelete" data-toggle="modal">
-                                                        Question n°
+                                                        Question n° {{ j }}
                                                     </a></b><br>
                                                         {{ j.textQuestion }}<br>
-                                                 <label style="color:#4bb1cf;">Info :</label>
-                                                    {{ j.infoBulle }}
+
 
                                                     {% if j.typeQuestion=='Vrai/faux' %}
                                                         <label>Votre reponse :</label>
@@ -285,9 +275,15 @@
                                                             <input type="text" class="form-control">
                                                             {{ j.descriptionQuestion }}
                                                         {% endif %}
+                                                    {% endif %}<br>
+                                                    {% if j.infoBulle != '' %}
+
+                                                        <div class="container">
+                                                            <a href="#" data-toggle="popover" title="INFO !" data-content="{{ j.infoBulle }}"><i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                                                        </div>
                                                     {% endif %}
 
-                                                </button>
+                                                </button><br>
                                                 <div class="modal fade" id="editequestion-{{ j.id }}" role="dialog">
                                                     <div class="modal-dialog">
 
@@ -319,7 +315,6 @@
                                                             <div class="modal-header">
                                                                 <h4 class="modal-title"></h4>
                                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-
                                                             </div>
                                                             <div class="modal-body">
                                                                 {{ render(controller(
@@ -327,41 +322,51 @@
                                                                     { 'id': j.id }
                                                                 )) }}
                                                             </div>
-
                                                         </div>
-
                                                     </div>
 
                                                 </div>
-
-                                                <div class="modal fade" id="dupliqQuestion" role="dialog">
-                                                    <div class="modal-dialog">
-
-                                                        <!-- Modal content-->
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title"></h4>
-                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                {{ include('question/edit.html.twig') }}
-                                                            </div>
-
-                                                        </div>
-
                                                     </div>
-
-                                                </div>
-
-                                                <div class="form-group row">
-
-
-                                                </div>
-
                                             </div>
+                                        <div>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <a href="#" data-target="#removequestion-{{ j.id }}" data-toggle="modal"  class="fa fa-trash-o" ></a>
 
-                                            </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <a href="#" data-target="#editequestion-{{ j.id }}" data-toggle="modal" class="fa fa-pencil"></a>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+
+                                                        {% if page.question|length < page.quiz.nbQuestion %}
+                                                            <a class="fa fa-file-o" href="{{ path('question_dep', {'question': j.id} )}}"></a>
+                                                        {% else %}
+                                                            <i style="color: grey" class="fa fa-file-o" href="{{ path('question_dep', {'question': j.id} )}}"></i>
+                                                        {% endif %}
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        {% if j.actif == false  %}
+                                                            <a class="fa fa-circle" href="{{ path('actif', {'question': j.id} )}}" style="color:grey"  ></a>
+                                                        {% else %}
+
+                                                                <a class="fa fa-circle" href="{{ path('actif', {'question': j.id} )}}"  style="color: #18835a"></a>
+
+                                                        {% endif %}
+                                                     </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
 
                                     {% endfor %}
 
@@ -408,46 +413,93 @@
                                 Page vide !
                             </label>
                             {% endif %}
-<br>
+
+
+
+                        </div>
+
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="container" style=" width: 632px; height:52px; border-left: 1.5px solid ;
+                             color: #3a87ad; background-color: #9acfea ; border-radius: 5px; " >
+                            <!-- Trigger the modal with a button -->
+                            <div class="form-group row">
+                                <div class="col-xs-2">
+                                    <font size="3">
+
+                                        {% if pos == 1 %}
+                                        <a style="color: grey" class="fa fa-chevron-circle-left"></a>
+                                        {% else %}
+                                        <a href="{{ path('precedentPage', {'quiz':quiz.id ,'page': page.id}) }}" class="fa fa-chevron-circle-left"></a>
+                                        {% endif %}
+
+
+
+                                        {{ pos }} / {{ quiz.nbPage}} page
+
+
+                                        {% if pos < quiz.page|length %}
+                                        <a class="fa fa-chevron-circle-right" href="{{ path('creatNextPage', {'quiz':quiz.id, 'page': page.id}) }}"></a>
+                                        {% else %}
+                                        <a class="fa fa-chevron-circle-right" style="color: gray"></a>
+                                        {% endif %}
+
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a href="#" data-target="#myModal" data-toggle="modal" class="fa fa-pencil"></a>
+                                        &nbsp;
+                                        <a href="#" class="fa fa-plus-square-o" ></a>
+                                        &nbsp;
+                                        <a href="#"  class="fa fa-trash-o" data-target="#myModalDelete" data-toggle="modal"></a>
+                                    </font>
+                                </div>
+                            </div>
 
                         </div>
                 </div>
 
 
 
-
-                    <div class="container" style=" width: 632px; height:52px; border-left: 1.5px solid ;
-                             color: #3a87ad; background-color: #9acfea ; border-radius: 5px; " >
-                        <!-- Trigger the modal with a button -->
-                        <div class="form-group row">
-                            <div class="col-xs-2">
-                                <font size="3">
-                                    <a href="{{ path('precedentPage', {'quiz':quiz.id ,'page': page.id}) }}" class="fa fa-chevron-circle-left"></a>
-                                    {{ page.ordre }} / {{ quiz.nbPage}} page
-                                    <a class="fa fa-chevron-circle-right" href="{{ path('creatNextPage', {'quiz':quiz.id}) }}"></a>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <a href="#" data-target="#myModal" data-toggle="modal" class="fa fa-pencil"></a>
-                                    &nbsp;
-                                    <a href="#" class="fa fa-plus-square-o" ></a>
-                                    &nbsp;
-                                    <a href="#"  class="fa fa-trash-o" data-target="#myModalDelete" data-toggle="modal"></a>
-                                </font>
-                            </div>
-                        </div>
-
-                    </div>
 
 
             </div>

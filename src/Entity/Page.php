@@ -18,6 +18,24 @@ class Page
      */
     private $id;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="page", cascade={"persist","remove"})
+     */
+    private $question;
+    public function __construct()
+    {
+        $this->question = new ArrayCollection();
+    }
+    /**
+     * @return Collection|Question[]
+     */
+    public function getQuestion(): Collection
+    {
+        return $this->question;
+    }
+
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Quiz",inversedBy="quiz", cascade={"persist","remove"})
      *
@@ -58,35 +76,8 @@ class Page
     }
 
 
-
-
-
-
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="page", cascade={"persist","remove"})
-     */
-    private $question;
-
-
-    public function __construct()
-    {
-        $this->question = new ArrayCollection();
-    }
-
-
-    /**
-     * @return Collection|Question[]
-     */
-    public function getQuestion(): Collection
-    {
-        return $this->question;
-    }
-
-
-
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $titre_page;
 

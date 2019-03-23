@@ -54,29 +54,29 @@ class AdminController extends EasyAdminController
     {
         $listquestion = $questionRepository->findBy(array('page' => $page->getId()));
 
+        $data_ordre = [''];
+        foreach ($quiz->getPage() as $p){
+            array_push($data_ordre, $p->getOrdre());
+        }
+        $pos = array_search($page->getOrdre(), $data_ordre);
+
         $form = $this->createForm(PageType::class, $page);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-
             $page->setQuiz($quiz);
             $entityManager->persist($page);
-
             $this->getDoctrine()->getManager()->flush();
         }
-
 
         $question = new Question();
         $formq = $this->createForm(QuestionType::class, $question);
         $formq->handleRequest($request);
 
-
         if ($formq->isSubmitted() && $formq->isValid()) {
-
             $entityManager = $this->getDoctrine()->getManager();
             $question->setPage($page);
-
-
+            $question->setActif(true);
             $entityManager->persist($question);
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
@@ -90,22 +90,29 @@ class AdminController extends EasyAdminController
                     'formq' => $formq->createView(),
                     'question' => $question,
                     'listquestion' => $listquestion,
-
+                    'pos'   => $pos
                 ]
             );
         }
 
 
     /**
-     * @Route("/{quiz}/creatnextpage", name="creatNextPage", methods={"GET","POST"})
+     * @Route("/{quiz}/{page}/creatnextpage", name="creatNextPage", methods={"GET","POST"})
      */
-    public function creatnextpage(Request $request, PageRepository $pageRepository, Quiz $quiz): Response
+    public function creatnextpage(Request $request, PageRepository $pageRepository, Quiz $quiz, Page $page): Response
     {
+        $totalPages = count($quiz->getPage());
+        $data_ordre = [''];
+        foreach ($quiz->getPage() as $p){
+            array_push($data_ordre, $p->getOrdre());
+        }
+        $pos = array_search($page->getOrdre(), $data_ordre);
 
-        if($quiz->getNbPage() > count($quiz->getPage())){
+        if($quiz->getNbPage() == $totalPages && $pos == $totalPages){
+            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(),'page' => $page->getId()]);
+        }elseif ($quiz->getNbPage() > $totalPages && $pos == $totalPages){
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($quiz);
-            $entityManager->flush();
 
             $page = new Page();
             $page->setQuiz($quiz);
@@ -120,10 +127,9 @@ class AdminController extends EasyAdminController
 
             return $this->redirectToRoute('creerquiz',['id'=>$quiz->getId(),'page'=>$page->getId()] );
         }else{
-            // redirect to page show quiz
-            dump('vous avez atteint le nombre maximum des pages dans ce quiz');
-            exit();
+            return $this->redirectToRoute('creerquiz',['id'=>$quiz->getId(),'page'=>$quiz->getPage()[$pos]->getId()] );
         }
+
     }
 
 
@@ -132,25 +138,19 @@ class AdminController extends EasyAdminController
      */
     public function precedentPage(Request $request, PageRepository $pageRepository, Quiz $quiz, Page $page): Response
     {
-        $listpage = $pageRepository->findBy(array('quiz' => $page->getQuiz()));
-        $ordreActuel=$page->getOrdre();
-        foreach($listpage as $e)
-        {
-            if ($e->getOrdre() < $page->getOrdre() )
-                if(count($listpage)-1==true) {
 
-                        echo "terminer";
-                    dump($e);
-                }
+        $data_ordre = [''];
+        foreach ($quiz->getPage() as $p){
+            array_push($data_ordre, $p->getOrdre());
         }
-   //     dump($page);
-        dump($page->getOrdre());
+        $pos = array_search($page->getOrdre(), $data_ordre) - 2 ;
 
-        exit;
+        $pagePrec = $quiz->getPage()[$pos];
 
-
-            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(),'page' => $page]);
-
+        if($pos >= 0)
+            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(),'page' => $pagePrec->getId()]);
+        else
+            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(),'page' => $page->getId()]);
 
     }
 

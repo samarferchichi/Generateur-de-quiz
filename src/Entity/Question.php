@@ -57,7 +57,26 @@ class Question
     private $description_question;
 
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $actif;
 
+    /**
+     * @return mixed
+     */
+    public function getActif()
+    {
+        return $this->actif;
+    }
+
+    /**
+     * @param mixed $actif
+     */
+    public function setActif($actif): void
+    {
+        $this->actif = $actif;
+    }
 
 
 

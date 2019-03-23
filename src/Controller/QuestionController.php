@@ -38,6 +38,7 @@ class QuestionController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+
             $entityManager->persist($question);
             $entityManager->flush();
 
@@ -64,6 +65,7 @@ class QuestionController extends AbstractController
                 $q->setInfoBulle($question->getInfoBulle());
 
             $entityManager = $this->getDoctrine()->getManager();
+            $question->setActif(true);
             $entityManager->persist($q);
             $entityManager->flush();
         }
@@ -71,6 +73,32 @@ class QuestionController extends AbstractController
         return $this->redirectToRoute('creerquiz', ['id' => $question->getPage()->getQuiz()->getId(), 'page' => $question->getPage()->getId()]);
     }
 
+
+
+
+    public function questionActifAction(Request $request, Question $question): Response
+    {
+
+        $entityManager = $this->getDoctrine()->getManager();
+            if($question->getActif()==true)
+            {
+
+                $question->setActif(0);
+                $entityManager->persist($question);
+                $entityManager->flush();
+            }
+            else{
+                if ($question->getActif()==false)
+                {   $question->setActif(1);
+                    $entityManager->persist($question);
+                    $entityManager->flush();
+
+                }
+            }
+
+
+        return $this->redirectToRoute('creerquiz', ['id' => $question->getPage()->getQuiz()->getId(), 'page' => $question->getPage()->getId()]);
+    }
 
 
 
@@ -83,6 +111,8 @@ class QuestionController extends AbstractController
             'question' => $question,
         ]);
     }
+
+
 
     /**
      * @Route("/{id}/edit", name="question_edit", methods={"GET","POST"})

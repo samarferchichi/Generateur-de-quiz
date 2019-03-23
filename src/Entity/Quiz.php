@@ -20,8 +20,10 @@ class Quiz
     private $id;
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Page", mappedBy="quiz", cascade={"persist","remove"})
+     * @ORM\OrderBy({"ordre" = "ASC"})
      */
     private $page;
+
     public function __construct()
     {
         $this->page = new ArrayCollection();
