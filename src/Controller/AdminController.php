@@ -29,6 +29,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class AdminController extends EasyAdminController
 {
 
+
+
+
     /**
      * @Route("/dashboard", name="admin_dashboard")
      */
@@ -268,6 +271,24 @@ class AdminController extends EasyAdminController
             'form' => $form->createView(),
         ]);
     }
+
+
+
+
+    /**
+     * @Route("/{id}/{page}/ajout", name="page_ajout", methods={"GET","POST"})
+     * @ParamConverter("quiz", class="App:Quiz")
+     */
+    public function ajoutPage(Request $request, Page $page, Quiz $quiz): Response
+    {
+            $entityManager = $this->getDoctrine()->getManager();
+            $quiz->setNbPage($quiz->getNbpage()+1);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+    }
+
+
 
 
 

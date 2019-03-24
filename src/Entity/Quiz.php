@@ -35,6 +35,10 @@ class Quiz
     {
         return $this->page;
     }
+
+
+
+
     /**
      * @ORM\Column(type="string", length=300)
      */

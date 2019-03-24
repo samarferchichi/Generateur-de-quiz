@@ -3,6 +3,8 @@
 #    controller: App\Controller\DefaultController::index
 
 
+
+
 question_dep:
     path: /question/{question}/duplication
     controller: App\Controller\QuestionController::questionDepAction
@@ -15,3 +17,7 @@ actif:
     controller: App\Controller\QuestionController::questionActifAction
     requirements:
         methods: GET
+
+easy_admin_bundle:
+    controller: App\Controller\AdminController::adlin
+    path:   /admin

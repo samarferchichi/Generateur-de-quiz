@@ -29,6 +29,9 @@ class PageController extends AbstractController
 
 
 
+
+
+
     /**
      * @Route("/{id}", name="page_show", methods={"GET"})
      */
@@ -61,18 +64,62 @@ class PageController extends AbstractController
     }
 
 
+
     /**
-     * @Route("/{id}", name="page_delete", methods={"DELETE"})
+     * @Route("/{id}/delete", name="page_supprimer", methods={"GET","POST", "DELETE"})
      */
-    public function delete(Request $request, Page $page): Response
+    public function deletepage(Request $request, Page $page): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$page->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($page);
-            $entityManager->flush();
+        $form = $this->createFormBuilder(null, [
+            'action' => $this->generateUrl('page_supprimer', ['id' => $page->getId()])
+        ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $data_ordre = [''];
+
+            foreach ($page->getQuiz()->getPage() as $p){
+                array_push($data_ordre, $p->getOrdre());
+            }
+            $pos = array_search($page->getOrdre(), $data_ordre);
+
+            if(count($page->getQuiz()->getPage()) == 1){
+                $p = new Page();
+                $p->setOrdre($page->getOrdre()+1);
+                $p->setQuiz($page->getQuiz());
+                $em->persist($p);
+                $em->remove($page);
+                $em->flush();
+
+                return $this->redirectToRoute('creerquiz', [
+                    'id' => $p->getQuiz()->getId(),
+                    'page' => $p->getId()
+                ]);
+            }else{
+                $page->getQuiz()->setNbPage($page->getQuiz()->getNbPage()-1);
+                $em->remove($page->getQuiz()->getPage()[$pos - 1]);
+                $em->flush();
+
+                $p = $page->getQuiz()->getPage()[$pos - 2];
+
+                return $this->redirectToRoute('creerquiz', [
+                    'id' => $p->getQuiz()->getId(),
+                    'page' => $p->getId()
+                ]);
+
+            }
+
         }
 
-        return $this->redirectToRoute('page_index');
+        return $this->render('page/_delete_form.html.twig', [
+            'page' => $page,
+            'form' => $form->createView(),
+        ]);
     }
+
+
 
 }

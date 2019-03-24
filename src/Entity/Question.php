@@ -18,7 +18,7 @@ class Question
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Page",inversedBy="page",  cascade={"persist","remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Page",inversedBy="question")
      * @ORM\JoinColumn(nullable=false)
      */
     private $page;

@@ -2,7 +2,6 @@
     /* make the backend contents as wide as the browser window */
     --body-max-width: 90%;
     /* change the background color of the <body> */
-    --body-bg: #f5f5f5;
     /* make the base font size smaller */
     --font-size-base: 20px;
     /* remove all border radius to make corners straight */

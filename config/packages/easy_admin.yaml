@@ -69,13 +69,15 @@ easy_admin:
 
   design:
     menu:
-      - { label: 'Dashboard', route: 'admin_dashboard', default: true }
-      - { label: 'Utilisateurs' , icon: 'user', children: [ 'User', 'Quiz'] }
+      - { label: 'Dashboard', route: 'admin_dashboard', icon: 'tachometer', default: true }
       - label: 'Quiz'
         children:
           - { label: 'Créer Quiz', route: 'quiz_new' }
           - 'Quiz'
-
+      - { label: 'Utilisateurs' , icon: 'user', children: [  'User', 'Quiz'] }
+      - { entity: 'Quiz', label: 'Configuration', icon: 'cogs', }
+      - { entity: 'Quiz', label: 'Statiqtique', icon: 'fa fa-pie-chart' }
+      - { entity: 'Quiz', label: 'Historique', icon: 'history' }
     brand_color: '#1FC5F3'
     assets:
       css:

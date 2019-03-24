@@ -6,6 +6,7 @@ use App\Entity\Page;
 use App\Entity\Question;
 use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
+use PhpParser\Parser\Php7;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -149,18 +150,19 @@ class QuestionController extends AbstractController
         $form = $this->createFormBuilder(null, [
             'action' => $this->generateUrl('question_delete', ['id' => $question->getId()])
         ])
-            ->add('submit', SubmitType::class)
-                     ->getForm();
+            ->getForm();
+        $page = $question->getPage();
+
+        $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            exit;
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($question);
-            $entityManager->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($question);
+            $em->flush();
 
             return $this->redirectToRoute('creerquiz', [
-                'id' => $question->getPage()->getQuiz()->getId(),
-                'page' => $question->getPage()->getId()
+                'id' => $page->getQuiz()->getId(),
+                'page' => $page->getId()
             ]);
         }
 
@@ -168,5 +170,13 @@ class QuestionController extends AbstractController
             'question' => $question,
             'form' => $form->createView(),
         ]);
+
     }
+
+
+
+
+
+
+
 }

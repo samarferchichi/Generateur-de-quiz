@@ -79,7 +79,7 @@ class QuizType extends AbstractType
                     '7' => 7,
                     '8' => 8,
                     '9' => 9,
-                    'illimité'=>'100'
+                    'illimité'=>'1000'
                 ],
 
                 'attr' => [

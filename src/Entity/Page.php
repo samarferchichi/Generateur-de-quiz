@@ -23,6 +23,8 @@ class Page
      * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="page", cascade={"persist","remove"})
      */
     private $question;
+
+
     public function __construct()
     {
         $this->question = new ArrayCollection();
@@ -37,7 +39,7 @@ class Page
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz",inversedBy="quiz", cascade={"persist","remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Quiz",inversedBy="page")
      *
      */
     private $quiz;
