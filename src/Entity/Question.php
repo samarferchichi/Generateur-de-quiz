@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Parametre;
 
@@ -19,21 +20,7 @@ class Question
      */
     private $id;
 
-    /**
-     * @return mixed
-     */
-    public function getReponse()
-    {
-        return $this->reponse;
-    }
 
-    /**
-     * @param mixed $reponse
-     */
-    public function setReponse($reponse): void
-    {
-        $this->reponse = $reponse;
-    }
 
 
     /**
@@ -41,12 +28,17 @@ class Question
      * @ORM\OneToMany(targetEntity="Reponse", mappedBy="question", cascade={"persist","remove"})
      */
     private $reponse;
-    // ...
 
     public function __construct() {
         $this->reponse = new ArrayCollection();
     }
-
+    /**
+     * @return Collection|Reponse[]
+     */
+    public function getReponse(): Collection
+    {
+        return $this->reponse;
+    }
 
 
 

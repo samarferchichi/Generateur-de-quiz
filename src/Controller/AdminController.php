@@ -57,9 +57,11 @@ class AdminController extends EasyAdminController
      *
      *
      */
-    public function creerquizAction(Quiz $quiz, Page $page,QuestionRepository $questionRepository, Request $request) : Response
+    public function creerquizAction(Quiz $quiz, Page $page,QuestionRepository $questionRepository,QuizRepository $quizRepository, Request $request) : Response
     {
         $listquestion = $questionRepository->findBy(array('page' => $page->getId()));
+
+        $listquiz = $quizRepository->findAll();
 
         $data_ordre = [''];
         foreach ($quiz->getPage() as $p){
@@ -106,7 +108,7 @@ class AdminController extends EasyAdminController
 
                   $reponse = new Reponse();
                   $reptext=$request->get('reptext');
-                  $reponse->setIdQuestion($question);
+                  $reponse->setQuestion($question);
                   $reponse->setReponseValide($reptext);
                   $entityManager->persist($reponse);
 
@@ -143,7 +145,8 @@ class AdminController extends EasyAdminController
                     'formq' => $formq->createView(),
                     'question' => $question,
                     'listquestion' => $listquestion,
-                    'pos'   => $pos
+                    'pos'   => $pos,
+                    'listquiz'=>$listquiz
                 ]
             );
         }

@@ -1,0 +1,51 @@
+<div id="demo" style="background-color: ">' +
+    '<div  id="test" style="background-color: ">'+
+        '<div class="form-group row">' +
+            '<table >' +
+                '<tr>' +
+                    '<td colspan="3">' +
+                        '</td>' +
+                    '<td></td>' +
+                    '<td></td>' +
+                    '<td colspan="7">' +
+                        '<div class="col-15"><select name="selecttype" class="form-control" id="mySelect" onchange="myFunction()">' +
+                                '<option  value="texte" selected>Texte</option>' +
+                                '<option value="date">Date</option>' +
+                                '<option value="number">Nombre</option></select></div>' +
+                        '</td>' +
+
+                    '</tr>'+
+                '<tr>' +
+                    '<td colspan="4"> ' +
+                        '<font size="3" color="#696969"> Nombre de caracteres autorisés:</font>' +
+                        '</td>' +
+                    '<td>' +
+                        '<div class="col-7"><input name="nbcaractere" type="number" class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
+                        '</td>' +
+                    '</tr> ' +
+                '<tr id="hide" >' +
+                    '<td colspan="4">' +
+                        '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                        '</td>' +
+                    '<td >' +
+                        '<div class="col-9"><input name="reptext" type="text" class="form-control">' +
+                            '</div>'+
+
+                        '</td>' +
+                    '<td>' +
+                        '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide()" class="fa fa-trash-o"></i></a></font>' +
+                        '</td>' +
+                    '</tr>' +
+                '<tr id="showPlus"> </tr>' +
+                '<tr>' +
+                    '<td colspan="7">' +
+
+                        '<font size="6" color=#228b22><a><i type="button" onclick="fonction()" class="fa fa-plus-square"></i></a></font>' +
+                        '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                        '</td>' +
+                    '</tr>' +
+                '<div id="divPlus"></div>' +
+            </table>
+                '</div>
+    </div>
+</div>

@@ -84,10 +84,11 @@
                                             <div class="col-xs-3">
                                                 <select id="my_select" name="" class="form-control" >
                                                     <option value="Open sans conseille" selected="selected">Parcourire les Quiz existants</option>
-                                                    <option value="volvo">Volvo</option>
-                                                    <option value="saab">Saab</option>
-                                                    <option value="opel">Opel</option>
-                                                    <option value="audi">Audi</option>
+
+                                                    {% for j in listquiz %}
+                                                    <option value="volvo">{{ j.id }}</option>
+
+                                                    {% endfor %}
                                                 </select>
 
                                             </div> &nbsp; &nbsp;
@@ -165,30 +166,24 @@
 
                                                  '</tr>'+
                                                  '<tr>' +
-                                                 '<td colspan="2"> ' +
-                                                 '<font size="2" color="#696969"> Nombre de caracteres autorisés:</font>' +
-                                                 '</td>' +
-                                                 '<td>' +
-                                                 '<div class="col-10"><input name="nbcaractere" type="number" class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
-                                                 '</td>' +
-                                                 '<td colspan="6"> ' +
-                                                 '<font size="2" color="#696969"> Nombre de mot correcte:</font>' +
+                                                 '<td colspan="4"> ' +
+                                                 '<font size="3" color="#696969"> Nombre de caracteres autorisés:</font>' +
                                                  '</td>' +
                                                  '<td>' +
                                                  '<div class="col-7"><input name="nbcaractere" type="number" class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
                                                  '</td>' +
                                                  '</tr> ' +
-                                                 '<tr id="hide" >' +
+                                                 '<tr id="hide_0" >' +
                                                  '<td colspan="4">' +
                                                  '<label><font size="3"> Repanse correcte n° :</font></label>' +
                                                  '</td>' +
                                                  '<td >' +
-                                                 '<div class="col-9"><input name="reptext" type="text" class="form-control">' +
+                                                 '<div class="col-9"><input name="test[]" type="text" class="form-control">' +
                                                  '</div>'+
 
                                                  '</td>' +
                                                  '<td>' +
-                                                 '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide()" class="fa fa-trash-o"></i></a></font>' +
+                                                 '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
                                                  '</td>' +
                                                  '</tr>' +
                                                  '<tr id="showPlus"> </tr>' +
@@ -227,9 +222,8 @@
                                                  '<option value="date" selected>Date</option>' +
                                                  '<option value="number">Number</option></select></div>' +
                                                  '</td>' +
-                                                 '</tr>'+
-
-                                                 '<tr>' +
+                                                 '</tr>' +
+                                                 '<tr id="hide_0">' +
                                                  '<td  colspan="4">' +
                                                  '<label><font size="3"> Repanse correcte n° :</font></label>' +
                                                  '</td>' +
@@ -239,7 +233,7 @@
 
                                                  '</td>' +
                                                  '<td>' +
-                                                 '<font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font>' +
+                                                 '<font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
                                                  '</td>' +
                                                  '</tr>' +
                                                  '<tr id="showPlus"> </tr>' +
@@ -282,7 +276,7 @@
                                                      '<div class="col-6"><input  type="number" class="form-control"></div>' +
                                                      '</td>' +
                                                      '</tr> ' +
-                                                     '<tr>' +
+                                                     '<tr  id="hide_0">' +
                                                      '<td  colspan="6">' +
                                                      '<label><font size="3"> Repanse correcte n° :</font></label>' +
                                                      '</td>' +
@@ -290,7 +284,7 @@
                                                      '<div class="col-7"><input type="number" class="form-control"></div>' +
                                                      '</td>' +
                                                      '<td>' +
-                                                     '<font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font>' +
+                                                     '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
                                                      '</td>' +
                                                      '</tr>' +
                                                      '<tr>' +
@@ -319,7 +313,7 @@
                                                      '<option value="number">Number</option></select></div>' +
                                                      '</td>' +
                                                      '</tr>'+
-                                                     '<tr>' +
+                                                     '<tr >'+
                                                      '<td colspan="4">' +
                                                      '<font size="3" color="#696969"> Nombre de caracteres autorisés:</font>' +
                                                      '</td>' +
@@ -327,7 +321,7 @@
                                                      '<div class="col-7"><input name="nbcaractere"   type="number" class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
                                                      '</td>' +
                                                      '</tr> ' +
-                                                     '<tr>' +
+                                                     '<tr id="hide_0">' +
                                                      '<td  colspan="4">' +
                                                      '<label><font size="3"> Repanse correcte n° :</font></label>' +
                                                      '</td>' +
@@ -335,7 +329,7 @@
                                                      '<div class="col-9"><input name="reptext" type="text" class="form-control"></div>' +
                                                      '</td>' +
                                                      '<td>' +
-                                                     '<font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font>' +
+                                                     '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
                                                      '</td>' +
                                                      '</tr>' +
                                                      '<tr>' +
@@ -355,32 +349,39 @@
 
                                      function fonction()
                                      {
-                                         document.getElementById("showPlus").innerHTML =
-                                             '<tr id="hide" ><td colspan="4"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
-                                             '<td><div class="col-9"><input type="text" class="form-control"></div></td>' +
-                                             '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide()" class="fa fa-trash-o"></i></a></font></td></tr>' ;
+                                        var nbr = $("#showPlus").children('tr').length;
+                                         nbr = nbr +1;
+                                         var innerHTML =
+                                             '<tr id="hide_'+nbr+'" ><td colspan="4"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                             '<td><div class="col-9"><input type="text" name="test[]" class="form-control"></div></td>' +
+                                             '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
+                                         $("#showPlus").append(innerHTML);
 
                                      }
 
                                      function fonctiondate()
                                      {
-                                         document.getElementById("showPlus").innerHTML =
-                                             '<tr><td colspan="4"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                         var nbr = $("#showPlus").children('tr').length;
+                                         nbr = nbr +1;
+                                         var innerHTML =
+                                             '<tr id="hide_'+nbr+'" ><td colspan="4"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
                                              '<td><div class="col-15"><input type="date" class="form-control"></div></td>' +
-                                             '<td><font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font></td></tr>' ;
-
+                                             '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
+                                         $("#showPlus").append(innerHTML);
                                      }
 
                                      function fonctionnumber()
                                      {
-                                         document.getElementById("showPlus").innerHTML =
-                                             '<tr><td colspan="6"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                         var nbr = $("#showPlus").children('tr').length;
+                                         nbr = nbr +1;
+                                         var innerHTML =
+                                             '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
                                              '<td><div class="col-7"><input type="number" class="form-control"></div></td>' +
-                                             '<td><font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font></td></tr>' ;
-
+                                             '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
+                                         $("#showPlus").append(innerHTML);
                                      }
-                                     function fonctionhide() {
-                                         document.getElementById("hide").innerHTML ='';
+                                     function fonctionhide(nbr) {
+                                         $('tr#hide_'+nbr).remove();
 
                                      }
 
@@ -508,7 +509,7 @@
                                             <div class="col-sm-11"  >
                                             <div class="list-group">
 
-                                                <button  type="button" style="background-color: #c0e5d7" class="list-group-item list-group-item-action ">
+                                                <button  type="button" style="background-color: #e1edf7" class="list-group-item list-group-item-action ">
                                                   <b>
                                                     <a data-target="#myModalDelete" data-toggle="modal">
                                                       Question n°

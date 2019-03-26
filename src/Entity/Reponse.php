@@ -20,23 +20,24 @@ class Reponse
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Question",inversedBy="reponse")
      */
-    private $id_question;
+    private $question;
 
     /**
      * @return mixed
      */
-    public function getIdQuestion()
+    public function getQuestion()
     {
-        return $this->id_question;
+        return $this->question;
     }
 
     /**
-     * @param mixed $id_question
+     * @param mixed $question
      */
-    public function setIdQuestion($id_question): void
+    public function setQuestion($question): void
     {
-        $this->id_question = $id_question;
+        $this->question = $question;
     }
+
 
 
 
