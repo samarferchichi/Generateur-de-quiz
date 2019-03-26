@@ -16,11 +16,29 @@ class Reponse
      */
     private $id;
 
+
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Question", cascade={"persist","remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Question",inversedBy="reponse")
      */
     private $id_question;
+
+    /**
+     * @return mixed
+     */
+    public function getIdQuestion()
+    {
+        return $this->id_question;
+    }
+
+    /**
+     * @param mixed $id_question
+     */
+    public function setIdQuestion($id_question): void
+    {
+        $this->id_question = $id_question;
+    }
+
+
 
     /**
      * @ORM\Column(type="string", length=2000)
@@ -32,17 +50,6 @@ class Reponse
         return $this->id;
     }
 
-    public function getIdQuestion(): ?int
-    {
-        return $this->id_question;
-    }
-
-    public function setIdQuestion(int $id_question): self
-    {
-        $this->id_question = $id_question;
-
-        return $this;
-    }
 
     public function getReponseValide(): ?string
     {

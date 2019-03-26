@@ -17,31 +17,39 @@ class Parametre
      */
     private $id;
 
+    /**
+     * One Cart has One Customer.
+     * @ORM\OneToOne(targetEntity="Question", inversedBy="parametre")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     */
+    private $question;
 
     /**
-     * @ORM\Column(type="string", length=2000)
+     * @return mixed
      */
-    private $rep_form_text;
+    public function getQuestion()
+    {
+        return $this->question;
+    }
 
     /**
-     * @ORM\Column(type="date")
+     * @param mixed $question
      */
-    private $rep_form_date;
+    public function setQuestion($question): void
+    {
+        $this->question = $question;
+    }
+
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $form_text;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $rep_form_nombre;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $longueur_min;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $longueur_max;
+    private $nb_caractere;
 
 
     public function getId(): ?int
@@ -49,66 +57,39 @@ class Parametre
         return $this->id;
     }
 
-
-    public function getRepFormText(): ?string
+    /**
+     * @return mixed
+     */
+    public function getFormText()
     {
-        return $this->rep_form_text;
+        return $this->form_text;
     }
 
-    public function setRepFormText(string $rep_form_text): self
+    /**
+     * @param mixed $form_text
+     */
+    public function setFormText($form_text): void
     {
-        $this->rep_form_text = $rep_form_text;
-
-        return $this;
+        $this->form_text = $form_text;
     }
 
-    public function getRepFormDate(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getNbCaractere()
     {
-        return $this->rep_form_date;
+        return $this->nb_caractere;
     }
 
-    public function setRepFormDate(\DateTimeInterface $rep_form_date): self
+    /**
+     * @param mixed $nb_caractere
+     */
+    public function setNbCaractere($nb_caractere): void
     {
-        $this->rep_form_date = $rep_form_date;
-
-        return $this;
+        $this->nb_caractere = $nb_caractere;
     }
 
-    public function getRepFormNombre(): ?int
-    {
-        return $this->rep_form_nombre;
-    }
 
-    public function setRepFormNombre(int $rep_form_nombre): self
-    {
-        $this->rep_form_nombre = $rep_form_nombre;
-
-        return $this;
-    }
-
-    public function getLongueurMin(): ?int
-    {
-        return $this->longueur_min;
-    }
-
-    public function setLongueurMin(int $longueur_min): self
-    {
-        $this->longueur_min = $longueur_min;
-
-        return $this;
-    }
-
-    public function getLongueurMax(): ?int
-    {
-        return $this->longueur_max;
-    }
-
-    public function setLongueurMax(int $longueur_max): self
-    {
-        $this->longueur_max = $longueur_max;
-
-        return $this;
-    }
 
 
 }

@@ -12,12 +12,9 @@ class ParametreType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('rep_form_text')
-            ->add('rep_form_date')
-            ->add('rep_form_nombre')
-            ->add('longueur_min')
-            ->add('longueur_max')
-            ->add('id_question')
+            ->add('form_text')
+            ->add('nb_caractere')
+            ->add('id')
         ;
     }
 

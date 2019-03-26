@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Parametre;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
@@ -16,6 +18,60 @@ class Question
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @return mixed
+     */
+    public function getReponse()
+    {
+        return $this->reponse;
+    }
+
+    /**
+     * @param mixed $reponse
+     */
+    public function setReponse($reponse): void
+    {
+        $this->reponse = $reponse;
+    }
+
+
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="Reponse", mappedBy="question", cascade={"persist","remove"})
+     */
+    private $reponse;
+    // ...
+
+    public function __construct() {
+        $this->reponse = new ArrayCollection();
+    }
+
+
+
+
+    /**
+     * One Customer has One Cart.
+     * @ORM\OneToOne(targetEntity="Parametre", mappedBy="question", cascade={"persist","remove"})
+     */
+    private $parametre;
+
+    /**
+     * @return mixed
+     */
+    public function getParametre()
+    {
+        return $this->parametre;
+    }
+
+    /**
+     * @param mixed $parametre
+     */
+    public function setParametre($parametre): void
+    {
+        $this->parametre = $parametre;
+    }
+
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Page",inversedBy="question")

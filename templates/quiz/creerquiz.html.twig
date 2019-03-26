@@ -151,16 +151,13 @@
                                                  '<div  id="test" style="background-color: ">'+
                                                  '<div class="form-group row">' +
                                                  '<table >' +
-
                                                  '<tr>' +
-
-
                                                  '<td colspan="3">' +
                                                  '</td>' +
                                                  '<td></td>' +
                                                  '<td></td>' +
                                                  '<td colspan="7">' +
-                                                 '<div class="col-15"><select class="form-control" id="mySelect" onchange="myFunction()">' +
+                                                 '<div class="col-15"><select name="selecttype" class="form-control" id="mySelect" onchange="myFunction()">' +
                                                  '<option  value="texte" selected>Texte</option>' +
                                                  '<option value="date">Date</option>' +
                                                  '<option value="number">Nombre</option></select></div>' +
@@ -168,24 +165,30 @@
 
                                                  '</tr>'+
                                                  '<tr>' +
-                                                 '<td colspan="4"> ' +
-                                                 '<font size="3" color="#696969"> Nombre de caracteres autorisés:</font>' +
+                                                 '<td colspan="2"> ' +
+                                                 '<font size="2" color="#696969"> Nombre de caracteres autorisés:</font>' +
                                                  '</td>' +
                                                  '<td>' +
-                                                 '<div class="col-7"><input  type="number" class="form-control"></div>' +
+                                                 '<div class="col-10"><input name="nbcaractere" type="number" class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
+                                                 '</td>' +
+                                                 '<td colspan="6"> ' +
+                                                 '<font size="2" color="#696969"> Nombre de mot correcte:</font>' +
+                                                 '</td>' +
+                                                 '<td>' +
+                                                 '<div class="col-7"><input name="nbcaractere" type="number" class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
                                                  '</td>' +
                                                  '</tr> ' +
-                                                 '<tr>' +
-                                                 '<td  colspan="4">' +
+                                                 '<tr id="hide" >' +
+                                                 '<td colspan="4">' +
                                                  '<label><font size="3"> Repanse correcte n° :</font></label>' +
                                                  '</td>' +
                                                  '<td >' +
-                                                 '<div class="col-9"><input type="text" class="form-control">' +
+                                                 '<div class="col-9"><input name="reptext" type="text" class="form-control">' +
                                                  '</div>'+
 
                                                  '</td>' +
                                                  '<td>' +
-                                                 '<font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font>' +
+                                                 '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide()" class="fa fa-trash-o"></i></a></font>' +
                                                  '</td>' +
                                                  '</tr>' +
                                                  '<tr id="showPlus"> </tr>' +
@@ -219,7 +222,7 @@
                                                  '<td></td>' +
                                                  '<td></td>' +
                                                  '<td colspan="6">' +
-                                                 '<div class="col-20"><select class="form-control" id="mySelect" onchange="myFunction()">' +
+                                                 '<div class="col-20"><select  name="selecttype"  class="form-control" id="mySelect" onchange="myFunction()">' +
                                                  '<option  value="texte" >Texte</option>' +
                                                  '<option value="date" selected>Date</option>' +
                                                  '<option value="number">Number</option></select></div>' +
@@ -265,7 +268,7 @@
                                                      '<td></td>' +
                                                      '<td colspan="6">' +
                                                      '<div class="col-20">' +
-                                                     '<select class="form-control"  id="mySelect" onchange="myFunction()">' +
+                                                     '<select  name="selecttype" class="form-control"  id="mySelect" onchange="myFunction()">' +
                                                      '<option  value="texte" >Texte</option>' +
                                                      '<option value="date">Date</option>' +
                                                      '<option value="number" selected>Nombre</option></select></div>' +
@@ -310,7 +313,7 @@
                                                      '<td></td>' +
                                                      '<td></td>' +
                                                      '<td colspan="7">' +
-                                                     '<div class="col-15"><select class="form-control"  id="mySelect" onchange="myFunction()">' +
+                                                     '<div class="col-15"><select  name="selecttype"  class="form-control"  id="mySelect" onchange="myFunction()">' +
                                                      '<option  value="texte" selected>Texte</option>' +
                                                      '<option value="date">Date</option>' +
                                                      '<option value="number">Number</option></select></div>' +
@@ -321,7 +324,7 @@
                                                      '<font size="3" color="#696969"> Nombre de caracteres autorisés:</font>' +
                                                      '</td>' +
                                                      '<td>' +
-                                                     '<div class="col-7"><input  type="number" class="form-control"></div>' +
+                                                     '<div class="col-7"><input name="nbcaractere"   type="number" class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
                                                      '</td>' +
                                                      '</tr> ' +
                                                      '<tr>' +
@@ -329,7 +332,7 @@
                                                      '<label><font size="3"> Repanse correcte n° :</font></label>' +
                                                      '</td>' +
                                                      '<td >' +
-                                                     '<div class="col-9"><input type="text" class="form-control"></div>' +
+                                                     '<div class="col-9"><input name="reptext" type="text" class="form-control"></div>' +
                                                      '</td>' +
                                                      '<td>' +
                                                      '<font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font>' +
@@ -353,9 +356,9 @@
                                      function fonction()
                                      {
                                          document.getElementById("showPlus").innerHTML =
-                                             '<tr><td colspan="4"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                             '<tr id="hide" ><td colspan="4"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
                                              '<td><div class="col-9"><input type="text" class="form-control"></div></td>' +
-                                             '<td><font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font></td></tr>' ;
+                                             '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide()" class="fa fa-trash-o"></i></a></font></td></tr>' ;
 
                                      }
 
@@ -376,6 +379,11 @@
                                              '<td><font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font></td></tr>' ;
 
                                      }
+                                     function fonctionhide() {
+                                         document.getElementById("hide").innerHTML ='';
+
+                                     }
+
                                  </script>
 
                                  <tr>
@@ -503,7 +511,7 @@
                                                 <button  type="button" style="background-color: #c0e5d7" class="list-group-item list-group-item-action ">
                                                   <b>
                                                     <a data-target="#myModalDelete" data-toggle="modal">
-                                                        Question n° {{ j }}
+                                                      Question n°
                                                     </a></b><br>
                                                         {{ j.textQuestion }}<br>
 

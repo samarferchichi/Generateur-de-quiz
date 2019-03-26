@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Page;
+use App\Entity\Parametre;
 use App\Entity\Question;
+use App\Entity\Reponse;
 use App\Form\PageType;
+use App\Form\ParametreType;
 use App\Form\QuestionType;
 use App\Repository\PageRepository;
 use App\Repository\QuestionRepository;
@@ -84,6 +87,45 @@ class AdminController extends EasyAdminController
             dump($formq);
             exit();*/
 
+          if($question->getTypeQuestion()=="Réponse courte") {
+              $selecttype=$request->get('selecttype');
+              if ($selecttype == 'texte'){
+
+                  $nbcaractere=$request->get('nbcaractere');
+
+                  $parametre = new Parametre();
+
+                      $entityManager = $this->getDoctrine()->getManager();
+
+
+                      $parametre->setFormText("true");
+                      $parametre->setQuestion($question);
+                      $parametre->setNbCaractere($nbcaractere);
+                      $entityManager->persist($parametre);
+
+
+                  $reponse = new Reponse();
+                  $reptext=$request->get('reptext');
+                  $reponse->setIdQuestion($question);
+                  $reponse->setReponseValide($reptext);
+                  $entityManager->persist($reponse);
+
+
+
+                  /* dump($question->getTypeQuestion());
+                  dump($request->get('selecttype'));
+                   dump($nbcaractere);
+                  dump($reptext);
+                  exit;
+             }else{
+                dump($question->getTypeQuestion());
+                 exit;
+                  */
+              }
+
+          }
+
+          /********/
 
             $entityManager = $this->getDoctrine()->getManager();
             $question->setPage($page);
