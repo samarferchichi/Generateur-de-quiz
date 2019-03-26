@@ -39,6 +39,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <div class="panel panel-success">
         <div class="card bg-info text-white">
@@ -125,8 +126,9 @@
                                             <div class="col-xs-2">
                                                 {{ form_label(formq.type_question) }}
                                             </div>
-                                            <div class="col-xs-2">
-                                                {{ form_widget(formq.type_question) }}
+                                            <div class="col-xs-5">
+                                                {{ form_widget(formq.type_question, { 'id': 'question_type' }) }}
+                                                <div id="showType"></div>
                                                 <small style="color: red">
                                                     <font size="2">
                                                 {{ form_errors(formq.type_question) }}
@@ -136,9 +138,247 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
+
+                                 <script>
+                                     if($('#question_type').val() == ''){
+                                         $('#question_type').on('change', function() {
+                                             var x = document.getElementById("question_type").value;
+                                             var i=0;
+
+                                             if(x == 'Réponse courte') {
+
+                                             $('#showType').html('<div id="demo" style="background-color: ">' +
+                                                 '<div  id="test" style="background-color: ">'+
+                                                 '<div class="form-group row">' +
+                                                 '<table >' +
+
+                                                 '<tr>' +
 
 
+                                                 '<td colspan="3">' +
+                                                 '</td>' +
+                                                 '<td></td>' +
+                                                 '<td></td>' +
+                                                 '<td colspan="7">' +
+                                                 '<div class="col-15"><select class="form-control" id="mySelect" onchange="myFunction()">' +
+                                                 '<option  value="texte" selected>Texte</option>' +
+                                                 '<option value="date">Date</option>' +
+                                                 '<option value="number">Nombre</option></select></div>' +
+                                                 '</td>' +
+
+                                                 '</tr>'+
+                                                 '<tr>' +
+                                                 '<td colspan="4"> ' +
+                                                 '<font size="3" color="#696969"> Nombre de caracteres autorisés:</font>' +
+                                                 '</td>' +
+                                                 '<td>' +
+                                                 '<div class="col-7"><input  type="number" class="form-control"></div>' +
+                                                 '</td>' +
+                                                 '</tr> ' +
+                                                 '<tr>' +
+                                                 '<td  colspan="4">' +
+                                                 '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                 '</td>' +
+                                                 '<td >' +
+                                                 '<div class="col-9"><input type="text" class="form-control">' +
+                                                 '</div>'+
+
+                                                 '</td>' +
+                                                 '<td>' +
+                                                 '<font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font>' +
+                                                 '</td>' +
+                                                 '</tr>' +
+                                                 '<tr id="showPlus"> </tr>' +
+                                                 '<tr>' +
+                                                 '<td colspan="7">' +
+
+                                                 '<font size="6" color=#228b22><a><i type="button" onclick="fonction()" class="fa fa-plus-square"></i></a></font>' +
+                                                 '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                 '</td>' +
+                                                 '</tr>' +
+                                                 '<div id="divPlus"></div>' +
+                                                 '</div></div>' );
+                                         }});
+                                     }else{
+                                         $('#showType').html('');
+                                     }
+                                     function myFunction() {
+
+                                         var a = document.getElementById("mySelect").value;
+                                     //    document.getElementById("demo").innerHTML = ": " + x;
+                                         if (a == 'date') {
+                                             document.getElementById("demo").innerHTML = a;
+
+                                             document.getElementById("demo").innerHTML = '<div id="demo" style="background-color: ">' +
+                                                 '<div  id="test" style="background-color: ">'+
+                                                 '<div class="form-group row">' +
+                                                 '<table >' +
+                                                 '<tr>' +
+                                                 '<td colspan="3">' +
+                                                 '</td>' +
+                                                 '<td></td>' +
+                                                 '<td></td>' +
+                                                 '<td colspan="6">' +
+                                                 '<div class="col-20"><select class="form-control" id="mySelect" onchange="myFunction()">' +
+                                                 '<option  value="texte" >Texte</option>' +
+                                                 '<option value="date" selected>Date</option>' +
+                                                 '<option value="number">Number</option></select></div>' +
+                                                 '</td>' +
+                                                 '</tr>'+
+
+                                                 '<tr>' +
+                                                 '<td  colspan="4">' +
+                                                 '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                 '</td>' +
+                                                 '<td>' +
+                                                 '<div class="col-15"><input type="date" class="form-control">' +
+                                                 '</div>'+
+
+                                                 '</td>' +
+                                                 '<td>' +
+                                                 '<font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font>' +
+                                                 '</td>' +
+                                                 '</tr>' +
+                                                 '<tr id="showPlus"> </tr>' +
+                                                 '<tr>' +
+                                                 '<td colspan="7">' +
+
+                                                 '<font size="6" color=#228b22><a><i type="button" onclick="fonctiondate()" class="fa fa-plus-square"></i></a></font>' +
+                                                 '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                 '</td>' +
+                                                 '</tr>' +
+                                                 '<div id="divPlus"></div>' +
+                                                 '</div></div>'
+                                         }else {
+
+                                             if (a == 'number') {
+                                                 document.getElementById("demo").innerHTML = a;
+
+                                                 document.getElementById("demo").innerHTML = '<div style="background-color: ">' +
+                                                     '<div  id="test" style="background-color: ">'+
+                                                     '<div class="form-group row">' +
+                                                     '<table  >' +
+                                                     '<tr>' +
+                                                     '<td colspan="3">' +
+                                                     '</td>' +
+                                                     '<td></td>' +
+                                                     '<td></td>' +
+                                                     '<td colspan="6">' +
+                                                     '<div class="col-20">' +
+                                                     '<select class="form-control"  id="mySelect" onchange="myFunction()">' +
+                                                     '<option  value="texte" >Texte</option>' +
+                                                     '<option value="date">Date</option>' +
+                                                     '<option value="number" selected>Nombre</option></select></div>' +
+                                                     '</td>' +
+                                                     '</tr>'+
+                                                     '<tr>' +
+                                                     '<td colspan="6">' +
+                                                     '<font size="3" color="#696969"> Nombre de chiffre autorisés de 1 à 100:</font>' +
+                                                     '</td>' +
+                                                     '<td>' +
+                                                     '<div class="col-6"><input  type="number" class="form-control"></div>' +
+                                                     '</td>' +
+                                                     '</tr> ' +
+                                                     '<tr>' +
+                                                     '<td  colspan="6">' +
+                                                     '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                     '</td>' +
+                                                     '<td >' +
+                                                     '<div class="col-7"><input type="number" class="form-control"></div>' +
+                                                     '</td>' +
+                                                     '<td>' +
+                                                     '<font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font>' +
+                                                     '</td>' +
+                                                     '</tr>' +
+                                                     '<tr>' +
+                                                     '<tr id="showPlus"> </tr>' +
+                                                     '<tr>' +
+                                                     '<td colspan="7">' +
+                                                     '<font size="6" color=#228b22><a><i type="button" onclick="fonctionnumber()" class="fa fa-plus-square"></i></a></font>' +
+                                                     '</td>' +
+                                                     '</tr>' +
+                                                     '</div></div> ';
+
+                                             }else if (a == 'texte'){
+                                                 document.getElementById("demo").innerHTML = '<div style="background-color: ">' +
+                                                     '<div  id="test" style="background-color: ">'+
+                                                     '<div class="form-group row">' +
+                                                     '<table  >' +
+                                                     '<tr>' +
+                                                     '<td colspan="3">' +
+                                                     '</td>' +
+                                                     '<td></td>' +
+                                                     '<td></td>' +
+                                                     '<td colspan="7">' +
+                                                     '<div class="col-15"><select class="form-control"  id="mySelect" onchange="myFunction()">' +
+                                                     '<option  value="texte" selected>Texte</option>' +
+                                                     '<option value="date">Date</option>' +
+                                                     '<option value="number">Number</option></select></div>' +
+                                                     '</td>' +
+                                                     '</tr>'+
+                                                     '<tr>' +
+                                                     '<td colspan="4">' +
+                                                     '<font size="3" color="#696969"> Nombre de caracteres autorisés:</font>' +
+                                                     '</td>' +
+                                                     '<td>' +
+                                                     '<div class="col-7"><input  type="number" class="form-control"></div>' +
+                                                     '</td>' +
+                                                     '</tr> ' +
+                                                     '<tr>' +
+                                                     '<td  colspan="4">' +
+                                                     '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                     '</td>' +
+                                                     '<td >' +
+                                                     '<div class="col-9"><input type="text" class="form-control"></div>' +
+                                                     '</td>' +
+                                                     '<td>' +
+                                                     '<font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font>' +
+                                                     '</td>' +
+                                                     '</tr>' +
+                                                     '<tr>' +
+                                                     '<tr id="showPlus"> </tr>' +
+                                                     '<tr>' +
+                                                     '<td colspan="7">' +
+                                                     '<font size="6" color=#228b22><a><i type="button" onclick="fonction()" class="fa fa-plus-square"></i></a></font>' +
+                                                     '</td>' +
+                                                     '</tr>' +
+                                                     '</div></div>' ;
+
+                                             }
+                                         }
+
+
+                                     }
+
+                                     function fonction()
+                                     {
+                                         document.getElementById("showPlus").innerHTML =
+                                             '<tr><td colspan="4"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                             '<td><div class="col-9"><input type="text" class="form-control"></div></td>' +
+                                             '<td><font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font></td></tr>' ;
+
+                                     }
+
+                                     function fonctiondate()
+                                     {
+                                         document.getElementById("showPlus").innerHTML =
+                                             '<tr><td colspan="4"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                             '<td><div class="col-15"><input type="date" class="form-control"></div></td>' +
+                                             '<td><font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font></td></tr>' ;
+
+                                     }
+
+                                     function fonctionnumber()
+                                     {
+                                         document.getElementById("showPlus").innerHTML =
+                                             '<tr><td colspan="6"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                             '<td><div class="col-7"><input type="number" class="form-control"></div></td>' +
+                                             '<td><font size="5" color=#00bfff> <i class="fa fa-trash-o"></i></font></td></tr>' ;
+
+                                     }
+                                 </script>
+
+                                 <tr>
                                     <td colspan="2">
                                         <div class="form-group row">
                                             <div class="col-xs-2">
@@ -215,16 +455,16 @@
                              color: #3a87ad;
                                 border-right: 1.5px solid ;
                                 border-bottom: 1.5px solid;
-                             height: 625px; background-color:{{ page.bgColor }};
+                             height: 699px; background-color:{{ page.bgColor }};
                                 border-radius: 3px;
                                 overflow: scroll;
                                 ">
                         &nbsp;&nbsp;
-                            <div class="col-sm-4"><font size="50">
-                                    <i class="fa fa-file-image-o"></i></font>
+                            <div class="col-sm-4">
+                                    <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
                             </div>
-                            <div class="col-sm-6"><br><b>
-                                    <font color="{{ quiz.colorTitre }}" >{{ quiz.titre }}</font></b><br>
+                            <div class="col-sm-6">
+                                    <font color="{{ quiz.colorTitre }}" >{{ quiz.titre }}</font>
                             </div>
                             <div class="col-sm-12" >
                                 <div class="list-group">
@@ -537,5 +777,5 @@
 <br>
 <br>
 <br>
-<br>
+
 {% endblock %}

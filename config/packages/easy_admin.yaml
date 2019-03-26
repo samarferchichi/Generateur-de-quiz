@@ -24,7 +24,7 @@ easy_admin:
       list:
         fields:
           - { property: 'titre', type: 'text' }
-          - { property: 'image', type: 'image', base_path: '%app.path.product_images%' }
+          - { property: 'brochure', type: 'image', base_path: 'brochures_directory' }
           - { property: 'description', type: 'text' }
           - { property: 'mode_correction', type: 'boolean' }
           - { property: 'mode_score', type: 'boolean' }
@@ -40,7 +40,7 @@ easy_admin:
 
         show:
           fields:
-            - { property: 'image', type: 'image', base_path: '%app.path.product_images%' }
+            - { property: 'brochure', type: 'image', base_path: 'brochures_directory' }
     User:
       class: App\Entity\User
       label: 'Admines'
@@ -71,11 +71,16 @@ easy_admin:
     menu:
       - { label: 'Dashboard', route: 'admin_dashboard', icon: 'tachometer', default: true }
       - label: 'Quiz'
+        icon: 'file'
         children:
-          - { label: 'Créer Quiz', route: 'quiz_new' }
-          - 'Quiz'
-      - { label: 'Utilisateurs' , icon: 'user', children: [  'User', 'Quiz'] }
+          - { label: 'Créer Quiz', route: 'quiz_new', icon: 'wpforms' }
+          - { entity: 'Quiz', icon: 'list-ol' }
       - { entity: 'Quiz', label: 'Configuration', icon: 'cogs', }
+      - label: 'Utilisateurs'
+        icon: 'users'
+        children:
+          - { entity: 'User' , icon: 'user-plus' }
+          - { entity: 'User', icon: 'user', label: 'Participants'  }
       - { entity: 'Quiz', label: 'Statiqtique', icon: 'fa fa-pie-chart' }
       - { entity: 'Quiz', label: 'Historique', icon: 'history' }
     brand_color: '#1FC5F3'

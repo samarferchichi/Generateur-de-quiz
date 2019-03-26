@@ -19,6 +19,8 @@ App\Entity\Quiz:
       - NotBlank:
           message: Description obligatoire.
 
+
+
 App\Entity\Question:
   properties:
     text_question:

@@ -9,6 +9,7 @@ use App\Form\QuestionType;
 use App\Repository\PageRepository;
 use App\Repository\QuestionRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Quiz;
@@ -77,6 +78,13 @@ class AdminController extends EasyAdminController
         $formq->handleRequest($request);
 
         if ($formq->isSubmitted() && $formq->isValid()) {
+
+          /*  dump($request);
+            dump($request->get('new_input'));
+            dump($formq);
+            exit();*/
+
+
             $entityManager = $this->getDoctrine()->getManager();
             $question->setPage($page);
             $question->setActif(true);
@@ -187,8 +195,27 @@ class AdminController extends EasyAdminController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+
+
+            $file = $quiz->getBrochure();
+
+            $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
+
+            try {
+                $file->move(
+                    $this->getParameter('brochures_directory'),
+                    $fileName
+                );
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
+
+            // updates the 'brochure' property to store the PDF file name
+            // instead of its contents
+            $quiz->setBrochure($fileName);
+
+
             $entityManager->persist($quiz);
-            $entityManager->flush();
 
 
             $page = new Page();
@@ -212,6 +239,14 @@ class AdminController extends EasyAdminController
             'form' => $form->createView(),
 
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    private function generateUniqueFileName()
+    {
+        return md5(uniqid());
     }
 
 

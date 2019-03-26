@@ -28,14 +28,16 @@ class QuestionType extends AbstractType
                 ]
             ])
             ->add('type_question', ChoiceType::class, [
+
                 'choices' => [
-                    'Texte libre' => 'Texte libre',
+                    'Texte libre' => 'Texte_libre',
                     'Cases à coucher' => 'Cases à coucher',
                     'Réponse courte' => 'Réponse courte',
                     'Vrai/faux' => 'Vrai/faux',
                     'Liste déroulante' => 'Liste déroulante',
 
                 ],
+
                 'required' =>  false,
                 'attr' => [
                     'class' => 'form-control'
