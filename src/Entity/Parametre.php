@@ -42,14 +42,36 @@ class Parametre
 
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $form_text;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $nb_caractere;
+
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $nb_chiffre;
+
+    /**
+     * @return mixed
+     */
+    public function getNbChiffre()
+    {
+        return $this->nb_chiffre;
+    }
+
+    /**
+     * @param mixed $nb_chiffre
+     */
+    public function setNbChiffre($nb_chiffre): void
+    {
+        $this->nb_chiffre = $nb_chiffre;
+    }
 
 
     public function getId(): ?int

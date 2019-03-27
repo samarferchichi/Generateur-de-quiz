@@ -10,6 +10,7 @@ use App\Form\PageType;
 use App\Form\ParametreType;
 use App\Form\QuestionType;
 use App\Repository\PageRepository;
+use App\Repository\ParametreRepository;
 use App\Repository\QuestionRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -57,11 +58,12 @@ class AdminController extends EasyAdminController
      *
      *
      */
-    public function creerquizAction(Quiz $quiz, Page $page,QuestionRepository $questionRepository,QuizRepository $quizRepository, Request $request) : Response
+    public function creerquizAction(Quiz $quiz, Page $page,QuestionRepository $questionRepository,ParametreRepository $parametreRepository ,QuizRepository $quizRepository, Request $request) : Response
     {
         $listquestion = $questionRepository->findBy(array('page' => $page->getId()));
 
         $listquiz = $quizRepository->findAll();
+
 
         $data_ordre = [''];
         foreach ($quiz->getPage() as $p){
@@ -92,53 +94,79 @@ class AdminController extends EasyAdminController
           if($question->getTypeQuestion()=="Réponse courte") {
               $selecttype=$request->get('selecttype');
               if ($selecttype == 'texte'){
-
                   $nbcaractere=$request->get('nbcaractere');
-
                   $parametre = new Parametre();
-
                       $entityManager = $this->getDoctrine()->getManager();
-
-
-                      $parametre->setFormText("true");
+                      $parametre->setFormText("texte");
                       $parametre->setQuestion($question);
                       $parametre->setNbCaractere($nbcaractere);
                       $entityManager->persist($parametre);
+                      $reptext=$request->get('test');
+                      $data = [''];
+                  foreach ($reptext as $p){
+                      array_push($data, $p);
+                  }
+                  for ($i = 1; $i < count($data); $i++) {
+                      $reponse = new Reponse();
+                      $reponse->setQuestion($question);
+                      $reponse->setReponseValide($data[$i]);
+                      $entityManager->persist($reponse);
+                  }
 
+              }elseif ($selecttype == 'date'){
+                  $parametre = new Parametre();
+                  $entityManager = $this->getDoctrine()->getManager();
+                  $parametre->setFormText("date");
+                  $parametre->setQuestion($question);
+                  $entityManager->persist($parametre);
+                  $date=$request->get('date');
+                  $data = [''];
+                  foreach ($date as $p){
+                      array_push($data, $p);
+                  }
+                  for ($i = 1; $i < count($data); $i++) {
+                      $reponse = new Reponse();
+                      $reponse->setQuestion($question);
+                      $reponse->setReponseValide($data[$i]);
+                      $entityManager->persist($reponse);
+                  }
+              }elseif ($selecttype == 'number'){
+                                    $parametre = new Parametre();
+                  $entityManager = $this->getDoctrine()->getManager();
+                  $parametre->setFormText("number");
+                  $parametre->setQuestion($question);
+                  $parametre->setNbChiffre($request->get('nbChiffre'));
+                  $entityManager->persist($parametre);
+                  $number=$request->get('number');
+                  $data = [''];
+                  foreach ($number as $p){
+                      array_push($data, $p);
+                  }
+                  for ($i = 1; $i < count($data); $i++) {
+                      $reponse = new Reponse();
+                      $reponse->setQuestion($question);
+                      $reponse->setReponseValide($data[$i]);
+                      $entityManager->persist($reponse);
 
-                  $reponse = new Reponse();
-                  $reptext=$request->get('reptext');
-                  $reponse->setQuestion($question);
-                  $reponse->setReponseValide($reptext);
-                  $entityManager->persist($reponse);
+                  }
 
-
-
-                  /* dump($question->getTypeQuestion());
-                  dump($request->get('selecttype'));
-                   dump($nbcaractere);
-                  dump($reptext);
-                  exit;
-             }else{
-                dump($question->getTypeQuestion());
-                 exit;
-                  */
               }
 
           }
 
-          /********/
-
             $entityManager = $this->getDoctrine()->getManager();
             $question->setPage($page);
             $question->setActif(true);
+
             $entityManager->persist($question);
+
             $this->getDoctrine()->getManager()->flush();
             return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
 
         }
 
-            return $this->render('quiz/creerquiz.html.twig', [
+
+        return $this->render('quiz/creerquiz.html.twig', [
                     'page' => $page,
                     'quiz' => $quiz,
                     'form' => $form->createView(),
@@ -146,7 +174,7 @@ class AdminController extends EasyAdminController
                     'question' => $question,
                     'listquestion' => $listquestion,
                     'pos'   => $pos,
-                    'listquiz'=>$listquiz
+                    'listquiz'=>$listquiz,
                 ]
             );
         }

@@ -141,9 +141,11 @@
                                 </tr>
 
                                  <script>
+
                                      if($('#question_type').val() == ''){
                                          $('#question_type').on('change', function() {
                                              var x = document.getElementById("question_type").value;
+
                                              var i=0;
 
                                              if(x == 'Réponse courte') {
@@ -200,6 +202,7 @@
                                      }else{
                                          $('#showType').html('');
                                      }
+
                                      function myFunction() {
 
                                          var a = document.getElementById("mySelect").value;
@@ -228,7 +231,7 @@
                                                  '<label><font size="3"> Repanse correcte n° :</font></label>' +
                                                  '</td>' +
                                                  '<td>' +
-                                                 '<div class="col-15"><input type="date" class="form-control">' +
+                                                 '<div class="col-15"><input name="date[]" type="date" class="form-control">' +
                                                  '</div>'+
 
                                                  '</td>' +
@@ -273,7 +276,7 @@
                                                      '<font size="3" color="#696969"> Nombre de chiffre autorisés de 1 à 100:</font>' +
                                                      '</td>' +
                                                      '<td>' +
-                                                     '<div class="col-6"><input  type="number" class="form-control"></div>' +
+                                                     '<div class="col-6"><input name="nbChiffre" type="number" class="form-control"></div>' +
                                                      '</td>' +
                                                      '</tr> ' +
                                                      '<tr  id="hide_0">' +
@@ -281,7 +284,7 @@
                                                      '<label><font size="3"> Repanse correcte n° :</font></label>' +
                                                      '</td>' +
                                                      '<td >' +
-                                                     '<div class="col-7"><input type="number" class="form-control"></div>' +
+                                                     '<div class="col-7"><input  name="number[]" type="number" class="form-control"></div>' +
                                                      '</td>' +
                                                      '<td>' +
                                                      '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
@@ -292,6 +295,7 @@
                                                      '<tr>' +
                                                      '<td colspan="7">' +
                                                      '<font size="6" color=#228b22><a><i type="button" onclick="fonctionnumber()" class="fa fa-plus-square"></i></a></font>' +
+                                                     '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
                                                      '</td>' +
                                                      '</tr>' +
                                                      '</div></div> ';
@@ -326,7 +330,7 @@
                                                      '<label><font size="3"> Repanse correcte n° :</font></label>' +
                                                      '</td>' +
                                                      '<td >' +
-                                                     '<div class="col-9"><input name="reptext" type="text" class="form-control"></div>' +
+                                                     '<div class="col-9"><input name="test" type="text" class="form-control"></div>' +
                                                      '</td>' +
                                                      '<td>' +
                                                      '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
@@ -337,6 +341,7 @@
                                                      '<tr>' +
                                                      '<td colspan="7">' +
                                                      '<font size="6" color=#228b22><a><i type="button" onclick="fonction()" class="fa fa-plus-square"></i></a></font>' +
+                                                     '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
                                                      '</td>' +
                                                      '</tr>' +
                                                      '</div></div>' ;
@@ -365,7 +370,7 @@
                                          nbr = nbr +1;
                                          var innerHTML =
                                              '<tr id="hide_'+nbr+'" ><td colspan="4"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
-                                             '<td><div class="col-15"><input type="date" class="form-control"></div></td>' +
+                                             '<td><div class="col-15"><input name="date[]"  type="date" class="form-control"></div></td>' +
                                              '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
                                          $("#showPlus").append(innerHTML);
                                      }
@@ -376,7 +381,7 @@
                                          nbr = nbr +1;
                                          var innerHTML =
                                              '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
-                                             '<td><div class="col-7"><input type="number" class="form-control"></div></td>' +
+                                             '<td><div class="col-7"><input name="number[]"  type="number" class="form-control"></div></td>' +
                                              '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
                                          $("#showPlus").append(innerHTML);
                                      }
@@ -505,6 +510,7 @@
                                 </label>
                             {% else %}
 
+
                                     {% for j in listquestion %}
                                             <div class="col-sm-11"  >
                                             <div class="list-group">
@@ -517,7 +523,8 @@
                                                         {{ j.textQuestion }}<br>
 
 
-                                                    {% if j.typeQuestion=='Vrai/faux' %}
+                                                   {% if j.typeQuestion=='Réponse courte' %}
+
                                                         <label>Votre reponse :</label>
                                                         <br>
                                                         <label>Choix 1</label>  <input type="checkbox" value="1"><br>
