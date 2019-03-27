@@ -42,9 +42,57 @@ class Reponse
 
 
     /**
-     * @ORM\Column(type="string", length=2000)
+     * @ORM\Column(type="string", length=2000, nullable=true)
      */
     private $reponse_valide;
+
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true, nullable=true)
+     */
+    private $etatvf;
+
+
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $etatcaseacocher;
+
+    /**
+     * @return mixed
+     */
+    public function getEtatcaseacocher()
+    {
+        return $this->etatcaseacocher;
+    }
+
+    /**
+     * @param mixed $etatcaseacocher
+     */
+    public function setEtatcaseacocher($etatcaseacocher): void
+    {
+        $this->etatcaseacocher = $etatcaseacocher;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getEtatvf()
+    {
+        return $this->etatvf;
+    }
+
+    /**
+     * @param mixed $etatvf
+     */
+    public function setEtatvf($etatvf): void
+    {
+        $this->etatvf = $etatvf;
+    }
+
+
 
     public function getId(): ?int
     {

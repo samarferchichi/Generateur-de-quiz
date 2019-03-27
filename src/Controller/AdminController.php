@@ -131,7 +131,7 @@ class AdminController extends EasyAdminController
                       $entityManager->persist($reponse);
                   }
               }elseif ($selecttype == 'number'){
-                                    $parametre = new Parametre();
+                  $parametre = new Parametre();
                   $entityManager = $this->getDoctrine()->getManager();
                   $parametre->setFormText("number");
                   $parametre->setQuestion($question);
@@ -152,7 +152,66 @@ class AdminController extends EasyAdminController
 
               }
 
+          }elseif ($question->getTypeQuestion()=="Vrai/faux") {
+             // $parametre = new Parametre();
+              $entityManager = $this->getDoctrine()->getManager();
+           //   $parametre->setQuestion($question);
+            //  $entityManager->persist($parametre);
+
+              $etat=$request->get('etat');
+              $dataetat = [''];
+              foreach ($etat as $p){
+                  array_push($dataetat, $p);
+              }
+              $vf=$request->get('vf');
+              $data = [''];
+              foreach ($vf as $p){
+                  array_push($data, $p);
+              }
+              for ($i = 1; $i < count($data); $i++) {
+                  $reponse = new Reponse();
+                  $reponse->setQuestion($question);
+                  $reponse->setReponseValide($data[$i]);
+
+                  $reponse->setEtatvf($dataetat[$i]);
+                  $entityManager->persist($reponse);
+
+              }
+
+          }elseif ($question->getTypeQuestion()=="Case à cocher") {
+             // $parametre = new Parametre();
+              $entityManager = $this->getDoctrine()->getManager();
+           //   $parametre->setQuestion($question);
+           //   $entityManager->persist($parametre);
+
+
+
+              $etatcase=$request->get('case');
+              $caseetat = [''];
+              foreach ($etatcase as $p){
+                  array_push($caseetat, $p);
+              }
+
+              $case=$request->get('etatcase');
+              $data = [''];
+              foreach ($case as $p){
+                  array_push($data, $p);
+              }
+              for ($i = 1; $i < count($data); $i++) {
+                  $reponse = new Reponse();
+                  $reponse->setQuestion($question);
+                  $reponse->setReponseValide($caseetat[$i]);
+
+                  $reponse->setEtatcaseacocher($data[$i]);
+                  $entityManager->persist($reponse);
+
+              }
+
+
+
+
           }
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $question->setPage($page);

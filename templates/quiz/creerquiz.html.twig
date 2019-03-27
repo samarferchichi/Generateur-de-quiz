@@ -198,7 +198,131 @@
                                                  '</tr>' +
                                                  '<div id="divPlus"></div>' +
                                                  '</div></div>' );
-                                         }});
+                                         }else {
+
+                                                 if (x == 'Vrai/faux') {
+                                                     $('#showType').html('<div id="demo" style="background-color: ">' +
+                                                         '<div  id="test" style="background-color: ">' +
+                                                         '<div class="form-group row">' +
+                                                         '<table >' +
+                                                         '<tr>' +
+                                                         '<td colspan="3">' +
+                                                         '</td>' +
+                                                         '<td></td>' +
+                                                         '<td></td>' +
+
+                                                         '<tr id="hide_0" >' +
+                                                         '<td colspan="4">' +
+                                                         '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                         '</td>' +
+                                                         '<td >' +
+                                                         '<div class="col-9"><input  name="vf[]" type="text" class="form-control">' +
+                                                         '</div>' +
+                                                         '</td>' +
+                                                         '<td>' +
+                                                         '<div style="width: 100px">' +
+                                                         '<select class="form-control" name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select>' +
+                                                         '</div>' +
+                                                         '</td>' +
+                                                         '<td>' +
+                                                         '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
+                                                         '</td>' +
+                                                         '</tr>' +
+                                                         '<tr id="showPlus"> </tr>' +
+                                                         '<tr>' +
+                                                         '<td colspan="7">' +
+
+                                                         '<font size="6" color=#228b22><a><i type="button" onclick="fonctiontypevraioufaux()" class="fa fa-plus-square"></i></a></font>' +
+                                                         '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                         '</td>' +
+                                                         '</tr>' +
+                                                         '<div id="divPlus"></div>' +
+                                                         '</div></div>');
+                                                 }
+                                             else {
+                                                 if (x=='Case à cocher') {
+                                                     $('#showType').html('<div id="demo" style="background-color: ">' +
+                                                         '<div  id="test" style="background-color: ">' +
+                                                         '<div class="form-group row">' +
+                                                         '<table >' +
+                                                         '<tr>' +
+                                                         '<td colspan="3">' +
+                                                         '</td>' +
+                                                         '<td></td>' +
+                                                         '<td></td>' +
+
+                                                         '<tr id="hide_0" >' +
+                                                         '<td colspan="4">' +
+                                                         '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                         '</td>' +
+                                                         '<td >' +
+                                                         '<div class="col-9"><input  name="case[]" type="text" class="form-control">' +
+                                                         '</div>' +
+                                                         '</td>' +
+                                                         '<td >' +
+                                                         '<div style="width: 150px">' +
+                                                         '<select class="form-control" name="etatcase[]"><option value="1">Repanse correcte</option><option value="0">Repanse incorrecte</option></select>' +
+                                                         '</div>' +
+                                                         '</td>' +
+                                                         '<td>' +
+                                                         '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
+                                                         '</td>' +
+                                                         '</tr>' +
+                                                         '<tr id="showPlus"> </tr>' +
+                                                         '<tr>' +
+                                                         '<td colspan="7">' +
+
+                                                         '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncaseacocher()" class="fa fa-plus-square"></i></a></font>' +
+                                                         '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                         '</td>' +
+                                                         '</tr>' +
+                                                         '<div id="divPlus"></div>' +
+                                                         '</div></div>');
+                                                 } else {
+                                                     if (x=='Liste déroulante') {
+                                                         $('#showType').html('<div id="demo" style="background-color: ">' +
+                                                             '<div  id="test" style="background-color: ">' +
+                                                             '<div class="form-group row">' +
+                                                             '<table >' +
+                                                             '<tr>' +
+                                                             '<td colspan="3">' +
+                                                             '</td>' +
+                                                             '<td></td>' +
+                                                             '<td></td>' +
+
+                                                             '<tr id="hide_0" >' +
+                                                             '<td colspan="4">' +
+                                                             '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                             '</td>' +
+                                                             '<td >' +
+                                                             '<div class="col-9"><input  name="case[]" type="text" class="form-control">' +
+                                                             '</div>' +
+                                                             '</td>' +
+                                                             '<td >' +
+                                                             '<div style="width: 150px">' +
+                                                             '<select class="form-control" name="etatcase[]"><option value="1">Repanse correcte</option><option value="0">Repanse incorrecte</option></select>' +
+                                                             '</div>' +
+                                                             '</td>' +
+                                                             '<td>' +
+                                                             '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
+                                                             '</td>' +
+                                                             '</tr>' +
+                                                             '<tr id="showPlus"> </tr>' +
+                                                             '<tr>' +
+                                                             '<td colspan="7">' +
+
+                                                             '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncaseacocher()" class="fa fa-plus-square"></i></a></font>' +
+                                                             '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                             '</td>' +
+                                                             '</tr>' +
+                                                             '<div id="divPlus"></div>' +
+                                                             '</div></div>');
+                                                     }
+                                                 }
+                                             }
+                                             }
+
+                                             });
                                      }else{
                                          $('#showType').html('');
                                      }
@@ -344,7 +468,7 @@
                                                      '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
                                                      '</td>' +
                                                      '</tr>' +
-                                                     '</div></div>' ;
+                                                     '</div></div> </table>' ;
 
                                              }
                                          }
@@ -385,6 +509,38 @@
                                              '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
                                          $("#showPlus").append(innerHTML);
                                      }
+
+
+
+                                     function fonctiontypevraioufaux()
+                                     {
+                                         var nbr = $("#showPlus").children('tr').length;
+                                         nbr = nbr +1;
+                                         var innerHTML =
+                                             '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                             '<td><div class="col-7"><input name="vf[]"  type="text" class="form-control"></div></td>' +
+                                             '<td><div style="width: 100px">' +
+                                             '<select class="form-control"  name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select>'+
+                                             '</div>' +
+                                             '</td><td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td>' +
+                                             '</tr>' ;
+                                         $("#showPlus").append(innerHTML);
+                                     }
+
+
+                                     function fonctioncaseacocher()
+                                     {
+                                         var nbr = $("#showPlus").children('tr').length;
+                                         nbr = nbr +1;
+                                         var innerHTML =
+                                             '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                             '<td><div class=""><input name="case[]"  type="text" class="form-control"></div></td>'+
+                                             '<td><div style="width: 150px">' +
+                                             '<select class="form-control" name="etatcase[]"><option value="1">Repanse correcte</option><option value="0">Repanse incorrecte</option></select></div></td>' +
+                                             '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
+                                         $("#showPlus").append(innerHTML);
+                                     }
+
                                      function fonctionhide(nbr) {
                                          $('tr#hide_'+nbr).remove();
 
