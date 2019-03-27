@@ -52,6 +52,27 @@ class Reponse
      */
     private $etatvf;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true, nullable=true)
+     */
+    private $etatlist;
+
+    /**
+     * @return mixed
+     */
+    public function getEtatlist()
+    {
+        return $this->etatlist;
+    }
+
+    /**
+     * @param mixed $etatlist
+     */
+    public function setEtatlist($etatlist): void
+    {
+        $this->etatlist = $etatlist;
+    }
+
 
 
     /**

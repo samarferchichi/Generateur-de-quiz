@@ -202,7 +202,7 @@
 
                                                  if (x == 'Vrai/faux') {
                                                      $('#showType').html('<div id="demo" style="background-color: ">' +
-                                                         '<div  id="test" style="background-color: ">' +
+                                                         '<div  id="test" style="background-color: "><label>Choix réponses de votre question</label>' +
                                                          '<div class="form-group row">' +
                                                          '<table >' +
                                                          '<tr>' +
@@ -242,7 +242,7 @@
                                              else {
                                                  if (x=='Case à cocher') {
                                                      $('#showType').html('<div id="demo" style="background-color: ">' +
-                                                         '<div  id="test" style="background-color: ">' +
+                                                         '<div  id="test" style="background-color: "><label>Choix réponses de votre question</label>' +
                                                          '<div class="form-group row">' +
                                                          '<table >' +
                                                          '<tr>' +
@@ -281,7 +281,7 @@
                                                  } else {
                                                      if (x=='Liste déroulante') {
                                                          $('#showType').html('<div id="demo" style="background-color: ">' +
-                                                             '<div  id="test" style="background-color: ">' +
+                                                             '<div  id="test" style="background-color: "><label>Choix réponses de votre question</label>' +
                                                              '<div class="form-group row">' +
                                                              '<table >' +
                                                              '<tr>' +
@@ -292,15 +292,15 @@
 
                                                              '<tr id="hide_0" >' +
                                                              '<td colspan="4">' +
-                                                             '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                             '<label><font size="3"> Choix réponse n° :</font></label>' +
                                                              '</td>' +
                                                              '<td >' +
-                                                             '<div class="col-9"><input  name="case[]" type="text" class="form-control">' +
+                                                             '<div class="col-9"><input  name="list[]" type="text" class="form-control">' +
                                                              '</div>' +
                                                              '</td>' +
                                                              '<td >' +
                                                              '<div style="width: 150px">' +
-                                                             '<select class="form-control" name="etatcase[]"><option value="1">Repanse correcte</option><option value="0">Repanse incorrecte</option></select>' +
+                                                             '<select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select>' +
                                                              '</div>' +
                                                              '</td>' +
                                                              '<td>' +
@@ -311,7 +311,7 @@
                                                              '<tr>' +
                                                              '<td colspan="7">' +
 
-                                                             '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncaseacocher()" class="fa fa-plus-square"></i></a></font>' +
+                                                             '<font size="6" color=#228b22><a><i type="button" onclick="fonctionliste()" class="fa fa-plus-square"></i></a></font>' +
                                                              '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
                                                              '</td>' +
                                                              '</tr>' +
@@ -540,6 +540,20 @@
                                              '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
                                          $("#showPlus").append(innerHTML);
                                      }
+
+                                     function fonctionliste()
+                                     {
+                                         var nbr = $("#showPlus").children('tr').length;
+                                         nbr = nbr +1;
+                                         var innerHTML =
+                                             '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Choix réponse n° :</font></label></td>' +
+                                             '<td><div class=""><input name="list[]"  type="text" class="form-control"></div></td>'+
+                                             '<td><div style="width: 150px">' +
+                                             '<select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div></td>' +
+                                             '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
+                                         $("#showPlus").append(innerHTML);
+                                     }
+
 
                                      function fonctionhide(nbr) {
                                          $('tr#hide_'+nbr).remove();

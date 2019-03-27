@@ -206,11 +206,31 @@ class AdminController extends EasyAdminController
                   $entityManager->persist($reponse);
 
               }
+          }elseif ($question->getTypeQuestion()=="Liste déroulante") {
+              $entityManager = $this->getDoctrine()->getManager();
 
+              $etatcase=$request->get('list');
+              $caseetat = [''];
+              foreach ($etatcase as $p){
+                  array_push($caseetat, $p);
+              }
+              $case=$request->get('etatlist');
+              $data = [''];
+              foreach ($case as $p){
+                  array_push($data, $p);
+              }
+              for ($i = 1; $i < count($data); $i++) {
+                  $reponse = new Reponse();
+                  $reponse->setQuestion($question);
+                  $reponse->setReponseValide($caseetat[$i]);
 
+                  $reponse->setEtatcaseacocher($data[$i]);
+                  $entityManager->persist($reponse);
 
+              }
 
-          }
+              }
+
 
 
             $entityManager = $this->getDoctrine()->getManager();
