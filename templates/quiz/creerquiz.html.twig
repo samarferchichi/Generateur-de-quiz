@@ -213,7 +213,7 @@
 
                                                          '<tr id="hide_0" >' +
                                                          '<td colspan="4">' +
-                                                         '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                         '<label><font size="2"> Repanse correcte n° :</font></label>' +
                                                          '</td>' +
                                                          '<td >' +
                                                          '<div class="col-9"><input  name="vf[]" type="text" class="form-control">' +
@@ -281,7 +281,7 @@
                                                  } else {
                                                      if (x=='Liste déroulante') {
                                                          $('#showType').html('<div id="demo" style="background-color: ">' +
-                                                             '<div  id="test" style="background-color: "><label>Choix réponses de votre question</label>' +
+                                                             '<div  id="test" style="background-color: "><label>Choix réponses de votre liste</label>' +
                                                              '<div class="form-group row">' +
                                                              '<table >' +
                                                              '<tr>' +
@@ -317,6 +317,92 @@
                                                              '</tr>' +
                                                              '<div id="divPlus"></div>' +
                                                              '</div></div>');
+                                                     }else {
+                                                         if (x=='Liste déroulante') {
+                                                             $('#showType').html('<div id="demo" style="background-color: ">' +
+                                                                 '<div  id="test" style="background-color: "><label>Choix réponses de votre liste</label>' +
+                                                                 '<div class="form-group row">' +
+                                                                 '<table >' +
+                                                                 '<tr>' +
+                                                                 '<td colspan="3">' +
+                                                                 '</td>' +
+                                                                 '<td></td>' +
+                                                                 '<td></td>' +
+
+                                                                 '<tr id="hide_0" >' +
+                                                                 '<td colspan="4">' +
+                                                                 '<label><font size="3"> Choix réponse n° :</font></label>' +
+                                                                 '</td>' +
+                                                                 '<td >' +
+                                                                 '<div class="col-9"><input  name="list[]" type="text" class="form-control">' +
+                                                                 '</div>' +
+                                                                 '</td>' +
+                                                                 '<td >' +
+                                                                 '<div style="width: 150px">' +
+                                                                 '<select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select>' +
+                                                                 '</div>' +
+                                                                 '</td>' +
+                                                                 '<td>' +
+                                                                 '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
+                                                                 '</td>' +
+                                                                 '</tr>' +
+                                                                 '<tr id="showPlus"> </tr>' +
+                                                                 '<tr>' +
+                                                                 '<td colspan="7">' +
+
+                                                                 '<font size="6" color=#228b22><a><i type="button" onclick="fonctionliste()" class="fa fa-plus-square"></i></a></font>' +
+                                                                 '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                                 '</td>' +
+                                                                 '</tr>' +
+                                                                 '<div id="divPlus"></div>' +
+                                                                 '</div></div>');
+                                                         }else {
+                                                             if (x=='Calculée') {
+                                                                 $('#showType').html('<div id="demo" style="background-color: ">' +
+                                                                     '<div  id="test" style="background-color: "><label>Question calculée</label>' +
+                                                                     '<div class="form-group row">' +
+                                                                     '<table >' +
+                                                                     '<tr>' +
+                                                                     '<td colspan="3">' +
+                                                                     '</td>' +
+                                                                     '<tr id="hide_0" >' +
+                                                                     '<td colspan="">' +
+                                                                     '<label><font size="2"> Description formule n° :</font></label>' +
+                                                                     '</td>' +
+                                                                     '<td colspan="">' +
+                                                                     '<label><font size="2"> Formule :</font></label>' +
+                                                                     '</td>' +
+                                                                     '<td colspan="">' +
+                                                                     '<label><font size="2"> Resultat :</font></label>' +
+                                                                     '</td>' +
+                                                                     '</tr>' +
+                                                                     '<tr id="hide_0">' +
+                                                                     '<td >' +
+                                                                     '<div class=""><input  name="descriptionF[]" type="text" class="form-control"></div>' +
+                                                                     '</div>' +
+                                                                     '</td>' +
+                                                                     '<td>' +
+                                                                     '<div class=""><input  name="formule[]" type="text" class="form-control"></div>' +
+                                                                     '</td>' +
+                                                                     '<td>' +
+                                                                     '<div class=""><input  name="resultatF[]" type="text" class="form-control"></div>' +
+                                                                     '</td>' +
+                                                                     '<td>' +
+                                                                     '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
+                                                                     '</td>' +
+                                                                     '</tr>' +
+                                                                     '<tr id="showPlus"> </tr>' +
+                                                                     '<tr>' +
+                                                                     '<td colspan="">' +
+
+                                                                     '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncalcule()" class="fa fa-plus-square"></i></a></font>' +
+                                                                     '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                                     '</td>' +
+                                                                     '</tr>' +
+                                                                     '<div id="divPlus"></div>' +
+                                                                     '</div></div>');
+                                                             }
+                                                         }
                                                      }
                                                  }
                                              }
@@ -554,6 +640,42 @@
                                          $("#showPlus").append(innerHTML);
                                      }
 
+
+                                     function fonctioncalcule()
+                                     {
+                                         var nbr = $("#showPlus").children('tr').length;
+                                         nbr = nbr +1;
+                                         var innerHTML ='<div class="form-group row">' +
+                                         '<table >' +
+                                         '<tr>' +
+                                         '<td colspan="3">' +
+                                         '</td>' +
+                                         '<td></td>' +
+                                         '<td></td>' +
+                                             '<tr id="hide_'+nbr+'" >' +
+                                             '<td colspan="2">' +
+                                             '<label><font size="2"> Description formule n° :</font></label>' +
+                                             '</td>' +
+                                             '<td colspan="">' +
+                                             '<label><font size="2"> Formule :</font></label>' +
+                                             '</td>' +
+                                             '<td colspan="">' +
+                                             '<label><font size="2"> Resultat :</font></label>' +
+                                             '</td>' +
+                                             '</tr> '+
+                                             '<tr id="hide_'+nbr+'">' +
+                                             '<td >' +
+                                             '<div class=""><input  name="descriptionF[]" type="text" class="form-control">' +
+                                             '</div>' +
+                                             '</td>' +
+                                             '<td>' +
+                                             '<div class=""><input  name="formule[]" type="text" class="form-control">' +
+                                             '</td>' +
+                                             '<td>' +
+                                             '<div class=""><input  name="resultatF[]" type="text" class="form-control">' +
+                                             '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
+                                         $("#showPlus").append(innerHTML);
+                                     }
 
                                      function fonctionhide(nbr) {
                                          $('tr#hide_'+nbr).remove();

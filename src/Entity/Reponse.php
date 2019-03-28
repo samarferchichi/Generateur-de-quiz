@@ -39,7 +39,71 @@ class Reponse
     }
 
 
+    /**
+     * @ORM\Column(type="string", length=2000, nullable=true)
+     */
+    private $formule;
 
+
+    /**
+     * @ORM\Column(type="string", length=2000, nullable=true)
+     */
+    private $resultatformule;
+
+    /**
+     * @return mixed
+     */
+    public function getFormule()
+    {
+        return $this->formule;
+    }
+
+    /**
+     * @param mixed $formule
+     */
+    public function setFormule($formule): void
+    {
+        $this->formule = $formule;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResultatformule()
+    {
+        return $this->resultatformule;
+    }
+
+    /**
+     * @param mixed $resultatformule
+     */
+    public function setResultatformule($resultatformule): void
+    {
+        $this->resultatformule = $resultatformule;
+    }
+
+
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $descriptionformule;
+
+    /**
+     * @return mixed
+     */
+    public function getDescriptionformule()
+    {
+        return $this->descriptionformule;
+    }
+
+    /**
+     * @param mixed $descriptionformule
+     */
+    public function setDescriptionformule($descriptionformule): void
+    {
+        $this->descriptionformule = $descriptionformule;
+    }
 
     /**
      * @ORM\Column(type="string", length=2000, nullable=true)

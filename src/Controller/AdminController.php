@@ -35,8 +35,6 @@ class AdminController extends EasyAdminController
 {
 
 
-
-
     /**
      * @Route("/dashboard", name="admin_dashboard")
      */
@@ -229,7 +227,45 @@ class AdminController extends EasyAdminController
 
               }
 
+              }elseif ($question->getTypeQuestion()=="Calculée") {
+              $entityManager = $this->getDoctrine()->getManager();
+
+              $descriptionf=$request->get('descriptionF');
+
+              $data_description = [''];
+              foreach ($descriptionf as $p){
+                  array_push($data_description, $p);
               }
+
+
+              $formule=$request->get('formule');
+
+              $data_formule = [''];
+              foreach ($formule as $p){
+                  array_push($data_formule, $p);
+              }
+
+              $resultatf=$request->get('resultatF');
+
+              $data_resultat = [''];
+              foreach ($resultatf as $p){
+                  array_push($data_resultat, $p);
+              }
+
+              for ($i = 1; $i < count($data_resultat); $i++) {
+
+                  $reponse = new Reponse();
+
+                  $reponse->setDescriptionformule($data_description[$i]);
+                  $reponse->setQuestion($question);
+                  $reponse->setFormule($data_formule[$i]);
+
+                  $reponse->setResultatformule($data_resultat[$i]);
+                  $entityManager->persist($reponse);
+
+              }
+
+          }
 
 
 

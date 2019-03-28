@@ -46,6 +46,10 @@ class Parametre
      */
     private $form_text;
 
+
+
+
+
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
