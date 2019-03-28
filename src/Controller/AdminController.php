@@ -12,6 +12,7 @@ use App\Form\QuestionType;
 use App\Repository\PageRepository;
 use App\Repository\ParametreRepository;
 use App\Repository\QuestionRepository;
+use App\Repository\ReponseRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -56,7 +57,7 @@ class AdminController extends EasyAdminController
      *
      *
      */
-    public function creerquizAction(Quiz $quiz, Page $page,QuestionRepository $questionRepository,ParametreRepository $parametreRepository ,QuizRepository $quizRepository, Request $request) : Response
+    public function creerquizAction(Quiz $quiz, Page $page,QuestionRepository $questionRepository,ParametreRepository $parametreRepository, ReponseRepository $reponseRepository ,QuizRepository $quizRepository, Request $request) : Response
     {
         $listquestion = $questionRepository->findBy(array('page' => $page->getId()));
 
@@ -82,204 +83,187 @@ class AdminController extends EasyAdminController
         $formq = $this->createForm(QuestionType::class, $question);
         $formq->handleRequest($request);
 
+
         if ($formq->isSubmitted() && $formq->isValid()) {
 
-          /*  dump($request);
-            dump($request->get('new_input'));
-            dump($formq);
-            exit();*/
 
-          if($question->getTypeQuestion()=="Réponse courte") {
-              $selecttype=$request->get('selecttype');
-              if ($selecttype == 'texte'){
-                  $nbcaractere=$request->get('nbcaractere');
-                  $parametre = new Parametre();
-                      $entityManager = $this->getDoctrine()->getManager();
-                      $parametre->setFormText("texte");
-                      $parametre->setQuestion($question);
-                      $parametre->setNbCaractere($nbcaractere);
-                      $entityManager->persist($parametre);
-                      $reptext=$request->get('test');
-                      $data = [''];
-                  foreach ($reptext as $p){
-                      array_push($data, $p);
-                  }
-                  for ($i = 1; $i < count($data); $i++) {
-                      $reponse = new Reponse();
-                      $reponse->setQuestion($question);
-                      $reponse->setReponseValide($data[$i]);
-                      $entityManager->persist($reponse);
-                  }
+            if ($question->getTypeQuestion() == "Réponse courte") {
+                $selecttype = $request->get('selecttype');
+                if ($selecttype == 'texte') {
+                    $nbcaractere = $request->get('nbcaractere');
+                    $parametre = new Parametre();
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $parametre->setFormText("texte");
+                    $parametre->setQuestion($question);
+                    $parametre->setNbCaractere($nbcaractere);
+                    $entityManager->persist($parametre);
+                    $reptext = $request->get('test');
+                    $data = [''];
+                    foreach ($reptext as $p) {
+                        array_push($data, $p);
+                    }
+                    for ($i = 1; $i < count($data); $i++) {
+                        $reponse = new Reponse();
+                        $reponse->setQuestion($question);
+                        $reponse->setReponseValide($data[$i]);
+                        $entityManager->persist($reponse);
+                    }
 
-              }elseif ($selecttype == 'date'){
-                  $parametre = new Parametre();
-                  $entityManager = $this->getDoctrine()->getManager();
-                  $parametre->setFormText("date");
-                  $parametre->setQuestion($question);
-                  $entityManager->persist($parametre);
-                  $date=$request->get('date');
-                  $data = [''];
-                  foreach ($date as $p){
-                      array_push($data, $p);
-                  }
-                  for ($i = 1; $i < count($data); $i++) {
-                      $reponse = new Reponse();
-                      $reponse->setQuestion($question);
-                      $reponse->setReponseValide($data[$i]);
-                      $entityManager->persist($reponse);
-                  }
-              }elseif ($selecttype == 'number'){
-                  $parametre = new Parametre();
-                  $entityManager = $this->getDoctrine()->getManager();
-                  $parametre->setFormText("number");
-                  $parametre->setQuestion($question);
-                  $parametre->setNbChiffre($request->get('nbChiffre'));
-                  $entityManager->persist($parametre);
-                  $number=$request->get('number');
-                  $data = [''];
-                  foreach ($number as $p){
-                      array_push($data, $p);
-                  }
-                  for ($i = 1; $i < count($data); $i++) {
-                      $reponse = new Reponse();
-                      $reponse->setQuestion($question);
-                      $reponse->setReponseValide($data[$i]);
-                      $entityManager->persist($reponse);
+                } elseif ($selecttype == 'date') {
+                    $parametre = new Parametre();
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $parametre->setFormText("date");
+                    $parametre->setQuestion($question);
+                    $entityManager->persist($parametre);
+                    $date = $request->get('date');
+                    $data = [''];
+                    foreach ($date as $p) {
+                        array_push($data, $p);
+                    }
 
-                  }
+                    $data_desc = $request->get('desc');
+                    $datad = [''];
+                    foreach ($data_desc as $p) {
+                        array_push($datad, $p);
+                    }
 
-              }
+                    for ($i = 1; $i < count($datad); $i++) {
+                        $reponse = new Reponse();
+                        $reponse->setQuestion($question);
+                        $reponse->setDescriptiondate($datad[$i]);
+                        $entityManager->persist($reponse);
+                    }
+                } elseif ($selecttype == 'number') {
+                    $parametre = new Parametre();
+                    $entityManager = $this->getDoctrine()->getManager();
+                    $parametre->setFormText("number");
+                    $parametre->setQuestion($question);
+                    $parametre->setNbChiffre($request->get('nbChiffre'));
+                    $entityManager->persist($parametre);
+                    $number = $request->get('number');
+                    $data = [''];
+                    foreach ($number as $p) {
+                        array_push($data, $p);
+                    }
+                    for ($i = 1; $i < count($data); $i++) {
+                        $reponse = new Reponse();
+                        $reponse->setQuestion($question);
+                        $reponse->setReponseValide($data[$i]);
+                        $entityManager->persist($reponse);
 
-          }elseif ($question->getTypeQuestion()=="Vrai/faux") {
-             // $parametre = new Parametre();
-              $entityManager = $this->getDoctrine()->getManager();
-           //   $parametre->setQuestion($question);
-            //  $entityManager->persist($parametre);
+                    }
 
-              $etat=$request->get('etat');
-              $dataetat = [''];
-              foreach ($etat as $p){
-                  array_push($dataetat, $p);
-              }
-              $vf=$request->get('vf');
-              $data = [''];
-              foreach ($vf as $p){
-                  array_push($data, $p);
-              }
-              for ($i = 1; $i < count($data); $i++) {
-                  $reponse = new Reponse();
-                  $reponse->setQuestion($question);
-                  $reponse->setReponseValide($data[$i]);
+                }
 
-                  $reponse->setEtatvf($dataetat[$i]);
-                  $entityManager->persist($reponse);
+            } elseif ($question->getTypeQuestion() == "Vrai/faux") {
+                $entityManager = $this->getDoctrine()->getManager();
+                $etat = $request->get('etat');
+                $dataetat = [''];
+                foreach ($etat as $p) {
+                    array_push($dataetat, $p);
+                }
+                $vf = $request->get('vf');
+                $data = [''];
+                foreach ($vf as $p) {
+                    array_push($data, $p);
+                }
+                for ($i = 1; $i < count($data); $i++) {
+                    $reponse = new Reponse();
+                    $reponse->setQuestion($question);
+                    $reponse->setReponseValide($data[$i]);
 
-              }
+                    $reponse->setEtatvf($dataetat[$i]);
+                    $entityManager->persist($reponse);
+                }
 
-          }elseif ($question->getTypeQuestion()=="Case à cocher") {
-             // $parametre = new Parametre();
-              $entityManager = $this->getDoctrine()->getManager();
-           //   $parametre->setQuestion($question);
-           //   $entityManager->persist($parametre);
+            } elseif ($question->getTypeQuestion() == "Case à cocher") {
+                $entityManager = $this->getDoctrine()->getManager();
+                $etatcase = $request->get('case');
+                $caseetat = [''];
+                foreach ($etatcase as $p) {
+                    array_push($caseetat, $p);
+                }
 
+                $case = $request->get('etatcase');
+                $data = [''];
+                foreach ($case as $p) {
+                    array_push($data, $p);
+                }
+                for ($i = 1; $i < count($data); $i++) {
+                    $reponse = new Reponse();
+                    $reponse->setQuestion($question);
+                    $reponse->setReponseValide($caseetat[$i]);
+                    $reponse->setEtatcaseacocher($data[$i]);
+                    $entityManager->persist($reponse);
 
+                }
+            } elseif ($question->getTypeQuestion() == "Liste déroulante") {
+                $entityManager = $this->getDoctrine()->getManager();
+                $etatcase = $request->get('list');
+                $caseetat = [''];
+                foreach ($etatcase as $p) {
+                    array_push($caseetat, $p);
+                }
+                $case = $request->get('etatlist');
+                $data = [''];
+                foreach ($case as $p) {
+                    array_push($data, $p);
+                }
+                for ($i = 1; $i < count($data); $i++) {
+                    $reponse = new Reponse();
+                    $reponse->setQuestion($question);
+                    $reponse->setReponseValide($caseetat[$i]);
+                    $reponse->setEtatcaseacocher($data[$i]);
+                    $entityManager->persist($reponse);
 
-              $etatcase=$request->get('case');
-              $caseetat = [''];
-              foreach ($etatcase as $p){
-                  array_push($caseetat, $p);
-              }
+                }
 
-              $case=$request->get('etatcase');
-              $data = [''];
-              foreach ($case as $p){
-                  array_push($data, $p);
-              }
-              for ($i = 1; $i < count($data); $i++) {
-                  $reponse = new Reponse();
-                  $reponse->setQuestion($question);
-                  $reponse->setReponseValide($caseetat[$i]);
-
-                  $reponse->setEtatcaseacocher($data[$i]);
-                  $entityManager->persist($reponse);
-
-              }
-          }elseif ($question->getTypeQuestion()=="Liste déroulante") {
-              $entityManager = $this->getDoctrine()->getManager();
-
-              $etatcase=$request->get('list');
-              $caseetat = [''];
-              foreach ($etatcase as $p){
-                  array_push($caseetat, $p);
-              }
-              $case=$request->get('etatlist');
-              $data = [''];
-              foreach ($case as $p){
-                  array_push($data, $p);
-              }
-              for ($i = 1; $i < count($data); $i++) {
-                  $reponse = new Reponse();
-                  $reponse->setQuestion($question);
-                  $reponse->setReponseValide($caseetat[$i]);
-
-                  $reponse->setEtatcaseacocher($data[$i]);
-                  $entityManager->persist($reponse);
-
-              }
-
-              }elseif ($question->getTypeQuestion()=="Calculée") {
-              $entityManager = $this->getDoctrine()->getManager();
-
-              $descriptionf=$request->get('descriptionF');
-
-              $data_description = [''];
-              foreach ($descriptionf as $p){
-                  array_push($data_description, $p);
-              }
+            } elseif ($question->getTypeQuestion() == "Calculée") {
+                $entityManager = $this->getDoctrine()->getManager();
+                $descriptionf = $request->get('descriptionF');
+                $data_description = [''];
+                foreach ($descriptionf as $p) {
+                    array_push($data_description, $p);
+                }
 
 
-              $formule=$request->get('formule');
+                $formule = $request->get('formule');
+                $data_formule = [''];
+                foreach ($formule as $p) {
+                    array_push($data_formule, $p);
+                }
 
-              $data_formule = [''];
-              foreach ($formule as $p){
-                  array_push($data_formule, $p);
-              }
+                $resultatf = $request->get('resultatF');
+                $data_resultat = [''];
+                foreach ($resultatf as $p) {
+                    array_push($data_resultat, $p);
+                }
 
-              $resultatf=$request->get('resultatF');
+                for ($i = 1; $i < count($data_resultat); $i++) {
+                    $reponse = new Reponse();
+                    $reponse->setDescriptionformule($data_description[$i]);
+                    $reponse->setQuestion($question);
+                    $reponse->setFormule($data_formule[$i]);
+                    $reponse->setResultatformule($data_resultat[$i]);
+                    $entityManager->persist($reponse);
 
-              $data_resultat = [''];
-              foreach ($resultatf as $p){
-                  array_push($data_resultat, $p);
-              }
+                }
 
-              for ($i = 1; $i < count($data_resultat); $i++) {
-
-                  $reponse = new Reponse();
-
-                  $reponse->setDescriptionformule($data_description[$i]);
-                  $reponse->setQuestion($question);
-                  $reponse->setFormule($data_formule[$i]);
-
-                  $reponse->setResultatformule($data_resultat[$i]);
-                  $entityManager->persist($reponse);
-
-              }
-
-          }
-
-
+            }
 
             $entityManager = $this->getDoctrine()->getManager();
             $question->setPage($page);
             $question->setActif(true);
-
             $entityManager->persist($question);
-
             $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+
+
+
+        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
 
         }
 
+        $listreponse = $reponseRepository->findAll();
 
         return $this->render('quiz/creerquiz.html.twig', [
                     'page' => $page,
@@ -290,6 +274,8 @@ class AdminController extends EasyAdminController
                     'listquestion' => $listquestion,
                     'pos'   => $pos,
                     'listquiz'=>$listquiz,
+
+                    'listreponse'=>$listreponse
                 ]
             );
         }

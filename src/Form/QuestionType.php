@@ -34,7 +34,7 @@ class QuestionType extends AbstractType
                     'Vrai/faux' => 'Vrai/faux',
                     'Case à cocher'=>'Case à cocher',
                     'Liste déroulante'=> 'Liste déroulante',
-                    'Calculée'=>'Calculée'
+                    'Calculée'=>'Calculée',
 
                 ],
 

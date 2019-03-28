@@ -129,7 +129,6 @@
                                             </div>
                                             <div class="col-xs-5">
                                                 {{ form_widget(formq.type_question, { 'id': 'question_type' }) }}
-                                                <div id="showType"></div>
                                                 <small style="color: red">
                                                     <font size="2">
                                                 {{ form_errors(formq.type_question) }}
@@ -139,6 +138,7 @@
                                         </div>
                                     </td>
                                 </tr>
+
 
                                  <script>
 
@@ -177,7 +177,7 @@
                                                  '</tr> ' +
                                                  '<tr id="hide_0" >' +
                                                  '<td colspan="4">' +
-                                                 '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                 '<label><font size="3"> Reponse correcte n° :</font></label>' +
                                                  '</td>' +
                                                  '<td >' +
                                                  '<div class="col-9"><input name="test[]" type="text" class="form-control">' +
@@ -213,7 +213,7 @@
 
                                                          '<tr id="hide_0" >' +
                                                          '<td colspan="4">' +
-                                                         '<label><font size="2"> Repanse correcte n° :</font></label>' +
+                                                         '<label><font size="2"> Reponse correcte n° :</font></label>' +
                                                          '</td>' +
                                                          '<td >' +
                                                          '<div class="col-9"><input  name="vf[]" type="text" class="form-control">' +
@@ -253,7 +253,7 @@
 
                                                          '<tr id="hide_0" >' +
                                                          '<td colspan="4">' +
-                                                         '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                         '<label><font size="3"> Reponse correcte n° :</font></label>' +
                                                          '</td>' +
                                                          '<td >' +
                                                          '<div class="col-9"><input  name="case[]" type="text" class="form-control">' +
@@ -261,7 +261,7 @@
                                                          '</td>' +
                                                          '<td >' +
                                                          '<div style="width: 150px">' +
-                                                         '<select class="form-control" name="etatcase[]"><option value="1">Repanse correcte</option><option value="0">Repanse incorrecte</option></select>' +
+                                                         '<select class="form-control" name="etatcase[]"><option value="1">Reponse correcte</option><option value="0">Reponse incorrecte</option></select>' +
                                                          '</div>' +
                                                          '</td>' +
                                                          '<td>' +
@@ -278,57 +278,12 @@
                                                          '</tr>' +
                                                          '<div id="divPlus"></div>' +
                                                          '</div></div>');
-                                                 } else {
+                                                 }else{
                                                      if (x=='Liste déroulante') {
-                                                         $('#showType').html('<div id="demo" style="background-color: ">' +
-                                                             '<div  id="test" style="background-color: "><label>Choix réponses de votre liste</label>' +
-                                                             '<div class="form-group row">' +
-                                                             '<table >' +
-                                                             '<tr>' +
-                                                             '<td colspan="3">' +
-                                                             '</td>' +
-                                                             '<td></td>' +
-                                                             '<td></td>' +
-
-                                                             '<tr id="hide_0" >' +
-                                                             '<td colspan="4">' +
-                                                             '<label><font size="3"> Choix réponse n° :</font></label>' +
-                                                             '</td>' +
-                                                             '<td >' +
-                                                             '<div class="col-9"><input  name="list[]" type="text" class="form-control">' +
-                                                             '</div>' +
-                                                             '</td>' +
-                                                             '<td >' +
-                                                             '<div style="width: 150px">' +
-                                                             '<select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select>' +
-                                                             '</div>' +
-                                                             '</td>' +
-                                                             '<td>' +
-                                                             '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
-                                                             '</td>' +
-                                                             '</tr>' +
-                                                             '<tr id="showPlus"> </tr>' +
-                                                             '<tr>' +
-                                                             '<td colspan="7">' +
-
-                                                             '<font size="6" color=#228b22><a><i type="button" onclick="fonctionliste()" class="fa fa-plus-square"></i></a></font>' +
-                                                             '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
-                                                             '</td>' +
-                                                             '</tr>' +
-                                                             '<div id="divPlus"></div>' +
-                                                             '</div></div>');
-                                                     }else {
-                                                         if (x=='Liste déroulante') {
                                                              $('#showType').html('<div id="demo" style="background-color: ">' +
                                                                  '<div  id="test" style="background-color: "><label>Choix réponses de votre liste</label>' +
                                                                  '<div class="form-group row">' +
                                                                  '<table >' +
-                                                                 '<tr>' +
-                                                                 '<td colspan="3">' +
-                                                                 '</td>' +
-                                                                 '<td></td>' +
-                                                                 '<td></td>' +
-
                                                                  '<tr id="hide_0" >' +
                                                                  '<td colspan="4">' +
                                                                  '<label><font size="3"> Choix réponse n° :</font></label>' +
@@ -362,9 +317,6 @@
                                                                      '<div  id="test" style="background-color: "><label>Question calculée</label>' +
                                                                      '<div class="form-group row">' +
                                                                      '<table >' +
-                                                                     '<tr>' +
-                                                                     '<td colspan="3">' +
-                                                                     '</td>' +
                                                                      '<tr id="hide_0" >' +
                                                                      '<td colspan="">' +
                                                                      '<label><font size="2"> Description formule n° :</font></label>' +
@@ -377,7 +329,7 @@
                                                                      '</td>' +
                                                                      '</tr>' +
                                                                      '<tr id="hide_0">' +
-                                                                     '<td >' +
+                                                                     '<td>' +
                                                                      '<div class=""><input  name="descriptionF[]" type="text" class="form-control"></div>' +
                                                                      '</div>' +
                                                                      '</td>' +
@@ -390,23 +342,22 @@
                                                                      '<td>' +
                                                                      '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
                                                                      '</td>' +
-                                                                     '</tr>' +
-                                                                     '<tr id="showPlus"> </tr>' +
-                                                                     '<tr>' +
-                                                                     '<td colspan="">' +
+
+                                                                     '<td id="showPlus" colspan="">' +
 
                                                                      '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncalcule()" class="fa fa-plus-square"></i></a></font>' +
-                                                                     '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+
                                                                      '</td>' +
                                                                      '</tr>' +
                                                                      '<div id="divPlus"></div>' +
                                                                      '</div></div>');
+
                                                              }
                                                          }
                                                      }
                                                  }
                                              }
-                                             }
+
 
                                              });
                                      }else{
@@ -425,10 +376,6 @@
                                                  '<div class="form-group row">' +
                                                  '<table >' +
                                                  '<tr>' +
-                                                 '<td colspan="3">' +
-                                                 '</td>' +
-                                                 '<td></td>' +
-                                                 '<td></td>' +
                                                  '<td colspan="6">' +
                                                  '<div class="col-20"><select  name="selecttype"  class="form-control" id="mySelect" onchange="myFunction()">' +
                                                  '<option  value="texte" >Texte</option>' +
@@ -438,7 +385,10 @@
                                                  '</tr>' +
                                                  '<tr id="hide_0">' +
                                                  '<td  colspan="4">' +
-                                                 '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                 '<label><font size="3"> Description date n° :</font></label>' +
+                                                 '</td>' +
+                                                 '<td>' +
+                                                 '<input type="text" name="desc[]"  class="form-control"> ' +
                                                  '</td>' +
                                                  '<td>' +
                                                  '<div class="col-15"><input name="date[]" type="date" class="form-control">' +
@@ -491,7 +441,7 @@
                                                      '</tr> ' +
                                                      '<tr  id="hide_0">' +
                                                      '<td  colspan="6">' +
-                                                     '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                     '<label><font size="3"> Reponse correcte n° :</font></label>' +
                                                      '</td>' +
                                                      '<td >' +
                                                      '<div class="col-7"><input  name="number[]" type="number" class="form-control"></div>' +
@@ -537,7 +487,7 @@
                                                      '</tr> ' +
                                                      '<tr id="hide_0">' +
                                                      '<td  colspan="4">' +
-                                                     '<label><font size="3"> Repanse correcte n° :</font></label>' +
+                                                     '<label><font size="3"> Reponse correcte n° :</font></label>' +
                                                      '</td>' +
                                                      '<td >' +
                                                      '<div class="col-9"><input name="test" type="text" class="form-control"></div>' +
@@ -567,7 +517,7 @@
                                         var nbr = $("#showPlus").children('tr').length;
                                          nbr = nbr +1;
                                          var innerHTML =
-                                             '<tr id="hide_'+nbr+'" ><td colspan="4"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                             '<tr id="hide_'+nbr+'" ><td colspan="4"><label><font size="3"> Reponse correcte n° :</font></label></td>' +
                                              '<td><div class="col-9"><input type="text" name="test[]" class="form-control"></div></td>' +
                                              '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
                                          $("#showPlus").append(innerHTML);
@@ -578,8 +528,11 @@
                                      {
                                          var nbr = $("#showPlus").children('tr').length;
                                          nbr = nbr +1;
-                                         var innerHTML =
-                                             '<tr id="hide_'+nbr+'" ><td colspan="4"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                         var innerHTML = '<tr id="hide_'+nbr+'" ><td colspan="4"> <label><font size="3"> Description date n° :</font></label>' +
+                                         '</td>' +
+                                         '<td>' +
+                                         '<input type="text" name="desc[]" class="form-control"> ' +
+                                         '</td>' +
                                              '<td><div class="col-15"><input name="date[]"  type="date" class="form-control"></div></td>' +
                                              '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
                                          $("#showPlus").append(innerHTML);
@@ -590,7 +543,7 @@
                                          var nbr = $("#showPlus").children('tr').length;
                                          nbr = nbr +1;
                                          var innerHTML =
-                                             '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                             '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Reponse correcte n° :</font></label></td>' +
                                              '<td><div class="col-7"><input name="number[]"  type="number" class="form-control"></div></td>' +
                                              '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
                                          $("#showPlus").append(innerHTML);
@@ -603,7 +556,7 @@
                                          var nbr = $("#showPlus").children('tr').length;
                                          nbr = nbr +1;
                                          var innerHTML =
-                                             '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                             '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Reponse correcte n° :</font></label></td>' +
                                              '<td><div class="col-7"><input name="vf[]"  type="text" class="form-control"></div></td>' +
                                              '<td><div style="width: 100px">' +
                                              '<select class="form-control"  name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select>'+
@@ -622,7 +575,7 @@
                                              '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
                                              '<td><div class=""><input name="case[]"  type="text" class="form-control"></div></td>'+
                                              '<td><div style="width: 150px">' +
-                                             '<select class="form-control" name="etatcase[]"><option value="1">Repanse correcte</option><option value="0">Repanse incorrecte</option></select></div></td>' +
+                                             '<select class="form-control" name="etatcase[]"><option value="1">Reponse correcte</option><option value="0">Reponse incorrecte</option></select></div></td>' +
                                              '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
                                          $("#showPlus").append(innerHTML);
                                      }
@@ -645,13 +598,7 @@
                                      {
                                          var nbr = $("#showPlus").children('tr').length;
                                          nbr = nbr +1;
-                                         var innerHTML ='<div class="form-group row">' +
-                                         '<table >' +
-                                         '<tr>' +
-                                         '<td colspan="3">' +
-                                         '</td>' +
-                                         '<td></td>' +
-                                         '<td></td>' +
+                                         var innerHTML =
                                              '<tr id="hide_'+nbr+'" >' +
                                              '<td colspan="2">' +
                                              '<label><font size="2"> Description formule n° :</font></label>' +
@@ -673,9 +620,19 @@
                                              '</td>' +
                                              '<td>' +
                                              '<div class=""><input  name="resultatF[]" type="text" class="form-control">' +
-                                             '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
+                                             '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>'+
+                                         '<tr>' +
+                                         '<td colspan="">' +
+
+                                         '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncalcule()" class="fa fa-plus-square"></i></a></font>' +
+
+                                         '</td>' +
+                                         '</tr>'
                                          $("#showPlus").append(innerHTML);
                                      }
+
+
+
 
                                      function fonctionhide(nbr) {
                                          $('tr#hide_'+nbr).remove();
@@ -683,7 +640,12 @@
                                      }
 
                                  </script>
+                                 <tr>
+                                     <td>
+                                         <div id="showType"></div>
+                                     </td>
 
+                                 </tr>
                                  <tr>
                                     <td colspan="2">
                                         <div class="form-group row">
@@ -697,6 +659,7 @@
                                         </div>
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <td>
                                         <div class="form-group row">
@@ -795,6 +758,8 @@
                                 </div>
                             </div>
 
+
+
                             {% if page.question|length == 0 %}
 
                                 <label>
@@ -803,33 +768,180 @@
                             {% else %}
 
 
-                                    {% for j in listquestion %}
-                                            <div class="col-sm-11"  >
+
+                                {% for j in listquestion %}
+
+
+
+
+
+                                       <div class="col-sm-11"  >
                                             <div class="list-group">
 
-                                                <button  type="button" style="background-color: #e1edf7" class="list-group-item list-group-item-action ">
+                                                <div  style="background-color: #e1edf7" class="list-group-item list-group-item-action ">
                                                   <b>
                                                     <a data-target="#myModalDelete" data-toggle="modal">
                                                       Question n°
                                                     </a></b><br>
-                                                        {{ j.textQuestion }}<br>
+                                                    </a></b>
 
-
-                                                   {% if j.typeQuestion=='Réponse courte' %}
-
-                                                        <label>Votre reponse :</label>
+                                                    {% if j.typeQuestion =='Vrai/faux' %}
+                                                        {{ j.textQuestion }}
                                                         <br>
-                                                        <label>Choix 1</label>  <input type="checkbox" value="1"><br>
-                                                        <label>Choix 2</label>  <input type="checkbox" value="2"><br>
                                                         {{ j.descriptionQuestion }}
-                                                        {% else %}
-                                                        {% if j.typeQuestion=='Réponse courte' %}
-                                                            <label>Votre reponse :</label>
-                                                            <br>
-                                                            <input type="text" class="form-control">
-                                                            {{ j.descriptionQuestion }}
-                                                        {% endif %}
-                                                    {% endif %}<br>
+
+                                                        {% for p in listreponse %}
+                                                            {% if p.question == j %}
+                                                           <table>
+                                                               <tr>
+                                                                   <td colspan="3">
+                                                                       {{ p.reponseValide }}
+                                                                   </td>
+                                                                   <td colspan="3">
+                                                                       <div style="width: 100px;">
+
+                                                                           <select style="width: 75px;" class="form-control">
+                                                                               <option>
+                                                                                   Vrai
+                                                                               </option>
+                                                                               <option>
+                                                                                   Faux
+                                                                               </option>
+                                                                           </select>
+                                                                       </div>
+                                                                   </td>
+                                                               </tr>
+                                                           </table>
+
+                                                            {% endif %}
+                                                        {% endfor %}
+
+                                                    {% endif %}
+
+
+                                                    {% if j.typeQuestion =='Liste déroulante' %}
+                                                        {{ j.textQuestion }}
+                                                        <br>
+                                                        {{ j.descriptionQuestion }}
+
+                                                                <table>
+                                                                    <tr>
+                                                                        <td colspan="3">
+                                                                            <div style="width: 100px;">
+                                                                                <select style="width: 100px;" class="form-control">
+                                                                                {% for i in listreponse %}
+                                                                                    {% if i.question == j %}
+
+                                                                                        <option>
+                                                                                        {{ i.reponseValide }}
+                                                                                    </option>
+
+                                                                                {% endif %}
+                                                                                {% endfor %}
+                                                                                </select>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                    {% endif %}
+
+
+
+                                                    {% if j.typeQuestion == 'Case à cocher' %}
+                                                        {{ j.textQuestion }}
+                                                        <br>
+                                                        {{ j.descriptionQuestion }}
+
+                                                        {% for p in listreponse %}
+                                                            {% if p.question == j %}
+                                                                <table>
+                                                                    <tr>
+                                                                        <td colspan="8">
+                                                                            {{ p.reponseValide }}
+                                                                        </td>
+                                                                        <td>
+                                                                            <div style="width: 100px;">
+                                                                                <input type="checkbox">
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endif %}
+
+                                                    {% if j.typeQuestion =='Calculée' %}
+                                                        {{ j.textQuestion }}
+                                                        <br>
+                                                        {{ j.descriptionQuestion }}
+
+                                                        {% for p in listreponse %}
+                                                            {% if p.question == j %}
+                                                                <table>
+                                                                    <tr>
+                                                                        <td colspan="3">
+                                                                            {{ p.descriptionformule }}
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            Formule:
+                                                                        </td>
+                                                                        <td colspan="3">
+                                                                         <input  class="form-control" type="text">
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>
+                                                                            Resultat:
+                                                                        </td>
+                                                                        <td>
+                                                                            <input  class="form-control" type="text">
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+
+                                                            {% endif %}
+                                                        {% endfor %}
+
+                                                    {% endif %}
+
+
+                                                    {% if j.typeQuestion=='Réponse courte' %}
+
+                                                       {% if j.parametre.formText == 'texte' %}
+                                                               {{ j.parametre.nbCaractere }}
+                                                          id de question: {{ j.id }}
+                                                           <textarea type="text"></textarea>
+
+                                                           {% for p in listreponse %}
+                                                               {% if p.question == j %}
+                                                                  id de reponse {{ dump( p.id ) }}
+                                                               {% endif %}
+                                                           {% endfor %}
+
+
+                                                       {% endif %}
+                                                       {% if j.parametre.formText == 'date' %}
+                                                           <input type="date">
+
+                                                       {% endif %}
+                                                       {% if j.parametre.formText == 'number' %}
+                                                           <input type="number">
+                                                       {% endif %}
+                                                    parametre id: {{ j.parametre.id }}
+                                                   {% endif %}
+
+                                                    {% if j.typeQuestion=='Chargement de fichier' %}
+                                                        {{ j.textQuestion }}<br>
+                                                        <input type="file"><br>
+                                                        {{ j.descriptionQuestion }}
+                                                    {% endif %}
+
+
+
                                                     {% if j.infoBulle != '' %}
 
                                                         <div class="container">
@@ -837,7 +949,7 @@
                                                         </div>
                                                     {% endif %}
 
-                                                </button><br>
+                                                </div><br>
                                                 <div class="modal fade" id="editequestion-{{ j.id }}" role="dialog">
                                                     <div class="modal-dialog">
 
@@ -926,7 +1038,8 @@
 
                                         </div>
 
-                                    {% endfor %}
+                                   {% endfor %}
+
                             {% endif %}
 
 

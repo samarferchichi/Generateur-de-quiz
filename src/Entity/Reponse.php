@@ -83,6 +83,28 @@ class Reponse
     }
 
 
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $descriptiondate;
+
+    /**
+     * @return mixed
+     */
+    public function getDescriptiondate()
+    {
+        return $this->descriptiondate;
+    }
+
+    /**
+     * @param mixed $descriptiondate
+     */
+    public function setDescriptiondate($descriptiondate): void
+    {
+        $this->descriptiondate = $descriptiondate;
+    }
+
+
 
     /**
      * @ORM\Column(type="string", nullable=true)
