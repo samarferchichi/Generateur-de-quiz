@@ -18,9 +18,8 @@ class Parametre
     private $id;
 
     /**
-     * One Cart has One Customer.
-     * @ORM\OneToOne(targetEntity="Question", inversedBy="parametre")
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Question", inversedBy="parametre")
+     *
      */
     private $question;
 
@@ -45,112 +44,6 @@ class Parametre
      * @ORM\Column(type="string", nullable=true)
      */
     private $form_text;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $pdf;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $doc;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $png;
-
-    /**
-     * @return mixed
-     */
-    public function getPdf()
-    {
-        return $this->pdf;
-    }
-
-    /**
-     * @param mixed $pdf
-     */
-    public function setPdf($pdf): void
-    {
-        $this->pdf = $pdf;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDoc()
-    {
-        return $this->doc;
-    }
-
-    /**
-     * @param mixed $doc
-     */
-    public function setDoc($doc): void
-    {
-        $this->doc = $doc;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPng()
-    {
-        return $this->png;
-    }
-
-    /**
-     * @param mixed $png
-     */
-    public function setPng($png): void
-    {
-        $this->png = $png;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getJpg()
-    {
-        return $this->jpg;
-    }
-
-    /**
-     * @param mixed $jpg
-     */
-    public function setJpg($jpg): void
-    {
-        $this->jpg = $jpg;
-    }
-
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $jpg;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $gif;
-
-    /**
-     * @return mixed
-     */
-    public function getGif()
-    {
-        return $this->gif;
-    }
-
-    /**
-     * @param mixed $gif
-     */
-    public function setGif($gif): void
-    {
-        $this->gif = $gif;
-    }
 
 
 

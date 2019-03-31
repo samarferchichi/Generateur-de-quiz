@@ -175,7 +175,16 @@
                                                  '<div class="col-7"><input name="nbcaractere" type="number" class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
                                                  '</td>' +
                                                  '</tr> ' +
+                                                 '<tr id="hide_0">' +
+                                                 '<td  colspan="4">' +
+                                                 '<label><font size="3"> Description n° :</font></label>' +
+                                                 '</td>' +
+                                                 '<td  colspan="4">' +
+                                                 '<div class="col-9"><input name="destext[]" type="text" class="form-control">' +
+                                                 '</td>' +
+                                                 '</tr>' +
                                                  '<tr id="hide_0" >' +
+
                                                  '<td colspan="4">' +
                                                  '<label><font size="3"> Reponse correcte n° :</font></label>' +
                                                  '</td>' +
@@ -342,11 +351,13 @@
                                                                      '<td>' +
                                                                      '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
                                                                      '</td>' +
-
-                                                                     '<td id="showPlus" colspan="">' +
+                                                                     '</tr>' +
+                                                                     '<tr id="showPlus"> </tr>' +
+                                                                     '<tr>' +
+                                                                     '<td colspan="7">' +
 
                                                                      '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncalcule()" class="fa fa-plus-square"></i></a></font>' +
-
+                                                                     '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
                                                                      '</td>' +
                                                                      '</tr>' +
                                                                      '<div id="divPlus"></div>' +
@@ -436,9 +447,18 @@
                                                      '<font size="3" color="#696969"> Nombre de chiffre autorisés de 1 à 100:</font>' +
                                                      '</td>' +
                                                      '<td>' +
-                                                     '<div class="col-6"><input name="nbChiffre" type="number" class="form-control"></div>' +
+                                                     '<div class="col-6"><input name="nbChiffre"  type="number" class="form-control"></div>' +
                                                      '</td>' +
                                                      '</tr> ' +
+                                                     '</tr> ' +
+                                                     '<tr id="hide_0">' +
+                                                     '<td  colspan="4">' +
+                                                     '<label><font size="3"> Description n° :</font></label>' +
+                                                     '</td>' +
+                                                     '<td  colspan="4">' +
+                                                     '<div class="col-9"><input name="desnum[]" type="text" class="form-control">' +
+                                                     '</td>' +
+                                                     '</tr>' +
                                                      '<tr  id="hide_0">' +
                                                      '<td  colspan="6">' +
                                                      '<label><font size="3"> Reponse correcte n° :</font></label>' +
@@ -482,9 +502,17 @@
                                                      '<font size="3" color="#696969"> Nombre de caracteres autorisés:</font>' +
                                                      '</td>' +
                                                      '<td>' +
-                                                     '<div class="col-7"><input name="nbcaractere"   type="number" class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
+                                                     '<div class="col-7"><input name="nbcaractere" type="number"  class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
                                                      '</td>' +
                                                      '</tr> ' +
+                                                     '<tr id="hide_0">' +
+                                                     '<td  colspan="4">' +
+                                                     '<label><font size="3"> Description n° :</font></label>' +
+                                                     '</td>' +
+                                                     '<td  colspan="4">' +
+                                                     '<div class="col-9"><input name="destext[]" type="text" class="form-control">' +
+                                                     '</td>' +
+                                                     '</tr>' +
                                                      '<tr id="hide_0">' +
                                                      '<td  colspan="4">' +
                                                      '<label><font size="3"> Reponse correcte n° :</font></label>' +
@@ -516,7 +544,14 @@
                                      {
                                         var nbr = $("#showPlus").children('tr').length;
                                          nbr = nbr +1;
-                                         var innerHTML =
+                                         var innerHTML =  '<tr id="hide_'+nbr+'">' +
+                                             '<td  colspan="4">' +
+                                             '<label><font size="3"> Description n° :</font></label>' +
+                                             '</td>' +
+                                             '<td  colspan="4">' +
+                                             '<div class="col-9"><input name="destext[]" type="text" class="form-control">' +
+                                             '</td>' +
+                                             '</tr>' +
                                              '<tr id="hide_'+nbr+'" ><td colspan="4"><label><font size="3"> Reponse correcte n° :</font></label></td>' +
                                              '<td><div class="col-9"><input type="text" name="test[]" class="form-control"></div></td>' +
                                              '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
@@ -542,7 +577,14 @@
                                      {
                                          var nbr = $("#showPlus").children('tr').length;
                                          nbr = nbr +1;
-                                         var innerHTML =
+                                         var innerHTML ='<tr id="hide_'+nbr+'"">' +
+                                             '<td  colspan="4">' +
+                                             '<label><font size="3"> Description n° :</font></label>' +
+                                             '</td>' +
+                                             '<td  colspan="4">' +
+                                             '<div class="col-9"><input name="desnum[]" type="text" class="form-control">' +
+                                             '</td>' +
+                                             '</tr>' +
                                              '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Reponse correcte n° :</font></label></td>' +
                                              '<td><div class="col-7"><input name="number[]"  type="number" class="form-control"></div></td>' +
                                              '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
@@ -611,7 +653,7 @@
                                              '</td>' +
                                              '</tr> '+
                                              '<tr id="hide_'+nbr+'">' +
-                                             '<td >' +
+                                             '<td  colspan="2">' +
                                              '<div class=""><input  name="descriptionF[]" type="text" class="form-control">' +
                                              '</div>' +
                                              '</td>' +
@@ -619,14 +661,9 @@
                                              '<div class=""><input  name="formule[]" type="text" class="form-control">' +
                                              '</td>' +
                                              '<td>' +
-                                             '<div class=""><input  name="resultatF[]" type="text" class="form-control">' +
-                                             '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>'+
-                                         '<tr>' +
-                                         '<td colspan="">' +
+                                             '<div class=""><input  name="resultatF[]" type="text" class="form-control"></td>' +
 
-                                         '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncalcule()" class="fa fa-plus-square"></i></a></font>' +
-
-                                         '</td>' +
+                                             '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td>'+
                                          '</tr>'
                                          $("#showPlus").append(innerHTML);
                                      }
@@ -898,47 +935,58 @@
                                                                             Resultat:
                                                                         </td>
                                                                         <td>
-                                                                            <input  class="form-control" type="text">
+                                                                            <input class="form-control" type="text">
                                                                         </td>
                                                                     </tr>
                                                                 </table>
-
                                                             {% endif %}
                                                         {% endfor %}
-
                                                     {% endif %}
 
 
-                                                    {% if j.typeQuestion=='Réponse courte' %}
 
-                                                       {% if j.parametre.formText == 'texte' %}
-                                                               {{ j.parametre.nbCaractere }}
-                                                          id de question: {{ j.id }}
-                                                           <textarea type="text"></textarea>
-
-                                                           {% for p in listreponse %}
-                                                               {% if p.question == j %}
-                                                                  id de reponse {{ dump( p.id ) }}
-                                                               {% endif %}
-                                                           {% endfor %}
-
-
-                                                       {% endif %}
-                                                       {% if j.parametre.formText == 'date' %}
-                                                           <input type="date">
-
-                                                       {% endif %}
-                                                       {% if j.parametre.formText == 'number' %}
-                                                           <input type="number">
-                                                       {% endif %}
-                                                    parametre id: {{ j.parametre.id }}
-                                                   {% endif %}
-
-                                                    {% if j.typeQuestion=='Chargement de fichier' %}
+                                                    {% if j.typeQuestion =='Réponse courte' %}
                                                         {{ j.textQuestion }}<br>
-                                                        <input type="file"><br>
                                                         {{ j.descriptionQuestion }}
+
+                                                        {% for p in listparametre %}
+
+                                                            {% if p.question==j and p.formText =='texte' %}
+                                                                  {% for r in listreponse %}
+                                                                      {% if r.question == j %}
+
+                                                                          {{ r.destext }}<br>
+                                                                         <textarea class="form-control"></textarea><br>
+                                                                      {% endif %}
+                                                                  {% endfor %}
+                                                              {% endif %}
+
+                                                            {% if p.question==j and p.formText =='date' %}
+                                                                {% for r in listreponse %}
+                                                                    {% if r.question == j %}
+                                                                        <br>
+                                                                        {{ r.descriptiondate }}
+                                                                        <input type="date">
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            {% endif %}
+
+
+
+
+                                                            {% if p.question==j and p.formText =='number' %}
+                                                                {% for r in listreponse %}
+                                                                    {% if r.question == j %}
+
+                                                                        {{ r.descriptiondate }}<br>
+                                                                        {{ r.desnumber }}
+                                                                        <input type="number" class="form-control">
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        {% endfor %}
                                                     {% endif %}
+
 
 
 
@@ -966,6 +1014,7 @@
                                                                     { 'id': j.id }
                                                                 )) }}
                                                             </div>
+
 
                                                         </div>
 
@@ -1008,7 +1057,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <a href="#" data-target="#editequestion-{{ j.id }}" data-toggle="modal" class="fa fa-pencil"></a>
+                                                        <a href="#" data-target="#editequestion-{{ j.id  }}" data-toggle="modal" class="fa fa-pencil"></a>
 
                                                     </td>
                                                 </tr>
@@ -1056,6 +1105,7 @@
                                     </label>
                                 </div>
                             </div>
+
                         {% endif %}
 
                             <!-- Modal -->
@@ -1083,7 +1133,6 @@
 
 
 
-                        </div>
 
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -1114,8 +1163,8 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <div class="container" style=" width: 632px; height:52px; border-left: 1.5px solid ;
                              color: #3a87ad; background-color: #9acfea ; border-radius: 5px; " >
                             <!-- Trigger the modal with a button -->
@@ -1152,8 +1201,9 @@
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <div class="modal fade" id="removepage-{{ page.id }}" role="dialog">
+
+
+                                 <div class="modal fade" id="removepage-{{ page.id }}" role="dialog">
                                             <div class="modal-dialog">
 
                                                 <!-- Modal content-->
@@ -1172,7 +1222,7 @@
                                             </div>
 
                                         </div>
-
+                                    </font>
                                         <a href="#" data-target="#myModal" data-toggle="modal" class="fa fa-pencil"></a>
                                         &nbsp;
                                         <a href="{{ path("page_ajout", { 'id': quiz.id, 'page': page.id } ) }}" class="fa fa-plus-square-o" ></a>
@@ -1181,10 +1231,9 @@
                                     </font>
                                 </div>
                             </div>
-
+                        </div>
                         </div>
                 </div>
-
 
 
 
@@ -1194,9 +1243,6 @@
         </div>
         </div>
     </div>
-<br>
-<br>
-<br>
-<br>
+
 
 {% endblock %}

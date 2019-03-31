@@ -24,6 +24,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * Common features needed in admin controllers.
@@ -88,6 +89,9 @@ class AdminController extends EasyAdminController
 
 
             if ($question->getTypeQuestion() == "Réponse courte") {
+                $des=$request->get('destext');
+                $desnum=$request->get('desnum');
+
                 $selecttype = $request->get('selecttype');
                 if ($selecttype == 'texte') {
                     $nbcaractere = $request->get('nbcaractere');
@@ -97,24 +101,36 @@ class AdminController extends EasyAdminController
                     $parametre->setQuestion($question);
                     $parametre->setNbCaractere($nbcaractere);
                     $entityManager->persist($parametre);
+
                     $reptext = $request->get('test');
                     $data = [''];
                     foreach ($reptext as $p) {
                         array_push($data, $p);
                     }
+
+
+
+
+                    $datatext = [''];
+                    foreach ($des as $p) {
+                        array_push($datatext, $p);
+                    }
                     for ($i = 1; $i < count($data); $i++) {
                         $reponse = new Reponse();
                         $reponse->setQuestion($question);
+                        $reponse->setDestext($datatext[$i]);
                         $reponse->setReponseValide($data[$i]);
                         $entityManager->persist($reponse);
                     }
 
                 } elseif ($selecttype == 'date') {
+
                     $parametre = new Parametre();
                     $entityManager = $this->getDoctrine()->getManager();
                     $parametre->setFormText("date");
                     $parametre->setQuestion($question);
                     $entityManager->persist($parametre);
+
                     $date = $request->get('date');
                     $data = [''];
                     foreach ($date as $p) {
@@ -127,13 +143,22 @@ class AdminController extends EasyAdminController
                         array_push($datad, $p);
                     }
 
+
                     for ($i = 1; $i < count($datad); $i++) {
+
                         $reponse = new Reponse();
+
                         $reponse->setQuestion($question);
                         $reponse->setDescriptiondate($datad[$i]);
                         $entityManager->persist($reponse);
+
                     }
                 } elseif ($selecttype == 'number') {
+                    $datanum = [''];
+                    foreach ($desnum as $p) {
+                        array_push($datanum, $p);
+                    }
+
                     $parametre = new Parametre();
                     $entityManager = $this->getDoctrine()->getManager();
                     $parametre->setFormText("number");
@@ -148,6 +173,8 @@ class AdminController extends EasyAdminController
                     for ($i = 1; $i < count($data); $i++) {
                         $reponse = new Reponse();
                         $reponse->setQuestion($question);
+                        $reponse->setDesnumber($datanum[$i]);
+
                         $reponse->setReponseValide($data[$i]);
                         $entityManager->persist($reponse);
 
@@ -264,6 +291,7 @@ class AdminController extends EasyAdminController
         }
 
         $listreponse = $reponseRepository->findAll();
+        $listparametre = $parametreRepository->findAll();
 
         return $this->render('quiz/creerquiz.html.twig', [
                     'page' => $page,
@@ -274,7 +302,7 @@ class AdminController extends EasyAdminController
                     'listquestion' => $listquestion,
                     'pos'   => $pos,
                     'listquiz'=>$listquiz,
-
+                    'listparametre'=>$listparametre,
                     'listreponse'=>$listreponse
                 ]
             );
@@ -358,6 +386,47 @@ class AdminController extends EasyAdminController
     }
 
 
+
+    /**
+     * @Route("/quiz/list", name="list_quiz", methods={"GET","POST"})
+     */
+    public function list_quiz(Request $request, QuizRepository $quizRepository, PageRepository $pageRepository): Response
+    {
+        $listquiz = $quizRepository->findAll();
+        $listpage = $pageRepository->findAll();
+
+        return $this->render('quiz/list.html.twig',[
+               'listequiz' => $listquiz,
+            'listepage' => $listpage
+        ]);
+    }
+
+    /**
+     * @Route("/page/list", name="list_page", methods={"GET","POST"})
+     */
+    public function list_page(Request $request, PageRepository $pageRepository): Response
+    {
+        $listpage = $pageRepository->findAll();
+
+        return $this->render('quiz/listPage.html.twig',[
+            'listepage' => $listpage
+        ]);
+
+
+    }
+
+
+
+
+    public function sendAction()
+    {
+
+        return $this->render('quiz/send.html.twig');
+    }
+
+
+
+
     /**
      * @Route("/quiz/new", name="quiz_new", methods={"GET","POST"})
      */
@@ -370,7 +439,7 @@ class AdminController extends EasyAdminController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
 
-
+            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
             $file = $quiz->getBrochure();
 
             $fileName = $this->generateUniqueFileName().'.'.$file->guessExtension();
@@ -381,11 +450,9 @@ class AdminController extends EasyAdminController
                     $fileName
                 );
             } catch (FileException $e) {
-                // ... handle exception if something happens during file upload
             }
 
-            // updates the 'brochure' property to store the PDF file name
-            // instead of its contents
+
             $quiz->setBrochure($fileName);
 
 

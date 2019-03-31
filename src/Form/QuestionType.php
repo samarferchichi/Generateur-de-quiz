@@ -22,7 +22,7 @@ class QuestionType extends AbstractType
                     'class' => 'form-control',
                 ],
                 'required' =>  false,
-                'label' => 'Titre de votre quiz',
+                'label' => 'Titre de votre question',
                 'label_attr' => [
                     'class' => ''
                 ]

@@ -59,9 +59,9 @@ class ParametreController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="parametre_edit", methods={"GET","POST"})
+     * @Route("/{id}/edit/parametre", name="parametre_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Parametre $parametre): Response
+    public function editparametre(Request $request, Parametre $parametre): Response
     {
         $form = $this->createForm(ParametreType::class, $parametre);
         $form->handleRequest($request);

@@ -1,0 +1,228 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+
+{% set _content_title = 'Espace d administartion' %}
+
+{% block page_title -%}
+    {{ _content_title }}
+
+{%- endblock %}
+
+{% block content_header %}
+
+    <div class="form-group row">
+        <div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+        </div>
+        &nbsp; &nbsp;
+        <h1 class="title">{{ _content_title }}</h1>
+    </div>
+{% endblock %}
+{% block main %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+
+
+            /* Clear floats after the columns */
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            .aa {
+                width: 35px;
+                height: 4px;
+                background-color: #444444;
+                margin: 6px 0;
+            }
+
+
+
+
+            /* Hide the browser's default checkbox */
+            .container input {
+                position: absolute;
+                opacity: 0;
+                cursor: pointer;
+                height: 0;
+                width: 0;
+            }
+
+
+            /* On mouse-over, add a grey background color */
+            .container:hover input ~ .checkmark {
+                background-color: #ccc;
+            }
+
+            /* When the checkbox is checked, add a blue background */
+            .container input:checked ~ .checkmark {
+                background-color: #2196F3;
+            }
+
+
+            /* Show the checkmark when checked */
+            .container input:checked ~ .checkmark:after {
+                display: block;
+            }
+
+            /* Style the checkmark/indicator */
+            .container .checkmark:after {
+                left: 9px;
+                top: 5px;
+                width: 5px;
+                height: 10px;
+                border: solid white;
+                border-width: 0 3px 3px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+            input[type=checkbox] {
+                position: relative;
+                cursor: pointer;
+            }
+            input[type=checkbox]:before {
+                content: "";
+                display: block;
+                position: absolute;
+                width: 16px;
+                height: 16px;
+                top: 0;
+                left: 0;
+                border: 2px solid #555555;
+                border-radius: 3px;
+                background-color: white;
+            }
+            input[type=checkbox]:checked:after {
+                content: "";
+                display: block;
+                width: 5px;
+                height: 10px;
+                border: solid black;
+                border-width: 0 2px 2px 0;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+                position: absolute;
+                top: 2px;
+                left: 6px;
+            }
+            .form-group label, .form-group legend.col-form-label {
+                align-self: self-start;
+                color: var(--text-color);
+                flex: 30% 0 0;
+                font-size: var(--font-size-base);
+                font-weight: 400;
+                margin: 5px 5px 0 0;
+                text-align: right;
+            }
+        </style>
+
+
+
+    <div class="panel panel-success">
+
+        <div class="row">
+            <div class="col-sm-4" style="background-color: ">
+                <div class="panel panel-success">
+                    <div class="card bg-info text-white">
+                        <div class="card-body"><center>LISTE QUIZ</center></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8" style="background-color: ">
+                <div class="panel panel-success">
+                    <div class="card bg-info text-white">
+                        <div class="card-body"> <center>CONTINUE DE QUIZ</center></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <table>
+
+                                <tr>
+                                    <td colspan="">
+                                        <div class="form-group row">
+                                            <div class="col-xs-1">
+
+
+                                                {% for q in listequiz %}
+
+                                                <div style="width:450px;">
+                                                    <a  href="#" style="max-width: 180px; background-color: "  onclick="myFunction( '{{ q.id }}','{{ q.description }}', '{{ q.brochure }}', '{{ q.titre }}' )"  ><font size="4"> {{ q.titre }}</font></a>
+                                                </div>
+
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                            </table>
+
+                        <script>
+
+                                function myFunction(p1,p2,p3,p4) {
+                                    document.getElementById("test").innerHTML ='<img width="60" height="60" src="{{ asset('uploads/brochures/')}}' + p3 + '"><label>Titre : </label>'+" "+p4+" "+'<br><label>Description : </label>'+"  "+p2+'' +" "+
+                                        '<input type="button" onclick="testfonction('+p1+')" class="btn btn-info" value="Plus">'  ;
+
+                                }
+
+
+                                function testfonction(p1) {
+                                    document.getElementById("test2").innerHTML ='' +
+                                        '<div style="background-color: red">Quiz : </div>' +p1;
+
+
+
+                                }
+
+
+                            </script>
+
+
+                            </div>
+                        <div class="col-sm-8">
+
+                        <div class="form-group col">
+                                <center>
+                                    <div id="test" style="background-color:  ; width: auto; height: auto"></div>
+                                    <br>
+                                    <div id="test2" style="background-color:  ; width: auto; height: auto"></div>
+
+                                    {% for p in listepage %}
+                                        {{ dump(p) }}
+                                    {% endfor %}
+
+                                </center>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

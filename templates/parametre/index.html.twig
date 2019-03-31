@@ -9,11 +9,10 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Rep_form_text</th>
-                <th>Rep_form_date</th>
-                <th>Rep_form_nombre</th>
-                <th>Longueur_min</th>
-                <th>Longueur_max</th>
+                <th>form_text</th>
+                <th>nb_caractere</th>
+                <th>nb_chiffre</th>
+
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,11 +20,10 @@
         {% for parametre in parametres %}
             <tr>
                 <td>{{ parametre.id }}</td>
-                <td>{{ parametre.repFormText }}</td>
-                <td>{{ parametre.repFormDate ? parametre.repFormDate|date('Y-m-d') : '' }}</td>
-                <td>{{ parametre.repFormNombre }}</td>
-                <td>{{ parametre.longueurMin }}</td>
-                <td>{{ parametre.longueurMax }}</td>
+                <td>{{ parametre.formText }}</td>
+                <td>{{ parametre.nbCaractere }}</td>
+                <td>{{ parametre.nbChiffre }}</td>
+
                 <td>
                     <a href="{{ path('parametre_show', {'id': parametre.id}) }}">show</a>
                     <a href="{{ path('parametre_edit', {'id': parametre.id}) }}">edit</a>

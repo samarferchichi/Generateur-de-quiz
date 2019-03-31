@@ -48,6 +48,52 @@ class Reponse
     /**
      * @ORM\Column(type="string", length=2000, nullable=true)
      */
+    private $destext;
+
+
+
+    /**
+     * @ORM\Column(type="string", length=2000, nullable=true)
+     */
+    private $desnumber;
+
+    /**
+     * @return mixed
+     */
+    public function getDesnumber()
+    {
+        return $this->desnumber;
+    }
+
+    /**
+     * @param mixed $desnumber
+     */
+    public function setDesnumber($desnumber): void
+    {
+        $this->desnumber = $desnumber;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getDestext()
+    {
+        return $this->destext;
+    }
+
+    /**
+     * @param mixed $destext
+     */
+    public function setDestext($destext): void
+    {
+        $this->destext = $destext;
+    }
+
+
+    /**
+     * @ORM\Column(type="string", length=2000, nullable=true)
+     */
     private $resultatformule;
 
     /**

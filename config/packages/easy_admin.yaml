@@ -9,19 +9,23 @@ easy_admin:
     batch_actions: ['delete']
     actions:
       - { name: 'edit', icon: 'pencil' , label: false }
-      - { name: 'delete', icon: 'delete', label: 'Supprimer' }
+      - { name: 'delete', icon: 'trash', label: false }
       - { name: 'new', label: 'Ajouter', icon: 'add' }
       - { name: 'search', label: 'Rechercher' }
+      - { name: 'show' , icon: 'eye' , label: false }
+      - { name: 'send' , icon: 'send' , label: false }
 
 
   entities:
 
     Question:
       class: App\Entity\Question
+
     Quiz:
       class: App\Entity\Quiz
       label: 'Lister Quiz'
       list:
+      action:
         fields:
           - { property: 'titre', type: 'text' }
           - { property: 'brochure', type: 'image', base_path: 'brochures_directory' }
@@ -38,13 +42,19 @@ easy_admin:
           - { property: 'message_e', type: 'text' }
           - { property: 'nb_tentative', type: 'integer' }
 
+
         show:
           fields:
+            - { type: 'group', columns: 4, label: 'Basic information' }
+            - { property: 'description', type: 'text' }
+            - { property: 'mode_correction', type: 'boolean' }
             - { property: 'brochure', type: 'image', base_path: 'brochures_directory' }
+
     User:
       class: App\Entity\User
       label: 'Admines'
       list:
+
           title: "Liste utilisateurs"
           fields:
             - { property: 'username', label: 'Nom utilisateur' }
@@ -74,7 +84,7 @@ easy_admin:
         icon: 'file'
         children:
           - { label: 'Créer Quiz', route: 'quiz_new', icon: 'wpforms' }
-          - { entity: 'Quiz', icon: 'list-ol' }
+          - { label: 'Lister Quizzz', route: 'list_quiz', icon: 'list-ol' }
       - { entity: 'Quiz', label: 'Configuration', icon: 'cogs', }
       - label: 'Utilisateurs'
         icon: 'users'

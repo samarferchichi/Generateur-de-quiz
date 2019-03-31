@@ -44,7 +44,7 @@ class Question
 
     /**
      * One Customer has One Cart.
-     * @ORM\OneToOne(targetEntity="Parametre", mappedBy="question", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="Parametre", mappedBy="question", cascade={"persist","remove"})
      */
     private $parametre;
 

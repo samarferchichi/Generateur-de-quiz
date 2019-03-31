@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Page;
+use App\Entity\Parametre;
 use App\Entity\Question;
+use App\Entity\Reponse;
 use App\Form\QuestionType;
 use App\Repository\QuestionRepository;
+use App\Repository\ReponseRepository;
 use PhpParser\Parser\Php7;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -52,7 +55,7 @@ class QuestionController extends AbstractController
         ]);
     }
 
-    public function questionDepAction(Request $request, Question $question): Response
+    public function questionDepAction(Request $request,ReponseRepository $reponseRepository, Question $question, Parametre $parametre, Reponse $reponse): Response
     {
 
         if(count($question->getPage()->getQuestion()) < $question->getPage()->getQuiz()->getNbQuestion()){
@@ -60,13 +63,49 @@ class QuestionController extends AbstractController
             $q->setPage($question->getPage());
             $q->setTextQuestion($question->getTextQuestion());
             $q->setTypeQuestion($question->getTypeQuestion());
+
+         /*   $p = new Parametre();
+
+            $p->setNbCaractere($parametre->getNbCaractere());
+            $p->setNbChiffre($parametre->getNbChiffre());
+            $p->setQuestion($parametre->getQuestion());
+            $p->setFormText($parametre->getFormText());
+
+         //   $r=$question->getReponse();
+
+          //  $r = $reponseRepository->findBy(array('question' => $reponse->getId() ));
+
+            $reponse=$reponseRepository->findBy(array('question' => $question->getId()));
+
+
+            for ( $i=0; $i < count($reponse); $i++){
+                $entityManager = $this->getDoctrine()->getManager();
+                $r=new Reponse();
+
+                $r->setDescriptiondate($reponse[$i]->getDescriptiondate());
+                $r->setQuestion($reponse[$i]->getQuestion());
+                $r->setDescriptionformule($reponse[$i]->getDescriptionformule());
+                $r->setResultatformule($reponse[$i]->getResultatformule());
+                $r->setFormule($reponse[$i]->getFormule());
+                $r->setEtatlist($reponse[$i]->getEtatlist());
+                $r->setEtatcaseacocher($reponse[$i]->getEtatcaseacocher());
+                $r->setEtatvf($reponse[$i]->getEtatvf());
+                $r->setReponseValide($reponse[$i]->getReponseValide());
+                $entityManager->persist($r);
+
+            }*/
+
             if($question->getDescriptionQuestion())
+
                 $q->setDescriptionQuestion($question->getDescriptionQuestion());
             if($question->getInfoBulle())
                 $q->setInfoBulle($question->getInfoBulle());
 
             $entityManager = $this->getDoctrine()->getManager();
             $question->setActif(true);
+
+          //  $entityManager->persist($p);
+
             $entityManager->persist($q);
             $entityManager->flush();
         }
@@ -122,6 +161,7 @@ class QuestionController extends AbstractController
     {
         $form = $this->createForm(QuestionType::class, $question, [
             'action' => $this->generateUrl('question_edit', ['id' => $question->getId()])
+
         ]);
         $form->handleRequest($request);
 
