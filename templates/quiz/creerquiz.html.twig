@@ -30,10 +30,44 @@
             background-color: #1f6377;
             margin: 6px 0;
         }
-
-
-
     </style>
+
+
+    <style>
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 340px;
+            height: auto;
+            background-color: #f1f1f1;
+        }
+
+        li a {
+            display: block;
+            color: #000;
+            padding: 8px 16px;
+            text-decoration: none;
+            width: px;
+        }
+
+        li a.active {
+            background-color: #7ab5d3;
+            color: white;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #2a85a0;
+            color: black;
+        }
+    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noodp, noimageindex, notranslate, nocache" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="generator" content="EasyAdmin" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -544,14 +578,7 @@
                                      {
                                         var nbr = $("#showPlus").children('tr').length;
                                          nbr = nbr +1;
-                                         var innerHTML =  '<tr id="hide_'+nbr+'">' +
-                                             '<td  colspan="4">' +
-                                             '<label><font size="3"> Description n° :</font></label>' +
-                                             '</td>' +
-                                             '<td  colspan="4">' +
-                                             '<div class="col-9"><input name="destext[]" type="text" class="form-control">' +
-                                             '</td>' +
-                                             '</tr>' +
+                                         var innerHTML =
                                              '<tr id="hide_'+nbr+'" ><td colspan="4"><label><font size="3"> Reponse correcte n° :</font></label></td>' +
                                              '<td><div class="col-9"><input type="text" name="test[]" class="form-control"></div></td>' +
                                              '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
@@ -803,15 +830,7 @@
                                     Page vide !
                                 </label>
                             {% else %}
-
-
-
                                 {% for j in listquestion %}
-
-
-
-
-
                                        <div class="col-sm-11"  >
                                             <div class="list-group">
 
@@ -819,7 +838,9 @@
                                                   <b>
                                                     <a data-target="#myModalDelete" data-toggle="modal">
                                                       Question n°
-                                                    </a></b><br>
+                                                    </a>
+
+                                                  </b><br>
                                                     </a></b>
 
                                                     {% if j.typeQuestion =='Vrai/faux' %}
@@ -859,13 +880,14 @@
                                                     {% if j.typeQuestion =='Liste déroulante' %}
                                                         {{ j.textQuestion }}
                                                         <br>
+
                                                         {{ j.descriptionQuestion }}
 
                                                                 <table>
                                                                     <tr>
                                                                         <td colspan="3">
                                                                             <div style="width: 100px;">
-                                                                                <select style="width: 100px;" class="form-control">
+                                                                                <select style="width: 350px;" class="form-control">
                                                                                 {% for i in listreponse %}
                                                                                     {% if i.question == j %}
 
@@ -899,7 +921,7 @@
                                                                         </td>
                                                                         <td>
                                                                             <div style="width: 100px;">
-                                                                                <input type="checkbox">
+                                                                                <input type="checkbox" >
                                                                             </div>
                                                                         </td>
                                                                     </tr>
@@ -927,7 +949,7 @@
                                                                             Formule:
                                                                         </td>
                                                                         <td colspan="3">
-                                                                         <input  class="form-control" type="text">
+                                                                         <input  style="width: 400px;" class="form-control" type="text">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -935,7 +957,7 @@
                                                                             Resultat:
                                                                         </td>
                                                                         <td>
-                                                                            <input class="form-control" type="text">
+                                                                            <input style="width: 400px;" class="form-control" type="text">
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -952,13 +974,8 @@
                                                         {% for p in listparametre %}
 
                                                             {% if p.question==j and p.formText =='texte' %}
-                                                                  {% for r in listreponse %}
-                                                                      {% if r.question == j %}
 
-                                                                          {{ r.destext }}<br>
                                                                          <textarea class="form-control"></textarea><br>
-                                                                      {% endif %}
-                                                                  {% endfor %}
                                                               {% endif %}
 
                                                             {% if p.question==j and p.formText =='date' %}
@@ -992,14 +1009,14 @@
 
                                                     {% if j.infoBulle != '' %}
 
-                                                        <div class="container">
+                                                        <div style="padding-left: 450px;" class="container">
                                                             <a href="#" data-toggle="popover" title="INFO !" data-content="{{ j.infoBulle }}"><i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
                                                         </div>
                                                     {% endif %}
 
                                                 </div><br>
-                                                <div class="modal fade" id="editequestion-{{ j.id }}" role="dialog">
-                                                    <div class="modal-dialog">
+                                                <div  class="modal fade" id="editequestion-{{ j.id }}" role="dialog">
+                                                    <div  class="modal-dialog">
 
                                                         <!-- Modal content-->
                                                         <div class="modal-content">

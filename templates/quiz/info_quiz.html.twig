@@ -1,0 +1,134 @@
+
+<script>
+    $( function() {
+        $( "#accordion" ).accordion({
+            collapsible: true
+        });
+    } );
+    $( function() {
+        $( "#selectable" ).selectable();
+    } );
+</script>
+<script>
+    $( function() {
+        $( "#menu" ).menu();
+    } );
+</script>
+<style>
+
+    .ui-menu { width: 150px; }
+</style>
+
+<div class="w3-panel w3-pale-green" >
+
+        <div class="row">
+            <div class="col-sm-8" style="background-color: ">
+                <div class="w3-panel w3-pale-green">
+                    <div class="w3-panel w3-pale-green">
+                        <div class="card-body"><center>{{ quiz.titre }}</center>
+
+                            <table class="table" >
+                                <tbody>
+
+                                <tr>
+                                    <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
+                                </tr>
+                                <tr>
+                                    <th>Description</th>
+                                    <td>{{ quiz.description }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Mode_correction</th>
+                                    <td>{{ quiz.modeCorrection ? 'Yes' : 'No' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Mode_score</th>
+                                    <td>{{ quiz.modeScore ? 'Yes' : 'No' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Temps_dispo</th>
+                                    <td>{{ quiz.tempsDispo ? quiz.tempsDispo|date('Y-m-d H:i:s') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Melange_question</th>
+                                    <td>{{ quiz.melangeQuestion ? 'Yes' : 'No' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Ouvrire_quiz</th>
+                                    <td>{{ quiz.ouvrireQuiz ? quiz.ouvrireQuiz|date('Y-m-d H:i:s') : '' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Fermer_quiz</th>
+                                    <td>{{ quiz.fermerQuiz ? quiz.fermerQuiz|date('Y-m-d H:i:s') : '' }}</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-sm-4" style="background-color: ;">
+                <div class="">
+                    <div class="card bg-info text-white">
+                        <div class="card-body" style="background-color: #b9def0"> <center>PAGE</center>
+                            <div id="accordion">
+
+                                {% for page in quiz.page %}
+
+                                    <h3>{{ page.titrePage }}</h3>
+                                    <div>
+                                        <label>Titre de page:</label>{{ page.titrePage }}
+                                        <div class="modal fade" id="removepage-{{ page.id }}" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Supprimer page</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        {{ render(controller(
+                                                            'App\\Controller\\AdminController::deletepage2',
+                                                            {  'page': page.id,'quiz': quiz.id }
+                                                        )) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+                                        <br>
+                                        <br>
+                                        <button style="background-color: #b9def0">
+                                          <a href="{{ path('modifier_page', {'quiz':quiz.id ,'page': page.id}) }}"class="fa fa-pencil"></a>
+                                        </button>
+                                        <button style="background-color: #b9def0">
+                                           <a  href="#"  data-target="#removepage-{{ page.id }}" data-toggle="modal" class="fa fa-trash-o"></a>
+                                        </button>
+                                        <button style="background-color: #b9def0">
+                                            <i class="fa fa-plus-square-o" href="{{ path('addpage', {'id':quiz.id, 'page': page.id}) }}"></i>
+                                        </button>
+
+                                    </div>
+
+
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+

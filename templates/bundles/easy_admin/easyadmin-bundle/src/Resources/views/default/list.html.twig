@@ -46,6 +46,7 @@
         {% set _action = easyadmin_get_action_for_list_view('search', _entity_config.name) %}
 
         {% block search_action %}
+
             <div class="form-action form-action-search {{ _action.css_class|default('') }}">
                 <form method="get" action="{{ path('easyadmin') }}">
                     {% block search_form %}

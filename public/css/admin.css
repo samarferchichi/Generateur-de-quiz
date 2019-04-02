@@ -1,6 +1,6 @@
 :root {
     /* make the backend contents as wide as the browser window */
-    --body-max-width: 90%;
+    --body-max-width: 100%;
     /* change the background color of the <body> */
     /* make the base font size smaller */
     --font-size-base: 20px;
@@ -8,6 +8,6 @@
     --border-radius: 20px;
     background-color: white;
 
-    table-border-color-dark: #6b1f33;
     --border-color: #ADFFE1;
+
 }

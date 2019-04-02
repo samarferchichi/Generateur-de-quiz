@@ -1,0 +1,474 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+
+{% set _content_title = 'Espace d administartion' %}
+
+{% block page_title -%}
+    {{ _content_title }}
+
+{%- endblock %}
+
+{% block content_header %}
+
+    <div class="form-group row">
+        <div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+        </div>
+        &nbsp; &nbsp;
+        <h1 class="title">{{ _content_title }}</h1>
+    </div>
+{% endblock %}
+{% block main %}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+
+
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        #feedback { font-size: 1.4em; }
+        #selectable .ui-selecting { background: #FECA40; }
+        #selectable .ui-selected { background: #F39814; color: white; }
+        #selectable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+        #selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+    </style>
+
+
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .aa {
+            width: 35px;
+            height: 4px;
+            background-color: #444444;
+            margin: 6px 0;
+        }
+
+
+
+
+        /* Hide the browser's default checkbox */
+        .container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+
+        /* On mouse-over, add a grey background color */
+        .container:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+
+
+        /* Show the checkmark when checked */
+        .container input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+        input[type=checkbox] {
+            position: relative;
+            cursor: pointer;
+        }
+        input[type=checkbox]:before {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            border: 2px solid #555555;
+            border-radius: 3px;
+            background-color: white;
+        }
+        input[type=checkbox]:checked:after {
+            content: "";
+            display: block;
+            width: 5px;
+            height: 10px;
+            border: solid black;
+            border-width: 0 2px 2px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+            position: absolute;
+            top: 2px;
+            left: 6px;
+        }
+        .form-group label, .form-group legend.col-form-label {
+            align-self: self-start;
+            color: var(--text-color);
+            flex: 30% 0 0;
+            font-size: var(--font-size-base);
+            font-weight: 400;
+            margin: 5px 5px 0 0;
+            text-align: right;
+        }
+    </style>
+
+
+    <div class="panel panel-success">
+
+        <div class="row">
+            <div class="col-sm-5" style="background-color: ">
+                <div class="panel panel-success">
+                    <div class="card bg-info text-white">
+                        <div class="card-body"><center>MODIFIER PAGES</center></div>
+                    </div>
+                    <div class="col-sm-12">
+
+
+                        <h2>Modifier page </h2>
+
+                        {{ form_start(form) }}
+                        <div id="page">
+                            <div>
+                                {{ form_label(form.titre_page) }}
+                                {{ form_widget(form.titre_page) }}
+                            </div>
+                            <div>
+                                {{ form_label(form.color_titre_page) }}
+                                {{ form_widget(form.color_titre_page) }}
+                            </div>
+                            <div>
+                                {{ form_label(form.bg_color) }}
+                                {{ form_widget(form.bg_color) }}
+                            </div>
+
+                        </div><br>
+                       <center>
+                           <button class="btn">Modifier</button>
+                           <button href="{{ path('get_info_quiz', {'quiz': quiz} )}}" class="btn">Retour à liste des quiz</button>
+                       </center>
+                        {{ form_end(form) }}
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7" style="background-color: ">
+                <div class="panel panel-success">
+                    <div class="card bg-info text-white">
+                        <div class="card-body"> <center>CONTINUE DE PAGE</center> </div>
+                    </div>
+                    <div  class="col-sm-12">
+                        <div class="col">
+                            <script>
+                                function myFunction(p1,p2) {
+                                    var url = '{{ path('newQuestion', {'quiz': 'quiz_id', 'page': 'page_id'}) }}';
+
+                                    url = url.replace("quiz_id", p1);
+                                    url = url.replace("page_id", p2);
+
+                                    $.ajax({
+                                        url:url,
+                                        method: 'POST',
+                                        success: function(result){
+                                            $("#demo").html(result);
+                                        }
+                                    });
+
+                                }
+                            </script>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <h2>Question de page</h2>
+                                    </td>
+                                    <td>
+                                        <div style="width: 23px; padding-left: 420px;" >
+
+                                            <h4> <a href="#" onclick="myFunction('{{ quiz.id }}', '{{ page.id }}')" style="color:#228b22 " class="fa fa-plus-square" ></a></h4>
+
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div  id="demo" style="background-color: mintcream"  class="col" >
+
+                                {% if page.question|length == 0 %}
+
+                                <label>
+                                    Page vide !
+                                </label>
+                                {% else %}
+                                {% for j in question %}
+                                    <br>
+                                <div class="col-sm-11"  >
+
+                                    <div style="border-bottom: 1px solid ;
+
+                                            ">
+                                    <label>
+                                      <b>
+                                          <i>
+                                              Question n°
+                                          </i>
+                                      </b>
+                                    </label><br>
+
+                                            {{ j.textQuestion }}
+                                        <br>
+                                   {% if j.typeQuestion =='Vrai/faux' %}
+
+                                       {{ j.descriptionQuestion }}
+                                       {% for p in j.reponse %}
+                                           {% if p.question == j %}
+                                               <table>
+                                                   <tr>
+                                                       <td colspan="3">
+                                                           {{ p.reponseValide }}
+                                                       </td>
+                                                       <td colspan="3">
+                                                           <div style="width: 100px;">
+
+                                                               <select style="width: 75px;" class="form-control">
+                                                                   <option>
+                                                                       Vrai
+                                                                   </option>
+                                                                   <option>
+                                                                       Faux
+                                                                   </option>
+                                                               </select>
+                                                           </div>
+                                                       </td>
+                                                   </tr>
+                                               </table>
+
+                                           {% endif %}
+                                       {% endfor %}
+
+
+                                   {% endif %}
+                                            {% if j.typeQuestion =='Liste déroulante' %}
+
+                                                {{ j.descriptionQuestion }}
+
+                                                <table>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <div style="width: 100px;">
+                                                                <select style="width: 350px;" class="form-control">
+                                                                    {% for i in j.reponse %}
+                                                                        {% if i.question == j %}
+
+                                                                            <option>
+                                                                                {{ i.reponseValide }}
+                                                                            </option>
+
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            {% endif %}
+
+                                            {% if j.typeQuestion == 'Case à cocher' %}
+
+                                                {{ j.descriptionQuestion }}
+
+                                                {% for p in j.reponse %}
+                                                    {% if p.question == j %}
+                                                        <table>
+                                                            <tr>
+                                                                <td colspan="8">
+                                                                    {{ p.reponseValide }}
+                                                                </td>
+                                                                <td>
+                                                                    <div style="width: 100px;">
+                                                                        <input type="checkbox">
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                            {% if j.typeQuestion =='Calculée' %}
+
+                                                {{ j.descriptionQuestion }}
+
+                                                {% for p in j.reponse %}
+                                                    {% if p.question == j %}
+                                                        <table>
+                                                            <tr>
+                                                                <td colspan="3">
+                                                                    {{ p.descriptionformule }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    Formule:
+                                                                </td>
+                                                                <td colspan="3">
+                                                                    <input  class="form-control" type="text">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>
+                                                                    Resultat:
+                                                                </td>
+                                                                <td>
+                                                                    <input class="form-control" type="text">
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                            {% if j.typeQuestion =='Réponse courte' %}
+                                                {{ j.descriptionQuestion }}
+
+                                                {% for p in j.parametre %}
+
+                                                    {% if p.question==j and p.formText =='texte' %}
+
+                                                                <textarea class="form-control"></textarea><br>
+
+                                                    {% endif %}
+
+                                                    {% if p.question==j and p.formText =='date' %}
+                                                        {% for r in j.reponse %}
+                                                            {% if r.question == j %}
+                                                                 {{ r.descriptiondate }}
+
+                                                                    <div style="width: 250px;">
+                                                                        <input type="date" class="form-control">
+                                                                    </div>
+
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endif %}
+
+
+
+
+                                                    {% if p.question==j and p.formText =='number' %}
+                                                        {% for r in j.reponse %}
+                                                            {% if r.question == j %}
+
+                                                                {{ r.desnumber }}
+                                                                <input type="number"  class="form-control">
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+
+                                        {% if j.infoBulle != '' %}
+
+                                            <div style=" padding-left: 650px;" class="container">
+                                                <a href="#" data-toggle="popover" title="INFO !" data-content="{{ j.infoBulle }}"><i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                                            </div>
+                                        {% endif %}
+                                        <div class="container" style=" color: #3a87ad;">
+
+                                         <table>
+                                             <tr>
+                                                 <td>
+                                                    <div style="width: 23px">
+                                                        <i class="fa fa-pencil-square-o"></i>
+                                                    </div>
+                                                 </td>
+                                                 <td></td>
+                                                 <td>
+                                                     <div style="width: 23px">
+                                                         <a href="#" data-target="#removequestion-{{ j.id }}" data-toggle="modal" class="fa fa-trash-o"></a>
+                                                     </div>
+
+                                                 </td>
+
+                                                 <td>
+                                                     {% if j.actif == false  %}
+                                                         <a class="fa fa-circle" href="{{ path('actif2', {'question': j.id} )}}" style="color:grey"  ></a>
+                                                     {% else %}
+
+                                                         <a class="fa fa-circle" href="{{ path('actif2', {'question': j.id} )}}"  style="color: #18835a"></a>
+
+                                                     {% endif %}
+                                                 </td>
+                                             </tr>
+                                         </table>
+
+                                        </div>
+
+
+                                    </div>
+                                 </div>
+                                    <div class="modal fade" id="removequestion-{{ j.id }}" role="dialog">
+                                        <div class="modal-dialog">
+
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title"></h4>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    {{ render(controller(
+                                                        'App\\Controller\\QuestionController::delete2',
+                                                        { 'id': j.id }
+                                                    )) }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                               {% endfor %}
+
+                                {% endif %}
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <br>
+
+{% endblock %}

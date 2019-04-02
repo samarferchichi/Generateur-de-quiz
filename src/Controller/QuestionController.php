@@ -55,58 +55,65 @@ class QuestionController extends AbstractController
         ]);
     }
 
-    public function questionDepAction(Request $request,ReponseRepository $reponseRepository, Question $question, Parametre $parametre, Reponse $reponse): Response
+    public function questionDepAction(Request $request,ReponseRepository $reponseRepository, Question $question, Reponse $reponse): Response
     {
 
         if(count($question->getPage()->getQuestion()) < $question->getPage()->getQuiz()->getNbQuestion()){
+
+            $entityManager = $this->getDoctrine()->getManager();
+
             $q = new Question();
             $q->setPage($question->getPage());
             $q->setTextQuestion($question->getTextQuestion());
             $q->setTypeQuestion($question->getTypeQuestion());
-
-         /*   $p = new Parametre();
-
-            $p->setNbCaractere($parametre->getNbCaractere());
-            $p->setNbChiffre($parametre->getNbChiffre());
-            $p->setQuestion($parametre->getQuestion());
-            $p->setFormText($parametre->getFormText());
-
-         //   $r=$question->getReponse();
-
-          //  $r = $reponseRepository->findBy(array('question' => $reponse->getId() ));
-
-            $reponse=$reponseRepository->findBy(array('question' => $question->getId()));
-
-
-            for ( $i=0; $i < count($reponse); $i++){
-                $entityManager = $this->getDoctrine()->getManager();
-                $r=new Reponse();
-
-                $r->setDescriptiondate($reponse[$i]->getDescriptiondate());
-                $r->setQuestion($reponse[$i]->getQuestion());
-                $r->setDescriptionformule($reponse[$i]->getDescriptionformule());
-                $r->setResultatformule($reponse[$i]->getResultatformule());
-                $r->setFormule($reponse[$i]->getFormule());
-                $r->setEtatlist($reponse[$i]->getEtatlist());
-                $r->setEtatcaseacocher($reponse[$i]->getEtatcaseacocher());
-                $r->setEtatvf($reponse[$i]->getEtatvf());
-                $r->setReponseValide($reponse[$i]->getReponseValide());
-                $entityManager->persist($r);
-
-            }*/
-
             if($question->getDescriptionQuestion())
-
                 $q->setDescriptionQuestion($question->getDescriptionQuestion());
             if($question->getInfoBulle())
                 $q->setInfoBulle($question->getInfoBulle());
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $question->setActif(true);
-
-          //  $entityManager->persist($p);
+            $q->setActif($question->getActif());
 
             $entityManager->persist($q);
+
+
+            foreach ($question->getParametre() as $par){
+                $p = new Parametre();
+
+                if($par->getNbCaractere())
+                    $p->setNbCaractere($par->getNbCaractere());
+                if($par->getNbChiffre())
+                    $p->setNbChiffre($par->getNbChiffre());
+                if($par->getFormText())
+                    $p->setFormText($par->getFormText());
+                $p->setQuestion($q);
+
+                $entityManager->persist($p);
+            }
+
+            foreach ($question->getReponse() as $rep){
+                $r = new Reponse();
+
+                if($rep->getDescriptiondate())
+                    $r->setDescriptiondate($rep->getDescriptiondate());
+                if($rep->getDescriptionformule())
+                    $r->setDescriptionformule($rep->getDescriptionformule());
+                if($rep->getResultatformule())
+                    $r->setResultatformule($rep->getResultatformule());
+                if($rep->getFormule())
+                    $r->setFormule($rep->getFormule());
+                if($rep->getEtatlist())
+                    $r->setEtatlist($rep->getEtatlist());
+                $r->setEtatcaseacocher($rep->getEtatcaseacocher());
+                if($rep->getEtatcaseacocher())
+                    $r->setEtatvf($rep->getEtatvf());
+                if($rep->getReponseValide())
+                    $r->setReponseValide($rep->getReponseValide());
+
+                $r->setQuestion($q);
+
+                $entityManager->persist($r);
+            }
+
             $entityManager->flush();
         }
 
@@ -140,6 +147,31 @@ class QuestionController extends AbstractController
         return $this->redirectToRoute('creerquiz', ['id' => $question->getPage()->getQuiz()->getId(), 'page' => $question->getPage()->getId()]);
     }
 
+
+    public function questionActif2Action(Request $request, Question $question): Response
+    {
+        $page=$question->getPage()->getId();
+        $quiz=$question->getPage()->getQuiz()->getId();
+
+        $entityManager = $this->getDoctrine()->getManager();
+        if($question->getActif()==true)
+        {
+
+            $question->setActif(0);
+            $entityManager->persist($question);
+            $entityManager->flush();
+        }
+        else{
+            if ($question->getActif()==false)
+            {   $question->setActif(1);
+                $entityManager->persist($question);
+                $entityManager->flush();
+
+            }
+        }
+
+        return $this->redirectToRoute('modifier_page', ['quiz' => $quiz, 'page' => $page]);
+    }
 
 
     /**
@@ -214,6 +246,39 @@ class QuestionController extends AbstractController
     }
 
 
+    /**
+     * @Route("/{id}/delete2", name="question_delete", methods={"GET","POST", "DELETE"})
+     */
+    public function delete2(Request $request, Question $question): Response
+    {
+        $form = $this->createFormBuilder(null, [
+            'action' => $this->generateUrl('question_delete', ['id' => $question->getId()])
+        ])
+            ->getForm();
+
+        $page = $question->getPage();
+        $quiz=$page->getQuiz()->getId();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($question);
+            $em->flush();
+
+            return $this->redirectToRoute('modifier_page', [
+                'quiz' => $page->getQuiz()->getId(),
+                'page' => $page->getId(),
+            ]);
+        }
+
+        return $this->render('question/_delete_form.html.twig', [
+            'quiz' => $quiz,
+            'page' => $page,
+            'form' => $form->createView(),
+        ]);
+
+    }
 
 
 

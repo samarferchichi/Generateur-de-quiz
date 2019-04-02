@@ -15,3 +15,8 @@ actif:
     controller: App\Controller\QuestionController::questionActifAction
     requirements:
         methods: GET
+actif2:
+    path: /question/{question}/activ2
+    controller: App\Controller\QuestionController::questionActif2Action
+    requirements:
+        methods: GET

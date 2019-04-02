@@ -16,14 +16,24 @@ class PageType extends AbstractType
         $builder
             ->add('titre_page',null,[
                 'required' =>  false,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
 
             ])
             ->add('color_titre_page', ColorType::class,[
                 'required' =>  false,
+                'attr' => [
+                    'class' => 'form-control',
+
+                ],
 
             ])
             ->add('bg_color', ColorType::class,[
                 'required' =>  false,
+                'attr' => [
+                    'class' => 'form-control',
+                ],
 
             ])
         ;
