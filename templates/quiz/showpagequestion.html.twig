@@ -1,0 +1,187 @@
+{% if p.question|length == 0 %}
+
+    <label>
+        Page vide !
+    </label>
+{% else %}
+    {% for j in p.question %}
+
+
+
+
+        {% if j.typeQuestion =='Vrai/faux' %}
+            {{ j.textQuestion }}
+            <br>
+            {{ j.descriptionQuestion }}
+
+            {% for p in j.reponse %}
+                {% if p.question == j %}
+                    <table>
+                        <tr>
+                            <td colspan="3">
+                                {{ p.reponseValide }}
+                            </td>
+                            <td colspan="3">
+                                <div style="width: 100px;">
+
+                                    <select style="width: 150px;" class="form-control">
+                                        <option>
+                                            Vrai
+                                        </option>
+                                        <option>
+                                            Faux
+                                        </option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                {% endif %}
+            {% endfor %}
+
+        {% endif %}
+
+
+        {% if j.typeQuestion =='Liste déroulante' %}
+            {{ j.textQuestion }}
+            <br>
+
+            {{ j.descriptionQuestion }}
+
+            <table>
+                <tr>
+                    <td colspan="3">
+                        <div style="width: 100px;">
+                            <select style="width: 350px;" class="form-control">
+                                {% for i in j.reponse %}
+                                    {% if i.question == j %}
+
+                                        <option>
+                                            {{ i.reponseValide }}
+                                        </option>
+
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        {% endif %}
+
+
+
+        {% if j.typeQuestion == 'Case à cocher' %}
+            {{ j.textQuestion }}
+            <br>
+            {{ j.descriptionQuestion }}
+
+            {% for p in j.reponse %}
+                {% if p.question == j %}
+                    <table>
+                        <tr>
+                            <td colspan="8">
+                                {{ p.reponseValide }}
+                            </td>
+                            <td>
+                                <div style="width: 100px;">
+                                    <input type="checkbox" >
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if j.typeQuestion =='Calculée' %}
+            {{ j.textQuestion }}
+            <br>
+            {{ j.descriptionQuestion }}
+
+            {% for p in j.reponse %}
+                {% if p.question == j %}
+                    <table>
+                        <tr>
+                            <td colspan="3">
+                                {{ p.descriptionformule }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Formule:
+                            </td>
+                            <td colspan="3">
+                                <input  style="width: 400px;" class="form-control" type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Resultat:
+                            </td>
+                            <td>
+                                <input style="width: 400px;" class="form-control" type="text">
+                            </td>
+                        </tr>
+                    </table>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+
+
+        {% if j.typeQuestion =='Réponse courte' %}
+            {{ j.textQuestion }}<br>
+            {{ j.descriptionQuestion }}
+
+            {% for p in j.parametre %}
+
+                {% if p.question==j and p.formText =='texte' %}
+
+                    <textarea class="form-control"></textarea><br>
+                {% endif %}
+
+                {% if p.question==j and p.formText =='date' %}
+                    {% for r in j.reponse %}
+                        {% if r.question == j %}
+                            <br>
+                            {{ r.descriptiondate }}
+                            <input type="date">
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+
+
+
+                {% if p.question==j and p.formText =='number' %}
+                    {% for r in j.reponse %}
+                        {% if r.question == j %}
+
+                            {{ r.descriptiondate }}<br>
+                            {{ r.desnumber }}
+                            <input type="number" class="form-control">
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+
+
+
+        {% if j.infoBulle != '' %}
+
+            <div style="padding-left: 570px;" class="container">
+                <a href="#" data-toggle="popover" title="INFO !" data-content="{{ j.infoBulle }}"><i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+            </div>
+        {% endif %}
+
+
+    {% endfor %}
+
+
+{% endif %}

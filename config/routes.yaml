@@ -10,6 +10,14 @@ question_dep:
         methods: GET
 
 
+question_dep2:
+    path: /question/{question}/duplication2
+    controller: App\Controller\QuestionController::questionDepAction2
+    requirements:
+        methods: GET
+
+
+
 actif:
     path: /question/{question}/activ
     controller: App\Controller\QuestionController::questionActifAction

@@ -1,4 +1,4 @@
-{% extends '@EasyAdmin/default/layout.html.twig' %}
+{% extends '/bundles/EasyAdmin/default/layout.html.twig' %}
 
 
 {% set _content_title = 'Espace d administartion' %}
@@ -174,7 +174,7 @@
                         </div><br>
                        <center>
                            <button class="btn">Modifier</button>
-                           <button href="{{ path('get_info_quiz', {'quiz': quiz} )}}" class="btn">Retour à liste des quiz</button>
+                           <button href="{{ path('get_info_quiz', {'quiz': quiz} )}}" class="btn">Retour à la liste des quiz</button>
                        </center>
                         {{ form_end(form) }}
 
@@ -211,9 +211,9 @@
                                         <h2>Question de page</h2>
                                     </td>
                                     <td>
-                                        <div style="width: 23px; padding-left: 420px;" >
+                                        <div style="width: 33px; padding-left: 580px; background-color: " >
 
-                                            <h4> <a href="#" onclick="myFunction('{{ quiz.id }}', '{{ page.id }}')" style="color:#228b22 " class="fa fa-plus-square" ></a></h4>
+                                            <h4> <a href="#" onclick="myFunction('{{ quiz.id }}', '{{ page.id }}')" style="color:#2a85a0 " class="fa fa-plus-square" ></a></h4>
 
                                         </div>
                                     </td>
@@ -257,7 +257,7 @@
                                                        <td colspan="3">
                                                            <div style="width: 100px;">
 
-                                                               <select style="width: 75px;" class="form-control">
+                                                               <select style="width: 150px;" class="form-control">
                                                                    <option>
                                                                        Vrai
                                                                    </option>
@@ -396,7 +396,7 @@
 
                                         {% if j.infoBulle != '' %}
 
-                                            <div style=" padding-left: 650px;" class="container">
+                                            <div style=" padding-left: 720px;" class="container">
                                                 <a href="#" data-toggle="popover" title="INFO !" data-content="{{ j.infoBulle }}"><i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
                                             </div>
                                         {% endif %}
@@ -405,8 +405,8 @@
                                          <table>
                                              <tr>
                                                  <td>
-                                                    <div style="width: 23px">
-                                                        <i class="fa fa-pencil-square-o"></i>
+                                                    <div style="width: 25px">
+                                                        <a href="#" class="fa fa-pencil-square-o"></a>
                                                     </div>
                                                  </td>
                                                  <td></td>
@@ -418,6 +418,8 @@
                                                  </td>
 
                                                  <td>
+                                                     <div style="width: 23px">
+
                                                      {% if j.actif == false  %}
                                                          <a class="fa fa-circle" href="{{ path('actif2', {'question': j.id} )}}" style="color:grey"  ></a>
                                                      {% else %}
@@ -425,6 +427,17 @@
                                                          <a class="fa fa-circle" href="{{ path('actif2', {'question': j.id} )}}"  style="color: #18835a"></a>
 
                                                      {% endif %}
+                                                     </div>
+                                                 </td>
+                                                 <td>
+                                                     <div style="width: 23px">
+
+                                                     {% if page.question|length < page.quiz.nbQuestion %}
+                                                         <a class="fa fa-file-o" href="{{ path('question_dep2', {'question': j.id} )}}"></a>
+                                                     {% else %}
+                                                         <i style="color: grey" class="fa fa-file-o" href="{{ path('question_dep2', {'question': j.id} )}}"></i>
+                                                     {% endif %}
+                                                     </div>
                                                  </td>
                                              </tr>
                                          </table>

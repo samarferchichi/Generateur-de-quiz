@@ -194,8 +194,7 @@ class QuizType extends AbstractType
                 'label' => 'Nombres des tentatives autorisées',
 
             ])
-            ->add('brochure', FileType::class, ['data_class' => null
-            ])
+            ->add('brochure',FileType::class, array('data_class' => null))
 
         ;
     }

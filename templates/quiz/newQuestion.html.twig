@@ -9,151 +9,94 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
-    {% if page.question|length < page.quiz.nbQuestion %}
-        {{ form_start(formq, {'method': 'post' }) }}
 
-        <div id="question"  style="border-radius: 10px;">
-            <table>
 
-                <tr>
-                    <td>
+    <div>
+        {% if page.question|length < page.quiz.nbQuestion %}
+            {{ form_start(formq, {'method': 'post' }) }}
 
-                        <div class="form-group row">
+            <div id="question" >
+                <table>
 
-                            <div class="col-xs-2">
-                                <label>Importer un question d'un autre Quiz: </label>
-                            </div>
-                            <div class="col-xs-3">
-                                <select id="my_select" name="" class="form-control" >
-                                    <option value="Open sans conseille" selected="selected">Parcourire les Quiz existants</option>
+                    <tr>
+                        <td>
 
-                                    {% for j in listquiz %}
-                                        <option value="volvo">{{ j.id }}</option>
+                            <div class="form-group row">
 
-                                    {% endfor %}
-                                </select>
+                                <div class="col-xs-2">
+                                  <label>Importer un question d'un autre Quiz: </label>
+                                </div>
+                                <div class="col-xs-3">
+                                    <select id="my_select" name="" class="form-control" >
+                                        <option value="Open sans conseille" selected="selected">Parcourire les Quiz existants</option>
 
-                            </div> &nbsp; &nbsp;
-                            <i class="fa fa-repeat" id="reset"></i>
+                                        {% for j in listquiz %}
+                                            <option value="volvo">{{ j.id }}</option>
 
-                            <script>
-                                $("#reset").on("click", function () {
-                                    $('#my_select option').prop('selected', function() {
-                                        return this.defaultSelected;
+                                        {% endfor %}
+                                    </select>
+
+                                </div> &nbsp; &nbsp;
+                                <i class="fa fa-repeat" id="reset"></i>
+
+                                <script>
+                                    $("#reset").on("click", function () {
+                                        $('#my_select option').prop('selected', function() {
+                                            return this.defaultSelected;
+                                        });
                                     });
-                                });
-                            </script>
-                        </div>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="form-group row">
-                            <div class="col-xs-2">
-
-                                {{ form_label(formq.text_question) }}
+                                </script>
                             </div>
-                            {{ form_widget(formq.text_question) }}
-                            <small style="color: red">
-                                <font size="2">
-                                    {{ form_errors(formq.text_question) }}
-                                </font>
-                            </small>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="form-group row">
-                            <div class="col-xs-2">
-                                {{ form_label(formq.type_question) }}
-                            </div>
-                            <div class="col-xs-5">
-                                {{ form_widget(formq.type_question, { 'id': 'question_type' }) }}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group row">
+                                <div class="col-xs-2">
+
+                                    {{ form_label(formq.text_question) }}
+                                </div>
+                                {{ form_widget(formq.text_question) }}
                                 <small style="color: red">
                                     <font size="2">
-                                        {{ form_errors(formq.type_question) }}
+                                        {{ form_errors(formq.text_question) }}
                                     </font>
                                 </small>
                             </div>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group row">
+                                <div class="col-xs-2">
+                                    {{ form_label(formq.type_question) }}
+                                </div>
+                                <div class="col-xs-5">
+                                    {{ form_widget(formq.type_question, { 'id': 'question_type' }) }}
+                                    <small style="color: red">
+                                        <font size="2">
+                                            {{ form_errors(formq.type_question) }}
+                                        </font>
+                                    </small>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
 
 
-                <script>
+                    <script>
 
-                    if($('#question_type').val() == ''){
-                        $('#question_type').on('change', function() {
-                            var x = document.getElementById("question_type").value;
+                        if($('#question_type').val() == ''){
+                            $('#question_type').on('change', function() {
+                                var x = document.getElementById("question_type").value;
 
-                            var i=0;
+                                var i=0;
 
-                            if(x == 'Réponse courte') {
+                                if(x == 'Réponse courte') {
 
-                                $('#showType').html('<div id="demo" style="background-color: ">' +
-                                    '<div  id="test" style="background-color: ">'+
-                                    '<div class="form-group row">' +
-                                    '<table >' +
-                                    '<tr>' +
-                                    '<td colspan="3">' +
-                                    '</td>' +
-                                    '<td></td>' +
-                                    '<td></td>' +
-                                    '<td colspan="7">' +
-                                    '<div class="col-15"><select name="selecttype" class="form-control" id="mySelect" onchange="myFunction()">' +
-                                    '<option  value="texte" selected>Texte</option>' +
-                                    '<option value="date">Date</option>' +
-                                    '<option value="number">Nombre</option></select></div>' +
-                                    '</td>' +
-
-                                    '</tr>'+
-                                    '<tr>' +
-                                    '<td colspan="4"> ' +
-                                    '<font size="3" color="#696969"> Nombre de caracteres autorisés:</font>' +
-                                    '</td>' +
-                                    '<td>' +
-                                    '<div class="col-7"><input name="nbcaractere" type="number" class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
-                                    '</td>' +
-                                    '</tr> ' +
-                                    '<tr id="hide_0">' +
-                                    '<td  colspan="4">' +
-                                    '<label><font size="3"> Description n° :</font></label>' +
-                                    '</td>' +
-                                    '<td  colspan="4">' +
-                                    '<div class="col-9"><input name="destext[]" type="text" class="form-control">' +
-                                    '</td>' +
-                                    '</tr>' +
-                                    '<tr id="hide_0" >' +
-
-                                    '<td colspan="4">' +
-                                    '<label><font size="3"> Reponse correcte n° :</font></label>' +
-                                    '</td>' +
-                                    '<td >' +
-                                    '<div class="col-9"><input name="test[]" type="text" class="form-control">' +
-                                    '</div>'+
-
-                                    '</td>' +
-                                    '<td>' +
-                                    '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
-                                    '</td>' +
-                                    '</tr>' +
-                                    '<tr id="showPlus"> </tr>' +
-                                    '<tr>' +
-                                    '<td colspan="7">' +
-
-                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonction()" class="fa fa-plus-square"></i></a></font>' +
-                                    '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
-                                    '</td>' +
-                                    '</tr>' +
-                                    '<div id="divPlus"></div>' +
-                                    '</div></div>' );
-                            }else {
-
-                                if (x == 'Vrai/faux') {
                                     $('#showType').html('<div id="demo" style="background-color: ">' +
-                                        '<div  id="test" style="background-color: "><label>Choix réponses de votre question</label>' +
+                                        '<div  id="test" style="background-color: ">'+
                                         '<div class="form-group row">' +
                                         '<table >' +
                                         '<tr>' +
@@ -161,19 +104,32 @@
                                         '</td>' +
                                         '<td></td>' +
                                         '<td></td>' +
-
-                                        '<tr id="hide_0" >' +
-                                        '<td colspan="4">' +
-                                        '<label><font size="2"> Reponse correcte n° :</font></label>' +
+                                        '<td colspan="7">' +
+                                        '<div class="col-15"><select name="selecttype" class="form-control" id="mySelect" onchange="myFunction()">' +
+                                        '<option  value="texte" selected>Texte</option>' +
+                                        '<option value="date">Date</option>' +
+                                        '<option value="number">Nombre</option></select></div>' +
                                         '</td>' +
-                                        '<td >' +
-                                        '<div class="col-9"><input  name="vf[]" type="text" class="form-control">' +
-                                        '</div>' +
+
+                                        '</tr>'+
+                                        '<tr>' +
+                                        '<td colspan="4"> ' +
+                                        '<font size="3" color="#696969"> Nombre de caracteres autorisés:</font>' +
                                         '</td>' +
                                         '<td>' +
-                                        '<div style="width: 100px">' +
-                                        '<select class="form-control" name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select>' +
-                                        '</div>' +
+                                        '<div class="col-7"><input name="nbcaractere" type="number" class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
+                                        '</td>' +
+                                        '</tr> ' +
+
+                                        '<tr id="hide_0" >' +
+
+                                        '<td colspan="4">' +
+                                        '<label><font size="3"> Reponse correcte :</font></label>' +
+                                        '</td>' +
+                                        '<td >' +
+                                        '<div class="col-9"><input name="test[]" type="text" class="form-control">' +
+                                        '</div>'+
+
                                         '</td>' +
                                         '<td>' +
                                         '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
@@ -183,15 +139,15 @@
                                         '<tr>' +
                                         '<td colspan="7">' +
 
-                                        '<font size="6" color=#228b22><a><i type="button" onclick="fonctiontypevraioufaux()" class="fa fa-plus-square"></i></a></font>' +
+                                        '<font size="6" color=#228b22><a><i type="button" onclick="fonction()" class="fa fa-plus-square"></i></a></font>' +
                                         '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
                                         '</td>' +
                                         '</tr>' +
                                         '<div id="divPlus"></div>' +
-                                        '</div></div>');
-                                }
-                                else {
-                                    if (x=='Case à cocher') {
+                                        '</div></div>' );
+                                }else {
+
+                                    if (x == 'Vrai/faux') {
                                         $('#showType').html('<div id="demo" style="background-color: ">' +
                                             '<div  id="test" style="background-color: "><label>Choix réponses de votre question</label>' +
                                             '<div class="form-group row">' +
@@ -204,15 +160,15 @@
 
                                             '<tr id="hide_0" >' +
                                             '<td colspan="4">' +
-                                            '<label><font size="3"> Reponse correcte n° :</font></label>' +
+                                            '<label><font size="2"> Reponse correcte n° :</font></label>' +
                                             '</td>' +
                                             '<td >' +
-                                            '<div class="col-9"><input  name="case[]" type="text" class="form-control">' +
+                                            '<div class="col-9"><input  name="vf[]" type="text" class="form-control">' +
                                             '</div>' +
                                             '</td>' +
-                                            '<td >' +
-                                            '<div style="width: 150px">' +
-                                            '<select class="form-control" name="etatcase[]"><option value="1">Reponse correcte</option><option value="0">Reponse incorrecte</option></select>' +
+                                            '<td>' +
+                                            '<div style="width: 100px">' +
+                                            '<select class="form-control" name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select>' +
                                             '</div>' +
                                             '</td>' +
                                             '<td>' +
@@ -223,29 +179,36 @@
                                             '<tr>' +
                                             '<td colspan="7">' +
 
-                                            '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncaseacocher()" class="fa fa-plus-square"></i></a></font>' +
+                                            '<font size="6" color=#228b22><a><i type="button" onclick="fonctiontypevraioufaux()" class="fa fa-plus-square"></i></a></font>' +
                                             '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
                                             '</td>' +
                                             '</tr>' +
                                             '<div id="divPlus"></div>' +
                                             '</div></div>');
-                                    }else{
-                                        if (x=='Liste déroulante') {
+                                    }
+                                    else {
+                                        if (x=='Case à cocher') {
                                             $('#showType').html('<div id="demo" style="background-color: ">' +
-                                                '<div  id="test" style="background-color: "><label>Choix réponses de votre liste</label>' +
+                                                '<div  id="test" style="background-color: "><label>Choix réponses de votre question</label>' +
                                                 '<div class="form-group row">' +
                                                 '<table >' +
+                                                '<tr>' +
+                                                '<td colspan="3">' +
+                                                '</td>' +
+                                                '<td></td>' +
+                                                '<td></td>' +
+
                                                 '<tr id="hide_0" >' +
                                                 '<td colspan="4">' +
-                                                '<label><font size="3"> Choix réponse n° :</font></label>' +
+                                                '<label><font size="3"> Reponse correcte n° :</font></label>' +
                                                 '</td>' +
                                                 '<td >' +
-                                                '<div class="col-9"><input  name="list[]" type="text" class="form-control">' +
+                                                '<div class="col-9"><input  name="case[]" type="text" class="form-control">' +
                                                 '</div>' +
                                                 '</td>' +
                                                 '<td >' +
                                                 '<div style="width: 150px">' +
-                                                '<select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select>' +
+                                                '<select class="form-control" name="etatcase[]"><option value="1">Reponse correcte</option><option value="0">Reponse incorrecte</option></select>' +
                                                 '</div>' +
                                                 '</td>' +
                                                 '<td>' +
@@ -256,39 +219,30 @@
                                                 '<tr>' +
                                                 '<td colspan="7">' +
 
-                                                '<font size="6" color=#228b22><a><i type="button" onclick="fonctionliste()" class="fa fa-plus-square"></i></a></font>' +
+                                                '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncaseacocher()" class="fa fa-plus-square"></i></a></font>' +
                                                 '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
                                                 '</td>' +
                                                 '</tr>' +
                                                 '<div id="divPlus"></div>' +
                                                 '</div></div>');
-                                        }else {
-                                            if (x=='Calculée') {
+                                        }else{
+                                            if (x=='Liste déroulante') {
                                                 $('#showType').html('<div id="demo" style="background-color: ">' +
-                                                    '<div  id="test" style="background-color: "><label>Question calculée</label>' +
+                                                    '<div  id="test" style="background-color: "><label>Choix réponses de votre liste</label>' +
                                                     '<div class="form-group row">' +
                                                     '<table >' +
                                                     '<tr id="hide_0" >' +
-                                                    '<td colspan="">' +
-                                                    '<label><font size="2"> Description formule n° :</font></label>' +
+                                                    '<td colspan="4">' +
+                                                    '<label><font size="3"> Choix réponse n° :</font></label>' +
                                                     '</td>' +
-                                                    '<td colspan="">' +
-                                                    '<label><font size="2"> Formule :</font></label>' +
-                                                    '</td>' +
-                                                    '<td colspan="">' +
-                                                    '<label><font size="2"> Resultat :</font></label>' +
-                                                    '</td>' +
-                                                    '</tr>' +
-                                                    '<tr id="hide_0">' +
-                                                    '<td>' +
-                                                    '<div class=""><input  name="descriptionF[]" type="text" class="form-control"></div>' +
+                                                    '<td >' +
+                                                    '<div class="col-9"><input  name="list[]" type="text" class="form-control">' +
                                                     '</div>' +
                                                     '</td>' +
-                                                    '<td>' +
-                                                    '<div class=""><input  name="formule[]" type="text" class="form-control"></div>' +
-                                                    '</td>' +
-                                                    '<td>' +
-                                                    '<div class=""><input  name="resultatF[]" type="text" class="form-control"></div>' +
+                                                    '<td >' +
+                                                    '<div style="width: 150px">' +
+                                                    '<select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select>' +
+                                                    '</div>' +
                                                     '</td>' +
                                                     '<td>' +
                                                     '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
@@ -298,375 +252,450 @@
                                                     '<tr>' +
                                                     '<td colspan="7">' +
 
-                                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncalcule()" class="fa fa-plus-square"></i></a></font>' +
+                                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonctionliste()" class="fa fa-plus-square"></i></a></font>' +
                                                     '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
                                                     '</td>' +
                                                     '</tr>' +
                                                     '<div id="divPlus"></div>' +
                                                     '</div></div>');
+                                            }else {
+                                                if (x=='Calculée') {
+                                                    $('#showType').html('<div id="demo" style="background-color: ">' +
+                                                        '<div  id="test" style="background-color: "><label>Question calculée</label>' +
+                                                        '<div class="form-group row">' +
+                                                        '<table >' +
+                                                        '<tr id="hide_0" >' +
+                                                        '<td colspan="">' +
+                                                        '<label><font size="2"> Description formule n° :</font></label>' +
+                                                        '</td>' +
+                                                        '<td colspan="">' +
+                                                        '<label><font size="2"> Formule :</font></label>' +
+                                                        '</td>' +
+                                                        '<td colspan="">' +
+                                                        '<label><font size="2"> Resultat :</font></label>' +
+                                                        '</td>' +
+                                                        '</tr>' +
+                                                        '<tr id="hide_0">' +
+                                                        '<td>' +
+                                                        '<div class=""><input  name="descriptionF[]" type="text" class="form-control"></div>' +
+                                                        '</div>' +
+                                                        '</td>' +
+                                                        '<td>' +
+                                                        '<div class=""><input  name="formule[]" type="text" class="form-control"></div>' +
+                                                        '</td>' +
+                                                        '<td>' +
+                                                        '<div class=""><input  name="resultatF[]" type="text" class="form-control"></div>' +
+                                                        '</td>' +
+                                                        '<td>' +
+                                                        '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
+                                                        '</td>' +
+                                                        '</tr>' +
+                                                        '<tr id="showPlus"> </tr>' +
+                                                        '<tr>' +
+                                                        '<td colspan="7">' +
 
+                                                        '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncalcule()" class="fa fa-plus-square"></i></a></font>' +
+                                                        '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                        '</td>' +
+                                                        '</tr>' +
+                                                        '<div id="divPlus"></div>' +
+                                                        '</div></div>');
+
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
 
 
-                        });
-                    }else{
-                        $('#showType').html('');
-                    }
+                            });
+                        }else{
+                            $('#showType').html('');
+                        }
 
-                    function myFunction() {
+                        function myFunction() {
 
-                        var a = document.getElementById("mySelect").value;
-                        //    document.getElementById("demo").innerHTML = ": " + x;
-                        if (a == 'date') {
-                            document.getElementById("demo").innerHTML = a;
-
-                            document.getElementById("demo").innerHTML = '<div id="demo" style="background-color: ">' +
-                                '<div  id="test" style="background-color: ">'+
-                                '<div class="form-group row">' +
-                                '<table >' +
-                                '<tr>' +
-                                '<td colspan="6">' +
-                                '<div class="col-20"><select  name="selecttype"  class="form-control" id="mySelect" onchange="myFunction()">' +
-                                '<option  value="texte" >Texte</option>' +
-                                '<option value="date" selected>Date</option>' +
-                                '<option value="number">Number</option></select></div>' +
-                                '</td>' +
-                                '</tr>' +
-                                '<tr id="hide_0">' +
-                                '<td  colspan="4">' +
-                                '<label><font size="3"> Description date n° :</font></label>' +
-                                '</td>' +
-                                '<td>' +
-                                '<input type="text" name="desc[]"  class="form-control"> ' +
-                                '</td>' +
-                                '<td>' +
-                                '<div class="col-15"><input name="date[]" type="date" class="form-control">' +
-                                '</div>'+
-
-                                '</td>' +
-                                '<td>' +
-                                '<font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
-                                '</td>' +
-                                '</tr>' +
-                                '<tr id="showPlus"> </tr>' +
-                                '<tr>' +
-                                '<td colspan="7">' +
-
-                                '<font size="6" color=#228b22><a><i type="button" onclick="fonctiondate()" class="fa fa-plus-square"></i></a></font>' +
-                                '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
-                                '</td>' +
-                                '</tr>' +
-                                '<div id="divPlus"></div>' +
-                                '</div></div>'
-                        }else {
-
-                            if (a == 'number') {
+                            var a = document.getElementById("mySelect").value;
+                            //    document.getElementById("demo").innerHTML = ": " + x;
+                            if (a == 'date') {
                                 document.getElementById("demo").innerHTML = a;
 
-                                document.getElementById("demo").innerHTML = '<div style="background-color: ">' +
+                                document.getElementById("demo").innerHTML = '<div id="demo" style="background-color: ">' +
                                     '<div  id="test" style="background-color: ">'+
                                     '<div class="form-group row">' +
-                                    '<table  >' +
+                                    '<table >' +
                                     '<tr>' +
-                                    '<td colspan="3">' +
-                                    '</td>' +
-                                    '<td></td>' +
-                                    '<td></td>' +
                                     '<td colspan="6">' +
-                                    '<div class="col-20">' +
-                                    '<select  name="selecttype" class="form-control"  id="mySelect" onchange="myFunction()">' +
+                                    '<div class="col-20"><select  name="selecttype"  class="form-control" id="mySelect" onchange="myFunction()">' +
                                     '<option  value="texte" >Texte</option>' +
-                                    '<option value="date">Date</option>' +
-                                    '<option value="number" selected>Nombre</option></select></div>' +
-                                    '</td>' +
-                                    '</tr>'+
-                                    '<tr>' +
-                                    '<td colspan="6">' +
-                                    '<font size="3" color="#696969"> Nombre de chiffre autorisés de 1 à 100:</font>' +
-                                    '</td>' +
-                                    '<td>' +
-                                    '<div class="col-6"><input name="nbChiffre"  type="number" class="form-control"></div>' +
-                                    '</td>' +
-                                    '</tr> ' +
-                                    '</tr> ' +
-                                    '<tr id="hide_0">' +
-                                    '<td  colspan="4">' +
-                                    '<label><font size="3"> Description n° :</font></label>' +
-                                    '</td>' +
-                                    '<td  colspan="4">' +
-                                    '<div class="col-9"><input name="desnum[]" type="text" class="form-control">' +
-                                    '</td>' +
-                                    '</tr>' +
-                                    '<tr  id="hide_0">' +
-                                    '<td  colspan="6">' +
-                                    '<label><font size="3"> Reponse correcte n° :</font></label>' +
-                                    '</td>' +
-                                    '<td >' +
-                                    '<div class="col-7"><input  name="number[]" type="number" class="form-control"></div>' +
-                                    '</td>' +
-                                    '<td>' +
-                                    '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
-                                    '</td>' +
-                                    '</tr>' +
-                                    '<tr>' +
-                                    '<tr id="showPlus"> </tr>' +
-                                    '<tr>' +
-                                    '<td colspan="7">' +
-                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonctionnumber()" class="fa fa-plus-square"></i></a></font>' +
-                                    '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
-                                    '</td>' +
-                                    '</tr>' +
-                                    '</div></div> ';
-
-                            }else if (a == 'texte'){
-                                document.getElementById("demo").innerHTML = '<div style="background-color: ">' +
-                                    '<div  id="test" style="background-color: ">'+
-                                    '<div class="form-group row">' +
-                                    '<table  >' +
-                                    '<tr>' +
-                                    '<td colspan="3">' +
-                                    '</td>' +
-                                    '<td></td>' +
-                                    '<td></td>' +
-                                    '<td colspan="7">' +
-                                    '<div class="col-15"><select  name="selecttype"  class="form-control"  id="mySelect" onchange="myFunction()">' +
-                                    '<option  value="texte" selected>Texte</option>' +
-                                    '<option value="date">Date</option>' +
+                                    '<option value="date" selected>Date</option>' +
                                     '<option value="number">Number</option></select></div>' +
                                     '</td>' +
-                                    '</tr>'+
-                                    '<tr >'+
-                                    '<td colspan="4">' +
-                                    '<font size="3" color="#696969"> Nombre de caracteres autorisés:</font>' +
-                                    '</td>' +
-                                    '<td>' +
-                                    '<div class="col-7"><input name="nbcaractere" type="number"  class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
-                                    '</td>' +
-                                    '</tr> ' +
-                                    '<tr id="hide_0">' +
-                                    '<td  colspan="4">' +
-                                    '<label><font size="3"> Description n° :</font></label>' +
-                                    '</td>' +
-                                    '<td  colspan="4">' +
-                                    '<div class="col-9"><input name="destext[]" type="text" class="form-control">' +
-                                    '</td>' +
                                     '</tr>' +
                                     '<tr id="hide_0">' +
                                     '<td  colspan="4">' +
-                                    '<label><font size="3"> Reponse correcte n° :</font></label>' +
-                                    '</td>' +
-                                    '<td >' +
-                                    '<div class="col-9"><input name="test" type="text" class="form-control"></div>' +
+                                    '<label><font size="3"> Description date n° :</font></label>' +
                                     '</td>' +
                                     '<td>' +
-                                    '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
+                                    '<input type="text" name="desc[]"  class="form-control"> ' +
+                                    '</td>' +
+                                    '<td>' +
+                                    '<div class="col-15"><input name="date[]" type="date" class="form-control">' +
+                                    '</div>'+
+
+                                    '</td>' +
+                                    '<td>' +
+                                    '<font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
                                     '</td>' +
                                     '</tr>' +
-                                    '<tr>' +
                                     '<tr id="showPlus"> </tr>' +
                                     '<tr>' +
                                     '<td colspan="7">' +
-                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonction()" class="fa fa-plus-square"></i></a></font>' +
+
+                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonctiondate()" class="fa fa-plus-square"></i></a></font>' +
                                     '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
                                     '</td>' +
                                     '</tr>' +
-                                    '</div></div> </table>' ;
+                                    '<div id="divPlus"></div>' +
+                                    '</div></div>'
+                            }else {
 
+                                if (a == 'number') {
+                                    document.getElementById("demo").innerHTML = a;
+
+                                    document.getElementById("demo").innerHTML = '<div style="background-color: ">' +
+                                        '<div  id="test" style="background-color: ">'+
+                                        '<div class="form-group row">' +
+                                        '<table  >' +
+                                        '<tr>' +
+                                        '<td colspan="3">' +
+                                        '</td>' +
+                                        '<td></td>' +
+                                        '<td></td>' +
+                                        '<td colspan="6">' +
+                                        '<div class="col-20">' +
+                                        '<select  name="selecttype" class="form-control"  id="mySelect" onchange="myFunction()">' +
+                                        '<option  value="texte" >Texte</option>' +
+                                        '<option value="date">Date</option>' +
+                                        '<option value="number" selected>Nombre</option></select></div>' +
+                                        '</td>' +
+                                        '</tr>'+
+                                        '<tr>' +
+                                        '<td colspan="6">' +
+                                        '<font size="3" color="#696969"> Nombre de chiffre autorisés de 1 à 100:</font>' +
+                                        '</td>' +
+                                        '<td>' +
+                                        '<div class="col-6"><input name="nbChiffre"  type="number" class="form-control"></div>' +
+                                        '</td>' +
+                                        '</tr> ' +
+                                        '</tr> ' +
+                                        '<tr id="hide_0">' +
+                                        '<td  colspan="4">' +
+                                        '<label><font size="3"> Description n° :</font></label>' +
+                                        '</td>' +
+                                        '<td  colspan="4">' +
+                                        '<div class="col-9"><input name="desnum[]" type="text" class="form-control">' +
+                                        '</td>' +
+                                        '</tr>' +
+                                        '<tr  id="hide_0">' +
+                                        '<td  colspan="6">' +
+                                        '<label><font size="3"> Reponse correcte n° :</font></label>' +
+                                        '</td>' +
+                                        '<td >' +
+                                        '<div class="col-7"><input  name="number[]" type="number" class="form-control"></div>' +
+                                        '</td>' +
+                                        '<td>' +
+                                        '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
+                                        '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<tr id="showPlus"> </tr>' +
+                                        '<tr>' +
+                                        '<td colspan="7">' +
+                                        '<font size="6" color=#228b22><a><i type="button" onclick="fonctionnumber()" class="fa fa-plus-square"></i></a></font>' +
+                                        '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                        '</td>' +
+                                        '</tr>' +
+                                        '</div></div> ';
+
+                                }else if (a == 'texte'){
+                                    document.getElementById("demo").innerHTML = '<div style="background-color: ">' +
+                                        '<div  id="test" style="background-color: ">'+
+                                        '<div class="form-group row">' +
+                                        '<table  >' +
+                                        '<tr>' +
+                                        '<td colspan="3">' +
+                                        '</td>' +
+                                        '<td></td>' +
+                                        '<td></td>' +
+                                        '<td colspan="7">' +
+                                        '<div class="col-15"><select  name="selecttype"  class="form-control"  id="mySelect" onchange="myFunction()">' +
+                                        '<option  value="texte" selected>Texte</option>' +
+                                        '<option value="date">Date</option>' +
+                                        '<option value="number">Number</option></select></div>' +
+                                        '</td>' +
+                                        '</tr>'+
+                                        '<tr >'+
+                                        '<td colspan="4">' +
+                                        '<font size="3" color="#696969"> Nombre de caracteres autorisés:</font>' +
+                                        '</td>' +
+                                        '<td>' +
+                                        '<div class="col-7"><input name="nbcaractere" type="number"  class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
+                                        '</td>' +
+                                        '</tr> ' +
+
+                                        '<tr id="hide_0">' +
+                                        '<td  colspan="4">' +
+                                        '<label><font size="3"> Reponse correcte n° :</font></label>' +
+                                        '</td>' +
+                                        '<td >' +
+                                        '<div class="col-9"><input name="test[]"  type="text" class="form-control"></div>' +
+                                        '</td>' +
+                                        '<td>' +
+                                        '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
+                                        '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                        '<tr id="showPlus"> </tr>' +
+                                        '<tr>' +
+                                        '<td colspan="7">' +
+                                        '<font size="6" color=#228b22><a><i type="button" onclick="fonction()" class="fa fa-plus-square"></i></a></font>' +
+                                        '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                        '</td>' +
+                                        '</tr>' +
+                                        '</div></div> </table>' ;
+
+                                }
                             }
+
+
+                        }
+
+                        function fonction()
+                        {
+                            var nbr = $("#showPlus").children('tr').length;
+                            nbr = nbr +1;
+                            var innerHTML =
+                                '<tr id="hide_'+nbr+'" >' +
+                                '<td colspan="4">' +
+                                '<label><font size="3"> Reponse correcte n° :</font></label>' +
+                                '</td>' +
+                                '<td>' +
+                                '<div class="col-9">' +
+                                '<input type="text" name="test[]" class="form-control"></div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font>' +
+                                '</td>' +
+                                '</tr>' ;
+                            $("#showPlus").append(innerHTML);
+
+                        }
+
+                        function fonctiondate()
+                        {
+                            var nbr = $("#showPlus").children('tr').length;
+                            nbr = nbr +1;
+                            var innerHTML = '<tr id="hide_'+nbr+'" ><td colspan="4"> <label><font size="3"> Description date n° :</font></label>' +
+                                '</td>' +
+                                '<td>' +
+                                '<input type="text" name="desc[]" class="form-control"> ' +
+                                '</td>' +
+                                '<td><div class="col-15"><input name="date[]"  type="date" class="form-control"></div></td>' +
+                                '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
+                            $("#showPlus").append(innerHTML);
+                        }
+
+                        function fonctionnumber()
+                        {
+                            var nbr = $("#showPlus").children('tr').length;
+                            nbr = nbr +1;
+                            var innerHTML ='<tr id="hide_'+nbr+'"">' +
+                                '<td  colspan="4">' +
+                                '<label><font size="3"> Description n° :</font></label>' +
+                                '</td>' +
+                                '<td  colspan="4">' +
+                                '<div class="col-9"><input name="desnum[]" type="text" class="form-control">' +
+                                '</td>' +
+                                '</tr>' +
+                                '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Reponse correcte n° :</font></label></td>' +
+                                '<td><div class="col-7"><input name="number[]"  type="number" class="form-control"></div></td>' +
+                                '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
+                            $("#showPlus").append(innerHTML);
                         }
 
 
-                    }
 
-                    function fonction()
-                    {
-                        var nbr = $("#showPlus").children('tr').length;
-                        nbr = nbr +1;
-                        var innerHTML =
-                            '<tr id="hide_'+nbr+'" ><td colspan="4"><label><font size="3"> Reponse correcte n° :</font></label></td>' +
-                            '<td><div class="col-9"><input type="text" name="test[]" class="form-control"></div></td>' +
-                            '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
-                        $("#showPlus").append(innerHTML);
-
-                    }
-
-                    function fonctiondate()
-                    {
-                        var nbr = $("#showPlus").children('tr').length;
-                        nbr = nbr +1;
-                        var innerHTML = '<tr id="hide_'+nbr+'" ><td colspan="4"> <label><font size="3"> Description date n° :</font></label>' +
-                            '</td>' +
-                            '<td>' +
-                            '<input type="text" name="desc[]" class="form-control"> ' +
-                            '</td>' +
-                            '<td><div class="col-15"><input name="date[]"  type="date" class="form-control"></div></td>' +
-                            '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
-                        $("#showPlus").append(innerHTML);
-                    }
-
-                    function fonctionnumber()
-                    {
-                        var nbr = $("#showPlus").children('tr').length;
-                        nbr = nbr +1;
-                        var innerHTML ='<tr id="hide_'+nbr+'"">' +
-                            '<td  colspan="4">' +
-                            '<label><font size="3"> Description n° :</font></label>' +
-                            '</td>' +
-                            '<td  colspan="4">' +
-                            '<div class="col-9"><input name="desnum[]" type="text" class="form-control">' +
-                            '</td>' +
-                            '</tr>' +
-                            '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Reponse correcte n° :</font></label></td>' +
-                            '<td><div class="col-7"><input name="number[]"  type="number" class="form-control"></div></td>' +
-                            '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
-                        $("#showPlus").append(innerHTML);
-                    }
+                        function fonctiontypevraioufaux()
+                        {
+                            var nbr = $("#showPlus").children('tr').length;
+                            nbr = nbr +1;
+                            var innerHTML =
+                                '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Reponse correcte n° :</font></label></td>' +
+                                '<td><div class="col-7"><input name="vf[]"  type="text" class="form-control"></div></td>' +
+                                '<td><div style="width: 100px">' +
+                                '<select class="form-control"  name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select>'+
+                                '</div>' +
+                                '</td><td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td>' +
+                                '</tr>' ;
+                            $("#showPlus").append(innerHTML);
+                        }
 
 
+                        function fonctioncaseacocher()
+                        {
+                            var nbr = $("#showPlus").children('tr').length;
+                            nbr = nbr +1;
+                            var innerHTML =
+                                '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
+                                '<td><div class=""><input name="case[]"  type="text" class="form-control"></div></td>'+
+                                '<td><div style="width: 150px">' +
+                                '<select class="form-control" name="etatcase[]"><option value="1">Reponse correcte</option><option value="0">Reponse incorrecte</option></select></div></td>' +
+                                '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
+                            $("#showPlus").append(innerHTML);
+                        }
 
-                    function fonctiontypevraioufaux()
-                    {
-                        var nbr = $("#showPlus").children('tr').length;
-                        nbr = nbr +1;
-                        var innerHTML =
-                            '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Reponse correcte n° :</font></label></td>' +
-                            '<td><div class="col-7"><input name="vf[]"  type="text" class="form-control"></div></td>' +
-                            '<td><div style="width: 100px">' +
-                            '<select class="form-control"  name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select>'+
-                            '</div>' +
-                            '</td><td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td>' +
-                            '</tr>' ;
-                        $("#showPlus").append(innerHTML);
-                    }
-
-
-                    function fonctioncaseacocher()
-                    {
-                        var nbr = $("#showPlus").children('tr').length;
-                        nbr = nbr +1;
-                        var innerHTML =
-                            '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Repanse correcte n° :</font></label></td>' +
-                            '<td><div class=""><input name="case[]"  type="text" class="form-control"></div></td>'+
-                            '<td><div style="width: 150px">' +
-                            '<select class="form-control" name="etatcase[]"><option value="1">Reponse correcte</option><option value="0">Reponse incorrecte</option></select></div></td>' +
-                            '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
-                        $("#showPlus").append(innerHTML);
-                    }
-
-                    function fonctionliste()
-                    {
-                        var nbr = $("#showPlus").children('tr').length;
-                        nbr = nbr +1;
-                        var innerHTML =
-                            '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Choix réponse n° :</font></label></td>' +
-                            '<td><div class=""><input name="list[]"  type="text" class="form-control"></div></td>'+
-                            '<td><div style="width: 150px">' +
-                            '<select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div></td>' +
-                            '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
-                        $("#showPlus").append(innerHTML);
-                    }
+                        function fonctionliste()
+                        {
+                            var nbr = $("#showPlus").children('tr').length;
+                            nbr = nbr +1;
+                            var innerHTML =
+                                '<tr id="hide_'+nbr+'" ><td colspan="6"><label><font size="3"> Choix réponse n° :</font></label></td>' +
+                                '<td><div class=""><input name="list[]"  type="text" class="form-control"></div></td>'+
+                                '<td><div style="width: 150px">' +
+                                '<select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div></td>' +
+                                '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
+                            $("#showPlus").append(innerHTML);
+                        }
 
 
-                    function fonctioncalcule()
-                    {
-                        var nbr = $("#showPlus").children('tr').length;
-                        nbr = nbr +1;
-                        var innerHTML =
-                            '<tr id="hide_'+nbr+'" >' +
-                            '<td colspan="2">' +
-                            '<label><font size="2"> Description formule n° :</font></label>' +
-                            '</td>' +
-                            '<td colspan="">' +
-                            '<label><font size="2"> Formule :</font></label>' +
-                            '</td>' +
-                            '<td colspan="">' +
-                            '<label><font size="2"> Resultat :</font></label>' +
-                            '</td>' +
-                            '</tr> '+
-                            '<tr id="hide_'+nbr+'">' +
-                            '<td  colspan="2">' +
-                            '<div class=""><input  name="descriptionF[]" type="text" class="form-control">' +
-                            '</div>' +
-                            '</td>' +
-                            '<td>' +
-                            '<div class=""><input  name="formule[]" type="text" class="form-control">' +
-                            '</td>' +
-                            '<td>' +
-                            '<div class=""><input  name="resultatF[]" type="text" class="form-control"></td>' +
+                        function fonctioncalcule()
+                        {
+                            var nbr = $("#showPlus").children('tr').length;
+                            nbr = nbr +1;
+                            var innerHTML =
+                                '<tr id="hide_'+nbr+'" >' +
+                                '<td colspan="2">' +
+                                '<label><font size="2"> Description formule n° :</font></label>' +
+                                '</td>' +
+                                '<td colspan="">' +
+                                '<label><font size="2"> Formule :</font></label>' +
+                                '</td>' +
+                                '<td colspan="">' +
+                                '<label><font size="2"> Resultat :</font></label>' +
+                                '</td>' +
+                                '</tr> '+
+                                '<tr id="hide_'+nbr+'">' +
+                                '<td  colspan="2">' +
+                                '<div class=""><input  name="descriptionF[]" type="text" class="form-control">' +
+                                '</div>' +
+                                '</td>' +
+                                '<td>' +
+                                '<div class=""><input  name="formule[]" type="text" class="form-control">' +
+                                '</td>' +
+                                '<td>' +
+                                '<div class=""><input  name="resultatF[]" type="text" class="form-control"></td>' +
 
-                            '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td>'+
-                            '</tr>'
-                        $("#showPlus").append(innerHTML);
-                    }
+                                '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td>'+
+                                '</tr>'
+                            $("#showPlus").append(innerHTML);
+                        }
 
 
 
 
-                    function fonctionhide(nbr) {
-                        $('tr#hide_'+nbr).remove();
+                        function fonctionhide(nbr) {
+                            $('tr#hide_'+nbr).remove();
 
-                    }
+                        }
 
-                </script>
-                <tr>
-                    <td>
-                        <div id="showType"></div>
-                    </td>
+                    </script>
+                    <tr>
+                        <td>
+                            <div id="showType"></div>
+                        </td>
 
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <div class="form-group row">
-                            <div class="col-xs-2">
-                                {{ form_label(formq.description_question) }}
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="form-group row">
+                                <div class="col-xs-2">
+                                    {{ form_label(formq.description_question) }}
+                                </div>
+                                <div class="col-xs-2">
+                                    {{ form_widget(formq.description_question) }}
+                                    {{ form_errors(formq.description_question) }}
+                                </div>
                             </div>
-                            <div class="col-xs-2">
-                                {{ form_widget(formq.description_question) }}
-                                {{ form_errors(formq.description_question) }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group row">
+                                <div class="col-xs-2">
+                                    {{ form_label(formq.info_bulle) }}
+                                </div>
+                                <div class="col-xs-2">
+                                    {{ form_widget(formq.info_bulle) }}
+                                    {{ form_errors(formq.info_bulle) }}
+                                </div>
+                                <div class="col-xs-2">
+                                    &nbsp;     <font size="5"> <i class="fa fa-question-circle"></i></font>
+
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td>
-                        <div class="form-group row">
-                            <div class="col-xs-2">
-                                {{ form_label(formq.info_bulle) }}
-                            </div>
-                            <div class="col-xs-2">
-                                {{ form_widget(formq.info_bulle) }}
-                                {{ form_errors(formq.info_bulle) }}
-                            </div>
-                            <div class="col-xs-2">
-                                &nbsp;     <font size="5"> <i class="fa fa-question-circle"></i></font>
-
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><br>
-
-
-                        <button type="submit" class="btn btn-info">Ajouter</button>
-
-                    </td>
-
-                </tr>
-            </table>
-        </div>
-        {{ form_end(formq) }}
-
-    {% endif %}
+                </table>
 
 
 
+<table>
+    <tr>
+        <td>
+
+                <button class="btn btn-info">Ajouter </button>
+
+        </td>
+        <td>
+            <div style=" padding-left: 720px;">
+
+            <a href="{{ path('modifier_page', { 'quiz': quiz.id,  'page': page.id}) }}">
+                <font size="4">
+                    <i class="fa fa-reply" ></i>
+                </font>
+            </a>
+            </div>
+        </td>
+    </tr>
+</table>
 
 
+
+            </div>
+            {{ form_end(formq) }}
+        {% else %}
+            <div><br><br><br>
+              <center>
+                  <div style="width: 700px">
+                      <br><center>Vous avez atteint le nombre maximum des question dans cette page !</center><br>
+                  </div>
+                  <br>
+              </center>
+                <div style=" padding-left: 720px;">
+
+                    <a href="{{ path('modifier_page', { 'quiz': quiz.id,  'page': page.id}) }}">
+                        <font size="4">
+                            <i class="fa fa-reply" ></i>
+                        </font>
+                    </a>
+                </div>
+
+            </div>
+        {% endif %}
+
+    </div>
 
 {% endblock %}

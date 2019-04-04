@@ -14,6 +14,7 @@ use App\Repository\ParametreRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\ReponseRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
+use Ecommerce\EcommerceBundle\Form\RechercheType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -44,6 +45,9 @@ class AdminController extends EasyAdminController
 {
 
 
+
+
+
     /**
      * @Route("/dashboard", name="admin_dashboard")
      */
@@ -53,7 +57,7 @@ class AdminController extends EasyAdminController
 
             $quiz = $em->getRepository('App:Quiz')->findAll();
 
-        return $this->render('bundles/easy_admin/dashboard.html.twig', array('quiz'=>$quiz));
+        return $this->render('/dashboard.html.twig', array('quiz'=>$quiz));
     }
 
 
@@ -96,14 +100,16 @@ class AdminController extends EasyAdminController
 
 
             if ($question->getTypeQuestion() == "Réponse courte") {
-                $des=$request->get('destext');
                 $desnum=$request->get('desnum');
 
                 $selecttype = $request->get('selecttype');
                 if ($selecttype == 'texte') {
                     $nbcaractere = $request->get('nbcaractere');
+
+
                     $parametre = new Parametre();
                     $entityManager = $this->getDoctrine()->getManager();
+
                     $parametre->setFormText("texte");
                     $parametre->setQuestion($question);
                     $parametre->setNbCaractere($nbcaractere);
@@ -115,11 +121,8 @@ class AdminController extends EasyAdminController
                         array_push($data, $p);
                     }
 
-
-
-
                     $datatext = [''];
-                    foreach ($des as $p) {
+                    foreach ($data as $p) {
                         array_push($datatext, $p);
                     }
                     for ($i = 1; $i < count($data); $i++) {
@@ -285,6 +288,8 @@ class AdminController extends EasyAdminController
             }
 
             $entityManager = $this->getDoctrine()->getManager();
+
+            $question->setDescriptionQuestion($question->getDescriptionQuestion());
             $question->setPage($page);
             $question->setActif(true);
             $entityManager->persist($question);
@@ -403,6 +408,65 @@ class AdminController extends EasyAdminController
 
         ]);
     }
+
+
+
+    /**
+     * @Route("/back/{quiz}", name="back", methods={"GET","POST"})
+     */
+    public function back( Quiz $quiz, QuizRepository $quizRepository)
+    {
+        $listquiz = $quizRepository->findAll();
+
+       return $this->redirectToRoute('get_info_quiz',[
+           'quiz'=>$quiz
+       ]);
+    }
+
+
+    /**
+     * @Route("/imprimerquiz/{quiz}", name="imprimerquiz", methods={"GET","POST"})
+     */
+    public function imprimerquiz( Quiz $quiz, QuizRepository $quizRepository)
+    {
+        $listquiz = $quizRepository->findAll();
+
+        return $this->render('quiz/imprimerquiz.html.twig',[
+            'quiz'=>$quiz,
+            'listquiz'=>$listquiz
+        ]);
+    }
+
+
+    /**
+     * @Route("/showpagequestion/{page}", name="showpagequestion", methods={"GET","POST"})
+     */
+    public function showpagequestion( Page $page, QuizRepository $quizRepository)
+    {
+        $listquiz = $quizRepository->findAll();
+
+        return $this->render('quiz/showpagequestion.html.twig',[
+            'p'=>$page
+        ]);
+    }
+
+
+    /**
+     * @Route("/showq/{quiz}", name="showq", methods={"GET","POST"})
+     */
+    public function showqAction( Quiz $quiz, QuizRepository $quizRepository)
+    {
+        $listquiz = $quizRepository->findAll();
+
+        return $this->render('quiz/showQuiz.html.twig',[
+            'quiz'=>$quiz
+        ]);
+    }
+
+
+    /**
+     * @Route("/send", name="send", methods={"GET","POST"})
+     */
     public function sendAction()
     {
 
@@ -410,6 +474,140 @@ class AdminController extends EasyAdminController
     }
 
 
+    /**
+     * @Route("/quiz/dupliqueAction/{quiz}", name="dupliqueAction", methods={"GET","POST"})
+     */
+    public function dupliqueAction(QuizRepository $quizRepository, Quiz $quiz)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $qui =new Quiz();
+        if($quiz->getNbQuestion())
+            $qui->setNbQuestion($quiz->getNbQuestion());
+        if($quiz->getNbPage())
+            $qui->setNbPage($quiz->getNbPage());
+
+
+        $nbquiz=$quizRepository->findAll();
+        $listquiz=$quizRepository->findAll();
+
+        $nb=0;
+
+        foreach ($nbquiz as $p)
+        {
+            if ($p->getTitre() == $quiz->getTitre() ) {
+
+                $nb=$nb+1;
+                    }
+
+        }
+
+        if($quiz->getTitre())
+            $copie = "(Copie".$nb.")";
+
+            $qui->setTitre($quiz->getTitre().$copie);
+        if($quiz->getColorTitre())
+            $qui->setColorTitre($quiz->getColorTitre());
+        if($quiz->getBrochure())
+            $qui->setBrochure($quiz->getBrochure());
+        if($quiz->getDescription())
+            $qui->setDescription($quiz->getDescription());
+        if($quiz->getEntete())
+            $qui->setEntete($quiz->getEntete());
+        if($quiz->getPied())
+            $qui->setPied($quiz->getPied());
+        if($quiz->getFermerQuiz())
+            $qui->setFermerQuiz($quiz->getFermerQuiz());
+        if($quiz->getOuvrireQuiz())
+            $qui->setOuvrireQuiz($quiz->getOuvrireQuiz());
+        if($quiz->getGras())
+            $qui->setGras($quiz->getGras());
+        if($quiz->getItalique())
+            $qui->setItalique($quiz->getItalique());
+        if($quiz->getImprimePdf())
+            $qui->setImprimePdf($quiz->getImprimePdf());
+        if($quiz->getMelangeQuestion())
+            $qui->setMelangeQuestion($quiz->getMelangeQuestion());
+        if($quiz->getNbTentative())
+            $qui->setNbTentative($quiz->getNbTentative());
+        if($quiz->getMessageE())
+            $qui->setMessageE($quiz->getMessageE());
+        if($quiz->getMessageS())
+            $qui->setMessageS($quiz->getMessageS());
+        if($quiz->getModeCorrection())
+            $qui->setModeCorrection($quiz->getModeCorrection());
+        if($quiz->getModeScore())
+            $qui->setModeScore($quiz->getModeScore());
+        if($quiz->getSendMail())
+            $qui->setSendMail($quiz->getSendMail());
+        if($quiz->getTempsDispo())
+            $qui->setTempsDispo($quiz->getTempsDispo());
+        $entityManager->persist($qui);
+        foreach ($quiz->getPage() as $par) {
+        $newpage = new Page();
+           if($par->getBgColor())
+                $newpage->setBgColor($par->getBgColor());
+            if($par->getOrdre())
+                $newpage->setOrdre($par->getOrdre());
+            if($par->getTitrePage())
+                $newpage->setTitrePage($par->getTitrePage());
+            if($par->getColorTitrePage())
+                $newpage->setColorTitrePage($par->getColorTitrePage());
+              $newpage->setQuiz($qui);
+            $entityManager->persist($newpage);
+            foreach ($par->getQuestion() as $quest) {
+                $newquestion =new Question();
+                $newquestion->setTextQuestion($quest->getTextQuestion());
+                $newquestion->setTypeQuestion($quest->getTypeQuestion());
+                if ($quest->getDescriptionQuestion())
+                    $newquestion->setDescriptionQuestion($quest->getDescriptionQuestion());
+                if ($quest->getInfoBulle())
+                    $newquestion->setInfoBulle($quest->getInfoBulle());
+                $newquestion->setActif($quest->getActif());
+                $newquestion->setPage($newpage);
+                $entityManager->persist($newquestion);
+                foreach ($quest->getParametre() as $param) {
+                    $parametre = new Parametre();
+                    if($param->getNbCaractere())
+                        $parametre->setNbCaractere($param->getNbCaractere());
+                    if($param->getNbChiffre())
+                        $parametre->setNbChiffre($param->getNbChiffre());
+                    if ($param->getFormText())
+                        $parametre->setFormText($param->getFormText());
+                    $parametre->setQuestion($newquestion);
+                    $entityManager->persist($parametre);
+
+                }
+                foreach ($quest->getReponse() as $rep) {
+
+                    $newrep = new Reponse();
+                    if ($rep->getDescriptiondate())
+                        $newrep->setDescriptiondate($rep->getDescriptiondate());
+                    if ($rep->getDescriptionformule())
+                        $newrep->setDescriptionformule($rep->getDescriptionformule());
+                    if ($rep->getResultatformule())
+                        $newrep->setResultatformule($rep->getResultatformule());
+                    if ($rep->getFormule())
+                        $newrep->setFormule($rep->getFormule());
+                    if ($rep->getEtatlist())
+                        $newrep->setEtatlist($rep->getEtatlist());
+                    $newrep->setEtatcaseacocher($rep->getEtatcaseacocher());
+                    if ($rep->getEtatcaseacocher())
+                        $newrep->setEtatvf($rep->getEtatvf());
+                    if ($rep->getReponseValide())
+                        $newrep->setReponseValide($rep->getReponseValide());
+                    $newrep->setQuestion($newquestion);
+                    $entityManager->persist($newrep);
+                }
+                }
+        }
+        $entityManager->flush();
+
+        return $this->redirectToRoute('list_quiz',[
+            'listequiz' => $listquiz,
+
+        ]);
+    }
 
 
     /**
@@ -539,9 +737,6 @@ class AdminController extends EasyAdminController
                     foreach ($reptext as $p) {
                         array_push($data, $p);
                     }
-
-
-
 
                     $datatext = [''];
                     foreach ($des as $p) {

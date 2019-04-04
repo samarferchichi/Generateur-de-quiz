@@ -1,0 +1,638 @@
+<!doctype html>
+
+<head>
+
+    <style>
+
+
+        html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline; }
+        article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+            display: block}
+        body {
+            line-height: 1; }
+        ol, ul {
+            list-style: none; }
+        blockquote, q {
+            quotes: none; }
+        blockquote:before, blockquote:after, q:before, q:after {
+            content: '';
+            content: none; }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0}
+
+        html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; }
+
+        /*-----------------------------------*/
+        /* General Styles */
+        /*-----------------------------------*/
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 400;
+            color:#8e8071;
+            font-size:13px;
+            position:relative;
+            background-size: 100% 100%;
+        }
+
+        ::selection {
+            background: #aba98c;
+            color: #333;
+            text-shadow: none;
+        }
+
+        a:active{background-color: transparent;}
+
+        input, textarea, input[type="submit"]:focus, div {
+            outline: 0 none;
+            font-family: 'Open Sans', sans-serif;
+        }
+        button, input, select, textarea {vertical-align: top; margin: 0;}
+
+        /*-----------------------------------*/
+        /* Clear Floats */
+        /*-----------------------------------*/
+
+
+        .clearfix {
+            *zoom: 1;
+        }
+        .clearfix:before,
+        .clearfix:after {
+            display: table;
+            line-height: 0;
+            content: "";
+        }
+        .clearfix:after {
+            clear: both;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: #5c5146;
+            font-weight: 400;
+            letter-spacing: -1px;
+            line-height:1.2em;
+            margin-bottom:.8em;
+        }
+        h4, h5, h6{color: #e86741;}
+
+        h1{font-size:27px}
+        h2{font-size:24px}
+        h3{font-size:21px}
+        h4{font-size:19px}
+        h5{font-size:17px}
+        h6{font-size:15px}
+
+        em{font-style: italic;}
+        strong{font-weight: 700;}
+        small{font-size: 85%;}
+
+        i{
+            position: relative;
+            top: 0;
+            left: 0;
+            display: inline-block;
+            overflow: hidden;
+            text-decoration: none;
+            font-style: normal;
+            background-repeat: no-repeat;
+            margin-right: 15px;
+        }
+        p{
+            line-height: 19px;
+            margin-bottom: 16px;
+        }
+
+
+
+        .btn-small span, .btn-small input{
+            height: 32px;
+            line-height: 30px;
+            padding: 0 14px;
+            font-size: 14px;
+        }
+        .btn-large span, .btn-large input{
+            height: 51px;
+            line-height: 47px;
+            padding: 0 23px;
+            font-size: 18px;
+        }
+
+
+
+        .boxed {
+            background: #fff;
+            -webkit-border-radius:5px;
+            -moz-border-radius:5px;
+            border-radius:5px;
+            -webkit-box-shadow: 0 0 12px rgba(58, 51, 46, 0.26);
+            -moz-box-shadow: 0 0 12px rgba(58, 51, 46, 0.26);
+            box-shadow: 0 0 12px rgba(58, 51, 46, 0.26);
+            margin-bottom:30px;
+            position: relative;
+            z-index: 0;
+        }
+
+
+        .price_col_head .price em {
+            font-size:37px;
+            margin-right:3px;
+            font-weight:700;
+            font-style:normal;
+            color:#fff;
+        }
+        .col_active .price_col_head .price em {font-size:45px;}
+
+        .price_col_head .price sup {
+            vertical-align: baseline;
+            position: relative;
+            top: -0.7em;
+            margin-left:2px;
+            font-size:0.5em;
+            color:#efe7de;
+            font-weight:700;
+        }
+        .price_body_top strong {
+            font-size:27px;
+            display:block;
+            margin-bottom: 10px;
+            color:#fff;
+            font-weight:700;
+            font-style: italic;
+        }
+        .price_body_top span {
+            font-size:11px;
+            display:block;
+            text-transform: uppercase;
+            font-weight:700;
+        }
+
+
+        .price_col_yellow .price_body_top  span {color:#fef4d8;}
+        .price_col_blue .price_body_top span {color:#a4cee7;}
+        .price_col_green .price_body_top span {color:#89eca8;}
+        .price_col_red .price_body_top span {color:#ffc19b;}
+
+        .price_col_body ul li {
+            color:#fff;
+            font-size:12px;
+            display:block;
+            line-height: 17px;
+            padding:0;
+            margin:0;
+        }
+        .price_col_body ul li:first-child {margin-top:5px;}
+
+
+        .price_style2 .price_col_body ul li {
+            font-size:15px;
+            line-height: 22px;
+        }
+
+
+        .widget-container{margin-bottom: 30px;}
+        .widget-container .widget-title{
+            padding: 19px 20px 19px 33px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+            margin-bottom:0;
+            background: #7b6d5e;
+            -webkit-box-shadow: inset 0 -2px 2px rgba(57,57,57,.36);
+            -moz-box-shadow: inset 0 -2px 2px rgba(57,57,57,.36);
+            box-shadow: inset 0 -2px 2px rgba(57,57,57,.36);
+            -webkit-border-radius: 4px 4px 0 0;
+            -moz-border-radius: 4px 4px 0 0;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .widget_categories li{position: relative;}
+
+        .widget_categories li a{
+            display: block;
+            padding: 12px 32px;
+            font-size: 14px;
+            line-height: 20px;
+            color: #7b6d5e;
+            position: relative;
+            border-left: 3px solid transparent;
+        }
+        .widget_categories li:hover a, .widget_categories li.current-menu-item a{
+            border-left: 3px solid #40a268;
+            background: #f6f0ec;
+        }
+
+
+        .tagcloud a:hover{color:#8D8569;}
+
+
+        .tabs_framed.styled .tagcloud a {margin: 7px 4px 9px;}
+
+        .post-item h2{
+            font-size:27px;
+            margin-bottom:10px;
+        }
+        .post-item h2 a, .post-item-wide h2 a{color:#4a4036;}
+        .post-item h2 a:hover, .post-item-wide h2 a:hover{color:#8D8569;}
+
+
+        .post-item .ribbon em, .post-item .ribbon strong{font-size: 17px;}
+
+        .post-item .post-image img,
+        .post-item-wide .post-image img{
+            display: block;
+            width: 100%;
+            -webkit-border-radius: 5px 5px 0 0;
+            -moz-border-radius: 5px 5px 0 0;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .post-meta-links li{
+            float: left;
+            background: #f5ede8;
+            border-left: 1px solid #fff;
+            font-size: 15px;
+            line-height: 25px;
+            font-weight: 700;
+            color: #7b6d5e;
+            text-align: center;
+            text-transform: uppercase;
+            padding-bottom: 200px;
+            margin-bottom: -200px;
+        }
+
+
+        input::-webkit-input-placeholder {font-size:13px; color:#c9c2bc;}
+        input:-moz-placeholder {font-size:13px; color:#c9c2bc;}
+        input:-ms-input-placeholder {font-size:13px; color:#c9c2bc;}
+        textarea::-webkit-input-placeholder {font-size:13px; color:#c9c2bc;}
+        textarea:-moz-placeholder {font-size:13px; color:#c9c2bc;}
+        textarea:-ms-input-placeholder {font-size:13px; color:#c9c2bc;}
+
+        label, input, button, select, textarea {
+            font-size: inherit;
+            line-height: normal;
+        }
+
+        .tabs li{
+            float:left;
+            text-align: center;
+            height: 48px;
+            line-height: 48px;
+            position: relative;
+            margin-right:5px;
+            margin-top: 5px;
+            background: #5c5146;
+            border-radius: 5px 5px 0 0;
+            -webkit-border-radius: 5px 5px 0 0;
+            -moz-border-radius: 5px 5px 0 0;
+            -webkit-box-shadow: 0 -5px 5px rgba(146, 119, 48, 0.18);
+            -moz-box-shadow: 0 -5px 5px rgba(146, 119, 48, 0.18);
+            box-shadow: 0 -5px 5px rgba(146, 119, 48, 0.18);
+        }
+
+        .tabs li a{
+            font-size: 14px;
+            color:#f8f3f0;
+            display: block;
+            padding: 0 22px;
+        }
+        .tabs li.active a{
+            font-size: 16px;
+            color:#5c5146;
+        }
+
+        .payment-form .tabs li,
+
+        .payment-form .tabs li a{
+            font-size: 25px;
+            padding: 0 40px;
+        }
+
+
+
+
+        .tab_image img{
+            border-radius: 4px;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            display: block;
+            width: 100%;
+        }
+        .tab-content.icons .tab_icon{
+            position: absolute;
+            top:34px;
+            left:32px;
+        }
+
+        /*-----------------------------------*/
+        /* Tabs Style 2 */
+        /*-----------------------------------*/
+
+        .tabs_framed.styled .tabs li{
+            border: 1px solid #e4dbca;
+            background: none;
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            height: 50px;
+            line-height: 46px;
+            margin-right: 3px;
+            margin-top: 0;
+        }
+
+        .tabs_framed.styled .tabs li a{
+            font-size: 16px;
+            color: #fff;
+            padding: 0 50px;
+        }
+        .tabs_framed.styled .tabs li.active a{color:#8e8071;}
+
+        @media (max-width: 991px){
+            .tabs_framed.styled .tabs li a{
+                font-size: 13px;
+                padding: 0 25px;
+            }
+        }
+
+
+
+
+        .tabs_framed.styled h2{
+            font-size: 32px;
+            color: #5c5248;
+            font-weight: 600;
+            letter-spacing: -2px;
+            margin-bottom: 10px;
+        }
+        .tabs_framed.styled h2 a{color: #5c5248;}
+
+        .tabs_framed.styled h3{
+            font-size: 28px;
+            color: #5c5146;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .tabs_framed.styled h3 a{color: #5c5146;}
+
+        .tabs_framed.styled h2 a:hover,
+        .tabs_framed.styled h3 a:hover{
+            color: #8D8569;
+        }
+
+
+
+        /*-----------------------------------*/
+        /* Main Menu */
+        /*-----------------------------------*/
+
+        /* Level 0 */
+
+
+        .dropdown{
+            padding: 0 5px;
+            z-index: auto;
+        }
+        .dropdown > li {
+            float:left;
+            position: relative;
+            border-left: 1px solid #F8F3F0;
+        }
+
+        @media (max-width: 1199px) {
+            .dropdown > li {border-left: 0 none;}
+        }
+
+        .dropdown a {
+            display: block;
+            font-size: 17px;
+            line-height: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            color: #8e8071;
+            padding: 18px 23px 12px 16px;
+            border-bottom: 3px solid transparent;
+        }
+        @media (max-width:479px){
+            .dropdown a {padding: 18px 16px 12px 8px;}
+            .dropdown .note{display:none;}
+        }
+
+        .dropdown > li:hover > a,
+        .dropdown > li.hover > a{
+            background: #f8f3f0;
+            border-bottom: 3px solid #4daf7b;
+        }
+
+        /* Level 1+ */
+
+        .dropdown ul{
+            position: absolute;
+            top:-9999px;
+            left:-9999px;
+            z-index: 9999;
+            width:100%;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            -webkit-box-shadow: 0 0 12px rgba(58, 51, 46, 0.26);
+            -moz-box-shadow: 0 0 12px rgba(58, 51, 46, 0.26);
+            box-shadow: 0 0 12px rgba(58, 51, 46, 0.26);
+        }
+        .ie8 .dropdown ul{padding-top: 0;}
+
+        .dropdown > li:hover > ul,
+        .dropdown > li.hover > ul{
+            top:65px;
+            left:0;
+        }
+        .dropdown ul li{position: relative;}
+
+        .dropdown > li > ul > li.first > a{
+            -webkit-border-radius: 0;
+            -moz-border-radius: 0;
+            border-radius: 0;
+        }
+        .dropdown ul > li.last > a{
+            border-radius: 0 0 3px 3px;
+            -webkit-border-radius: 0 0 3px 3px;
+            -moz-border-radius: 0 0 3px 3px;
+        }
+        .dropdown ul a{
+            font-size: 13px;
+            line-height: 17px;
+            padding: 10px 16px !important;
+            background: #fff;
+            border-left: 3px solid transparent;
+            border-bottom: 0 none;
+        }
+        .dropdown ul a:hover{
+            background: #f8f3f0;
+            border-left: 3px solid #4daf7b;
+        }
+
+        /* Level 2+ */
+
+        .dropdown ul > li.first,
+        .dropdown ul > li.first > a{
+            -webkit-border-radius: 3px 3px 0 0;
+            -moz-border-radius: 3px 3px 0 0;
+            border-radius: 3px 3px 0 0;
+        }
+        .dropdown ul li:hover > ul{
+            position: absolute;
+            top:0;
+            left:100%;
+            width:100%;
+            background-color: rgba(255,255,255,0);
+        }
+
+        /*-----------------------------------*/
+        /* User Menu */
+        /*-----------------------------------*/
+
+        .user-menu .dropdown a {font-size: 15px; padding: 18px 20px 12px 15px;}
+        .user-menu .dropdown ul a {font-size: 13px;}
+
+        @media (max-width: 1199px){
+            .user-menu .dropdown a {padding: 18px 10px 12px 8px;}
+        }
+
+        /*-----------------------------------*/
+        /* Contact Form styled */
+        /*-----------------------------------*/
+
+        .add-comment.styled input[type="text"],
+        .add-comment.styled input[type="password"] {
+            height: 48px;
+            padding-left: 10px;
+        }
+        .ie8 .add-comment.styled input[type="text"],
+        .ie8 .add-comment.styled input[type="password"] {
+            line-height: 46px;
+        }
+
+
+
+        .widget_login.styled h6 {
+            font-weight: 700;
+            color: #8E8071;
+            text-transform: uppercase;
+            text-align: center;
+            letter-spacing: 0;
+            margin-bottom: 24px;
+        }
+
+        .widget_login.styled input[type="text"],
+        .widget_login.styled input[type="password"]{
+            padding-left: 64px;
+            height: 48px;
+        }
+        .ie8 .widget_login.styled input[type="text"],
+        .ie8 .widget_login.styled input[type="password"]{
+            line-height: 46px;
+        }
+
+          .widget_login.styled .rowSocial a{
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 15px;
+        }
+
+        /*-----------------------------------*/
+        /* Search Form styled */
+        /*-----------------------------------*/
+
+
+
+        .note {
+            display: block;
+            width: 13px;
+            height: 13px;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            top: 15px;
+            right: 12px;
+            z-index: 9999;
+            text-align: center;
+            font-size: 9px;
+            font-weight: 700;
+            line-height: 13px;
+            color: #fff;
+            background: #e55e3a;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+        }
+
+    </style>
+
+
+
+    <!-- Scroll Bars -->
+
+</head>
+
+<body>
+
+
+
+<div class="container container-wide">
+<br><br>
+    <!-- content -->
+    <div class="content " role="main">
+        <!-- row -->
+        <div class="row">
+            <div class="col-sm-8">
+                <!-- Website Menu -->
+                <div id="topmenu">
+                    <ul class="dropdown clearfix boxed">
+                        <li class="menu-level-0"><a href="#"><i class="icon-menu"></i><span>check in</span><sup class="note">3</sup></a></li>
+                        <li class="menu-level-0"><a href="#"><i class="icon-menu icon-menu2"></i><span>events</span></a> </li>
+                        <li class="menu-level-0"><a href="#"><i class="icon-menu icon-menu3"></i><span>Quiz</span></a>
+                            <ul class="submenu-1">
+
+                                {% for quiz in listquiz %}
+                                    <li style="width: 350px;" class="menu-level-1"><a href="#">{{ quiz.titre }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        <li class="menu-level-0"><a href="#"><i class="icon-menu icon-menu4"></i><span>settings</span></a></li>
+                    </ul>
+                </div>
+                <!--/ Website Menu -->
+
+                <!-- row level 2 -->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <!-- Widget Trade -->
+                        <div class="widget-container widget-trade boxed">
+                            <div class="widget-title">
+                           </div>
+                            <div class="inner">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!--/ row level 2 -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

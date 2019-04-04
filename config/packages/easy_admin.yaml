@@ -13,7 +13,6 @@ easy_admin:
       - { name: 'new', label: 'Ajouter', icon: 'add' }
       - { name: 'search', label: 'Rechercher' }
       - { name: 'show' , icon: 'eye' , label: false }
-      - { name: 'send' , icon: 'send' , label: false }
 
 
   entities:

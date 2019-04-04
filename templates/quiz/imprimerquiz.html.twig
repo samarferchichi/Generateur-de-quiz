@@ -1,0 +1,278 @@
+{% extends '/bundles/EasyAdmin/default/layout.html.twig' %}
+
+
+{% set _content_title = 'Espace d administartion' %}
+
+{% block page_title -%}
+    {{ _content_title }}
+
+{%- endblock %}
+
+{% block content_header %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+
+    <div class="form-group row" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+         xmlns="http://www.w3.org/1999/html">
+
+        <div>
+
+            <div class="aa"></div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+        </div>
+        &nbsp; &nbsp;
+        <h1 class="title">{{ _content_title }}</h1>
+    </div>
+{% endblock %}
+{% block main %}
+<style>
+    .aa {
+        width: 35px;
+        height: 4px;
+        background-color: #1f6377;
+        margin: 6px 0;
+    }
+</style>
+
+{% if quiz.page|length == 0 %}
+
+<label>
+    Quiz vide !
+</label>
+{% else %}
+    <div style=" padding-left: 1500px;">
+        <h2>
+            <a href="#" id="pdfDownloader" class="fa fa-print"></a>
+            <a href="{{ path('list_quiz', {'quiz': quiz })}}" > <i class="fa fa-reply" ></i>
+            </a>
+        </h2>
+    </div>
+
+
+    <div style="background-color: mintcream; width: 740px" id="printDiv">
+
+       <font color="{{ quiz.colorTitre }}">
+         {% if quiz.gras == 1 and quiz.italique == 1 %}
+
+         <b><i>
+            <h1>
+                {{ quiz.titre }}
+            </h1>
+             </i></b>
+       </font>
+        {% else %}
+        {{ quiz.titre }}
+        {% endif %}
+
+        <div>
+            {% for p in quiz.page %}
+
+                   <div style="background-color:{{ p.bgColor }} ">
+                      <h4>
+                          <font color="{{ p.colorTitrePage }}" > <b> {{ p.titrePage }} </b></font>
+                      </h4>
+
+                       {% if p.question|length == 0 %}
+
+                           <label>
+                               Page vide !
+                           </label>
+                       {% else %}
+                           {% for j in p.question %}
+
+
+
+<label>Question n°</label>
+                               <br>
+                               {% if j.typeQuestion =='Vrai/faux' %}
+                                   {{ j.textQuestion }}
+                                   <br>
+                                   {{ j.descriptionQuestion }}
+
+                                   {% for p in j.reponse %}
+                                       {% if p.question == j %}
+                                           <table>
+                                               <tr>
+                                                   <td colspan="3">
+                                                       {{ p.reponseValide }}
+                                                   </td>
+                                                   <td colspan="3">
+                                                       <div style="width: 300px;">
+
+                                                           <input type="text"  class="form-control">
+                                                       </div>
+                                                   </td>
+                                               </tr>
+                                           </table>
+
+                                       {% endif %}
+                                   {% endfor %}
+
+                               {% endif %}
+
+
+                               {% if j.typeQuestion =='Liste déroulante' %}
+                                   {{ j.textQuestion }}
+                                   <br>
+
+                                   {{ j.descriptionQuestion }}<br>
+                                    Cerculer la ou les bonnees reponses:
+
+                                                       {% for i in j.reponse %}
+                                                           {% if i.question == j %}<br>
+                                                                   {{ i.reponseValide }}
+
+                                                           {% endif %}
+                                                       {% endfor %}
+
+
+                               {% endif %}
+
+
+
+                               {% if j.typeQuestion == 'Case à cocher' %}
+                                   {{ j.textQuestion }}
+                                   <br>
+                                   {{ j.descriptionQuestion }}
+
+                                   {% for p in j.reponse %}
+                                       {% if p.question == j %}
+                                           <table>
+                                               <tr>
+                                                   <td colspan="8">
+                                                       {{ p.reponseValide }}
+                                                   </td>
+                                                   <td>
+                                                       <div style="width: 100px;">
+                                                           <input type="checkbox" >
+                                                       </div>
+                                                   </td>
+                                               </tr>
+                                           </table>
+
+                                       {% endif %}
+                                   {% endfor %}
+                               {% endif %}
+
+                               {% if j.typeQuestion =='Calculée' %}
+                                   {{ j.textQuestion }}
+                                   <br>
+                                   {{ j.descriptionQuestion }}
+
+                                   {% for p in j.reponse %}
+                                       {% if p.question == j %}
+                                           <table>
+                                               <tr>
+                                                   <td colspan="3">
+                                                       {{ p.descriptionformule }}
+                                                   </td>
+                                               </tr>
+                                               <tr>
+                                                   <td>
+                                                       Formule:
+                                                   </td>
+                                                   <td colspan="3">
+                                                       <input  style="width: 400px;" class="form-control" type="text">
+                                                   </td>
+                                               </tr>
+                                               <tr>
+                                                   <td>
+                                                       Resultat:
+                                                   </td>
+                                                   <td>
+                                                       <input style="width: 400px;" class="form-control" type="text">
+                                                   </td>
+                                               </tr>
+                                           </table>
+                                       {% endif %}
+                                   {% endfor %}
+                               {% endif %}
+
+
+
+                               {% if j.typeQuestion =='Réponse courte' %}
+                                   {{ j.textQuestion }}<br>
+                                   {{ j.descriptionQuestion }}
+
+                                   {% for p in j.parametre %}
+
+                                       {% if p.question==j and p.formText =='texte' %}
+
+                                           <textarea class="form-control"></textarea><br>
+                                       {% endif %}
+
+                                       {% if p.question==j and p.formText =='date' %}
+                                           {% for r in j.reponse %}
+                                               {% if r.question == j %}
+                                                   <br>
+                                                   {{ r.descriptiondate }}
+                                                   <input type="text"  style="width: 300px;" class="form-control">
+                                               {% endif %}
+                                           {% endfor %}
+                                       {% endif %}
+
+
+
+
+                                       {% if p.question==j and p.formText =='number' %}
+                                           {% for r in j.reponse %}
+                                               {% if r.question == j %}
+
+                                                   {{ r.descriptiondate }}<br>
+                                                   {{ r.desnumber }}
+                                                   <input type="text" style="width: 300px" class="form-control">
+                                               {% endif %}
+                                           {% endfor %}
+                                       {% endif %}
+                                   {% endfor %}
+                               {% endif %}
+
+
+
+
+                               {% if j.infoBulle != '' %}
+
+                                   <div class="container">
+
+                                   <font color="#6495ed">
+                                       INFO :
+                                   </font> {{ j.infoBulle }}
+                                   </div>
+                               {% endif %}
+<br>
+                           {% endfor %}
+                       {% endif %}
+                   </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endif %}
+
+    <script>
+        $(document).ready(function(){
+
+            //pdf 다운로드
+            $("#pdfDownloader").click(function(){
+
+                html2canvas(document.getElementById("printDiv"), {
+                    onrendered: function(canvas) {
+
+                        var imgData = canvas.toDataURL('image/png');
+                        console.log('Report Image URL: '+imgData);
+                        var doc = new jsPDF('p', 'mm', [1000, 215]); //210mm wide and 297mm high
+
+                        doc.addImage(imgData, 'PNG', 10, 10);
+                        doc.save('sample.pdf');
+                    }
+                });
+
+            });
+
+
+        })
+    </script>
+{% endblock %}

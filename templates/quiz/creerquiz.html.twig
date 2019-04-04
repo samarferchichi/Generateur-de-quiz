@@ -1,4 +1,4 @@
-{% extends '@EasyAdmin/default/layout.html.twig' %}
+{% extends '/bundles/EasyAdmin/default/layout.html.twig' %}
 
 
 {% set _content_title = 'Espace d administartion' %}
@@ -32,41 +32,7 @@
         }
     </style>
 
-
-    <style>
-
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            width: 340px;
-            height: auto;
-            background-color: #f1f1f1;
-        }
-
-        li a {
-            display: block;
-            color: #000;
-            padding: 8px 16px;
-            text-decoration: none;
-            width: px;
-        }
-
-        li a.active {
-            background-color: #7ab5d3;
-            color: white;
-        }
-
-        li a:hover:not(.active) {
-            background-color: #2a85a0;
-            color: black;
-        }
-    </style>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noodp, noimageindex, notranslate, nocache" />
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="generator" content="EasyAdmin" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -209,18 +175,11 @@
                                                  '<div class="col-7"><input name="nbcaractere" type="number" class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
                                                  '</td>' +
                                                  '</tr> ' +
-                                                 '<tr id="hide_0">' +
-                                                 '<td  colspan="4">' +
-                                                 '<label><font size="3"> Description n° :</font></label>' +
-                                                 '</td>' +
-                                                 '<td  colspan="4">' +
-                                                 '<div class="col-9"><input name="destext[]" type="text" class="form-control">' +
-                                                 '</td>' +
-                                                 '</tr>' +
+
                                                  '<tr id="hide_0" >' +
 
                                                  '<td colspan="4">' +
-                                                 '<label><font size="3"> Reponse correcte n° :</font></label>' +
+                                                 '<label><font size="3"> Reponse correcte :</font></label>' +
                                                  '</td>' +
                                                  '<td >' +
                                                  '<div class="col-9"><input name="test[]" type="text" class="form-control">' +
@@ -263,7 +222,7 @@
                                                          '</div>' +
                                                          '</td>' +
                                                          '<td>' +
-                                                         '<div style="width: 100px">' +
+                                                         '<div style="width: 150px">' +
                                                          '<select class="form-control" name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select>' +
                                                          '</div>' +
                                                          '</td>' +
@@ -539,20 +498,13 @@
                                                      '<div class="col-7"><input name="nbcaractere" type="number"  class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
                                                      '</td>' +
                                                      '</tr> ' +
-                                                     '<tr id="hide_0">' +
-                                                     '<td  colspan="4">' +
-                                                     '<label><font size="3"> Description n° :</font></label>' +
-                                                     '</td>' +
-                                                     '<td  colspan="4">' +
-                                                     '<div class="col-9"><input name="destext[]" type="text" class="form-control">' +
-                                                     '</td>' +
-                                                     '</tr>' +
+
                                                      '<tr id="hide_0">' +
                                                      '<td  colspan="4">' +
                                                      '<label><font size="3"> Reponse correcte n° :</font></label>' +
                                                      '</td>' +
                                                      '<td >' +
-                                                     '<div class="col-9"><input name="test" type="text" class="form-control"></div>' +
+                                                     '<div class="col-9"><input name="test[]"  type="text" class="form-control"></div>' +
                                                      '</td>' +
                                                      '<td>' +
                                                      '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
@@ -579,9 +531,18 @@
                                         var nbr = $("#showPlus").children('tr').length;
                                          nbr = nbr +1;
                                          var innerHTML =
-                                             '<tr id="hide_'+nbr+'" ><td colspan="4"><label><font size="3"> Reponse correcte n° :</font></label></td>' +
-                                             '<td><div class="col-9"><input type="text" name="test[]" class="form-control"></div></td>' +
-                                             '<td><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></td></tr>' ;
+                                             '<tr id="hide_'+nbr+'" >' +
+                                             '<td colspan="4">' +
+                                             '<label><font size="3"> Reponse correcte n° :</font></label>' +
+                                             '</td>' +
+                                             '<td>' +
+                                             '<div class="col-9">' +
+                                             '<input type="text" name="test[]" class="form-control"></div>' +
+                                             '</td>' +
+                                             '<td>' +
+                                             '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font>' +
+                                             '</td>' +
+                                             '</tr>' ;
                                          $("#showPlus").append(innerHTML);
 
                                      }
@@ -746,7 +707,7 @@
                                         &nbsp; &nbsp;&nbsp; &nbsp;  &nbsp;
 
 
-                    <button class="btn btn-info">Ajouter à la page</button>
+                                      <button class="btn btn-info">Ajouter à la page</button>
 
                                         &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
                                     </td>
@@ -755,7 +716,7 @@
 
                                         &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;    &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
 
-                                        <button type="button" style="width: 220px" class="btn btn-success">Terminer la création de Quiz</button>
+                                        <button type="button" style="width: 240px" class="btn btn-success">Terminer la création de Quiz</button>
                                     </td>
                                 </tr>
                             </table>
@@ -784,7 +745,7 @@
 
                         </div>
 
-                        <div class="row" style=" width: 629px;border-left: 1.5px solid ;
+                        <div class="row" style=" width: 690px;border-left: 1.5px solid ;
                              color: #3a87ad;
                                 border-right: 1.5px solid ;
                                 border-bottom: 1.5px solid;
@@ -797,16 +758,49 @@
                                     <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
                             </div>
                             <div class="col-sm-6">
-                                    <font color="{{ quiz.colorTitre }}" >{{ quiz.titre }}</font>
+
+                                {% if quiz.gras == 1 and quiz.italique==1 %}
+                                <b>
+                                    <i>
+
+                                    <font color="{{ quiz.colorTitre }}" >
+                                        {{ quiz.titre }}</font>
+                                    </i>
+                                </b>
+                                {% else %}
+                                {% if  quiz.gras == 1 and quiz.italique==0 %}
+                                <b>
+                                         <font color="{{ quiz.colorTitre }}" >
+                                            {{ quiz.titre }}</font>
+
+                                </b>
+                                {% else %}
+                                {% if  quiz.gras == 0 and quiz.italique==1 %}
+                                <i>
+                                    <font color="{{ quiz.colorTitre }}" >
+                                        {{ quiz.titre }}</font>
+
+                                </i>
+                                {% else %}
+                                {% if  quiz.gras == 0 and quiz.italique== 0 %}
+
+                                    <font color="{{ quiz.colorTitre }}" >
+                                        {{ quiz.titre }}</font>
+
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
                             </div>
                             <div class="col-sm-12" >
                                 <div class="list-group">
                                     {% if pos == 1 %}
                                     <label>
-                                      <font color="black">
-                                         <i>
-                                             {{ quiz.entete }}
-                                         </i>
+
+                                        <font color="black">
+
+                                        {{ quiz.entete }}
+
                                       </font>
                                     </label>
                                     {% endif %}
@@ -814,7 +808,9 @@
                                     <label>
                                      <font color="{{ page.colorTitrePage }}" >
                                        <b>
-                                           {{ page.titrePage }}
+
+                                                {{ page.titrePage }}
+
                                        </b>
                                      </font>
                                     </label>
@@ -840,8 +836,9 @@
                                                       Question n°
                                                     </a>
 
-                                                  </b><br>
-                                                    </a></b>
+                                                  </b>
+                                                    <br>
+
 
                                                     {% if j.typeQuestion =='Vrai/faux' %}
                                                         {{ j.textQuestion }}
@@ -858,7 +855,7 @@
                                                                    <td colspan="3">
                                                                        <div style="width: 100px;">
 
-                                                                           <select style="width: 75px;" class="form-control">
+                                                                           <select style="width: 150px;" class="form-control">
                                                                                <option>
                                                                                    Vrai
                                                                                </option>
@@ -1009,7 +1006,7 @@
 
                                                     {% if j.infoBulle != '' %}
 
-                                                        <div style="padding-left: 450px;" class="container">
+                                                        <div style="padding-left: 530px;" class="container">
                                                             <a href="#" data-toggle="popover" title="INFO !" data-content="{{ j.infoBulle }}"><i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
                                                         </div>
                                                     {% endif %}
@@ -1182,76 +1179,81 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             &nbsp;&nbsp;&nbsp;
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <div class="container" style=" width: 632px; height:52px; border-left: 1.5px solid ;
-                             color: #3a87ad; background-color: #9acfea ; border-radius: 5px; " >
-                            <!-- Trigger the modal with a button -->
-                            <div class="form-group row">
-                                <div class="col-xs-2">
-                                    <font size="3">
+                            <div class="modal fade" id="removepage-{{ page.id }}" role="dialog">
+                                <div class="modal-dialog">
 
-
-
-
-
-                                        {% if pos == 1 %}
-                                            <a style="color: grey" class="fa fa-chevron-circle-left"></a>
-                                        {% else %}
-                                            <a href="{{ path('precedentPage', {'quiz':quiz.id ,'page': page.id}) }}" class="fa fa-chevron-circle-left"></a>
-                                        {% endif %}
-                                        {{ pos }} / {{ quiz.nbPage}} page
-
-
-                                        {% if pos < quiz.nbPage %}
-                                            <a class="fa fa-chevron-circle-right" href="{{ path('creatNextPage', {'quiz':quiz.id, 'page': page.id}) }}"></a>
-                                        {% else %}
-                                            <a class="fa fa-chevron-circle-right" style="color: gray"></a>
-                                        {% endif %}
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-                                 <div class="modal fade" id="removepage-{{ page.id }}" role="dialog">
-                                            <div class="modal-dialog">
-
-                                                <!-- Modal content-->
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">Supprimer page</h4>
-                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        {{ render(controller(
-                                                            'App\\Controller\\PageController::deletepage',
-                                                            { 'page': page.id }
-                                                        )) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Supprimer page</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>
-                                    </font>
-                                        <a href="#" data-target="#myModal" data-toggle="modal" class="fa fa-pencil"></a>
-                                        &nbsp;
-                                        <a href="{{ path("page_ajout", { 'id': quiz.id, 'page': page.id } ) }}" class="fa fa-plus-square-o" ></a>
-                                        &nbsp;
-                                        <a href="#"  data-target="#removepage-{{ page.id }}" data-toggle="modal"  class="fa fa-trash-o" ></a>
-                                    </font>
+                                        <div class="modal-body">
+                                            {{ render(controller(
+                                                'App\\Controller\\PageController::deletepage',
+                                                { 'page': page.id }
+                                            )) }}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        </div>
-                </div>
 
+                            </div>
+
+                          <div class="container" style=" width: 675px; height:52px; border-left: 1.5px solid ;
+                             color: #3a87ad; background-color: #9acfea ; border-radius: 5px; " >
+                              <!-- Trigger the modal with a button -->
+                              <div class="form-group row">
+                                  <div class="col-xs-2">
+                                      <font size="3">
+
+
+
+
+
+                                          {% if pos == 1 %}
+                                              <a style="color: grey" class="fa fa-chevron-circle-left"></a>
+                                          {% else %}
+                                              <a href="{{ path('precedentPage', {'quiz':quiz.id ,'page': page.id}) }}" class="fa fa-chevron-circle-left"></a>
+                                          {% endif %}
+                                          {{ pos }} / {{ quiz.nbPage}} page
+
+
+                                          {% if pos < quiz.nbPage %}
+                                              <a class="fa fa-chevron-circle-right" href="{{ path('creatNextPage', {'quiz':quiz.id, 'page': page.id}) }}"></a>
+                                          {% else %}
+                                              <a class="fa fa-chevron-circle-right" style="color: gray"></a>
+                                          {% endif %}
+                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+                                      </font>
+                                      <a href="#" data-target="#myModal" data-toggle="modal" class="fa fa-pencil"></a>
+                                      &nbsp;
+                                      <a href="{{ path("page_ajout", { 'id': quiz.id, 'page': page.id } ) }}" class="fa fa-plus-square-o" ></a>
+                                      &nbsp;
+                                      <a href="#"  data-target="#removepage-{{ page.id }}" data-toggle="modal"  class="fa fa-trash-o" ></a>
+                                  </div>
+
+                              </div>
+                          </div>
+
+                            </div>
+
+                        </div>
+
+                </div>
 
 
 
@@ -1259,7 +1261,7 @@
 
         </div>
         </div>
-    </div>
+
 
 
 {% endblock %}

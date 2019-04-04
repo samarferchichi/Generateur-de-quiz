@@ -1,4 +1,5 @@
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
 <script>
     $( function() {
         $( "#accordion" ).accordion({
@@ -22,43 +23,115 @@
 <div class="w3-panel w3-pale-green" >
 
         <div class="row">
-            <div class="col-sm-8" style="background-color: ">
+
+            <div class="col-sm-8" style="background-color:; width: 750px ">
+
+
+                <div class="modal fade" id="showquiz-{{ quiz.id }}" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content" style="width: 1000px; height:800px ;">
+                            <div class="modal-header">
+                                <h4 class="modal-title">{{ quiz.titre }}</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body" style=" overflow: scroll;">
+                                {{ render(controller(
+                                    'App\\Controller\\AdminController::showqAction',{'quiz': quiz.id}
+                                )) }}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+                <table>
+                <tr>
+                    <td>
+                        <div style="padding-right: 450px;">
+                            <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
+                        </div>
+
+                    </td>
+                    <td colspan="2">
+                        <div class="container">
+                            <div class="row">
+                                <div >
+                                    <h4>
+                                        <a href="{{ path('showq',{ 'quiz': quiz.id }) }}" class="fa fa-eye" data-target="#showquiz-{{ quiz.id }}"  data-toggle="modal" ></a>
+                                    </h4>
+                                </div>
+                                &nbsp;&nbsp;
+                                <div>
+                            <h4>
+                                <a href="{{ path('dupliqueAction',{ 'quiz': quiz.id }) }}" class="fa fa-files-o"></a>
+                            </h4>
+                                </div>&nbsp;&nbsp;
+                                <div >
+                            <h4>
+                                <a href="{{ path('send')}}" class="fa fa-paper-plane"></a>
+                            </h4>
+                                </div>
+
+                                &nbsp;&nbsp;
+                                <div >
+                                    <h4>
+                                <a href="{{ path('imprimerquiz', {'quiz': quiz.id }) }}"  class="fa fa-print"></a>
+                                    </h4>
+                                </div>
+                        </div>
+                        </div>
+
+
+                    </td>
+                </tr>
+
+                </table>
                 <div class="w3-panel w3-pale-green">
+
                     <div class="w3-panel w3-pale-green">
-                        <div class="card-body"><center>{{ quiz.titre }}</center>
+                        <div class="card-body">
 
                             <table class="table" >
                                 <tbody>
-
                                 <tr>
-                                    <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
+
+                                    <th colspan="2">
+
+                                       {{ quiz.titre }}
+                                    </th>
                                 </tr>
+
                                 <tr>
                                     <th>Description</th>
                                     <td>{{ quiz.description }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Mode_correction</th>
+                                    <th>Mode correction</th>
                                     <td>{{ quiz.modeCorrection ? 'Yes' : 'No' }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Mode_score</th>
+                                    <th>Mode score</th>
                                     <td>{{ quiz.modeScore ? 'Yes' : 'No' }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Temps_dispo</th>
+                                    <th>Temps disponible</th>
                                     <td>{{ quiz.tempsDispo ? quiz.tempsDispo|date('Y-m-d H:i:s') : '' }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Melange_question</th>
+                                    <th>Melange les question</th>
                                     <td>{{ quiz.melangeQuestion ? 'Yes' : 'No' }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Ouvrire_quiz</th>
+                                    <th>Ouvreture de quiz</th>
                                     <td>{{ quiz.ouvrireQuiz ? quiz.ouvrireQuiz|date('Y-m-d H:i:s') : '' }}</td>
                                 </tr>
                                 <tr>
-                                    <th>Fermer_quiz</th>
+                                    <th>Fermerture de quiz</th>
                                     <td>{{ quiz.fermerQuiz ? quiz.fermerQuiz|date('Y-m-d H:i:s') : '' }}</td>
                                 </tr>
 
@@ -72,16 +145,49 @@
 
 
             <div class="col-sm-4" style="background-color: ;">
-                <div class="">
-                    <div class="card bg-info text-white">
-                        <div class="card-body" style="background-color: #b9def0"> <center>PAGE</center>
+                <div>
+                    <div class="card bg-info text-white" style="background-color: #b9def0; width: 410px;">
+                        <div class="card-body" style="background-color: #b9def0; width: 400px; "> <center>PAGE</center>
                             <div id="accordion">
 
                                 {% for page in quiz.page %}
 
+                                  {% if page.titrePage == null %}
+                                    <h3>Titre de page est vide</h3>
+                                    {% else %}
                                     <h3>{{ page.titrePage }}</h3>
+                                        {% endif %}
                                     <div>
-                                        <label>Titre de page:</label>{{ page.titrePage }}
+                                        <label>Titre de page:</label>{% if page.titrePage == null %}
+                                        <h3>VIDE</h3>
+                                    {% else %}
+                                        <h3>{{ page.titrePage }}</h3>
+                                        {% endif %}
+
+                                        <label>Nombre des questions :   {{ page.question|length }}</label>
+
+
+
+                                        <div class="modal fade" id="showpagequestion-{{ page.id }}" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content" style="width: 1000px; height:800px ;">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">{{ quiz.titre }}</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body" style=" overflow: scroll;">
+                                                        {{ render(controller(
+                                                            'App\\Controller\\AdminController::showpagequestion',{'page': page.id}
+                                                        )) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
                                         <div class="modal fade" id="removepage-{{ page.id }}" role="dialog">
                                             <div class="modal-dialog">
 
@@ -105,15 +211,19 @@
 
                                         <br>
                                         <br>
-                                        <button style="background-color: #b9def0">
-                                          <a href="{{ path('modifier_page', {'quiz':quiz.id ,'page': page.id}) }}"class="fa fa-pencil"></a>
+                                        <button style="background-color: #b9def0; width: 40px; height: 40px">
+                                          <a href="{{ path('modifier_page', {'quiz':quiz.id ,'page': page.id}) }}" class="fa fa-pencil"></a>
                                         </button>
-                                        <button style="background-color: #b9def0">
+                                        <button style="background-color: #b9def0; width: 40px; height: 40px">
                                            <a  href="#"  data-target="#removepage-{{ page.id }}" data-toggle="modal" class="fa fa-trash-o"></a>
                                         </button>
-                                        <button style="background-color: #b9def0">
+                                        <button style="background-color: #b9def0; width: 40px; height: 40px">
                                             <i class="fa fa-plus-square-o" href="{{ path('addpage', {'id':quiz.id, 'page': page.id}) }}"></i>
                                         </button>
+                                        <button style="background-color: #b9def0; width: 40px; height: 40px">
+                                            <i class="fa fa-eye" data-target="#showpagequestion-{{ page.id }}"  data-toggle="modal"></i>
+                                        </button>
+
 
                                     </div>
 
@@ -129,6 +239,3 @@
 
         </div>
     </div>
-
-
-

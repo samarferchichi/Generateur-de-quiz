@@ -21,9 +21,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class QuizController extends EasyAdminController
 {
-
-
-
     /**
      * @Route("/", name="quiz_index", methods={"GET"})
      */
