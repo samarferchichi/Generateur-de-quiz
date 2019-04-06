@@ -73,15 +73,26 @@
                                 </div>&nbsp;&nbsp;
                                 <div >
                             <h4>
+                                {% if quiz.sendMail == 1 %}
                                 <a href="{{ path('send')}}" class="fa fa-paper-plane"></a>
+                                {% else %}
+                                <i style="color: grey"  class="fa fa-paper-plane"></i>
+                                {% endif %}
+
                             </h4>
                                 </div>
 
                                 &nbsp;&nbsp;
-                                <div >
+                                <div>
+                                    {% if quiz.imprimePdf == 1 %}
                                     <h4>
-                                <a href="{{ path('imprimerquiz', {'quiz': quiz.id }) }}"  class="fa fa-print"></a>
+                                     <a href="{{ path('imprimerquiz', {'quiz': quiz.id }) }}"  class="fa fa-print"></a>
                                     </h4>
+                                    {% else %}
+                                    <h4>
+                                        <i style="color: grey"  class="fa fa-print"></i>
+                                    </h4>
+                                    {% endif %}
                                 </div>
                         </div>
                         </div>
@@ -114,10 +125,7 @@
                                     <th>Mode correction</th>
                                     <td>{{ quiz.modeCorrection ? 'Yes' : 'No' }}</td>
                                 </tr>
-                                <tr>
-                                    <th>Mode score</th>
-                                    <td>{{ quiz.modeScore ? 'Yes' : 'No' }}</td>
-                                </tr>
+
                                 <tr>
                                     <th>Temps disponible</th>
                                     <td>{{ quiz.tempsDispo ? quiz.tempsDispo|date('Y-m-d H:i:s') : '' }}</td>

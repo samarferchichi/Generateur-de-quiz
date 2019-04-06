@@ -279,7 +279,7 @@ class QuestionController extends AbstractController
             ]);
         }
 
-        return $this->render('question/edit.html.twig', [
+        return $this->render('question/editQuestion.html.twig', [
             'question' => $question,
             'form' => $form->createView(),
         ]);

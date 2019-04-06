@@ -22,7 +22,6 @@
 {% block main %}
 
 
-
     <style>
         .aa {
             width: 35px;
@@ -179,6 +178,7 @@
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noodp, noimageindex, notranslate, nocache" />
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="generator" content="EasyAdmin" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  >
 
@@ -262,10 +262,10 @@
                                                       <div>
                                                           {{ form_label(form.image) }}
                                                           {{ form_widget(form.brochure) }}
+                                        </div>
 
                                                       </div>
                                             </div>
-                                        </div>
                                     </td>
                                 </tr>
 
@@ -286,22 +286,20 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
-                                        &nbsp; <label style="cursor: default; font-size: 20px; color: #444444">&nbsp;&nbsp;Le type Quiz: modes correction et score :</label>
-                                            <div class="custom-control custom-switch">
+                                    <td colspan="1">
+                                        &nbsp;   <label style="cursor: default; font-size: 20px; color: #444444">Le type Quiz: modes correction et score :</label>
 
-                                                {{ form_widget(form.mode_correction) }}
+                                              {{ form_widget(form.mode_correction) }}
 
-                                                {{ form_label(form.mode_correction) }}
+                                                <font size="2">
+
+                                                    {{ form_label(form.mode_correction) }}
+
+                                                </font>
 
 
-                                            </div>
-                                            <div class="custom-control custom-switch">
-                                                {{ form_widget(form.mode_score) }}
 
-                                                {{ form_label(form.mode_score) }}
 
-                                            </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -313,9 +311,9 @@
                                                 {{ form_label(form.temps_dispo) }}
                                                 </div>
                                                 <div class="col-xs-2">
-<br>
+
                                                 {{ form_widget(form.temps_dispo) }}
-                                                    &nbsp;</div>
+                                                </div>
 
 
                                         </div>
@@ -377,6 +375,7 @@
                                     </tr>
                                     <tr>
                                         <td>
+
                                             <div class="form-group row">
                                                 <div class="col-xs-2">
 
@@ -397,15 +396,14 @@
                                             </div>
 
                                         </td>
-                                    </tr>
-
-
 
                             </table>
+
 
                             {% block javascripts %}
 
                             <script>
+
                                 var slider = document.getElementById("quiz_temps_dispo_minute");
                                 var output = document.getElementById("minuteid");
 
@@ -506,4 +504,5 @@
                 {{ form_widget(form._token) }}
     </div>
     </div>
+
 {% endblock %}

@@ -21,4 +21,7 @@ return [
     Sonata\BlockBundle\SonataBlockBundle::class => ['all' => true],
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
 
+
+
+
 ];

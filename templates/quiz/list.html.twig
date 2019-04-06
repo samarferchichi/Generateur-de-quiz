@@ -9,7 +9,15 @@
 {%- endblock %}
 
 {% block content_header %}
+<style>
+    .aa {
+        width: 35px;
+        height: 4px;
+        background-color: #444444;
+        margin: 6px 0;
+    }
 
+</style>
     <div class="form-group row">
         <div>
             <div class="aa"></div>
@@ -68,9 +76,7 @@
                                                 {% for q in listequiz %}
                                                     <div style=" width:373px;border-bottom: 1px solid ;
                                                              color: #3a87ad; ">
-
-                                                                <button style="width: 373px" class="list-group-item" href="#" onclick="myFunction( '{{ q.id }}','{{ q.description }}', '{{ q.brochure }}', '{{ q.titre }}' )" >{{ q.titre }}</button>
-
+                                                        <button style="width: 373px" class="list-group-item" href="#" onclick="myFunction( '{{ q.id }}','{{ q.description }}', '{{ q.brochure }}', '{{ q.titre }}' )" >{{ q.titre }}</button>
                                                     </div>
                                                 {% endfor %}
                                             </div>

@@ -716,7 +716,7 @@
 
                                         &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;    &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
 
-                                        <button type="button" style="width: 240px" class="btn btn-success">Terminer la création de Quiz</button>
+                                        <a href="{{ path('terminerQuiz', {'quiz':quiz.id }) }}" style="width: 240px" class="btn btn-success">Terminer la création de Quiz</a>
                                     </td>
                                 </tr>
                             </table>
@@ -804,27 +804,20 @@
                                       </font>
                                     </label>
                                     {% endif %}
-
                                     <label>
                                      <font color="{{ page.colorTitrePage }}" >
                                        <b>
-
                                                 {{ page.titrePage }}
-
                                        </b>
                                      </font>
                                     </label>
 
                                 </div>
                             </div>
-
-
-
                             {% if page.question|length == 0 %}
-
-                                <label>
-                                    Page vide !
-                                </label>
+                                    <label>
+                                        Page vide !
+                                    </label>
                             {% else %}
                                 {% for j in listquestion %}
                                        <div class="col-sm-11"  >
@@ -835,11 +828,8 @@
                                                     <a data-target="#myModalDelete" data-toggle="modal">
                                                       Question n°
                                                     </a>
-
                                                   </b>
                                                     <br>
-
-
                                                     {% if j.typeQuestion =='Vrai/faux' %}
                                                         {{ j.textQuestion }}
                                                         <br>
@@ -985,9 +975,6 @@
                                                                 {% endfor %}
                                                             {% endif %}
 
-
-
-
                                                             {% if p.question==j and p.formText =='number' %}
                                                                 {% for r in listreponse %}
                                                                     {% if r.question == j %}
@@ -1055,11 +1042,7 @@
                                                     </div>
 
                                                 </div>
-
-
-
-
-                                                    </div>
+                                            </div>
                                             </div>
                                         <div>
                                             <table>
@@ -1136,17 +1119,9 @@
                                         <div class="modal-body">
                                             {{ include('page/edit.html.twig') }}
                                         </div>
-
                                     </div>
-
                                 </div>
-
                             </div>
-
-
-
-
-
 
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -59,7 +59,7 @@ class ParametreController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit/parametre", name="parametre_edit", methods={"GET","POST"})
+     * @Route("/{id}/editParametre", name="parametre_edit", methods={"GET","POST"})
      */
     public function editparametre(Request $request, Parametre $parametre): Response
     {

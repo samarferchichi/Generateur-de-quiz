@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Quiz;
+use Doctrine\DBAL\Types\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
@@ -60,12 +61,10 @@ class QuizType extends AbstractType
             ])
             ->add('mode_correction',null, [
 
-                'label'=> 'Activer le mode correction sur votre quiz: la bonne réponse sera affichée aux répondants aprés qu\'ils aient réponduus'
+                'label'=> 'Activer le mode correction sur votre quiz: la bonne réponse sera affichée aux répondants aprés qu\'ils aient réponduus ,
+                    Activer le mode score sur votre quiz :le scrore des répondants sera calculé en fonction de leurs réponses'
             ])
-            ->add('mode_score', null,[
-                'attr' => [ 'custom-control-input' ],
-                'label' => ' Activer le mode score sur votre quiz :le scrore des répondants sera calculé en fonction de leurs réponses'
-            ])
+
             ->add('temps_dispo',null,[
                 'label' => 'Temps disponible'
             ])
@@ -115,8 +114,18 @@ class QuizType extends AbstractType
 
             ])
 
-            ->add('ouvrire_quiz')
-            ->add('fermer_quiz')
+            ->add('ouvrire_quiz', null,[
+                'required' =>false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
+            ->add('fermer_quiz',null,[
+                'required' =>false,
+                'attr' => [
+                    'class' => 'form-control'
+                ]
+            ])
 
             ->add('send_mail',null,[
                 'required' =>  false,

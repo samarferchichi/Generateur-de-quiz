@@ -43,7 +43,19 @@
                 'easyadmin-sidebar-width-' + (localStorage.getItem('easyadmin/sidebar/width') || 'normal')
             );
         </script>
+        <nav class="navbar" role="navigation">
+            <button id="navigation-toggler" type="button" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button>
 
+            <div id="header-logo">
+                {% block header_logo %}
+                    <a style="background-color: " class="logo {{ easyadmin_config('site_name')|length > 14 ? 'logo-long' }}" title="{{ easyadmin_config('site_name')|striptags }}" href="{{ path('easyadmin') }}">
+                        {{ easyadmin_config('site_name')|raw }}
+                    </a>
+                {% endblock header_logo %}
+            </div>
+        </nav>
         {% block wrapper_wrapper %}
         <div class="wrapper">
         {% block wrapper %}
@@ -85,7 +97,7 @@
                         {% endset %}
 
                         <div  style="background-color: ; width: 200px; height: 100px" class="content-top navbar-custom-menu">
-                            <br><br><br> <div class="user user-menu-wrapper {{ _user_is_impersonated ? 'user-is-impersonated' }}" data-toggle="popover" data-placement="bottom" data-container=".user-menu-wrapper" data-content="{{ _user_menu_content|e('html_attr') }}" data-html="true">
+                             <div class="user user-menu-wrapper {{ _user_is_impersonated ? 'user-is-impersonated' }}" data-toggle="popover" data-placement="bottom" data-container=".user-menu-wrapper" data-content="{{ _user_menu_content|e('html_attr') }}" data-html="true">
                                 {% if easyadmin_config('user.display_avatar') %}
                                     {% set _avatar_image_path = easyadmin_read_property(app.user, easyadmin_config('user.avatar_property_path')) %}
                                     {% if null == _avatar_image_path %}
@@ -102,7 +114,6 @@
                         </div>
                     {% endblock header %}
                 </header>
-<br><br><br>
 
 
 
@@ -178,19 +189,7 @@
         {% for js_asset in easyadmin_config('design.assets.js') %}
             <script src="{{ asset(js_asset) }}"></script>
         {% endfor %}
-        <nav class="navbar" role="navigation">
-            <button id="navigation-toggler" type="button" aria-label="Toggle navigation">
-                <i class="fa fa-bars"></i>
-            </button>
 
-            <div id="header-logo">
-                {% block header_logo %}
-                    <a style="background-color:blue " class="logo {{ easyadmin_config('site_name')|length > 14 ? 'logo-long' }}" title="{{ easyadmin_config('site_name')|striptags }}" href="{{ path('easyadmin') }}">
-                        {{ easyadmin_config('site_name')|raw }}
-                    </a>
-                {% endblock header_logo %}
-            </div>
-        </nav>
     </body>
     {% endblock body %}
 </html>

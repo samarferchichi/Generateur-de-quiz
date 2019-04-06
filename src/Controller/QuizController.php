@@ -6,6 +6,7 @@ use App\Entity\Page;
 use App\Entity\Quiz;
 use App\Form\QuizType;
 use App\Repository\QuizRepository;
+use Doctrine\ORM\Mapping\Entity;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,6 +31,24 @@ class QuizController extends EasyAdminController
             'quizzes' => $quizRepository->findAll(),
         ]);
     }
+
+
+    /**
+     * @Route("/terminerQuiz/{quiz}", name="terminerQuiz", methods={"GET"})
+     */
+    public function terminerQuiz(Quiz $quiz)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $quiz->setTerminer(true);
+        $entityManager->persist($quiz);
+        $entityManager->flush();
+        return $this->render('quiz/terminerQuiz.html.twig', [
+            'quiz' => $quiz,
+        ]);
+    }
+
+
 
     /**
      * @Route("/new", name="quiz_new", methods={"GET","POST"})

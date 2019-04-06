@@ -7,6 +7,7 @@
  */
 
 namespace App\Controller\front_end;
+use App\Entity\Quiz;
 use App\Repository\QuizRepository;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -26,6 +27,21 @@ class IndexController extends Controller
 
         return $this->render('front_end/index.html.twig',[
             'listquiz'=> $listquiz
+        ]);
+
+    }
+
+    /**
+     * @Route("/{quiz}", name="quizpublic", methods={"GET"})
+     */
+    public function quizpublic( Quiz $quiz, QuizRepository $quizRepository)
+    {
+        $listquiz= $quizRepository->findAll();
+
+        return $this->render('front_end/quizpublic.html.twig',[
+            'quiz'=> $quiz,
+            'listquiz'=> $listquiz
+
         ]);
 
     }

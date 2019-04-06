@@ -474,6 +474,9 @@ class AdminController extends EasyAdminController
     }
 
 
+
+
+
     /**
      * @Route("/quiz/dupliqueAction/{quiz}", name="dupliqueAction", methods={"GET","POST"})
      */
@@ -486,6 +489,8 @@ class AdminController extends EasyAdminController
             $qui->setNbQuestion($quiz->getNbQuestion());
         if($quiz->getNbPage())
             $qui->setNbPage($quiz->getNbPage());
+        if($quiz->getTerminer())
+            $qui->setTerminer($quiz->getTerminer());
 
 
         $nbquiz=$quizRepository->findAll();
@@ -536,8 +541,6 @@ class AdminController extends EasyAdminController
             $qui->setMessageS($quiz->getMessageS());
         if($quiz->getModeCorrection())
             $qui->setModeCorrection($quiz->getModeCorrection());
-        if($quiz->getModeScore())
-            $qui->setModeScore($quiz->getModeScore());
         if($quiz->getSendMail())
             $qui->setSendMail($quiz->getSendMail());
         if($quiz->getTempsDispo())
@@ -635,9 +638,11 @@ class AdminController extends EasyAdminController
             } catch (FileException $e) {
             }
 
-
+           if($quiz->getFermerQuiz())
+               $quiz->setFermerQuiz($quiz->getFermerQuiz());
+           if ($quiz->getOuvrireQuiz())
+               $quiz->setOuvrireQuiz($quiz->getOuvrireQuiz());
             $quiz->setBrochure($fileName);
-
 
             $entityManager->persist($quiz);
 

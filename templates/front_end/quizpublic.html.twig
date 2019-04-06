@@ -1,0 +1,313 @@
+<html lang="en">
+
+<head>
+
+    <style>
+        .center {
+            margin: auto;
+            width: 60%;
+            border: 0.5px solid #eeeeee ;
+            padding: 10px;
+        }
+        .img2 {
+            float: right;
+        }
+        body {
+            font-family: "Lato", sans-serif;
+            transition: background-color .5s;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #2a85a0;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
+        }
+    </style>
+
+
+
+    <!-- Scroll Bars -->
+
+</head>
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand"  href="{{ path('index') }}">Quiz accueil</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li>
+              <span style="color:white;  font-size:40px;cursor:pointer" onclick="openNav()">&#9776;</span>
+          </li>
+
+            <li><a href="{{ path('index') }}">Home</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Quiz <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+
+                    {% if listquiz|length == 0 %}
+                        <li style="width: 350px;" class="menu-level-1">Liste Vide</li>
+                    {% else %}
+                        {% for quiz in listquiz %}
+                            {% if quiz.terminer == 1 %}
+                                {% if quiz.ouvrireQuiz <= date() and date() < quiz.fermerQuiz %}
+                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id }) }}" onclick="MyFunction()">{{ quiz.titre }}</a></li>
+
+                                {% endif %}
+                                {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}
+                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id }) }}" onclick="MyFunction()">{{ quiz.titre }}</a></li>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </li>
+            <li><a href="#">Page 2</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Clients</a>
+    <a href="#">Contact</a>
+</div>
+
+<div>
+    <h2>  <font size="5" color="{{ quiz.colorTitre }}">
+            Titre de quiz
+            {% if quiz.gras and quiz.italique %}
+          <b><i>  "{{ quiz.titre }}"</i></b>
+            {% else %}
+            {% if quiz.gras %}
+            <b> "{{ quiz.titre }}"</b>
+            {% else %}
+            {% if quiz.italique %}
+            <i> "{{ quiz.titre }}"</i>
+            {% else %}
+            "{{ quiz.titre }}"
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            </font>
+
+        <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
+
+    </h2>
+    <p>{{ quiz.description }}.</p>
+
+
+<div>
+
+    <div>
+        {% for page in quiz.page %}
+
+            <div class="center" style="background-color:{{ page.bgColor }}; ">
+
+                {% if page.colorTitrePage %}
+                    <font size="4" color="{{ page.colorTitrePage }}">
+                        <b> {{ page.titrePage }}</b>
+                    </font>
+                {% else %}
+                    <b> {{ page.titrePage }}</b>
+                {% endif %}
+                {% if page.question|length == 0 %}
+
+                    <label>
+                        Page vide !
+                    </label>
+                {% else %}
+                    {% for j in page.question %}
+
+                        <br>
+
+                        <label>
+                            <font color="black"> Question :°</font>
+                        </label> <br> {{ j.textQuestion }}
+                        <br>
+                        {% if j.typeQuestion =='Vrai/faux' %}
+
+                            {{ j.descriptionQuestion }}
+                            {% for p in j.reponse %}
+                                {% if p.question == j %}
+                                    {{ p.reponseValide }}
+                                    <select style="width: 150px;" class="form-control">
+                                        <option>
+                                            Vrai
+                                        </option>
+                                        <option>
+                                            Faux
+                                        </option>
+                                    </select>
+
+                                {% endif %}
+                            {% endfor %}
+
+
+                        {% endif %}
+                        {% if j.typeQuestion =='Liste déroulante' %}
+
+                            {{ j.descriptionQuestion }}
+                            <br>
+                            <select style="width: 350px;" class="form-control">
+                                {% for i in j.reponse %}
+                                    {% if i.question == j %}
+
+                                        <option>
+                                            {{ i.reponseValide }}
+                                        </option>
+
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        {% endif %}
+
+                        {% if j.typeQuestion == 'Case à cocher' %}
+
+                            {{ j.descriptionQuestion }}
+
+                            {% for p in j.reponse %}
+                                {% if p.question == j %}
+                                    {{ p.reponseValide }}
+                                    <input type="checkbox">
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {% if j.typeQuestion =='Calculée' %}
+
+                            {{ j.descriptionQuestion }}
+
+                            {% for p in j.reponse %}
+                                {% if p.question == j %}
+                                    {{ p.descriptionformule }}
+                                    Formule:
+                                    <input  class="form-control" type="text">
+                                    Resultat:
+                                    <input class="form-control" type="text">
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                        {% if j.typeQuestion =='Réponse courte' %}
+                            {{ j.descriptionQuestion }}
+
+                            {% for p in j.parametre %}
+
+                                {% if p.question==j and p.formText =='texte' %}
+
+                                    <textarea class="form-control"></textarea><br>
+
+                                {% endif %}
+
+                                {% if p.question==j and p.formText =='date' %}
+                                    {% for r in j.reponse %}
+                                        {% if r.question == j %}
+                                            {{ r.descriptiondate }}
+                                            <input type="date" class="form-control">
+
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+
+
+
+
+                                {% if p.question==j and p.formText =='number' %}
+                                    {% for r in j.reponse %}
+                                        {% if r.question == j %}
+
+                                            {{ r.desnumber }}
+                                            <input type="number"  class="form-control">
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                                {% if p.question.infoBulle != '' %}
+                                    <br>
+                                    <a href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ j.infoBulle }}" >{{ j.infoBulle }}<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                                {% endif %}
+
+                            {% endfor %}
+                        {% endif %}
+
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+        {% endfor %}
+        <br>
+        <center>
+            <button class="btn btn-success" onclick="myFunction()">Precedent</button>
+            <button class="btn btn-success">Suivant</button>
+        </center>
+    </div>
+</div>
+</div>
+
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+        document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+        document.body.style.backgroundColor = "white";
+    }
+</script>
+<br><br>
+</body>
+</html>
+

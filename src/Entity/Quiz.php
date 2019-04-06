@@ -40,6 +40,28 @@ class Quiz
 
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $terminer;
+
+    /**
+     * @return mixed
+     */
+    public function getTerminer()
+    {
+        return $this->terminer;
+    }
+
+    /**
+     * @param mixed $terminer
+     */
+    public function setTerminer($terminer): void
+    {
+        $this->terminer = $terminer;
+    }
+
+
+    /**
      * @ORM\Column(type="string")
      *
      * @Assert\NotBlank(message="Please, upload the product brochure as a Image file.")
@@ -58,6 +80,10 @@ class Quiz
 
         return $this;
     }
+
+
+
+
 
     /**
      * @ORM\Column(type="string", length=300)
@@ -97,12 +123,9 @@ class Quiz
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $mode_correction;
+
     /**
      * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $mode_score;
-    /**
-     * @ORM\Column(type="time", nullable=true)
      */
     private $temps_dispo;
     /**
@@ -136,13 +159,13 @@ class Quiz
      */
     private $melange_question;
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date", nullable=true)
      */
-    private $ouvrire_quiz;
+    private $ouvrire_quiz = null;
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date", nullable=true)
      */
-    private $fermer_quiz;
+    private $fermer_quiz = null;
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
@@ -246,20 +269,12 @@ class Quiz
         $this->mode_correction = $mode_correction;
         return $this;
     }
-    public function getModeScore(): ?bool
-    {
-        return $this->mode_score;
-    }
-    public function setModeScore(bool $mode_score): self
-    {
-        $this->mode_score = $mode_score;
-        return $this;
-    }
-    public function getTempsDispo(): ?\DateTimeInterface
+
+    public function getTempsDispo()
     {
         return $this->temps_dispo;
     }
-    public function setTempsDispo(?\DateTimeInterface $temps_dispo): self
+    public function setTempsDispo( $temps_dispo): self
     {
         $this->temps_dispo = $temps_dispo;
         return $this;
@@ -291,24 +306,40 @@ class Quiz
         $this->melange_question = $melange_question;
         return $this;
     }
-    public function getOuvrireQuiz(): ?\DateTimeInterface
+
+    /**
+     * @return mixed
+     */
+    public function getOuvrireQuiz()
     {
         return $this->ouvrire_quiz;
     }
-    public function setOuvrireQuiz(\DateTimeInterface $ouvrire_quiz): self
+
+    /**
+     * @param mixed $ouvrire_quiz
+     */
+    public function setOuvrireQuiz($ouvrire_quiz): void
     {
         $this->ouvrire_quiz = $ouvrire_quiz;
-        return $this;
     }
-    public function getFermerQuiz(): ?\DateTimeInterface
+
+    /**
+     * @return mixed
+     */
+    public function getFermerQuiz()
     {
         return $this->fermer_quiz;
     }
-    public function setFermerQuiz(?\DateTimeInterface $fermer_quiz): self
+
+    /**
+     * @param mixed $fermer_quiz
+     */
+    public function setFermerQuiz($fermer_quiz): void
     {
         $this->fermer_quiz = $fermer_quiz;
-        return $this;
     }
+
+
     public function getSendMail(): ?bool
     {
         return $this->send_mail;

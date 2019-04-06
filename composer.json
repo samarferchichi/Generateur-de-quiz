@@ -9,6 +9,8 @@
         "easycorp/easyadmin-bundle": "^2.1",
         "friendsofsymfony/user-bundle": "~2.0",
         "hwi/oauth-bundle": "^0.6.3",
+        "knpuniversity/oauth2-client-bundle": "^1.28",
+        "league/oauth2-google": "^3.0",
         "php-http/guzzle6-adapter": "1.1.1",
         "php-http/httplug-bundle": "1.15",
         "sensio/framework-extra-bundle": "^5.2",
