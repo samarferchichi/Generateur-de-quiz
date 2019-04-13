@@ -15,6 +15,9 @@ use App\Repository\QuestionRepository;
 use App\Repository\ReponseRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 use Ecommerce\EcommerceBundle\Form\RechercheType;
+use http\Client\Curl\User;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -158,6 +161,8 @@ class AdminController extends EasyAdminController
                         $reponse = new Reponse();
 
                         $reponse->setQuestion($question);
+                        $reponse->setReponseValide($data[$i]);
+
                         $reponse->setDescriptiondate($datad[$i]);
                         $entityManager->persist($reponse);
 
@@ -249,7 +254,7 @@ class AdminController extends EasyAdminController
                     $reponse = new Reponse();
                     $reponse->setQuestion($question);
                     $reponse->setReponseValide($caseetat[$i]);
-                    $reponse->setEtatcaseacocher($data[$i]);
+                    $reponse->setEtatlist($data[$i]);
                     $entityManager->persist($reponse);
 
                 }
@@ -465,12 +470,52 @@ class AdminController extends EasyAdminController
 
 
     /**
-     * @Route("/send", name="send", methods={"GET","POST"})
+     * @Route("/send/{quiz}", name="send", methods={"GET","POST"})
      */
-    public function sendAction()
+    public function sendAction(Request $request, Quiz $quiz)
     {
+        $form = $this->createFormBuilder(null, [
+            'action' => $this->generateUrl('send', ['quiz' => $quiz->getId()])
+        ])
+            ->add('email', EmailType::class)
+            ->getForm();
 
-        return $this->render('quiz/send.html.twig');
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $to = $form->getData()['email'];
+
+            $transport = (new \Swift_SmtpTransport('smtp.googlemail.com', 465, 'ssl'))
+                ->setUsername('samarferchichi61@gmail.com')
+                ->setPassword('samarferchichi123');
+
+            // Create the Mailer using your created Transport
+            $mailer = new \Swift_Mailer($transport);
+
+            // Create a message
+            $body = $this->renderView(
+            // templates/emails/registration.html.twig
+                'emails/send_quiz.html.twig', ['quiz' => $quiz]);
+
+            $message = (new \Swift_Message('Email Through Swift Mailer'))
+                ->setFrom(['amarferchichi61@gmail.com' => 'Quiz'])
+                ->setTo([$to])
+                //    ->setCc(['RECEPIENT_2_EMAIL_ADDRESS'])
+                //   ->setBcc(['RECEPIENT_3_EMAIL_ADDRESS'])
+                ->setBody($body)
+                ->setContentType('text/html')
+            ;
+
+            // Send the message
+            $mailer->send($message);
+
+            return $this->redirectToRoute('send', ['quiz' => $quiz->getId()]);
+        }
+
+
+        return $this->render('quiz/send.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
 
@@ -492,25 +537,10 @@ class AdminController extends EasyAdminController
         if($quiz->getTerminer())
             $qui->setTerminer($quiz->getTerminer());
 
-
-        $nbquiz=$quizRepository->findAll();
         $listquiz=$quizRepository->findAll();
 
-        $nb=0;
-
-        foreach ($nbquiz as $p)
-        {
-            if ($p->getTitre() == $quiz->getTitre() ) {
-
-                $nb=$nb+1;
-                    }
-
-        }
-
         if($quiz->getTitre())
-            $copie = "(Copie".$nb.")";
-
-            $qui->setTitre($quiz->getTitre().$copie);
+            $qui->setTitre($quiz->getTitre());
         if($quiz->getColorTitre())
             $qui->setColorTitre($quiz->getColorTitre());
         if($quiz->getBrochure())
@@ -638,11 +668,15 @@ class AdminController extends EasyAdminController
             } catch (FileException $e) {
             }
 
+
            if($quiz->getFermerQuiz())
-               $quiz->setFermerQuiz($quiz->getFermerQuiz());
+               $quiz->setFermerQuiz(new \DateTime($quiz->getFermerQuiz()));
            if ($quiz->getOuvrireQuiz())
-               $quiz->setOuvrireQuiz($quiz->getOuvrireQuiz());
+               $quiz->setOuvrireQuiz(new \DateTime($quiz->getOuvrireQuiz()));
+
             $quiz->setBrochure($fileName);
+
+            $quiz->setUser($this->getUser());
 
             $entityManager->persist($quiz);
 
@@ -655,6 +689,8 @@ class AdminController extends EasyAdminController
             $page->setOrdre(1);
 
             $entityManager->persist($page);
+
+
             $entityManager->flush();
 
             $this->addFlash('good','Votre Quiz est bien configuré');
@@ -716,7 +752,12 @@ class AdminController extends EasyAdminController
         }
 
         $question = new Question();
-        $formq = $this->createForm(QuestionType::class, $question);
+        $formq = $this->createForm(QuestionType::class, $question, [
+            'action' => $this->generateUrl('newQuestion', [
+                'quiz' => $quiz->getId(),
+                'page' => $page->getId()
+            ])
+        ]);
         $formq->handleRequest($request);
 
 
@@ -724,8 +765,9 @@ class AdminController extends EasyAdminController
 
 
             if ($question->getTypeQuestion() == "Réponse courte") {
-                $des=$request->get('destext');
-                $desnum=$request->get('desnum');
+                $des = $request->get('destext');
+
+                $desnum = $request->get('desnum');
 
                 $selecttype = $request->get('selecttype');
                 if ($selecttype == 'texte') {
@@ -738,16 +780,17 @@ class AdminController extends EasyAdminController
                     $entityManager->persist($parametre);
 
                     $reptext = $request->get('test');
-                    $data = [''];
+                    $data = [];
                     foreach ($reptext as $p) {
                         array_push($data, $p);
                     }
 
-                    $datatext = [''];
-                    foreach ($des as $p) {
+                    $datatext = [];
+
+                    foreach ($data as $p) {
                         array_push($datatext, $p);
                     }
-                    for ($i = 1; $i < count($data); $i++) {
+                    for ($i = 0; $i < count($data); $i++) {
                         $reponse = new Reponse();
                         $reponse->setQuestion($question);
                         $reponse->setReponseValide($data[$i]);
@@ -763,19 +806,19 @@ class AdminController extends EasyAdminController
                     $entityManager->persist($parametre);
 
                     $date = $request->get('date');
-                    $data = [''];
+                    $data = [];
                     foreach ($date as $p) {
                         array_push($data, $p);
                     }
 
                     $data_desc = $request->get('desc');
-                    $datad = [''];
+                    $datad = [];
                     foreach ($data_desc as $p) {
                         array_push($datad, $p);
                     }
 
 
-                    for ($i = 1; $i < count($datad); $i++) {
+                    for ($i = 0; $i < count($datad); $i++) {
 
                         $reponse = new Reponse();
 
@@ -785,7 +828,7 @@ class AdminController extends EasyAdminController
 
                     }
                 } elseif ($selecttype == 'number') {
-                    $datanum = [''];
+                    $datanum = [];
                     foreach ($desnum as $p) {
                         array_push($datanum, $p);
                     }
@@ -797,11 +840,11 @@ class AdminController extends EasyAdminController
                     $parametre->setNbChiffre($request->get('nbChiffre'));
                     $entityManager->persist($parametre);
                     $number = $request->get('number');
-                    $data = [''];
+                    $data = [];
                     foreach ($number as $p) {
                         array_push($data, $p);
                     }
-                    for ($i = 1; $i < count($data); $i++) {
+                    for ($i = 0 ; $i < count($data); $i++) {
                         $reponse = new Reponse();
                         $reponse->setQuestion($question);
                         $reponse->setDesnumber($datanum[$i]);
@@ -816,16 +859,16 @@ class AdminController extends EasyAdminController
             } elseif ($question->getTypeQuestion() == "Vrai/faux") {
                 $entityManager = $this->getDoctrine()->getManager();
                 $etat = $request->get('etat');
-                $dataetat = [''];
+                $dataetat = [];
                 foreach ($etat as $p) {
                     array_push($dataetat, $p);
                 }
                 $vf = $request->get('vf');
-                $data = [''];
+                $data = [];
                 foreach ($vf as $p) {
                     array_push($data, $p);
                 }
-                for ($i = 1; $i < count($data); $i++) {
+                for ($i = 0; $i < count($data); $i++) {
                     $reponse = new Reponse();
                     $reponse->setQuestion($question);
                     $reponse->setReponseValide($data[$i]);
@@ -837,17 +880,17 @@ class AdminController extends EasyAdminController
             } elseif ($question->getTypeQuestion() == "Case à cocher") {
                 $entityManager = $this->getDoctrine()->getManager();
                 $etatcase = $request->get('case');
-                $caseetat = [''];
+                $caseetat = [];
                 foreach ($etatcase as $p) {
                     array_push($caseetat, $p);
                 }
 
                 $case = $request->get('etatcase');
-                $data = [''];
+                $data = [];
                 foreach ($case as $p) {
                     array_push($data, $p);
                 }
-                for ($i = 1; $i < count($data); $i++) {
+                for ($i = 0; $i < count($data); $i++) {
                     $reponse = new Reponse();
                     $reponse->setQuestion($question);
                     $reponse->setReponseValide($caseetat[$i]);
@@ -858,16 +901,16 @@ class AdminController extends EasyAdminController
             } elseif ($question->getTypeQuestion() == "Liste déroulante") {
                 $entityManager = $this->getDoctrine()->getManager();
                 $etatcase = $request->get('list');
-                $caseetat = [''];
+                $caseetat = [];
                 foreach ($etatcase as $p) {
                     array_push($caseetat, $p);
                 }
                 $case = $request->get('etatlist');
-                $data = [''];
+                $data = [];
                 foreach ($case as $p) {
                     array_push($data, $p);
                 }
-                for ($i = 1; $i < count($data); $i++) {
+                for ($i = 0; $i < count($data); $i++) {
                     $reponse = new Reponse();
                     $reponse->setQuestion($question);
                     $reponse->setReponseValide($caseetat[$i]);
@@ -879,25 +922,25 @@ class AdminController extends EasyAdminController
             } elseif ($question->getTypeQuestion() == "Calculée") {
                 $entityManager = $this->getDoctrine()->getManager();
                 $descriptionf = $request->get('descriptionF');
-                $data_description = [''];
+                $data_description = [];
                 foreach ($descriptionf as $p) {
                     array_push($data_description, $p);
                 }
 
 
                 $formule = $request->get('formule');
-                $data_formule = [''];
+                $data_formule = [];
                 foreach ($formule as $p) {
                     array_push($data_formule, $p);
                 }
 
                 $resultatf = $request->get('resultatF');
-                $data_resultat = [''];
+                $data_resultat = [];
                 foreach ($resultatf as $p) {
                     array_push($data_resultat, $p);
                 }
 
-                for ($i = 1; $i < count($data_resultat); $i++) {
+                for ($i = 0; $i < count($data_resultat); $i++) {
                     $reponse = new Reponse();
                     $reponse->setDescriptionformule($data_description[$i]);
                     $reponse->setQuestion($question);
@@ -920,7 +963,7 @@ class AdminController extends EasyAdminController
 
 
 
-            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+            return $this->redirectToRoute('modifier_page', ['quiz' => $quiz->getId(), 'page' => $page->getId()]);
 
         }
 
@@ -1047,32 +1090,15 @@ class AdminController extends EasyAdminController
 
 
     /**
-     * @Route("/{id}/{page}/addpage", name="addpage", methods={"GET","POST"})
+     * @Route("/add-page-to-quiz/{quiz}", name="add_page_to_quiz", methods={"GET","POST"})
      * @ParamConverter("quiz", class="App:Quiz")
      */
-    public function addpage(Request $request, Quiz $quiz, Page $page , PageRepository $pageRepository): Response
+    public function addPageToQuiz(Request $request, Quiz $quiz, PageRepository $pageRepository): Response
     {
 
         $entityManager = $this->getDoctrine()->getManager();
 
-
-        $quiz->setNbPage($quiz->getNbpage()+1);
-        $entityManager->persist($quiz);
-
-
-        $totalPages = count($quiz->getPage());
-        $data_ordre = [''];
-        foreach ($quiz->getPage() as $p){
-            array_push($data_ordre, $p->getOrdre());
-        }
-        $pos = array_search($page->getOrdre(), $data_ordre);
-
-        if($quiz->getNbPage() == $totalPages && $pos == $totalPages){
-            return $this->redirectToRoute('list_quiz', ['id' => $quiz->getId(),'page' => $page->getId()]);
-        }elseif ($quiz->getNbPage() > $totalPages && $pos == $totalPages){
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($quiz);
-
+        if($quiz->getNbPage() > count($quiz->getPage())){
             $page = new Page();
             $page->setQuiz($quiz);
             $page->setBgColor('');
@@ -1083,11 +1109,9 @@ class AdminController extends EasyAdminController
 
             $entityManager->persist($page);
             $entityManager->flush();
-
-            return $this->redirectToRoute('list_quiz',['id'=>$quiz->getId(),'page'=>$page->getId()] );
-        }else{
-            return $this->redirectToRoute('list_quiz',['id'=>$quiz->getId(),'page'=>$quiz->getPage()[$pos]->getId()] );
         }
+
+        return new JsonResponse(true);
 
     }
 
@@ -1164,7 +1188,39 @@ class AdminController extends EasyAdminController
     }
 
 
+    /**
+     * @Route("/quiz/form-update/max-page/{quiz}", name="form_update_max_page", methods={"POST"})
+     */
+    public function formUpdateMaxPage(Request $request, Quiz $quiz): Response
+    {
+        $form = $this->createFormBuilder()
+            ->add('max', IntegerType::class, [
+                'label' => 'Nombre maximum des pages ',
+                'attr' => [
+                    'value' => $quiz->getNbPage(),
+                    'min' => $quiz->getNbPage(),
+                    'class' => 'form-control'
+                ]
+            ])
+            ->getForm();
 
+        $form->handleRequest($request);
+
+        return $this->render('quiz/update_max_page.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/quiz/update/{quiz}/max-page/{max}", name="update_max_page", methods={"POST"})
+     */
+    public function updateMaxPage(Request $request, Quiz $quiz, $max): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $quiz->setNbPage($max);
+        $em->flush();
+        return new JsonResponse(true);
+    }
 
 
 

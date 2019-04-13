@@ -1,6 +1,63 @@
-{% trans_default_domain 'FOSUserBundle' %}
+{% extends '/bundles/EasyAdmin/default/layout.html.twig' %}
 
-<div class="fos_user_user_show">
-    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
-    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+{% set _content_title = 'Espace d administartion' %}
+
+{% block page_title -%}
+    {{ _content_title }}
+
+{%- endblock %}
+
+{% block content_header %}
+
+    <div class="form-group row">
+        <div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+        </div>
+        &nbsp; &nbsp;
+        <h1 class="title">{{ _content_title }}</h1>
+    </div>
+{% endblock %}
+{% block main %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    </head>
+    <body>
+    <div class="panel panel-success">
+
+        <div class="card bg-info text-white">
+            <div class="card-body">
+
+
+                Profile
+
+            </div>
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-sm-12">
+<div style="padding: 20px" class="fos_user_user_show">
+    <p>Nom utilisateur: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Telephone: {{ user.numerotel }}</p>
+
 </div>
+<center>
+    <a class="fos_user_profile_edit" href="{{ path('fos_user_profile_edit') }}"><button class="btn btn-success">Modifier profile</button></a>
+    <a class="fos_user_change_password" href="{{ path('fos_user_change_password') }}"><button class="btn btn-success">Changer mot de passe</button></a>
+
+</center>
+                        </div>
+                    </div></div>
+            </div></div></div></body>
+
+{% endblock %}

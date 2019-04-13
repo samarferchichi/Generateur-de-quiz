@@ -40,6 +40,7 @@ easy_admin:
           - { property: 'message_s', type: 'text' }
           - { property: 'message_e', type: 'text' }
           - { property: 'nb_tentative', type: 'integer' }
+          - { property: 'terminer', type: 'boolean' }
 
 
         show:
@@ -58,6 +59,7 @@ easy_admin:
           fields:
             - { property: 'username', label: 'Nom utilisateur' }
             - { property: 'email', label: 'Email' }
+            - { property: 'numerotel', label: 'Telephone' }
             - enabled
             - { property: 'lastLogin', label: 'Dernier login' }
             - { property: 'confirmation_token', label: 'Confermation code' , type: 'text', type_options: { required: false } }
@@ -70,6 +72,7 @@ easy_admin:
           - { property: 'username', label: 'Nom utilisateur' }
           - { property: 'email', label: 'Email' }
           - { property: 'plainPassword', type: 'text', type_options: { required: false } }
+          - { property: 'numerotel', type: 'tel' , label: 'Telephone'}
 
           - { type: 'group', label: 'securite information', icon: 'phone', columns: 6 }
           - enabled

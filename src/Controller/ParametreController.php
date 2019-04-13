@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Page;
 use App\Entity\Parametre;
+use App\Entity\Quiz;
 use App\Form\ParametreType;
 use App\Repository\ParametreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,24 +60,35 @@ class ParametreController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/{id}/editParametre", name="parametre_edit", methods={"GET","POST"})
      */
     public function editparametre(Request $request, Parametre $parametre): Response
     {
-        $form = $this->createForm(ParametreType::class, $parametre);
+        $form = $this->createForm(ParametreType::class, $parametre, [
+            'action' => $this->generateUrl('parametre_edit', ['id' => $parametre->getId()])
+        ]);
         $form->handleRequest($request);
+
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('parametre_index', [
-                'id' => $parametre->getId(),
+            $page = $parametre->getQuestion()->getPage()->getId();
+
+            $quiz= $parametre->getQuestion()->getPage()->getQuiz()->getId();
+
+
+            return $this->redirectToRoute('creerquiz', [
+                'id'=>$quiz,
+                'page' => $page
             ]);
         }
 
         return $this->render('parametre/edit.html.twig', [
             'parametre' => $parametre,
+            'question' => $parametre->getQuestion(),
             'form' => $form->createView(),
         ]);
     }

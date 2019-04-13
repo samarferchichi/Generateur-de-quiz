@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" >
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>
 
     <div class="form-group row" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
          xmlns="http://www.w3.org/1999/html">
@@ -263,7 +263,11 @@
 
                         var imgData = canvas.toDataURL('image/png');
                         console.log('Report Image URL: '+imgData);
-                        var doc = new jsPDF('p', 'mm', [1000, 215]); //210mm wide and 297mm high
+                        var width = 215;
+                        var height = document.getElementById('printDiv').scrollHeight;
+                        console.log(height);
+
+                        var doc = new jsPDF('p', 'mm', [height, width]); //210mm wide and 297mm high
 
                         doc.addImage(imgData, 'PNG', 10, 10);
                         doc.save('sample.pdf');

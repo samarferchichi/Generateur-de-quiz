@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reponse{% endblock %}
+
+{% block body %}
+    <h1>Reponse</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ reponse.id }}</td>
+            </tr>
+            <tr>
+                <th>Formule</th>
+                <td>{{ reponse.formule }}</td>
+            </tr>
+            <tr>
+                <th>Destext</th>
+                <td>{{ reponse.destext }}</td>
+            </tr>
+            <tr>
+                <th>Desnumber</th>
+                <td>{{ reponse.desnumber }}</td>
+            </tr>
+            <tr>
+                <th>Resultatformule</th>
+                <td>{{ reponse.resultatformule }}</td>
+            </tr>
+            <tr>
+                <th>Descriptiondate</th>
+                <td>{{ reponse.descriptiondate }}</td>
+            </tr>
+            <tr>
+                <th>Descriptionformule</th>
+                <td>{{ reponse.descriptionformule }}</td>
+            </tr>
+            <tr>
+                <th>Reponse_valide</th>
+                <td>{{ reponse.reponseValide }}</td>
+            </tr>
+            <tr>
+                <th>Etatvf</th>
+                <td>{{ reponse.etatvf ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Etatlist</th>
+                <td>{{ reponse.etatlist ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Etatcaseacocher</th>
+                <td>{{ reponse.etatcaseacocher ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('reponse_index') }}">back to list</a>
+
+    <a href="{{ path('reponse_edit', {'id': reponse.id}) }}">edit</a>
+
+    {{ include('reponse/_delete_form.html.twig') }}
+{% endblock %}

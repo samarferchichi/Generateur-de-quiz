@@ -9,3 +9,6 @@ fos_user:
   registration:
     form:
       type: App\Form\RegistrationFormType
+  profile:
+    form:
+      type: App\Form\ProfileFormType

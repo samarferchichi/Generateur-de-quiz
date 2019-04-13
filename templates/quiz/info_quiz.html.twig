@@ -1,5 +1,5 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+
+
 <script>
     $( function() {
         $( "#accordion" ).accordion({
@@ -28,10 +28,10 @@
 
 
                 <div class="modal fade" id="showquiz-{{ quiz.id }}" role="dialog">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-xl">
 
                         <!-- Modal content-->
-                        <div class="modal-content" style="width: 1000px; height:800px ;">
+                        <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title">{{ quiz.titre }}</h4>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -51,12 +51,7 @@
 
                 <table>
                 <tr>
-                    <td>
-                        <div style="padding-right: 450px;">
-                            <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
-                        </div>
 
-                    </td>
                     <td colspan="2">
                         <div class="container">
                             <div class="row">
@@ -74,7 +69,7 @@
                                 <div >
                             <h4>
                                 {% if quiz.sendMail == 1 %}
-                                <a href="{{ path('send')}}" class="fa fa-paper-plane"></a>
+                                <a href="{{ path('send', {'quiz': quiz.id})}}" class="fa fa-paper-plane"></a>
                                 {% else %}
                                 <i style="color: grey"  class="fa fa-paper-plane"></i>
                                 {% endif %}
@@ -112,39 +107,138 @@
                                 <tr>
 
                                     <th colspan="2">
-
-                                       {{ quiz.titre }}
+                                        <div style="padding-right: 450px;">
+                                            <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
+                                        </div>
+                                    <center>
+                                        {{ quiz.titre }}
+                                    </center>
                                     </th>
                                 </tr>
 
                                 <tr>
                                     <th>Description</th>
-                                    <td>{{ quiz.description }}</td>
+                                    <td><div>
+                                            <label>{{ quiz.description }}</label>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Mode correction</th>
-                                    <td>{{ quiz.modeCorrection ? 'Yes' : 'No' }}</td>
+                                    <td> <label>{{ quiz.modeCorrection ? 'Oui' : 'Non' }}</label></td>
                                 </tr>
 
                                 <tr>
                                     <th>Temps disponible</th>
-                                    <td>{{ quiz.tempsDispo ? quiz.tempsDispo|date('Y-m-d H:i:s') : '' }}</td>
+                                    {% if quiz.tempsDispo == 1 %}
+                                        <td> <label>temps 1 minute</label></td>
+                                    {% else %}
+                                        <td> <label>temps 0 minute</label></td>
+                                    {% endif %}
+
                                 </tr>
                                 <tr>
                                     <th>Melange les question</th>
-                                    <td>{{ quiz.melangeQuestion ? 'Yes' : 'No' }}</td>
+                                    <td> <label>{{ quiz.melangeQuestion ? 'Oui' : 'Non' }}</label></td>
                                 </tr>
                                 <tr>
                                     <th>Ouvreture de quiz</th>
+                                    {% if quiz.ouvrireQuiz != null %}
                                     <td>{{ quiz.ouvrireQuiz ? quiz.ouvrireQuiz|date('Y-m-d H:i:s') : '' }}</td>
+                                    {% else %}
+                                        <td>  <label>Temps illimité</label></td>
+                                    {% endif %}
                                 </tr>
                                 <tr>
                                     <th>Fermerture de quiz</th>
+                                    {% if quiz.fermerQuiz != null %}
                                     <td>{{ quiz.fermerQuiz ? quiz.fermerQuiz|date('Y-m-d H:i:s') : '' }}</td>
+                                    {% else %}
+                                    <td><label>Temps illimité</label></td>
+                                    {% endif %}
                                 </tr>
+                                <tr>
+                                    <th>Nombre actuel des pages</th>
+                                    <td> <label>{{ quiz.page|length }}</label></td>
 
+                                </tr>
+                                <tr>
+                                    <th>Nombre maximum des pages</th>
+                                    <td> <label><div id="value-max-page">{{ quiz.nbPage }}</div></label> &nbsp;&nbsp;<a id="update-max-page"  data-id="{{ quiz.id }}" href="javascript:;" class="fa fa-pencil"></a>
+                                        <div class="modal fade" id="moodal-update-max-page" role="dialog">
+                                            <div class="modal-dialog modal-xm">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">{{ quiz.titre }}</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body-update-max-page">
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-id="{{ quiz.id }}" id="btn-update-max-page">Update</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                    </td>
+
+                                </tr>
                                 </tbody>
                             </table>
+
+                            <script>
+                                $(document).ready(function(){
+                                    $("#update-max-page").click(function(){
+                                        var  id = $(this).data('id');
+                                        var url = "{{ path('form_update_max_page', {'quiz': 'id_quiz'}) }}";
+                                        url = url.replace('id_quiz', id);
+                                        $.ajax({
+                                            type: "POST",
+                                            url: url,
+                                            success: function(content){
+                                                $('.modal-body-update-max-page').html(content);
+                                                $("#moodal-update-max-page").modal('show');
+                                            }
+                                        });
+
+                                    });
+                                    $('#btn-update-max-page').click(function(){
+                                        var  id = $(this).data('id');
+                                        var  max = $('#form_max').val();
+                                        var url = "{{ path('update_max_page', {'quiz': 'id_quiz', 'max': 'max_value'}) }}";
+                                        url = url.replace('id_quiz', id);
+                                        url = url.replace('max_value', max);
+                                        $.ajax({
+                                            type: "POST",
+                                            url: url,
+                                            data: {id: id, max: max},
+                                            success: function(response){
+                                                $('#value-max-page').html(max);
+                                                $("#moodal-update-max-page").modal('hide');
+                                                myFunction(id);
+
+                                            }
+                                        });
+
+                                    });
+                                    $('#add-page-to-quiz').click(function(){
+                                        var  id = $(this).data('id');
+                                        var url = "{{ path('add_page_to_quiz', {'quiz': 'id_quiz'}) }}";
+                                        url = url.replace('id_quiz', id);
+                                        $.ajax({
+                                            type: "POST",
+                                            url: url,
+                                            data: {id: id},
+                                            success: function(response){
+                                                myFunction(id);
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -155,7 +249,17 @@
             <div class="col-sm-4" style="background-color: ;">
                 <div>
                     <div class="card bg-info text-white" style="background-color: #b9def0; width: 410px;">
-                        <div class="card-body" style="background-color: #b9def0; width: 400px; "> <center>PAGE</center>
+                        <div class="card-body" style="background-color: #b9def0; width: 400px; ">
+                            {% if(quiz.nbPage  > quiz.page|length) %}
+                                <button style="background-color: #b9def0; width: 30px; height: 30px" data-id="{{ quiz.id }}" id="add-page-to-quiz">
+                                    <i class="fa fa-plus-square-o" ></i>
+                                </button>
+                            {% else %}
+                                <button style="background-color: grey; width: 30px; height: 30px">
+                                    <i class="fa fa-plus-square-o" ></i>
+                                </button>
+                            {% endif %}
+                            <center>PAGE</center>
                             <div id="accordion">
 
                                 {% for page in quiz.page %}
@@ -177,10 +281,10 @@
 
 
                                         <div class="modal fade" id="showpagequestion-{{ page.id }}" role="dialog">
-                                            <div class="modal-dialog">
+                                            <div class="modal-dialog modal-lg">
 
                                                 <!-- Modal content-->
-                                                <div class="modal-content" style="width: 1000px; height:800px ;">
+                                                <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h4 class="modal-title">{{ quiz.titre }}</h4>
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -224,9 +328,6 @@
                                         </button>
                                         <button style="background-color: #b9def0; width: 40px; height: 40px">
                                            <a  href="#"  data-target="#removepage-{{ page.id }}" data-toggle="modal" class="fa fa-trash-o"></a>
-                                        </button>
-                                        <button style="background-color: #b9def0; width: 40px; height: 40px">
-                                            <i class="fa fa-plus-square-o" href="{{ path('addpage', {'id':quiz.id, 'page': page.id}) }}"></i>
                                         </button>
                                         <button style="background-color: #b9def0; width: 40px; height: 40px">
                                             <i class="fa fa-eye" data-target="#showpagequestion-{{ page.id }}"  data-toggle="modal"></i>

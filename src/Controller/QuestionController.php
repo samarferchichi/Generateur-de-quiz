@@ -6,7 +6,9 @@ use App\Entity\Page;
 use App\Entity\Parametre;
 use App\Entity\Question;
 use App\Entity\Reponse;
+use App\Form\ParametreType;
 use App\Form\QuestionType;
+use App\Form\ReponseType;
 use App\Repository\QuestionRepository;
 use App\Repository\ReponseRepository;
 use PhpParser\Parser\Php7;
@@ -264,26 +266,33 @@ class QuestionController extends AbstractController
      */
     public function edit(Request $request, Question $question): Response
     {
+
         $form = $this->createForm(QuestionType::class, $question, [
-            'action' => $this->generateUrl('question_edit', ['id' => $question->getId()])
+            'action' => $this->generateUrl('question_edit', ['id' => $question->getId() ])
 
         ]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+
+        if ($form->isSubmitted() && $form->isValid() ) {
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('creerquiz', [
                 'id' => $question->getPage()->getQuiz()->getId(),
-                'page' => $question->getPage()->getId()
+                'page' => $question->getPage()->getId(),
             ]);
         }
+
 
         return $this->render('question/editQuestion.html.twig', [
             'question' => $question,
             'form' => $form->createView(),
+
         ]);
     }
+
+
+
 
 
 

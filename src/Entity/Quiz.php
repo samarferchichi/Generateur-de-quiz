@@ -39,6 +39,31 @@ class Quiz
     }
 
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User",inversedBy="quiz")
+     *
+     */
+    private $user;
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
+
+
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */

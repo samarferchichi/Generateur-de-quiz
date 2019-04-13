@@ -43,8 +43,24 @@ class QuizType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('gras')
-            ->add('italique')
+            ->add('gras', null, [
+                'attr' => [
+                    'data-toggle' => "toggle",
+                    'data-onstyle' => "info",
+                    'data-on' => "Oui",
+                    'data-off' => "Non"
+                ],
+                'data' => true
+            ])
+            ->add('italique', null, [
+                'attr' => [
+                    'data-toggle' => "toggle",
+                    'data-onstyle' => "info",
+                    'data-on' => "Oui",
+                    'data-off' => "Non"
+                ],
+                'data' => true
+            ])
             ->add('image', null, [
                 'required' =>  false,
                 'label'=> 'Image/Logo à faire apparaitre en debut de votre quiz'
@@ -55,18 +71,41 @@ class QuizType extends AbstractType
                         'class' => 'form-control',
                         ],
 
+
                 'required' =>  false,
                 'label' => 'Description de votre quiz',
+                'label_attr' => [
+                    'style' => 'margin-left: 5px;'
+                ],
 
             ])
             ->add('mode_correction',null, [
-
-                'label'=> 'Activer le mode correction sur votre quiz: la bonne réponse sera affichée aux répondants aprés qu\'ils aient réponduus ,
-                    Activer le mode score sur votre quiz :le scrore des répondants sera calculé en fonction de leurs réponses'
+                'label'=> 'Activer le mode correction sur votre quiz: la bonne réponse sera affichée aux répondants aprés qu\'ils aient réponduus.
+                Activer le mode score sur votre quiz :le scrore des répondants sera calculé en fonction de leurs réponses',
+                'label_attr' => [
+                    'style' => 'margin-left: 17px;'
+                ],
+                'attr' => [
+                    'data-toggle' => "toggle",
+                    'data-onstyle' => "success",
+                    'data-on' => "Oui",
+                    'data-off' => "Non"
+                ],
+                'data' => true
             ])
 
             ->add('temps_dispo',null,[
-                'label' => 'Temps disponible'
+                'label' => 'Temps disponible',
+                'label_attr' => [
+                    'style' => 'margin-left: 7px;'
+                ],
+                'attr' => [
+                    'data-toggle' => "toggle",
+                    'data-onstyle' => "warning",
+                    'data-on' => "Oui",
+                    'data-off' => "Non"
+                ],
+                'data' => true
             ])
             ->add('nb_question', ChoiceType::class, [
                 'choices' => [
@@ -110,31 +149,54 @@ class QuizType extends AbstractType
             ])
             ->add('melange_question',null,[
                 'required' =>  false,
-                'label' => 'Melanger les questions'
+                'label' => 'Melanger les questions',
+                'attr' => [
+                    'data-toggle' => "toggle",
+                    'data-onstyle' => "info",
+                    'data-on' => "Oui",
+                    'data-off' => "Non"
+                ],
+                'data' => true
 
             ])
 
-            ->add('ouvrire_quiz', null,[
+            ->add('ouvrire_quiz', TextType::class,[
                 'required' =>false,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'autocomplete' => "off"
                 ]
             ])
-            ->add('fermer_quiz',null,[
+            ->add('fermer_quiz',TextType::class,[
                 'required' =>false,
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'autocomplete' => "off"
                 ]
             ])
 
             ->add('send_mail',null,[
                 'required' =>  false,
-                'label' => 'Envoyer le quiz par email'
+                'label' => 'Envoyer le quiz par email',
+                'attr' => [
+                    'data-toggle' => "toggle",
+                    'data-onstyle' => "info",
+                    'data-on' => "Oui",
+                    'data-off' => "Non"
+                ],
+                'data' => true
 
             ])
             ->add('imprime_pdf',null,[
                 'required' =>  false,
-                'label' => 'Imprimer le quiz en pdf'
+                'label' => 'Imprimer le quiz en pdf',
+                'attr' => [
+                    'data-toggle' => "toggle",
+                    'data-onstyle' => "info",
+                    'data-on' => "Oui",
+                    'data-off' => "Non"
+                ],
+                'data' => true
 
             ])
 

@@ -15,7 +15,6 @@ class ParametreType extends AbstractType
             ->add('form_text')
             ->add('nb_caractere')
             ->add('nb_chiffre')
-            ->add('id')
         ;
     }
 

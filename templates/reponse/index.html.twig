@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reponse index{% endblock %}
+
+{% block body %}
+    <h1>Reponse index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Formule</th>
+                <th>Destext</th>
+                <th>Desnumber</th>
+                <th>Resultatformule</th>
+                <th>Descriptiondate</th>
+                <th>Descriptionformule</th>
+                <th>Reponse_valide</th>
+                <th>Etatvf</th>
+                <th>Etatlist</th>
+                <th>Etatcaseacocher</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reponse in reponses %}
+            <tr>
+                <td>{{ reponse.id }}</td>
+                <td>{{ reponse.formule }}</td>
+                <td>{{ reponse.destext }}</td>
+                <td>{{ reponse.desnumber }}</td>
+                <td>{{ reponse.resultatformule }}</td>
+                <td>{{ reponse.descriptiondate }}</td>
+                <td>{{ reponse.descriptionformule }}</td>
+                <td>{{ reponse.reponseValide }}</td>
+                <td>{{ reponse.etatvf ? 'Yes' : 'No' }}</td>
+                <td>{{ reponse.etatlist ? 'Yes' : 'No' }}</td>
+                <td>{{ reponse.etatcaseacocher ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('reponse_show', {'id': reponse.id}) }}">show</a>
+                    <a href="{{ path('reponse_edit', {'id': reponse.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('reponse_new') }}">Create new</a>
+{% endblock %}

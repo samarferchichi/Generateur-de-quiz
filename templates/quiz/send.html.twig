@@ -22,18 +22,13 @@
 {% endblock %}
 {% block main %}
 
-ici on va envoyer un quiz par un emil
+    ici on va envoyer un quiz par un emil
 
     {# templates/emails/registration.html.twig #}
     <h3>You did it! You registered!</h3>
-<input type="email">
+    {{ form_start(form) }}
+    {{ form_widget(form.email) }}
     <input type="submit" value="Envoyer">
-    Hi ! You're successfully registered.
+    {{ form_end(form) }}
 
-    {# example, assuming you have a route named "login" #}
-    To login, go to: <a href="#">...</a>.
-    Thanks!
-
-    {# Makes an absolute URL to the /images/logo.png file #}
-    <img src="{{ absolute_url(asset('images/logo.png')) }}">
 {% endblock %}

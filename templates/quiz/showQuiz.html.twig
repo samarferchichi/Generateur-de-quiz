@@ -1,33 +1,23 @@
 
-{% block content_header %}
-
-    <div class="form-group row">
-        <div>
-            <div class="aa"></div>
-            <div class="aa"></div>
-            <div class="aa"></div>
-        </div>
-        &nbsp; &nbsp;
-    </div>
-{% endblock %}
 {% block main %}
    <table>
     <tr>
 
     {% for p in quiz.page %}
-            <td bgcolor="{{ p.bgColor }}">
-                {%  if p.bgColor== null %}
-                <div style=" width: 600px; height: 950px; border-bottom: 1.5px; color: #3a87ad;" >
-                    {% else %}
-                        <div style=" width: 600px; height: auto; border-bottom: 1.5px; color: #3a87ad;" >
-                {% endif %}
-                        <div style="background-color:  ; border-right:solid 1.5px">
+            <td style="vertical-align: top;">
+                <div style="background-color: {{ p.bgColor  }}; width: 600px; height: auto;" >
+
+                        <div style="">
                         {% if p.titrePage == null %}
-                        <center>
-                            <label><b><h2>
-                                        Titre est vide
-                                    </h2></b></label>
-                        </center>
+                            <center>
+                                <label>
+                                    <b>
+                                        <h2>
+                                            Titre est vide
+                                        </h2>
+                                    </b>
+                                </label>
+                            </center>
                         {% else %}
                             <center>
                                 <font color="{{ p.colorTitrePage }}">
@@ -46,17 +36,14 @@
                             Page vide !
                         </label>
                         {% else %}
-                        {% for j in p.question %}
+                        {% for key, j in p.question %}
 
 
 
-                        <div>
-                            <div class="list-group">
-
-                                <div>
-
-                                    <br>
-
+                            <div class="list-group" style="padding: 10px">
+                                        <h4>
+                                           <label>Question n° : {{ key + 1 }}</label>
+                                        </h4>
 
                                     {% if j.typeQuestion =='Vrai/faux' %}
                                         {{ j.textQuestion }}
@@ -223,24 +210,19 @@
 
 
                                     {% if j.infoBulle != '' %}
-
                                         <div style="padding-left: 570px;" class="container">
-                                            <a href="#" data-toggle="popover" title="INFO !" data-content="{{ j.infoBulle }}"><i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                                            <a href="#" data-toggle="popover" title="{{ j.infoBulle }}" data-content="{{ j.infoBulle }}"><i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
                                         </div>
                                     {% endif %}
-
+                            </div>
 
                         {% endfor %}
 
-
-                    </div>
-
-                </div>
+                        {% endif %}
                         </div>
-                    </div>
                 </div>
-                {% endif %}
-                {% endfor %}
-
-    </tr></table>
+            </td>
+    {% endfor %}
+    </tr>
+   </table>
 {% endblock %}

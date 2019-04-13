@@ -227,7 +227,7 @@
                                     Page vide !
                                 </label>
                                 {% else %}
-                                {% for j in question %}
+                                {% for key, j in question %}
                                     <br>
                                 <div class="col-sm-11"  >
 
@@ -237,7 +237,7 @@
                                     <label>
                                       <b>
                                           <i>
-                                              Question n°
+                                              Question n° : {{ key + 1 }}
                                           </i>
                                       </b>
                                     </label><br>
