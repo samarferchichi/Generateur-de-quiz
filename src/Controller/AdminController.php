@@ -13,10 +13,13 @@ use App\Repository\PageRepository;
 use App\Repository\ParametreRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\ReponseRepository;
+use Doctrine\DBAL\Types\TextType;
+use Doctrine\ORM\EntityManager;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 use Ecommerce\EcommerceBundle\Form\RechercheType;
 use http\Client\Curl\User;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -477,13 +480,26 @@ class AdminController extends EasyAdminController
         $form = $this->createFormBuilder(null, [
             'action' => $this->generateUrl('send', ['quiz' => $quiz->getId()])
         ])
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class,[
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
+            ]
+
+                )
+            ->add('description', TextareaType::class,[
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
+                ]
+            )
             ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $to = $form->getData()['email'];
+            $des = $form->getData()['description'];
 
             $transport = (new \Swift_SmtpTransport('smtp.googlemail.com', 465, 'ssl'))
                 ->setUsername('samarferchichi61@gmail.com')
@@ -495,8 +511,7 @@ class AdminController extends EasyAdminController
             // Create a message
             $body = $this->renderView(
             // templates/emails/registration.html.twig
-                'emails/send_quiz.html.twig', ['quiz' => $quiz]);
-
+                'emails/send_quiz.html.twig', ['quiz' => $quiz, 'message' =>$des]);
             $message = (new \Swift_Message('Email Through Swift Mailer'))
                 ->setFrom(['amarferchichi61@gmail.com' => 'Quiz'])
                 ->setTo([$to])
@@ -536,6 +551,12 @@ class AdminController extends EasyAdminController
             $qui->setNbPage($quiz->getNbPage());
         if($quiz->getTerminer())
             $qui->setTerminer($quiz->getTerminer());
+
+        if($quiz->getUser())
+            $qui->setUser($quiz->getUser());
+
+
+
 
         $listquiz=$quizRepository->findAll();
 
@@ -673,6 +694,7 @@ class AdminController extends EasyAdminController
                $quiz->setFermerQuiz(new \DateTime($quiz->getFermerQuiz()));
            if ($quiz->getOuvrireQuiz())
                $quiz->setOuvrireQuiz(new \DateTime($quiz->getOuvrireQuiz()));
+
 
             $quiz->setBrochure($fileName);
 
@@ -990,11 +1012,15 @@ class AdminController extends EasyAdminController
     {
         $question=$page->getQuestion();
 
-
         $form = $this->createForm(PageType::class, $page);
+        if ($page->getTitrePage())
+            $page->setTitrePage($page->getTitrePage());
+
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('list_quiz');

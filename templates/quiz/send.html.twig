@@ -9,6 +9,7 @@
 {%- endblock %}
 
 {% block content_header %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
     <div class="form-group row">
         <div>
@@ -22,13 +23,25 @@
 {% endblock %}
 {% block main %}
 
-    ici on va envoyer un quiz par un emil
 
-    {# templates/emails/registration.html.twig #}
-    <h3>You did it! You registered!</h3>
     {{ form_start(form) }}
-    {{ form_widget(form.email) }}
-    <input type="submit" value="Envoyer">
+    E-mail : {{ form_widget(form.email) }}
+    <br>
+    <br>
+    Description : <br> {{ form_widget(form.description) }}
+    <br>
+    <input type="submit" value="Envoyer" class="btn btn-info">
+
+    <div style=" padding-left: 98%;">
+
+        <a href="{{ path('list_quiz') }}">
+            <font size="4">
+                <i class="fa fa-reply" ></i>
+            </font>
+        </a>
+    </div>
+
     {{ form_end(form) }}
+
 
 {% endblock %}
