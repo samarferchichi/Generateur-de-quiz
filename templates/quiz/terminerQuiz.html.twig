@@ -25,21 +25,22 @@
 {% block main %}
 
 
-    {{ quiz.id }}
 
-    {% if quiz.modeCorrection %}
-        mode correction activé
-    {% endif %}
 <br>
     {% if quiz.tempsDispo %}
-        le temps disponible est activé
+        <form action="{{ path('insert', {'quiz' : quiz.id} ) }}" method="post" >
+          QUIZ:  {{ quiz.titre }}<br>
+
+            {% if quiz.modeCorrection %}
+                mode correction activé
+            {% endif %}
+            <br>
+        le temps disponible est activé <input type="time" name="timequiz">
+        <input type="submit" value="Ajouter un compteur a votre quiz"  >
+        </form>
     {% endif %}
 
 
 <br>
-
-
-
-terminer
 
 {% endblock %}

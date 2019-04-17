@@ -89,7 +89,7 @@
     {% if quiz|length != 0 %}
 <center><table>
         {% for p in quiz %}
-
+            {% if p.user == user %}
          <td>
              <body>
 
@@ -107,6 +107,7 @@
 
              </body>
          </td>
+            {% endif %}
 
 
 

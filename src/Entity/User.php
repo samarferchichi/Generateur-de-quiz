@@ -20,6 +20,22 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Quiz", mappedBy="user", cascade={"persist","remove"})
      */
     private $quiz;
@@ -36,6 +52,31 @@ class User extends BaseUser
         return $this->quiz;
     }
 
+    /**
+     * @ORM\OneToMany(targetEntity="ParticipantQuiz", mappedBy="quiz")
+     */
+    private $participantquiz;
+
+    /**
+     * @return mixed
+     */
+    public function getParticipantquiz()
+    {
+        return $this->participantquiz;
+    }
+
+    /**
+     * @param mixed $participantquiz
+     */
+    public function setParticipantquiz($participantquiz): void
+    {
+        $this->participantquiz = $participantquiz;
+    }
+
+
+    public function __constructt() {
+        $this->quiz = new ArrayCollection();
+    }
 
     /**
      * @ORM\Column(type="string")
@@ -59,11 +100,4 @@ class User extends BaseUser
     }
 
 
-
-
-    public function __construct()
-    {
-        parent::__construct();
-        // your own logic
-    }
 }

@@ -50,6 +50,15 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 class AdminController extends EasyAdminController
 {
 
+    /**
+     * @Route("/finduser", name="finduser")
+     */
+    public function finduser()
+    {
+        dump($this->getUser()->getId());
+        exit;
+        return $this->getUser()->getId();
+    }
 
 
 
@@ -60,10 +69,11 @@ class AdminController extends EasyAdminController
     public function dashboardAction()
     {
         $em=$this->getDoctrine()->getManager();
+        $user = $this->getUser();
 
             $quiz = $em->getRepository('App:Quiz')->findAll();
 
-        return $this->render('/dashboard.html.twig', array('quiz'=>$quiz));
+        return $this->render('/dashboard.html.twig', array('quiz'=>$quiz, 'user'=>$user));
     }
 
 
@@ -396,23 +406,17 @@ class AdminController extends EasyAdminController
     {
         $listquiz = $quizRepository->findAll();
 
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
-        $serializer = new Serializer($normalizers, $encoders);
+        $user = $this->getUser();
+
 
         $listpage = $pageRepository->findAll();
 
-        $performanceDatas = [];
-        foreach ($listpage as $key => $p) {
-            $performanceDatas[$key] = ['idQuiz'=>$p->getQuiz()->getId(), 'idPage'=>$p->getId(), 'titrePage'=>$p->getTitrePage()];
-        }
-        $reponse = new JsonResponse();
-        $reponse->setData(array('page' => $performanceDatas));
+
 
 
         return $this->render('quiz/list.html.twig',[
                'listequiz' => $listquiz,
-            'listepage'=>$reponse,
+            'user' => $user
 
         ]);
     }
@@ -1106,9 +1110,6 @@ class AdminController extends EasyAdminController
             $entityManager = $this->getDoctrine()->getManager();
             $quiz->setNbPage($quiz->getNbpage()+1);
             $entityManager->flush();
-
-
-
 
             return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
     }

@@ -112,7 +112,9 @@
                                                              color: #3a87ad; ">
                                                     <ul id="myUL">
                                                         {% for q in listequiz %}
+                                                            {% if q.user == user %}
                                                             <li><a style="width: 373px" href="#" onclick="myFunction( '{{ q.id }}' )" >{{ q.titre }}</a></li>
+                                                            {% endif %}
                                                         {% endfor %}
                                                     </ul>
                                                 </div>

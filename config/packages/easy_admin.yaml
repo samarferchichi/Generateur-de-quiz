@@ -10,7 +10,6 @@ easy_admin:
     actions:
       - { name: 'edit', icon: 'pencil' , label: false }
       - { name: 'delete', icon: 'trash', label: false }
-      - { name: 'new', label: 'Ajouter', icon: 'add' }
       - { name: 'search', label: 'Rechercher' }
       - { name: 'show' , icon: 'eye' , label: false }
 
@@ -22,6 +21,8 @@ easy_admin:
 
     Quiz:
       class: App\Entity\Quiz
+      controller: App\Controller\QuizController
+
       label: 'Lister Quiz'
       list:
       action:
@@ -41,7 +42,6 @@ easy_admin:
           - { property: 'message_e', type: 'text' }
           - { property: 'nb_tentative', type: 'integer' }
           - { property: 'terminer', type: 'boolean' }
-
 
         show:
           fields:

@@ -537,16 +537,17 @@
                                         &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 
                                         &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;    &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
+                                <a href="{{ path('terminerQuiz', {'quiz':quiz.id }) }}" style="width: 240px" class="btn btn-success">Terminer la création de Quiz</a>
 
-                                        <a href="{{ path('terminerQuiz', {'quiz':quiz.id }) }}" style="width: 240px" class="btn btn-success">Terminer la création de Quiz</a>
+                                {{ form_end(formq) }}
 
                             </div>
-                            {{ form_end(formq) }}
                             {% else %}
                                 <div style="border-radius: 10px;"><br><br><br>
                                     <div style="background-color: 	#FF6347">
                                         <br>Vous avez atteint le nombre maximum des question dans cette page !
                                     </div>
+
                                     <br>
                                     <div class="text-center">
                                         {% if pos == 1 %}
@@ -561,6 +562,12 @@
                                         {% endif %}
                                     </div>
                                 </div>
+                                <br>
+                                <br>
+                              <center>
+                                  <a href="{{ path('terminerQuiz', {'quiz':quiz.id }) }}" style="width: 240px" class="btn btn-success">Terminer la création de Quiz</a>
+                              </center>
+
                             {% endif %}
 
                         </div>

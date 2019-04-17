@@ -173,7 +173,7 @@
 
                                 {% endif %}
                                 {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}
-                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id }) }}" onclick="MyFunction()">{{ quiz.titre }}</a></li>
+                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id }) }}" >{{ quiz.titre }}</a></li>
                                 {% endif %}
 
                             {% endif %}
@@ -204,7 +204,7 @@
 
 
 
-    <form id="regForm" onsubmit="return checkForm(this)" >
+    <form id="regForm"  action="{{ path('quizpublic', {'quiz':quiz.id}) }}" method="post" >
 
         <center>
             <h1>  <font size="" color="{{ quiz.colorTitre }}">
@@ -225,23 +225,34 @@
                 </font>
                 <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
 
-
             </h1>
         </center>
         <p>{{ quiz.description }}.</p>
 
+
+        {% set ii=0 %}
+
+        {% for par in listparticipantquiz %}
+            {% if par.user == userconct and par.quiz == quiz%}
+                {% set ii=ii+1 %}
+            {% endif %}
+
+        {% endfor %}
+        {{ ii }} /  {{ quiz.nbTentative }}
+
+{% if ii == quiz.nbTentative  %}
+ <center>
+     Vos ete terminé le nombre de tentatives      <br>
+     <a class="btn btn-success" href="{{ path('index') }}"> Back </a>
+ </center>
+    {% else %}
         {% for key,  i in quiz.page %}
-
-
-
 
             <div  class="tab" style="background-color: {{ i.bgColor }}; padding: 20px">
 
                 {% if key ==0  %}
                     {{ quiz.entete }}
                 {% endif %}
-
-
 
                 <h2>page : {{ key + 1 }}</h2>
                 <h3>
@@ -253,8 +264,6 @@
                     <h2>Cette page est vide !!</h2>
                 {% endif %}
                 {% for key2, question in i.question  %}
-
-
 
                     {% if question.typeQuestion == 'Réponse courte'  %}
 
@@ -268,12 +277,10 @@
                                     <label style="padding-left: 77%"><font size="2px">Nombre des caractères maximum sont  {{ para.nbCaractere }}</font></label>
 
                                     <div class="row">
-                                       <div class="col-sm-11"> <input onkeyup="showHint(this.value)"  id="vv" class="form-control" oninput="this.className = ''"  onchange="this.value = this.value.replace(/^\s+|\s+$/g, ''); valid_name.checked = this.value;" > </div>
-                                       <div class="col-sm-1"><input type="checkbox" disabled name="valid_name"></div>
-
-                                   </div>
+                                        <div class="col-sm-11"> <input name="typetext" onkeyup="showHint(this.value)"  id="vv" class="form-control" oninput="this.className = ''"  onchange="this.value = this.value.replace(/^\s+|\s+$/g, ''); valid_name.checked = this.value;" > </div>
+                                        <div class="col-sm-1"><input type="checkbox" disabled name="valid_name"></div>
+                                    </div>
                                     <p><span id="txtHint"></span></p>
-
 
                                     <input id="nb" class="hidden" type="number" value="{{ para.nbCaractere }}">
 
@@ -444,6 +451,11 @@
         </div>
 
 
+{% endif %}
+
+
+
+
     </form>
 
 </div>
@@ -454,23 +466,25 @@
 </div>
 
 <script>
+
     function openNav() {
         document.getElementById("mySidenav").style.width = "250px";
         document.getElementById("main").style.marginLeft = "250px";
         document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
     }
+
     function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
         document.getElementById("main").style.marginLeft= "0";
         document.body.style.backgroundColor = "white";
     }
-    var currentTab = 0; // Current tab is set to be the first tab (0)
-    showTab(currentTab); // Display the current tab
+
+    var currentTab = 0;
+    showTab(currentTab);
+
     function showTab(n) {
-        // This function will display the specified tab of the form...
         var x = document.getElementsByClassName("tab");
         x[n].style.display = "block";
-        //... and fix the Previous/Next buttons:
         if (n == 0) {
             document.getElementById("prevBtn").style.display = "none";
         } else {
@@ -478,146 +492,86 @@
         }
         if (n == (x.length - 1)) {
             document.getElementById("nextBtn").innerHTML = "Submit";
+
         } else {
             document.getElementById("nextBtn").innerHTML = "Next";
         }
-        //... and run a function that will display the correct step indicator:
         fixStepIndicator(n)
     }
-    function nextPrev(n) {
-        // This function will figure out which tab to display
-        var x = document.getElementsByClassName("tab");
-        // Exit the function if any field in the current tab is invalid:
-        if (n == 1 && !validateForm())
 
+    function nextPrev(n) {
+        var x = document.getElementsByClassName("tab");
+        if (n == 1 && !validateForm())
             return false;
-        // Hide the current tab:
         x[currentTab].style.display = "none";
-        // Increase or decrease the current tab by 1:
         currentTab = currentTab + n;
-        // if you have reached the end of the form...
         if (currentTab >= x.length) {
-            // ... the form gets submitted:
+            alert('Are you sur !!');
             document.getElementById("regForm").submit();
-            return false;
+           // return false;
         }
-        // Otherwise, display the correct tab:
         showTab(currentTab);
     }
-    function validateForm() {
-        // This function deals with validation of the form fields
 
+    function validateForm() {
         var x, y, i, valid = true;
         x = document.getElementsByClassName("tab");
         y = x[currentTab].getElementsByTagName("input");
-        // A loop that checks every input field in the current tab:
+
         for (i = 0; i < y.length; i++) {
-            // If a field is empty...
             if (y[i].value == "") {
-
-
-                // add an "invalid" class to the field:
                 y[i].className += " invalid";
-                // and set the current valid status to false
                 valid = false;
             }
         }
-        // If the valid status is true, mark the step as finished and valid:
         if (valid) {
             if(this.nb.value !=  this.vv.length  && this.vv.value.length >  this.nb.value ) {
-
                 alert('il faut entre une réponse avec la longueur inférieure à '+this.nb.value  );
                 this.vv.focus();
-
                 return false;
-
-            }
-
-            if(this.nbch.value !=  this.cc.length  && this.cc.value.length >  this.nbch.value ) {
-
-                alert('il faut entre une réponse avec la longueur inférieure à '+this.nbch.value  );
-                this.vv.focus();
-
-                return false;
-
             }
 
             document.getElementsByClassName("step")[currentTab].className += " finish";
         }
-        return valid; // return the valid status
+        return valid;
     }
+
     function fixStepIndicator(n) {
-        // This function removes the "active" class of all steps...
         var i, x = document.getElementsByClassName("step");
         for (i = 0; i < x.length; i++) {
             x[i].className = x[i].className.replace(" active", "");
         }
-        //... and adds the "active" class on the current step:
         x[n].className += " active";
     }
 
     function showHint(str) {
         console.log(str);
-
         if (str.length == 0) {
             document.getElementById("txtHint").innerHTML = "";
             console.log("vide");
             return;
         }
-else{
+        else{
             if(this.nb.value !=  this.vv.length  && this.vv.value.length >  this.nb.value ) {
-
                 document.getElementById("txtHint").innerHTML = "<label><font color=red> Il faut entre une réponse avec la longueur inférieure à "+this.nb.value+"</font></label>" ;
                 console.log("non");
                 return false;
-
             }else {
                 document.getElementById("txtHint").innerHTML = "<label><font color=green>La longueur de réponse est valide</font></label>";
                 console.log("oui");
             }
-
-
-
         }
-
     }
 
     function showHintnumber(str) {
-
-
-
         console.log(str);
-
         if (str.length == 0) {
             document.getElementById("txtHintn").innerHTML = "";
             console.log("vide");
             return;
         }
-        else{
-            
-            if(this.nbch.value !=  this.cc.length  && this.cc.value.length >  this.nbch.value ) {
-
-                document.getElementById("txtHintn").innerHTML = "<label><font color=red> Il faut entre une réponse avec la longueur inférieure à "+this.nbch.value+"</font></label>" ;
-                console.log("non");
-                return false;
-
-            }else {
-                document.getElementById("txtHintn").innerHTML = "<label><font color=green>La longueur de réponse est valide</font></label>";
-                console.log("oui");
-            }
-
-
-        }
-
-
-
-
 
     }
-
-
-
-
 </script>
 <br><br>
 </body>

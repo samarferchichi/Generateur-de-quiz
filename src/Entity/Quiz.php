@@ -4,6 +4,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Entity\User;
 
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -20,6 +21,9 @@ class Quiz
      * @ORM\Column(type="integer")
      */
     private $id;
+
+
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Page", mappedBy="quiz", cascade={"persist","remove"})
      * @ORM\OrderBy({"ordre" = "ASC"})
@@ -37,6 +41,39 @@ class Quiz
     {
         return $this->page;
     }
+
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="ParticipantQuiz", mappedBy="user")
+     */
+    private $participantquiz;
+
+
+
+    public function __constructm() {
+        $this->user = new ArrayCollection();
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getParticipantquiz()
+    {
+        return $this->participantquiz;
+    }
+
+    /**
+     * @param mixed $participantquiz
+     */
+    public function setParticipantquiz($participantquiz): void
+    {
+        $this->participantquiz = $participantquiz;
+    }
+
+
+
 
 
 
@@ -215,6 +252,32 @@ class Quiz
      * @ORM\Column(type="string", length=1000)
      */
     private $message_e;
+
+
+
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $timequiz;
+
+    /**
+     * @return mixed
+     */
+    public function getTimequiz()
+    {
+        return $this->timequiz;
+    }
+
+    /**
+     * @param mixed $timequiz
+     */
+    public function setTimequiz($timequiz): void
+    {
+        $this->timequiz = $timequiz;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;

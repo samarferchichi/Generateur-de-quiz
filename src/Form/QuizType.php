@@ -6,6 +6,7 @@ use App\Entity\Quiz;
 use Doctrine\DBAL\Types\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -28,6 +29,8 @@ class QuizType extends AbstractType
                     'class' => ''
                 ]
             ])
+
+
             ->add('color_titre', ColorType::class,[
                 'required' =>  false,
 
