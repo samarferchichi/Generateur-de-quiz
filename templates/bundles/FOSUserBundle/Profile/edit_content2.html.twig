@@ -1,0 +1,108 @@
+
+{% set _content_title = 'Espace d administartion' %}
+
+{% block page_title -%}
+    {{ _content_title }}
+
+{%- endblock %}
+
+{% block content_header %}
+
+    <div class="form-group row">
+        <div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+        </div>
+        &nbsp; &nbsp;
+        <h1 class="title">{{ _content_title }}</h1>
+    </div>
+{% endblock %}
+
+{% block main %}
+
+
+
+    <head>
+
+
+        <!------ Include the above in your HEAD tag ---------->
+
+        <title>Login Page</title>
+        <!--Made with love by Mutiullah Samim -->
+
+        <!--Bootsrap 4 CDN-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <!--Custom styles-->
+        <style type="text/css">
+
+
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    </head>
+    <body>
+    <div class="panel panel-success">
+
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <a href="{{ path('fos_user_profile_show') }}">
+                    <font size="4">
+                        <i class="fa fa-reply" ></i>
+                    </font>
+                </a>
+                &nbsp;
+
+                Modifier profile
+
+            </div>
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-sm-12">
+
+    <div style="padding: 20px">
+        <br>
+
+        {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+
+
+        {{ form_label(form.username) }}
+
+        {{ form_widget(form.username) }}<br>
+
+        {{ form_label(form.email) }}
+
+        {{ form_widget(form.email) }}<br>
+
+        {{ form_label(form.numerotel) }}
+
+        {{ form_widget(form.numerotel) }}<br>
+
+
+        {{ form_widget(form.plainPassword) }}<br>
+
+
+        <div>
+            <input type="submit" class="btn btn-success" value="Modifier" />
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+
+{% endblock %}

@@ -600,6 +600,10 @@ class AdminController extends EasyAdminController
             $qui->setSendMail($quiz->getSendMail());
         if($quiz->getTempsDispo())
             $qui->setTempsDispo($quiz->getTempsDispo());
+
+        $qui->setTimequiz($quiz->getTimequiz());
+
+
         $entityManager->persist($qui);
         foreach ($quiz->getPage() as $par) {
         $newpage = new Page();

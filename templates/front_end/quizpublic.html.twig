@@ -159,7 +159,7 @@
                 <span style="color:white;  font-size:40px;cursor:pointer" onclick="openNav()">&#9776;</span>
             </li>
 
-            <li><a href="{{ path('index') }}">Home</a></li>
+            <li><a href="{{ path('index') }}">Accueil</a></li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Quiz <span class="caret"></span></a>
                 <ul class="dropdown-menu">
 
@@ -184,18 +184,130 @@
             <li><a href="#">Page 2</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+
+            <li> <a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <ul>
+                <li>
+                    <div>
+                        <font color="#1e90ff">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} </font> |
+
+                    </div>
+                    {% else %}
+                <li>
+
+                <li>
+                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                </li>
+
+                <li>
+                    <a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Inscrire</a>
+
+                    <ul style="background-color: #d1ecf1" class="dropdown-menu">
+
+                        <li>
+                            <a>
+                                Facebook
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                Gmail
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('fos_user_registration_register') }}">
+                                Register
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                </li>
+                {% endif %}
+
+                {% if app.request.hasPreviousSession %}
+                    {% for type, messages in app.session.flashbag.all() %}
+                        {% for message in messages %}
+                            <div class="flash-{{ type }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endif %}
+
+                <div>
+                    {% block fos_user_content %}
+                    {% endblock fos_user_content %}
+                </div>
+            </ul>
+
+
         </ul>
     </div>
 </nav>
 
 <div id="mySidenav" class="sidenav">
+
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
+
+
+
+
+    <center>
+      <font color="#7fffd4" >
+         <h2>
+             About
+         </h2>
+      </font>
+    </center>
+
+    <div class="panel panel-success">
+
+        <div class="card bg-info text-white">
+            <div class="card-body">
+
+ Profile
+
+            </div>
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div style="padding: 20px" class="fos_user_user_show">
+                                <p>Nom utilisateur: {{ userconct.username }}</p>
+                                <p>Email: {{ userconct.email }}</p>
+                                <p>Telephone: {{ userconct.numerotel }}</p>
+
+                            </div>
+
+                        </div>
+                        <a><button onclick="fonctionmodifier()" class="btn btn-success">Modifier profile</button></a>
+                            <script>
+                                function fonctionmodifier() {
+                                    $('#modifier').html('uuuuuuuuuuuu' );
+
+                                }
+                            </script>
+                        <div id="modifier"><font color="aqua">
+                                ddsssssssssssssss
+                            </font> </div>
+
+                        <a class="fos_user_change_password" href="{{ path('fos_user_change_password') }}"><button class="btn btn-success">Changer mot de passe</button></a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div></div>
+
+
 </div>
 
 
@@ -206,6 +318,7 @@
 
     <form id="regForm"  action="{{ path('quizpublic', {'quiz':quiz.id}) }}" method="post" >
 
+        <input value="{{ quiz.timequiz }}" hidden id="timequiz">
         <center>
             <h1>  <font size="" color="{{ quiz.colorTitre }}">
                     Titre de quiz
@@ -238,14 +351,57 @@
             {% endif %}
 
         {% endfor %}
-        {{ ii }} /  {{ quiz.nbTentative }}
+        {{ ii }} /  {{ quiz.nbTentative }}<br>
 
-{% if ii == quiz.nbTentative  %}
+
+        {% if quiz.tempsDispo == 1 %}
+
+        Temps disponible pour passer le quiz est :<font color="blue"><b> {{ quiz.timequiz }} minutes   </b></font><br>
+        {% else %}
+        {% if quiz.tempsDispo == 0   %}
+            Temps disponible pour passer le quiz est :<font color="blue"><b> Illimiter   </b></font><br>
+        {% else %}
+            <div><span id="counter_session"></span></div>
+            <script>
+                var t = document.getElementById("timequiz");
+                var quiz = document.getElementById("quiz");
+                var SessionTime=(t.value * 100)*10*60;
+                var tickDuration=1000;
+
+                var myInterval=setInterval(function(){
+                    SessionTime=SessionTime-tickDuration;
+                    var diff=Date.now()-Date.now(),ns=(((SessionTime-diff)/1000)>>0),m=(ns/60)>>0,s=ns-m*60;
+                    $('#counter_session').text("Le tempts disponible est "+ m+':'+((''+s).length>1?'':'0')+s+  ' minutes' );
+
+                },1000);
+                var myTimeOut=setTimeout(SessionExpireEvent,SessionTime);
+                $(document).ajaxSend(function () {
+                    clearTimeout(myTimeOut);
+                    SessionTime=1000*10*60;
+                    myTimeOut=setTimeout(SessionExpireEvent,SessionTime);
+                });
+
+                function SessionExpireEvent()
+                { clearInterval(myInterval);
+                    window.location.pathname = '/index/test' ;
+                }
+            </script>
+        {% endif %}
+        {% endif %}
+
+<input type="number" hidden id="quiz">
+
+
+
+
+        {% if ii == quiz.nbTentative  %}
  <center>
+
      Vos ete terminé le nombre de tentatives      <br>
      <a class="btn btn-success" href="{{ path('index') }}"> Back </a>
  </center>
     {% else %}
+
         {% for key,  i in quiz.page %}
 
             <div  class="tab" style="background-color: {{ i.bgColor }}; padding: 20px">

@@ -1,51 +1,414 @@
-<div id="demo" style="background-color: ">' +
-    '<div  id="test" style="background-color: ">'+
-        '<div class="form-group row">' +
-            '<table >' +
-                '<tr>' +
-                    '<td colspan="3">' +
-                        '</td>' +
-                    '<td></td>' +
-                    '<td></td>' +
-                    '<td colspan="7">' +
-                        '<div class="col-15"><select name="selecttype" class="form-control" id="mySelect" onchange="myFunction()">' +
-                                '<option  value="texte" selected>Texte</option>' +
-                                '<option value="date">Date</option>' +
-                                '<option value="number">Nombre</option></select></div>' +
-                        '</td>' +
+<html lang="en">
 
-                    '</tr>'+
-                '<tr>' +
-                    '<td colspan="4"> ' +
-                        '<font size="3" color="#696969"> Nombre de caracteres autorisés:</font>' +
-                        '</td>' +
-                    '<td>' +
-                        '<div class="col-7"><input name="nbcaractere" type="number" class="form-control"> <i><font size="2" color="#808080">Entre 1 et 1000</font></i></div>' +
-                        '</td>' +
-                    '</tr> ' +
-                '<tr id="hide" >' +
-                    '<td colspan="4">' +
-                        '<label><font size="3"> Repanse correcte n° :</font></label>' +
-                        '</td>' +
-                    '<td >' +
-                        '<div class="col-9"><input name="reptext" type="text" class="form-control">' +
-                            '</div>'+
+<head>
 
-                        '</td>' +
-                    '<td>' +
-                        '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide()" class="fa fa-trash-o"></i></a></font>' +
-                        '</td>' +
-                    '</tr>' +
-                '<tr id="showPlus"> </tr>' +
-                '<tr>' +
-                    '<td colspan="7">' +
+    <style>
+        .center {
+            margin: auto;
+            width: 60%;
+            border: 0.5px solid #eeeeee ;
+            padding: 10px;
+        }
+        .img2 {
+            float: right;
+        }
+        body {
+            font-family: "Lato", sans-serif;
+            transition: background-color .5s;
+        }
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+        .sidenav a:hover {
+            color: #2a85a0;
+        }
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+        @media screen and (max-height: 450px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
+        }
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+        .pagination a.active {
+            background-color: dodgerblue;
+            color: white;
+        }
+        .pagination a:hover:not(.active) {background-color: #ddd;}
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f1f1f1;
+        }
+        #regForm {
+            background-color: #ffffff;
+            margin: 100px auto;
+            font-family: Raleway;
+            padding: 40px;
+            width: 70%;
+            min-width: 300px;
+        }
+        h1 {
+            text-align: center;
+        }
+        input {
+            padding: 10px;
+            width: 100%;
+            font-size: 17px;
+            font-family: Raleway;
+            border: 1px solid #aaaaaa;
+        }
+        /* Mark input boxes that gets an error on validation: */
+        input.invalid {
+            background-color: #ffdddd;
+        }
+        /* Hide all steps by default: */
+        .tab {
+            display: none;
+        }
+        button {
+            background-color: #4CAF50;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 17px;
+            font-family: Raleway;
+            cursor: pointer;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        #prevBtn {
+            background-color: #bbbbbb;
+        }
+        /* Make circles that indicate the steps of the form: */
+        .step {
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbbbbb;
+            border: none;
+            border-radius: 50%;
+            display: inline-block;
+            opacity: 0.5;
+        }
+        .step.active {
+            opacity: 1;
+        }
+        /* Mark the steps that are finished and valid: */
+        .step.finish {
+            background-color: #4CAF50;
+        }
+    </style>
 
-                        '<font size="6" color=#228b22><a><i type="button" onclick="fonction()" class="fa fa-plus-square"></i></a></font>' +
-                        '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
-                        '</td>' +
-                    '</tr>' +
-                '<div id="divPlus"></div>' +
-            </table>
-                '</div>
+
+
+    <!-- Scroll Bars -->
+
+</head>
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand"  href="{{ path('index') }}">Quiz accueil</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li>
+                <span style="color:white;  font-size:40px;cursor:pointer" onclick="openNav()">&#9776;</span>
+            </li>
+
+            <li><a href="{{ path('index') }}">Home</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Quiz <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+
+                    {% if listquiz|length == 0 %}
+                        <li style="width: 350px;" class="menu-level-1">Liste Vide</li>
+                    {% else %}
+                        {% for quiz in listquiz %}
+                            {% if quiz.terminer == 1 %}
+                                {% if quiz.ouvrireQuiz <= date() and date() < quiz.fermerQuiz %}
+                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id }) }}" onclick="MyFunction()">{{ quiz.titre }}</a></li>
+
+                                {% endif %}
+                                {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}
+                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id }) }}" >{{ quiz.titre }}</a></li>
+                                {% endif %}
+
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </li>
+            <li><a href="#">Page 2</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
     </div>
+</nav>
+
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="#">About</a>
+    <a href="#">Services</a>
+    <a href="#">Clients</a>
+    <a href="#">Contact</a>
 </div>
+
+
+
+<div style="background-color: ">
+
+
+
+    <form id="regForm"  action="{{ path('quizpublic', {'quiz':quiz.id}) }}" method="post" >
+
+        <input value="{{ quiz.timequiz }}" hidden id="timequiz">
+        <center>
+            <h1>  <font size="" color="{{ quiz.colorTitre }}">
+                    Titre de quiz
+                    {% if quiz.gras and quiz.italique %}
+                        <b><i>  "{{ quiz.titre }}"</i></b>
+                    {% else %}
+                        {% if quiz.gras %}
+                            <b> "{{ quiz.titre }}"</b>
+                        {% else %}
+                            {% if quiz.italique %}
+                                <i> "{{ quiz.titre }}"</i>
+                            {% else %}
+                                "{{ quiz.titre }}"
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </font>
+                <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
+
+            </h1>
+        </center>
+        <p>{{ quiz.description }}.</p>
+
+
+        {% set ii=0 %}
+
+        {% for par in listparticipantquiz %}
+            {% if par.user == userconct and par.quiz == quiz%}
+                {% set ii=ii+1 %}
+            {% endif %}
+
+        {% endfor %}
+        {{ ii }} /  {{ quiz.nbTentative }}<br>
+
+
+        {% if quiz.tempsDispo == 1 %}
+
+            Temps disponible pour passer le quiz est :<font color="blue"><b> {{ quiz.timequiz }} minutes   </b></font><br>
+        {% else %}
+            {% if quiz.tempsDispo == 0   %}
+                Temps disponible pour passer le quiz est :<font color="blue"><b> 0 minute   </b></font><br>
+
+            {% endif %}
+        {% endif %}
+
+
+
+        <script>
+            var t = document.getElementById("timequiz");
+            var SessionTime=(t.value * 100)*10*60;
+            var tickDuration=1000;
+
+            var myInterval=setInterval(function(){
+                SessionTime=SessionTime-tickDuration;
+                var diff=Date.now()-Date.now(),ns=(((SessionTime-diff)/1000)>>0),m=(ns/60)>>0,s=ns-m*60;
+                $('#counter_session').text("Le tempts disponible est "+ m+':'+((''+s).length>1?'':'0')+s+  ' minutes' );
+
+            },1000);
+            var myTimeOut=setTimeout(SessionExpireEvent,SessionTime);
+            $(document).ajaxSend(function () {
+                clearTimeout(myTimeOut);
+                SessionTime=1000*10*60;
+                myTimeOut=setTimeout(SessionExpireEvent,SessionTime);
+            });
+
+            function SessionExpireEvent()
+            { clearInterval(myInterval);
+                window.location.pathname = 'index' ;
+            }
+        </script>
+
+
+        {% if ii == quiz.nbTentative  %}
+            <center>
+
+                Vos ete terminé le nombre de tentatives      <br>
+                <a class="btn btn-success" href="{{ path('index') }}"> Back </a>
+            </center>
+
+
+        {% endif %}
+
+
+
+
+    </form>
+
+</div>
+</div>
+
+
+
+</div>
+
+<script>
+
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+        document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+        document.body.style.backgroundColor = "white";
+    }
+
+    var currentTab = 0;
+    showTab(currentTab);
+
+    function showTab(n) {
+        var x = document.getElementsByClassName("tab");
+        x[n].style.display = "block";
+        if (n == 0) {
+            document.getElementById("prevBtn").style.display = "none";
+        } else {
+            document.getElementById("prevBtn").style.display = "inline";
+        }
+        if (n == (x.length - 1)) {
+            document.getElementById("nextBtn").innerHTML = "Submit";
+
+        } else {
+            document.getElementById("nextBtn").innerHTML = "Next";
+        }
+        fixStepIndicator(n)
+    }
+
+    function nextPrev(n) {
+        var x = document.getElementsByClassName("tab");
+        if (n == 1 && !validateForm())
+            return false;
+        x[currentTab].style.display = "none";
+        currentTab = currentTab + n;
+        if (currentTab >= x.length) {
+            alert('Are you sur !!');
+            document.getElementById("regForm").submit();
+            // return false;
+        }
+        showTab(currentTab);
+    }
+
+    function validateForm() {
+        var x, y, i, valid = true;
+        x = document.getElementsByClassName("tab");
+        y = x[currentTab].getElementsByTagName("input");
+
+        for (i = 0; i < y.length; i++) {
+            if (y[i].value == "") {
+                y[i].className += " invalid";
+                valid = false;
+            }
+        }
+        if (valid) {
+            if(this.nb.value !=  this.vv.length  && this.vv.value.length >  this.nb.value ) {
+                alert('il faut entre une réponse avec la longueur inférieure à '+this.nb.value  );
+                this.vv.focus();
+                return false;
+            }
+
+            document.getElementsByClassName("step")[currentTab].className += " finish";
+        }
+        return valid;
+    }
+
+    function fixStepIndicator(n) {
+        var i, x = document.getElementsByClassName("step");
+        for (i = 0; i < x.length; i++) {
+            x[i].className = x[i].className.replace(" active", "");
+        }
+        x[n].className += " active";
+    }
+
+    function showHint(str) {
+        console.log(str);
+        if (str.length == 0) {
+            document.getElementById("txtHint").innerHTML = "";
+            console.log("vide");
+            return;
+        }
+        else{
+            if(this.nb.value !=  this.vv.length  && this.vv.value.length >  this.nb.value ) {
+                document.getElementById("txtHint").innerHTML = "<label><font color=red> Il faut entre une réponse avec la longueur inférieure à "+this.nb.value+"</font></label>" ;
+                console.log("non");
+                return false;
+            }else {
+                document.getElementById("txtHint").innerHTML = "<label><font color=green>La longueur de réponse est valide</font></label>";
+                console.log("oui");
+            }
+        }
+    }
+
+    function showHintnumber(str) {
+        console.log(str);
+        if (str.length == 0) {
+            document.getElementById("txtHintn").innerHTML = "";
+            console.log("vide");
+            return;
+        }
+
+    }
+</script>
+<br><br>
+</body>
+</html>

@@ -12,7 +12,14 @@ use App\Entity\Quiz;
 use App\Entity\User;
 use App\Repository\ParticipantQuizRepository;
 use App\Repository\QuizRepository;
+use FOS\UserBundle\Event\FilterUserResponseEvent;
+use FOS\UserBundle\Event\FormEvent;
+use FOS\UserBundle\Event\GetResponseUserEvent;
+use FOS\UserBundle\FOSUserEvents;
+use FOS\UserBundle\Model\UserInterface;
 use http\Env\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -64,6 +71,7 @@ class IndexController extends Controller
      */
     public function quizpublic( Quiz $quiz, QuizRepository $quizRepository,ParticipantQuizRepository $participantQuizRepository , \Symfony\Component\HttpFoundation\Request $request)
     {
+
         $entityManager = $this->getDoctrine()->getManager();
 
         $listquiz= $quizRepository->findAll();
@@ -110,7 +118,8 @@ class IndexController extends Controller
             'quiz'=> $quiz,
             'listquiz'=> $listquiz,
             'userconct' => $this->getUser(),
-            'listparticipantquiz' => $listparticipantquiz
+            'listparticipantquiz' => $listparticipantquiz,
+
 
 
         ]);
@@ -121,12 +130,19 @@ class IndexController extends Controller
 
 
     /**
-     * @Route("/test/{quiz}", name="test", methods={"GET" , "POST"})
+     * @Route("/test", name="test", methods={"GET" , "POST"})
      */
-    public function test( Quiz $quiz)
+    public function test(QuizRepository $quizRepository,ParticipantQuizRepository $participantQuizRepository)
     {
-        return $this->render('front_end/test.html.twig', [
-            'quiz' => $quiz,
+        $listquiz= $quizRepository->findAll();
+
+        $listparticipantquiz= $participantQuizRepository->findAll();
+
+        return $this->render('front_end/test.html.twig',[
+
+            'listquiz'=> $listquiz,
+            'userconct' => $this->getUser(),
+            'listparticipantquiz' => $listparticipantquiz
 
         ]);
     }
