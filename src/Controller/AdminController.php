@@ -55,8 +55,7 @@ class AdminController extends EasyAdminController
      */
     public function finduser()
     {
-        dump($this->getUser()->getId());
-        exit;
+
         return $this->getUser()->getId();
     }
 
@@ -358,7 +357,7 @@ class AdminController extends EasyAdminController
 
             $page = new Page();
             $page->setQuiz($quiz);
-            $page->setBgColor('');
+            $page->setBgColor('	#FFFFFF	');
             $page->setColorTitrePage('');
             $page->setTitrePage('');
             $ordre = $pageRepository->getMaxOrdre($quiz->getId());
@@ -559,9 +558,6 @@ class AdminController extends EasyAdminController
         if($quiz->getUser())
             $qui->setUser($quiz->getUser());
 
-
-
-
         $listquiz=$quizRepository->findAll();
 
         if($quiz->getTitre())
@@ -713,9 +709,9 @@ class AdminController extends EasyAdminController
 
             $page = new Page();
             $page->setQuiz($quiz);
-            $page->setBgColor('');
+            $page->setBgColor('	#FFFFFF	');
             $page->setColorTitrePage('');
-            $page->setTitrePage('');
+            $page->setTitrePage('Vide');
             $page->setOrdre(1);
 
             $entityManager->persist($page);
@@ -1132,9 +1128,9 @@ class AdminController extends EasyAdminController
         if($quiz->getNbPage() > count($quiz->getPage())){
             $page = new Page();
             $page->setQuiz($quiz);
-            $page->setBgColor('');
+            $page->setBgColor('	#FFFFFF	');
             $page->setColorTitrePage('');
-            $page->setTitrePage('');
+            $page->setTitrePage('Vide');
             $ordre = $pageRepository->getMaxOrdre($quiz->getId());
             $page->setOrdre(($ordre[0]['maxOrdre'])+1);
 
@@ -1145,8 +1141,6 @@ class AdminController extends EasyAdminController
         return new JsonResponse(true);
 
     }
-
-
 
 
     /**

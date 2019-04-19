@@ -23,6 +23,34 @@ class Question
 
 
 
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ReponseParticipant", mappedBy="id_question", cascade={"persist","remove"})
+     */
+    private $rep;
+
+    public function __constructa()
+    {
+        $this->rep = new ArrayCollection();
+    }
+    /**
+     * @return Collection|ReponseParticipant[]
+     */
+    public function getREp(): Collection
+    {
+        return $this->rep;
+    }
+
+
+
+
+
+
+
+
+
+
     /**
      * One product has many features. This is the inverse side.
      * @ORM\OneToMany(targetEntity="Reponse", mappedBy="question", cascade={"persist","remove"})

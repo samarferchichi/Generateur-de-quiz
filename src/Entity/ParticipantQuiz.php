@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -15,6 +17,51 @@ class ParticipantQuiz
      * @ORM\Column(type="integer")
      */
     private $id;
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ReponseParticipant", mappedBy="participantquiz", cascade={"persist","remove"})
+     */
+    private $reponseparticipant;
+
+
+
+    public function __construct()
+    {
+        $this->reponseparticipant = new ArrayCollection();
+    }
+    /**
+     * @return Collection|ReponseParticipant[]
+     */
+    public function getreponseparticipant(): Collection
+    {
+        return $this->reponseparticipant;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**

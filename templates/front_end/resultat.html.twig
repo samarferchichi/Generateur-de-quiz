@@ -131,6 +131,8 @@
         .step.finish {
             background-color: #4CAF50;
         }
+
+
         .vl {
             border-bottom: 1px solid green;
             height: 1px;
@@ -143,7 +145,7 @@
 
 </head>
 <head>
-    <title>Quiz</title>
+    <title>Resultat de quiz</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -255,12 +257,15 @@
 
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
+
+
+
     <center>
-      <font color="#7fffd4" >
-         <h2>
-             About
-         </h2>
-      </font>
+        <font color="#7fffd4" >
+            <h2>
+                About
+            </h2>
+        </font>
     </center>
 
     <div class="panel panel-success">
@@ -268,7 +273,7 @@
         <div class="card bg-info text-white">
             <div class="card-body">
 
- Profile
+                Profile
 
             </div>
         </div>
@@ -287,12 +292,12 @@
 
                         </div>
                         <a><button onclick="fonctionmodifier()" class="btn btn-success">Modifier profile</button></a>
-                            <script>
-                                function fonctionmodifier() {
-                                    $('#modifier').html('uuuuuuuuuuuu' );
+                        <script>
+                            function fonctionmodifier() {
+                                $('#modifier').html('uuuuuuuuuuuu' );
 
-                                }
-                            </script>
+                            }
+                        </script>
                         <div id="modifier"><font color="aqua">
                                 ddsssssssssssssss
                             </font> </div>
@@ -315,14 +320,15 @@
 
 <div style="background-color: ">
 
+    {% set res=0 %}
 
+    <form id="regForm" method="post" >
 
-    <form id="regForm"  action="{{ path('quizpublic', {'quiz':quiz.id}) }}" method="post" >
-
+        <center><div style="background-color: #2a85a0"> Resultat est: {{ res }}</div> </center>
         <input value="{{ quiz.timequiz }}" hidden id="timequiz">
         <center>
             <h1>  <font size="" color="{{ quiz.colorTitre }}">
-                    Titre de quiz
+                 Correction de quiz
                     {% if quiz.gras and quiz.italique %}
                         <b><i>  "{{ quiz.titre }}"</i></b>
                     {% else %}
@@ -344,281 +350,219 @@
         <p>{{ quiz.description }}.</p>
 
 
-        {% set ii=0 %}
 
-        {% for par in listparticipantquiz %}
-            {% if par.user == userconct and par.quiz == quiz%}
-                {% set ii=ii+1 %}
-            {% endif %}
-
-        {% endfor %}
-        {{ ii }} /  {{ quiz.nbTentative }}<br>
-
-
-        {% if quiz.tempsDispo == 1 %}
-
-        Temps disponible pour passer le quiz est :<font color="blue"><b> {{ quiz.timequiz }} minutes   </b></font><br>
-        {% else %}
-        {% if quiz.tempsDispo == 0   %}
-            Temps disponible pour passer le quiz est :<font color="blue"><b> Illimiter   </b></font><br>
-        {% else %}
-            <div><span id="counter_session"></span></div>
-            <script>
-                var t = document.getElementById("timequiz");
-                var quiz = document.getElementById("quiz");
-                var SessionTime=(t.value * 100)*10*60;
-                var tickDuration=1000;
-
-                var myInterval=setInterval(function(){
-                    SessionTime=SessionTime-tickDuration;
-                    var diff=Date.now()-Date.now(),ns=(((SessionTime-diff)/1000)>>0),m=(ns/60)>>0,s=ns-m*60;
-                    $('#counter_session').text("Le tempts disponible est "+ m+':'+((''+s).length>1?'':'0')+s+  ' minutes' );
-
-                },1000);
-                var myTimeOut=setTimeout(SessionExpireEvent,SessionTime);
-                $(document).ajaxSend(function () {
-                    clearTimeout(myTimeOut);
-                    SessionTime=1000*10*60;
-                    myTimeOut=setTimeout(SessionExpireEvent,SessionTime);
-                });
-
-                function SessionExpireEvent()
-                { clearInterval(myInterval);
-                    window.location.pathname = '/index/test' ;
-                }
-            </script>
-        {% endif %}
-        {% endif %}
-
-<input type="number" hidden id="quiz">
+        <input type="number" hidden id="quiz">
 
 
 
 
-        {% if ii == quiz.nbTentative  %}
- <center>
+            {% for key,  i in quiz.page %}
 
-     Vos ete terminé le nombre de tentatives      <br>
-     <a class="btn btn-success" href="{{ path('index') }}"> Back </a>
- </center>
-    {% else %}
+                <div  class="tab" style="background-color: {{ i.bgColor }}; padding: 20px">
 
-        {% for key,  i in quiz.page %}
+                    {% if key ==0  %}
+                        {{ quiz.entete }}
+                    {% endif %}
 
-            <div  class="tab" style="background-color: {{ i.bgColor }}; padding: 20px">
-
-                {% if key ==0  %}
-                    {{ quiz.entete }}
-                {% endif %}
-
-                <h2>page : {{ key + 1 }}</h2>
-                <h3>
-                    {% if i.titrePage == "Vide" %}
+                    <h2>page : {{ key + 1 }}</h2>
+                    <h3>
+                        {% if i.titrePage == "Vide" %}
                         {% else %}
-                    <font color="{{ i.colorTitrePage }} ">
-                        {{ i.titrePage   }}
-                    </font>
+                            <font color="{{ i.colorTitrePage }} ">
+                                {{ i.titrePage   }}
+                            </font>
+                        {% endif %}
+
+                    </h3>
+                    {% if i.question|length == 0  %}
+                        <h2>Cette page est vide !!</h2>
                     {% endif %}
-                </h3>
-                {% if i.question|length == 0  %}
-                    <h2>Cette page est vide !!</h2>
-                {% endif %}
-                {% for key2, question in i.question  %}
-                    <div class="vl">
-                    </div>
-                    {% if question.typeQuestion == 'Réponse courte'  %}
-
-                        {% for para in question.parametre %}
-                            {% if para.question == question %}
-                                {% if para.formText == 'texte' %}
-                                    <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                                    {{ question.textQuestion }}<br>
-                                    {{ question.descriptionQuestion }}
-                                    <label style="padding-left: 77%"><font size="2px">Nombre des caractères maximum sont  {{ para.nbCaractere }}</font></label>
-
-                                    <div class="row">
-                                        <!--  onkeyup="showHint(this.value)" -->
-                                        <input  value="{{ question }}" hidden name="nbtext[]">
-
-                                        <div class="col-sm-11"> <input name="typetext[]" id="vv" class="form-control" oninput="this.className = ''"  onchange="this.value = this.value.replace(/^\s+|\s+$/g, ''); valid_name.checked = this.value;" > </div>
-                                        <div class="col-sm-1"><input type="checkbox" disabled name="valid_name"></div>
-                                    </div>
-                                    <p><span id="txtHint"></span></p>
-
-                                    <input id="nb" class="hidden" type="number" value="{{ para.nbCaractere }}">
-
-
-                                {% endif %}
-
-                                {% if para.formText == 'date' %}
-                                    <br>
-                                    <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                                    {{ question.textQuestion }}<br>
-                                    {{ question.descriptionQuestion }}<br>
-
-                                    <input type="date" oninput="this.className = ''"   >
-
-
-                                    {% if question.infoBulle != '' %}
-                                        <br>
-                                        <a href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
-                                    {% endif %}
-                                {% endif %}
-
-
-                                {% if para.formText == 'number' %}
-                                    <br>
-                                    <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                                    {{ question.textQuestion }}<br>
-                                    {{ question.descriptionQuestion }}<br>
-                                    <label style="padding-left: 77%">Nombre des chiffres maximum sont  {{ para.nbChiffre }}</label>
-
-                                    <input id="cc" onkeyup="showHintnumber(this.value)" type="number" oninput="this.className = ''"   >
-                                    <input id="nbch" class="hidden" type="number" value="{{ para.nbChiffre }}">
-
-                                    <p><span id="txtHintn"></span></p>
-
-                                    {% if question.infoBulle != '' %}
-                                        <br>
-                                        <a href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
-                                    {% endif %}
-                                {% endif %}
-
-
-                            {% endif %}
-                        {% endfor %}
-
-
-                    {% endif %}
-
-
-
-                    {% if question.typeQuestion == 'Vrai/faux' %}
-                        <br><br>
-                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                        {{ question.textQuestion }}<br>
-                        {{ question.descriptionQuestion }}<br>
-                        {% for p in question.reponse %}
-                            {% if p.question == question %}
-
-
-                                {{ p.reponseValide }}
-                                <select style="width: 150px;" class="form-control">
-                                    <option>
-                                        Vrai
-                                    </option>
-                                    <option>
-                                        Faux
-                                    </option>
-                                </select>
-
-                            {% endif %}
-                        {% endfor %}
-
-                    {% endif %}
-
-
-                    {% if question.typeQuestion =='Liste déroulante' %}
-                        <br><br>
-                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                        {{ question.textQuestion }}
+                    {% for key2, question in i.question  %}
+                        <div class="vl">
+                        </div>
                         <br>
-                        {{ question.descriptionQuestion }}
-                        <br>
-                        <select style="width: 350px;" class="form-control">
-                            {% for i in question.reponse %}
-                                {% if i.question == question %}
+                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
+                        {% if question.typeQuestion == 'Réponse courte'  %}
+                            {% for para in question.parametre %}
+                                {% if para.question == question %}
+                                    {% if para.formText == 'texte' %}
 
-                                    <option>
-                                        {{ i.reponseValide }}
-                                    </option>
+                                        {{ question.textQuestion }}<br>
+                                        {{ question.descriptionQuestion }}
+
+
+                                        {% for p in reponseParticipant %}
+                                            {% if p.idQuestion == question and p.tentative == max.tentative  %}
+                                                    {% for q in question.reponse %}
+                                                      {% if q.reponseValide == p.reponse  %}<br>
+                                                        <label><font color="green">Reponse correct</font></label>
+                                                          {% set res=res+1 %}
+                                                          {% else %}<br>
+                                                              <label><font color="red">Reponse incorrect !! </font></label>
+
+                                                      {% endif %}
+
+                                                    {% endfor %}
+
+
+
+                                            {% endif %}
+                                        {% endfor %}
+
+                                    {% endif %}
+
+                                    {% if para.formText == 'date' %}
+
+                                        {{ question.textQuestion }}<br>
+                                        {{ question.descriptionQuestion }}<br>
+
+                                        <input type="date" oninput="this.className = ''"   >
+
+
+
+                                    {% endif %}
+
+
+                                    {% if para.formText == 'number' %}
+                                        <br>
+                                        {{ question.textQuestion }}<br>
+                                        {{ question.descriptionQuestion }}<br>
+                                        <label style="padding-left: 77%">Nombre des chiffres maximum sont  {{ para.nbChiffre }}</label>
+
+                                        <input id="cc" onkeyup="showHintnumber(this.value)" type="number" oninput="this.className = ''"   >
+                                        <input id="nbch" class="hidden" type="number" value="{{ para.nbChiffre }}">
+
+                                        <p><span id="txtHintn"></span></p>
+
+
+                                    {% endif %}
+
 
                                 {% endif %}
                             {% endfor %}
-                        </select>
+
+
+                        {% endif %}
+
+
+
+                        {% if question.typeQuestion == 'Vrai/faux' %}
+                            <br><br>
+                            {{ question.textQuestion }}<br>
+                            {{ question.descriptionQuestion }}<br>
+                            {% for p in question.reponse %}
+                                {% if p.question == question %}
+
+
+                                    {{ p.reponseValide }}
+                                    <select style="width: 150px;" class="form-control">
+                                        <option>
+                                            Vrai
+                                        </option>
+                                        <option>
+                                            Faux
+                                        </option>
+                                    </select>
+
+                                {% endif %}
+                            {% endfor %}
+
+                        {% endif %}
+
+
+                        {% if question.typeQuestion =='Liste déroulante' %}
+                            <br><br>
+                            {{ question.textQuestion }}
+                            <br>
+                            {{ question.descriptionQuestion }}
+                            <br>
+                            <select style="width: 350px;" class="form-control">
+                                {% for i in question.reponse %}
+                                    {% if i.question == question %}
+
+                                        <option>
+                                            {{ i.reponseValide }}
+                                        </option>
+
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        {% endif %}
+
+
+
+                        {% if question.typeQuestion == 'Case à cocher' %}
+                            <br><br>
+                            {{ question.textQuestion }}
+                            <br>
+                            {{ question.descriptionQuestion }}
+
+                            {% for p in question.reponse %}
+                                {% if p.question == question %}
+                                    <br>
+                                    {{ p.reponseValide }}
+
+                                    <input  type="checkbox">
+
+
+
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+
+
+
+                        {% if question.typeQuestion =='Calculée' %}
+                            <br>
+                            {{ question.textQuestion }}
+                            <br>
+                            {{ question.descriptionQuestion }}<br>
+
+                            {% for p in question.reponse %}
+                                {% if p.question == question %}
+                                    {{ p.descriptionformule }}<br>
+                                    Formule:<br>
+                                    <input  class="form-control" type="text">
+                                    Resultat:
+                                    <input class="form-control" type="text">
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+
+
+
+                    {% endfor %}
+
+                    {% if key == quiz.page|length %}
+                        {{ quiz.pied }}
                     {% endif %}
 
-
-
-                    {% if question.typeQuestion == 'Case à cocher' %}
-                        <br><br>
-                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                        {{ question.textQuestion }}
-                        <br>
-                        {{ question.descriptionQuestion }}
-
-                        {% for p in question.reponse %}
-                            {% if p.question == question %}
-                                <br>
-                                {{ p.reponseValide }}
-
-                                <input  type="checkbox">
-
-
-
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-
-
-
-                    {% if question.typeQuestion =='Calculée' %}
-                        <br>
-                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                        {{ question.textQuestion }}
-                        <br>
-                        {{ question.descriptionQuestion }}<br>
-
-                        {% for p in question.reponse %}
-                            {% if p.question == question %}
-                                {{ p.descriptionformule }}<br>
-                                Formule:<br>
-                                <input  class="form-control" type="text">
-                                Resultat:
-                                <input class="form-control" type="text">
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-
-
-                    {% if question.infoBulle != '' %}
-
-                        <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
-                    {% endif %}
-
-                {% endfor %}
-
-                {% if key == quiz.page|length %}
-                    {{ quiz.pied }}
-                {% endif %}
-
-            </div>
+                </div>
 
 
 
 
-        {% endfor %}
-
-        <div style="overflow:auto;">
-            <div style="float:right;">
-                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-            </div>
-        </div>
-
-
-        <div style="text-align:center;margin-top:40px;">
-            {% for  i in quiz.page %}
-                <span class="step"></span>
             {% endfor %}
-        </div>
+
+            <div style="overflow:auto;">
+                <div style="float:right;">
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                </div>
+            </div>
 
 
-{% endif %}
+            <div style="text-align:center;margin-top:40px;">
+                {% for  i in quiz.page %}
+                    <span class="step"></span>
+                {% endfor %}
+            </div>
 
 
 
+        <a type="button">
 
+        </a>
     </form>
 
 </div>
@@ -654,7 +598,7 @@
             document.getElementById("prevBtn").style.display = "inline";
         }
         if (n == (x.length - 1)) {
-            document.getElementById("nextBtn").innerHTML ='valider';
+            document.getElementById("nextBtn").innerHTML ='Next';
 
         } else {
             document.getElementById("nextBtn").innerHTML = "Next";
@@ -671,7 +615,7 @@
         if (currentTab >= x.length) {
             alert('Are you sur !!');
             document.getElementById("regForm").submit();
-           // return false;
+            // return false;
         }
         showTab(currentTab);
     }
@@ -679,8 +623,9 @@
     function validateForm() {
         var x, y, i, valid = true;
         x = document.getElementsByClassName("tab");
-        y = x[currentTab].getElementsByTagName("input");
 
+        if (valid)
+            document.getElementsByClassName("step")[currentTab].className += " finish";
 
         return valid;
     }
@@ -693,34 +638,8 @@
         x[n].className += " active";
     }
 
-/*    function showHint(str) {
-        console.log(str);
-        if (str.length == 0) {
-            document.getElementById("txtHint").innerHTML = "";
-            console.log("vide");
-            return;
-        }
-        else{
-            if(this.nb.value !=  this.vv.length  && this.vv.value.length >  this.nb.value ) {
-                document.getElementById("txtHint").innerHTML = "<label><font color=red> Il faut entre une réponse avec la longueur inférieure à "+this.nb.value+"</font></label>" ;
-                console.log("non");
-                return false;
-            }else {
-                document.getElementById("txtHint").innerHTML = "<label><font color=green>La longueur de réponse est valide</font></label>";
-                console.log("oui");
-            }
-        }
-    }*/
 
-    function showHintnumber(str) {
-        console.log(str);
-        if (str.length == 0) {
-            document.getElementById("txtHintn").innerHTML = "";
-            console.log("vide");
-            return;
-        }
 
-    }
 </script>
 <br><br>
 </body>
