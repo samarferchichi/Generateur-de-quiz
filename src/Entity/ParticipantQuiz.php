@@ -54,12 +54,26 @@ class ParticipantQuiz
 
 
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $resultat;
 
+    /**
+     * @return mixed
+     */
+    public function getResultat()
+    {
+        return $this->resultat;
+    }
 
-
-
-
-
+    /**
+     * @param mixed $resultat
+     */
+    public function setResultat($resultat): void
+    {
+        $this->resultat = $resultat;
+    }
 
 
 

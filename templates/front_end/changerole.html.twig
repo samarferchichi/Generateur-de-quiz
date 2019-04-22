@@ -212,23 +212,23 @@
 
             </li>
             <li><a href="#">Page 2</a></li>
+            <li>
+                <a href="{{ path('changeAdmin' ) }}" >Tu peut creer maintenant votre quiz </a> <a  href="{{ path('fos_user_security_login') }}">Vasy</a>
 
+            </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
 
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                <li>
-                    <a href="{{ path('changeAdmin' ) }}" >Tu peut creer un quiz</a>
 
-                </li>
-            <li> <a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li> <a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 <li>
                     <div>
-                            <font color="#1e90ff">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} </font> |
+                        <font color="#1e90ff">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} </font> |
 
                     </div>
                 </li>
-                        {% else %}
+            {% else %}
                 <li>
 
                     <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
@@ -236,9 +236,9 @@
                 </li>
 
                 <li>
-                <a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Inscrire</a>
+                    <a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Inscrire</a>
 
-                <ul style="background-color: #d1ecf1" class="dropdown-menu">
+                    <ul style="background-color: #d1ecf1" class="dropdown-menu">
 
                         <li>
                             <a>
@@ -257,23 +257,23 @@
                         </li>
                     </ul>
                 </li>
-                        {% endif %}
+            {% endif %}
 
-                    {% if app.request.hasPreviousSession %}
-                        {% for type, messages in app.session.flashbag.all() %}
-                            {% for message in messages %}
-                                <div class="flash-{{ type }}">
-                                    {{ message }}
-                                </div>
-                            {% endfor %}
-                        {% endfor %}
-                    {% endif %}
+            {% if app.request.hasPreviousSession %}
+                {% for type, messages in app.session.flashbag.all() %}
+                    {% for message in messages %}
+                        <div class="flash-{{ type }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
 
-                    <div>
-                        {% block fos_user_content %}
-                        {% endblock fos_user_content %}
-                    </div>
-            </ul>
+            <div>
+                {% block fos_user_content %}
+                {% endblock fos_user_content %}
+            </div>
+        </ul>
 
 
         </ul>
@@ -290,9 +290,9 @@
 
 <div class="container">
     <div style="padding: 100px">
-       <h1>
-           Welcome
-       </h1>
+        <h1>
+            Welcome
+        </h1>
 
     </div>
 

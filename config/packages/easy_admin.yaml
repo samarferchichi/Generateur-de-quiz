@@ -16,9 +16,13 @@ easy_admin:
 
   entities:
 
-    Question:
-      class: App\Entity\Question
-
+    ParticipantQuiz:
+      class: App\Entity\ParticipantQuiz
+      label: 'Participant'
+      list:
+      show:
+        fields:
+          - { property: 'User', type: 'integer' }
     Quiz:
       class: App\Entity\Quiz
       controller: App\Controller\QuizController
@@ -95,6 +99,7 @@ easy_admin:
           - { entity: 'User', icon: 'user', label: 'Participants'  }
       - { entity: 'Quiz', label: 'Statiqtique', icon: 'fa fa-pie-chart' }
       - { entity: 'Quiz', label: 'Historique', icon: 'history' }
+
     brand_color: '#1FC5F3'
     assets:
       css:

@@ -19,6 +19,21 @@ class ReponseParticipantRepository extends ServiceEntityRepository
         parent::__construct($registry, ReponseParticipant::class);
     }
 
+
+    public function getTentativeMax($quiz)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('MAX(p.ordre) AS maxOrdre')
+            ->innerJoin('p.quiz', 'q')
+            ->where('q.id = ?1')
+            ->setParameter(1, $quiz)
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+
+
+
     // /**
     //  * @return ReponseParticipant[] Returns an array of ReponseParticipant objects
     //  */

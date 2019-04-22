@@ -134,7 +134,7 @@
 
 
         .vl {
-            border-bottom: 1px solid green;
+            border-bottom: 1px solid gray;
             height: 1px;
         }
     </style>
@@ -322,9 +322,8 @@
 
     {% set res=0 %}
 
-    <form id="regForm" method="post" >
+    <form id="regForm" action="{{ path('index') }}" method="post" >
 
-        <center><div style="background-color: #2a85a0"> Resultat est: {{ res }}</div> </center>
         <input value="{{ quiz.timequiz }}" hidden id="timequiz">
         <center>
             <h1>  <font size="" color="{{ quiz.colorTitre }}">
@@ -380,47 +379,92 @@
                     {% for key2, question in i.question  %}
                         <div class="vl">
                         </div>
-                        <br>
+                        <br>                                            {% set nb=0 %}
+
                         <h5><b>Question n°: {{ key2+1 }}</b></h5>
                         {% if question.typeQuestion == 'Réponse courte'  %}
                             {% for para in question.parametre %}
                                 {% if para.question == question %}
+
+
+
                                     {% if para.formText == 'texte' %}
 
                                         {{ question.textQuestion }}<br>
                                         {{ question.descriptionQuestion }}
-
-
+                                        {% for user in listparticipantquiz %}
+                                            {% if user.user == userconct %}
+                                                {% set nb=nb + 1 %}
+                                            {% endif %}
+                                        {% endfor %}
                                         {% for p in reponseParticipant %}
+
                                             {% if p.idQuestion == question and p.tentative == max.tentative  %}
                                                     {% for q in question.reponse %}
-                                                      {% if q.reponseValide == p.reponse  %}<br>
+                                                      {% if q.reponseValide == p.reponse and p.tentative == max.tentative %}<br>
+                                                          {{ p.reponse  }}
                                                         <label><font color="green">Reponse correct</font></label>
                                                           {% set res=res+1 %}
                                                           {% else %}<br>
+
+                                                              {{ p.reponse  }}
+
                                                               <label><font color="red">Reponse incorrect !! </font></label>
 
                                                       {% endif %}
 
                                                     {% endfor %}
 
-
-
                                             {% endif %}
                                         {% endfor %}
 
+
                                     {% endif %}
+
+
+
+
 
                                     {% if para.formText == 'date' %}
 
                                         {{ question.textQuestion }}<br>
-                                        {{ question.descriptionQuestion }}<br>
+                                        {{ question.descriptionQuestion }}
+                                        {% for user in listparticipantquiz %}
+                                            {% if user.user == userconct %}
+                                                {% set nb=nb + 1 %}
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% for p in reponseParticipant %}
 
-                                        <input type="date" oninput="this.className = ''"   >
+                                            {% if p.idQuestion == question and p.tentative == max.tentative  %}
+                                                {% for q in question.reponse %}
 
+                                                    {% if q.reponseValide == p.reponse and p.tentative == max.tentative  %}
+
+                                                        <label><font color="green">Reponse correct</font></label>
+                                                        <p>{{ p.reponse }}</p>
+
+                                                        {% set res=res+1 %}
+                                                    {% else %}<br>
+                                                        <p>{{ p.reponse }}</p>
+
+                                                      <label><font color="red">Reponse incorrect !! </font></label>
+                                                    {% endif %}
+
+                                                {% endfor %}
+
+                                            {% endif %}
+                                        {% endfor %}
 
 
                                     {% endif %}
+
+
+
+
+
+
+
 
 
                                     {% if para.formText == 'number' %}
@@ -543,7 +587,26 @@
 
 
             {% endfor %}
+        {% set o=0 %}
+        {% for q in quiz.page %}
+        {% for p in q.question %}
+            {% set o=o+1 %}
+        {% endfor %}
+        {% endfor %}
 
+        {% if res < o/2 %}
+        <center>
+            <h2><font color="red">   {{ quiz.messageE }}</font></h2>
+        </center>
+      <h1><font color="red"> Votre score est :  {{ res }} / {{ o }} point/s</font></h1>
+{% else %}
+   <center>
+       <h2><font color="#4169e1">   {{ quiz.messageS }}</font></h2>
+   </center>
+
+    <h1><font color="green"> Votre score est :  {{ res }} / {{ o }} point/s</font></h1>
+
+        {% endif %}
             <div style="overflow:auto;">
                 <div style="float:right;">
                     <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
@@ -559,16 +622,11 @@
             </div>
 
 
-
+        <input  hidden value="{{ res }}" type="number" name="res" >
         <a type="button">
 
         </a>
     </form>
-
-</div>
-</div>
-
-
 
 </div>
 
@@ -598,7 +656,7 @@
             document.getElementById("prevBtn").style.display = "inline";
         }
         if (n == (x.length - 1)) {
-            document.getElementById("nextBtn").innerHTML ='Next';
+            document.getElementById("nextBtn").innerHTML ='Retour';
 
         } else {
             document.getElementById("nextBtn").innerHTML = "Next";
@@ -613,7 +671,7 @@
         x[currentTab].style.display = "none";
         currentTab = currentTab + n;
         if (currentTab >= x.length) {
-            alert('Are you sur !!');
+            alert('Votre score serra enregistrer dans votre historique !!');
             document.getElementById("regForm").submit();
             // return false;
         }

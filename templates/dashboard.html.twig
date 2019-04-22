@@ -32,39 +32,52 @@
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <style>
-            .card {
-                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-                max-width: 300px;
-                height: 230px;
-                margin: 10px;
-                text-align: center;
+
+            body {
+                font-family: Arial, Helvetica, sans-serif;
             }
 
-            .title {
+            .flip-card {
+                background-color: transparent;
+                width: 300px;
+                height: 300px;
+                perspective: 1000px;
             }
 
-            button {
-                border: none;
-                outline: 0;
-                display: inline-block;
-                padding: 8px;
-                color: white;
-                background-color: #000;
-                text-align: center;
-                cursor: pointer;
+            .flip-card-inner {
+                position: relative;
                 width: 100%;
-                font-size: 18px;
+                height: 100%;
+                text-align: center;
+                transition: transform 0.6s;
+                transform-style: preserve-3d;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
             }
 
-            a {
-                text-decoration: none;
-                font-size: 18px;
+            .flip-card:hover .flip-card-inner {
+                transform: rotateY(180deg);
+            }
+
+            .flip-card-front, .flip-card-back {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                backface-visibility: hidden;
+            }
+
+            .flip-card-front {
+                background-color: #bbb;
                 color: black;
+                z-index: 2;
             }
 
-            button:hover, a:hover {
-                opacity: 0.7;
+            .flip-card-back {
+                background-color: #2980b9;
+                color: white;
+                transform: rotateY(180deg);
+                z-index: 1;
             }
+
         </style>
     </head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -82,42 +95,72 @@
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
 
-
-    <div class="span9">
+{% set nb=0 %}
+{% set nbquiz=1 %}
+    {% set idquiz = 0 %}
     <h2 style="text-align:center">Welcome</h2>
+    <br>
+    <center>
+            {% if quiz|length != 0 %}
+                <div class="row"><br><br>
 
-    {% if quiz|length != 0 %}
-<center><table>
-        {% for p in quiz %}
-            {% if p.user == user %}
-         <td>
-             <body>
+                {% for p in quiz %}
+
+                    {% if p.user == user %}
+                        <div class="col-sm-3" style="background-color:;">
+                            <div class="flip-card">
+                                <div class="flip-card-inner">
+                                    <div class="flip-card-front">
+                                        <img src="{{ asset('uploads/brochures/' ~ p.brochure) }}" alt="Avatar" style="width:300px;height:300px;">
+                                    </div>
+                                    <div class="flip-card-back">
+
+                                        <h3>{{ p.titre }}</h3>
+                                        <p class="title">
+                                            {% for i in parquiz %}
+                                                {% if i.quiz == p %}
+                                                    {% set idquiz = i.quiz %}
+                                                    {% set nb = nb+1 %}
+                                                {% endif %}
+                                            {% endfor %}
 
 
-             <div class="card">
-                 <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ p.brochure) }}">
-                 <h1>{{ p.titre }}</h1>
-                 <p class="title">100 participant</p>
-                 <p>{{ p.description }}</p>
-                 <div style="margin: 24px 0;">
+                                            {% if idquiz == p %}
+                                                {{ nb }} participant/s
+                                            {% else %}
+                                                {% if nb ==0 %}
+                                                    0 participant
+                                                {% endif %}
 
-                 </div>
-                 <p><button>Voir</button></p>
-             </div>
+                                            {% endif %}
 
-             </body>
-         </td>
+                                            {% set nb=0 %}
+
+                                        </p>
+                                        <p>{{ p.description }}</p>
+                                        <button href="#">Voir</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+
+                        {% set nbquiz=nbquiz+1 %}
+
+
+                    {% endif %}
+
+
+
+                {% endfor %}
+
+                </div>
+
+            {% else %}
+                Aucun quiz exist
             {% endif %}
+    </center>
 
-
-
-    {% endfor %}
-
-    </table></center>
-            </div>
-    {% else %}
-    Aucun quiz exist
-    {% endif %}
 
 
 

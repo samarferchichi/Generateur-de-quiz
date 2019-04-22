@@ -6,18 +6,18 @@ use App\Entity\Page;
 use App\Entity\Parametre;
 use App\Entity\Question;
 use App\Entity\Reponse;
+use App\Entity\User;
 use App\Form\PageType;
 use App\Form\ParametreType;
 use App\Form\QuestionType;
 use App\Repository\PageRepository;
 use App\Repository\ParametreRepository;
+use App\Repository\ParticipantQuizRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\ReponseRepository;
 use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManager;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
-use Ecommerce\EcommerceBundle\Form\RechercheType;
-use http\Client\Curl\User;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -62,17 +62,22 @@ class AdminController extends EasyAdminController
 
 
 
+
     /**
      * @Route("/dashboard", name="admin_dashboard")
      */
-    public function dashboardAction()
+    public function dashboardAction(ParticipantQuizRepository $participantQuizRepository)
     {
+        $parquiz = $participantQuizRepository->findAll();
+
         $em=$this->getDoctrine()->getManager();
         $user = $this->getUser();
 
+
+
             $quiz = $em->getRepository('App:Quiz')->findAll();
 
-        return $this->render('/dashboard.html.twig', array('quiz'=>$quiz, 'user'=>$user));
+        return $this->render('/dashboard.html.twig', array('quiz'=>$quiz, 'user'=>$user, 'parquiz'=>$parquiz));
     }
 
 
@@ -535,7 +540,6 @@ class AdminController extends EasyAdminController
             'form' => $form->createView(),
         ]);
     }
-
 
 
 
@@ -1042,6 +1046,9 @@ class AdminController extends EasyAdminController
 
 
 
+
+
+
     /**
      * @Route("/quiz_index", name="quiz_index", methods={"GET"})
      */
@@ -1096,6 +1103,19 @@ class AdminController extends EasyAdminController
             'page' => $page,
             'form' => $form->createView(),
         ]);
+    }
+
+
+
+    /**
+     * @Route("/dashboard", name="admin", methods={"GET" , "POST"})
+     */
+    public function admin()
+    {
+
+
+
+        return $this->render('admin');
     }
 
 
