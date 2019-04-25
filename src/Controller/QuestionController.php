@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Page;
 use App\Entity\Parametre;
 use App\Entity\Question;
+use App\Entity\Quiz;
 use App\Entity\Reponse;
 use App\Form\ParametreType;
 use App\Form\QuestionType;
@@ -56,6 +57,80 @@ class QuestionController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+    /**
+     * @Route("/question_importe/{question}/{quizactuel}/{pageactuel}", name="question_importe", methods={"GET" , "POST"})
+     */
+    public function question_importe(Request $request, Page $pageactuel, Quiz $quizactuel,ReponseRepository $reponseRepository, Question $question, Reponse $reponse): Response
+    {
+
+        if(count($question->getPage()->getQuestion()) < $question->getPage()->getQuiz()->getNbQuestion()){
+
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $q = new Question();
+            $q->setPage($pageactuel);
+            $q->setTextQuestion($question->getTextQuestion());
+            $q->setTypeQuestion($question->getTypeQuestion());
+            if($question->getDescriptionQuestion())
+                $q->setDescriptionQuestion($question->getDescriptionQuestion());
+            if($question->getInfoBulle())
+                $q->setInfoBulle($question->getInfoBulle());
+
+            $q->setActif($question->getActif());
+
+            $entityManager->persist($q);
+
+
+            foreach ($question->getParametre() as $par){
+                $p = new Parametre();
+
+                if($par->getNbCaractere())
+                    $p->setNbCaractere($par->getNbCaractere());
+                if($par->getNbChiffre())
+                    $p->setNbChiffre($par->getNbChiffre());
+                if($par->getFormText())
+                    $p->setFormText($par->getFormText());
+                $p->setQuestion($q);
+
+                $entityManager->persist($p);
+            }
+
+            foreach ($question->getReponse() as $rep){
+                $r = new Reponse();
+
+                if($rep->getDescriptiondate())
+                    $r->setDescriptiondate($rep->getDescriptiondate());
+                if($rep->getDescriptionformule())
+                    $r->setDescriptionformule($rep->getDescriptionformule());
+                if($rep->getResultatformule())
+                    $r->setResultatformule($rep->getResultatformule());
+                if($rep->getFormule())
+                    $r->setFormule($rep->getFormule());
+                if($rep->getEtatlist())
+                    $r->setEtatlist($rep->getEtatlist());
+                $r->setEtatcaseacocher($rep->getEtatcaseacocher());
+                if($rep->getEtatcaseacocher())
+                    $r->setEtatvf($rep->getEtatvf());
+                if($rep->getReponseValide())
+                    $r->setReponseValide($rep->getReponseValide());
+
+                $r->setQuestion($q);
+
+                $entityManager->persist($r);
+            }
+
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('creerquiz', ['id' => $quizactuel->getId(), 'page' => $pageactuel->getId()]);
+    }
+
+
+
+
+
 
     public function questionDepAction(Request $request,ReponseRepository $reponseRepository, Question $question, Reponse $reponse): Response
     {
@@ -121,10 +196,6 @@ class QuestionController extends AbstractController
 
         return $this->redirectToRoute('creerquiz', ['id' => $question->getPage()->getQuiz()->getId(), 'page' => $question->getPage()->getId()]);
     }
-
-
-
-
 
 
 

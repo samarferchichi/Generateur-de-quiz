@@ -74,12 +74,9 @@ class QuizType extends AbstractType
                         'class' => 'form-control',
                         ],
 
-
                 'required' =>  false,
-                'label' => 'Description de votre quiz',
-                'label_attr' => [
-                    'style' => 'margin-left: 5px;'
-                ],
+                'label' => 'Description de quiz',
+
 
             ])
             ->add('mode_correction',null, [
@@ -99,9 +96,7 @@ class QuizType extends AbstractType
 
             ->add('temps_dispo',null,[
                 'label' => 'Temps disponible',
-                'label_attr' => [
-                    'style' => 'margin-left: 7px;'
-                ],
+
                 'attr' => [
                     'data-toggle' => "toggle",
                     'data-onstyle' => "warning",
@@ -128,6 +123,9 @@ class QuizType extends AbstractType
                     'class' => 'form-control'
                 ],
                 'label' => 'Nombres des questions par pages',
+                'label_attr' => [
+                    'style' => 'margin-left: 16px;'
+                ]
 
             ])
             ->add('nb_page', ChoiceType::class, [
@@ -148,6 +146,9 @@ class QuizType extends AbstractType
                 ],
 
                 'label' => 'Nombres des pages ',
+                'label_attr' => [
+                    'style' => 'margin-left: 5px;'
+                ]
 
             ])
             ->add('melange_question',null,[
@@ -167,15 +168,19 @@ class QuizType extends AbstractType
                 'required' =>false,
                 'attr' => [
                     'class' => 'form-control',
-                    'autocomplete' => "off"
+                    'autocomplete' => "off",
+                    'width' => '295px'
                 ]
             ])
             ->add('fermer_quiz',TextType::class,[
                 'required' =>false,
                 'attr' => [
                     'class' => 'form-control',
-                    'autocomplete' => "off"
-                ]
+                    'autocomplete' => "off",
+                    'width' => '295px'
+
+                ],
+
             ])
 
             ->add('send_mail',null,[
@@ -266,6 +271,9 @@ class QuizType extends AbstractType
                     'class' => 'form-control'
                 ],
                 'label' => 'Nombres des tentatives autorisées',
+                'label_attr' => [
+                    'style' => 'margin-left: 16px;'
+                ]
 
             ])
             ->add('brochure',FileType::class, array('data_class' => null))

@@ -97,6 +97,8 @@
 
 {% set nb=0 %}
 {% set nbquiz=1 %}
+{% set usernb=0 %}
+{% set total=0 %}
     {% set idquiz = 0 %}
     <h2 style="text-align:center">Welcome</h2>
     <br>
@@ -109,30 +111,40 @@
                     {% if p.user == user %}
                         <div class="col-sm-3" style="background-color:;">
                             <div class="flip-card">
+                                <h3>{{ p.titre }}</h3>
+
                                 <div class="flip-card-inner">
+
                                     <div class="flip-card-front">
                                         <img src="{{ asset('uploads/brochures/' ~ p.brochure) }}" alt="Avatar" style="width:300px;height:300px;">
+
                                     </div>
                                     <div class="flip-card-back">
 
                                         <h3>{{ p.titre }}</h3>
                                         <p class="title">
+
+                                            {% if parquiz|length == 0  %}
+                                               0 participant
+
+                                                {% else %}
+
                                             {% for i in parquiz %}
-                                                {% if i.quiz == p %}
-                                                    {% set idquiz = i.quiz %}
-                                                    {% set nb = nb+1 %}
+                                                {% if i.quiz == p and i.user == user %}
+                                                {{ i.user.id }}
+                                                {{ i.quiz.id }}
                                                 {% endif %}
                                             {% endfor %}
 
-
-                                            {% if idquiz == p %}
-                                                {{ nb }} participant/s
-                                            {% else %}
-                                                {% if nb ==0 %}
-                                                    0 participant
-                                                {% endif %}
+                                                    {{  total }}
 
                                             {% endif %}
+
+                                            {% set total=total + nbquiz %}
+
+
+
+
 
                                             {% set nb=0 %}
 
@@ -145,7 +157,6 @@
                             <br>
                         </div>
 
-                        {% set nbquiz=nbquiz+1 %}
 
 
                     {% endif %}

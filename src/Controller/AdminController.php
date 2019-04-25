@@ -73,9 +73,8 @@ class AdminController extends EasyAdminController
         $em=$this->getDoctrine()->getManager();
         $user = $this->getUser();
 
-
-
             $quiz = $em->getRepository('App:Quiz')->findAll();
+
 
         return $this->render('/dashboard.html.twig', array('quiz'=>$quiz, 'user'=>$user, 'parquiz'=>$parquiz));
     }
@@ -91,6 +90,8 @@ class AdminController extends EasyAdminController
      */
     public function creerquizAction(Quiz $quiz, Page $page,QuestionRepository $questionRepository,ParametreRepository $parametreRepository, ReponseRepository $reponseRepository ,QuizRepository $quizRepository, Request $request) : Response
     {
+
+
         $listquestion = $questionRepository->findBy(array('page' => $page->getId()));
 
         $listquiz = $quizRepository->findAll();
@@ -318,7 +319,6 @@ class AdminController extends EasyAdminController
             $this->getDoctrine()->getManager()->flush();
 
 
-
         return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
 
         }
@@ -336,7 +336,8 @@ class AdminController extends EasyAdminController
                     'pos'   => $pos,
                     'listquiz'=>$listquiz,
                     'listparametre'=>$listparametre,
-                    'listreponse'=>$listreponse
+                    'listreponse'=>$listreponse,
+                    'user' => $this->getUser()
                 ]
             );
         }
@@ -364,7 +365,7 @@ class AdminController extends EasyAdminController
             $page->setQuiz($quiz);
             $page->setBgColor('	#FFFFFF	');
             $page->setColorTitrePage('');
-            $page->setTitrePage('');
+            $page->setTitrePage('Vide');
             $ordre = $pageRepository->getMaxOrdre($quiz->getId());
             $page->setOrdre(($ordre[0]['maxOrdre'])+1);
 
@@ -547,7 +548,7 @@ class AdminController extends EasyAdminController
     /**
      * @Route("/quiz/dupliqueAction/{quiz}", name="dupliqueAction", methods={"GET","POST"})
      */
-    public function dupliqueAction(QuizRepository $quizRepository, Quiz $quiz)
+        public function dupliqueAction(QuizRepository $quizRepository, Quiz $quiz)
     {
         $entityManager = $this->getDoctrine()->getManager();
 
@@ -753,6 +754,47 @@ class AdminController extends EasyAdminController
             'quiz' => $quiz,
         ]);
     }
+
+
+
+    /**
+     * @Route("/infoPage/{quiz}/{quizactuel}/{pageactuel}", name="infoPage", methods={"GET", "POST"})
+     */
+    public function infoPage(Quiz $quiz ,Quiz $quizactuel, Page $pageactuel, Request $request)
+    {
+
+        return $this->render('quiz/importePage.html.twig', [
+            'quiz' => $quiz,
+            'quizactuel' => $quizactuel,
+            'pageactuel' => $pageactuel
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/infoQuestion/{page}/{quizactuel}/{pageactuel}", name="infoQuestion", methods={"GET", "POST"})
+     */
+    public function infoQuestion(Page $page,Quiz $quizactuel, Page $pageactuel, QuestionRepository $questionRepository, ParametreRepository $parametreRepository, ReponseRepository $reponseRepository, Request $request)
+    {
+
+        $listquestion = $questionRepository->findBy(array('page' => $page->getId()));
+
+
+
+        return $this->render('quiz/importeQuestion.html.twig', [
+            'page' => $page,
+            'listquestion' => $questionRepository->findAll(),
+            'listparametre' => $parametreRepository->findAll(),
+            'listreponse' => $reponseRepository->findAll(),
+            'question' => $listquestion,
+            'quizactuel' =>$quizactuel->getId(),
+            'pageactuel'=>$pageactuel->getId()
+
+
+        ]);
+    }
+
 
 
 

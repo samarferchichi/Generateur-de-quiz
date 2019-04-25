@@ -1,6 +1,6 @@
 {% extends '/bundles/EasyAdmin/default/layout.html.twig' %}
 
-{% set _content_title = 'Espace d administartion' %}
+{% set _content_title = 'ESPACE ADMINISTRATEUR' %}
 
 {% block page_title -%}
     {{ _content_title }}
@@ -9,15 +9,7 @@
 
 {% block content_header %}
 
-    <div class="form-group row">
-        <div>
-            <div class="aa"></div>
-            <div class="aa"></div>
-            <div class="aa"></div>
-        </div>
-        &nbsp; &nbsp;
         <h1 class="title">{{ _content_title }}</h1>
-    </div>
 {% endblock %}
 {% block main %}
 
@@ -191,7 +183,7 @@
 
     <div class="panel panel-success">
         <div class="card bg-info text-white">
-            <div class="card-body">QUIZ / Configuration et paramétrage de quiz</div>
+            <div class="card-body"><b><h4><font color="white">QUIZ / Configuration quiz </font></h4></b></div>
         </div>
 
         <div class="panel-body">
@@ -200,161 +192,137 @@
             <div class="row">
                 <div class="col">
                     {{ form_start(form, {'method': 'post' }) }}
+                    <br>
                     <div class="row">
                         <div class="col-sm-7">
-                            <table>
 
-                                <tr>
-                                    <td colspan="2">
-                                        <div class="form-group row">
-                                            <div class="col-xs-1">
 
-                                                <div>
-                                                    {{ form_label(form.titre) }}
-                                                </div>
+                                        <div class="row">
+                                             <div class="col-sm-2">
+                                                   {{ form_label(form.titre) }}
+                                                 </div>
+                                                <div class="col-sm-7">
+                                                 {{ form_widget(form.titre) }}
+                                                 </div>
+
+
+
 
                                             </div>
-                                            <div class="col-xs-1">
-                                                <div>
-                                                    {{ form_widget(form.titre) }}
 
-                                                </div>
-
-                                                <small style="color: red">
-                                                    {{ form_errors(form.titre) }}
-                                                </small>
-
-                                            </div>
-                                            <div class="col-xs-1">
-                                                <div>&nbsp;&nbsp;
-                                                    {{ form_label(form.color_titre) }}
-                                                    {{ form_widget(form.color_titre) }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-
-                                    <td colspan="2">
+                                        <small style="color: red">
+                                            {{ form_errors(form.titre) }}
+                                        </small>
+                                          <br>
 
 
-                                        <div class="col-xs-2">
-                                            <div>&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                        <div class="col-xs-4">
+                                            <div>
 
                                                 {{ form_label(form.gras) }}
                                                 {{ form_widget(form.gras) }}
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 {{ form_label(form.italique) }}
                                                 {{ form_widget(form.italique) }}
-                                            </div>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                                {{ form_label(form.color_titre) }}
+                                                {{ form_widget(form.color_titre) }}
                                         </div>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" >
-                                        <div class="form-group col">
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div>
                                             <div class="col-xs-2">
                                                  <label>Choisissez un logo :</label>
                                                       <div>
                                                           {{ form_label(form.image) }}
                                                           {{ form_widget(form.brochure) }}
-                                        </div>
-
-                                                      </div>
+                                                       </div>
                                             </div>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>
-                                            <div class="col-xs-2">
-                                              <label>
-                                                  {{ form_label(form.description) }}
-                                              </label>
-                                            </div>
-                                        </td>
-                                </tr>
-                                    <tr>
-                                    <td>
-
-                                        <div class="col-xs-2">
-
-                                            {{ form_widget(form.description) }}
                                         </div>
-                                        <small style="color: red">
-                                            {{ form_errors(form.description) }}
-                                        </small>
-                                    </td>
-                                    </tr>
-                                <tr>
-                                    <td colspan="1">
-                                        <br>
-                                        &nbsp;   <label style="cursor: default; font-size: 20px; color: #444444">Le type Quiz: modes correction et score :</label>
-
-                                              {{ form_widget(form.mode_correction) }}
-
-                                                <font size="2">
-
-                                                    {{ form_label(form.mode_correction)|nl2br }}
-
-                                                </font>
-
-
-
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td height="10">
-                                        <div>
-
-                                                <div class="col-xs-2">
-
-                                                {{ form_label(form.temps_dispo) }}
-
-
-                                                {{ form_widget(form.temps_dispo) }}
-                                                </div>
-
-
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="form-group row">
+                                          <br>
                                             <div class="col-xs-2">
-                                                {{ form_label(form.nb_question) }}
                                             </div>
-                                            <div class="col-xs-2">
+
+
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    {{ form_label(form.description) }}
+                                </div>
+
+                            </div>
+                            <div class="col-sm-9">
+                                {{ form_widget(form.description) }}
+                            </div>
+
+                            <small style="color: red">
+                                {{ form_errors(form.description) }}
+                            </small>
+
+                            <br>
+                             <label style="cursor: default; font-size: 20px; color: #444444">Le type Quiz: modes correction et score :</label>
+
+                            {{ form_widget(form.mode_correction) }}
+
+                              <font size="2">
+
+                               {{ form_label(form.mode_correction)|nl2br }}
+
+                              </font>
+
+<br>
+
+                            <div class="col-xs-2">
+                              {{ form_label(form.temps_dispo) }}
+                                  {{ form_widget(form.temps_dispo) }}
+                              </div>
+
+                            <br>
+
+
+
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    {{ form_label(form.nb_question) }}
+                                </div>
+                                &nbsp;&nbsp;&nbsp;
+
+                                <div class="col-xs-2">
 
                                                 {{ form_widget(form.nb_question) }}
-                                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <div class="col-xs-2">
+                                </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+                                <div class="col-xs-2">
                                                 {{ form_label(form.nb_page) }}
-                                            </div>
-                                            <div class="col-xs-2">
+                                </div>
+                                &nbsp;&nbsp;&nbsp;
+
+                                <div class="col-xs-2">
                                                 {{ form_widget(form.nb_page) }}
 
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="form-group row">
+                                </div>
+                            </div>
+
+
+
+                                    <br>
+
+                                        <div class="row">
                                             <div class="col-xs-2">
                                                 {{ form_label(form.nb_tentative) }}
-                                            </div>
+                                            </div>&nbsp;&nbsp;
                                             <div class="col-xs-9">
                                                     {{ form_widget(form.nb_tentative) }}
 
                                             </div>
                                         </div>
-                                    </td>
-                                </tr>
-                                    <tr>
-                                        <td>
+                                       <br>
                                             <div>
 
 
@@ -372,51 +340,45 @@
 
                                             </div>
                                             </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
 
-                                            <div class="form-group row">
-                                                <div class="col-xs-2">
 
-                                                {{ form_label(form.ouvrire_quiz) }}
-                                                </div>
-                                                <div class="col-xs-2">
-                                                {{ form_widget(form.ouvrire_quiz) }}
-                                                </div>
 
-                                                    <div class="col-xs-2">
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <br>
+                            <br>
 
-                                                {{ form_label(form.fermer_quiz) }}
-                                                    </div>
-                                                <div class="col-xs-2">
-                                                {{ form_widget(form.fermer_quiz) }}
-                                                </div>
-                                                <script>
-                                                    $('#quiz_ouvrire_quiz').datepicker({
-                                                        uiLibrary: 'bootstrap4',
-                                                        format: 'dd-mm-yyyy',
-                                                    });
-                                                    $('#quiz_fermer_quiz').datepicker({
-                                                        uiLibrary: 'bootstrap4',
-                                                        format: 'dd-mm-yyyy',
-                                                    });
-                                                </script>
-                                            </div>
 
-                                        </td>
 
-                            </table>
 
 
                     </div>
 
                         <div class="col-sm-5">
+                            <div class="">
+                                <div class="form-group col">
+                                    <div class="col-xs-2">
 
-                            <div class="container">
+                                        {{ form_label(form.ouvrire_quiz) }}
 
+                                        {{ form_widget(form.ouvrire_quiz) }}
+                                    </div>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="col-xs-2">
+
+                                        {{ form_label(form.fermer_quiz) }}
+
+                                        {{ form_widget(form.fermer_quiz) }}
+                                    </div>
+                                    <script>
+                                        $('#quiz_ouvrire_quiz').datepicker({
+                                            uiLibrary: 'bootstrap4',
+                                            format: 'dd-mm-yyyy',
+                                        });
+                                        $('#quiz_fermer_quiz').datepicker({
+                                            uiLibrary: 'bootstrap4',
+                                            format: 'dd-mm-yyyy',
+                                        });
+                                    </script>
+                                </div>
                                             <div class="form-group col">
                                                 <div class="col-xs-2">
                                                     {{ form_label(form.entete) }}
@@ -484,13 +446,13 @@
                             </div>
 
                         </div>
-
-                      </div>
-
-
+                    {{ form_widget(form._token) }}
                 </div>
-                {{ form_widget(form._token) }}
-    </div>
+
+
+            </div>
+
+        </div>
     </div>
 
 {% endblock %}

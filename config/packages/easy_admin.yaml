@@ -1,9 +1,6 @@
 easy_admin:
-  site_name: '<font color=#1FC5F3><em style="font-size: 80%;">Quiz Back-Office .</em></font>'
-  formats:
-    datetime:   'd/m/Y à H\hi e'
-    date:       'd/m/Y'
-    time:       'H\hi e'
+  site_name: '<font color=#1FC5F3><em style="font-size: 100%;">Quiz Back-Office .</em></font>'
+
 
   list:
     batch_actions: ['delete']

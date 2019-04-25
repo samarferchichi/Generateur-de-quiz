@@ -381,8 +381,9 @@
                         </div>
                         <br>                                            {% set nb=0 %}
 
-                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                        {% if question.typeQuestion == 'Réponse courte'  %}
+                        {% if question.typeQuestion == 'Réponse courte' and question.actif == 1  %}
+                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
+
                             {% for para in question.parametre %}
                                 {% if para.question == question %}
 
@@ -425,7 +426,7 @@
 
 
 
-                                    {% if para.formText == 'date' %}
+                                    {% if para.formText == 'date'  and question.actif == 1 %}
 
                                         {{ question.textQuestion }}<br>
                                         {{ question.descriptionQuestion }}
@@ -467,7 +468,7 @@
 
 
 
-                                    {% if para.formText == 'number' %}
+                                    {% if para.formText == 'number' and question.actif == 1 %}
                                         <br>
                                         {{ question.textQuestion }}<br>
                                         {{ question.descriptionQuestion }}<br>
@@ -490,8 +491,9 @@
 
 
 
-                        {% if question.typeQuestion == 'Vrai/faux' %}
-                            <br><br>
+                        {% if question.typeQuestion == 'Vrai/faux' and question.actif == 1 %}
+                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
+
                             {{ question.textQuestion }}<br>
                             {{ question.descriptionQuestion }}<br>
                             {% for p in question.reponse %}
@@ -514,8 +516,9 @@
                         {% endif %}
 
 
-                        {% if question.typeQuestion =='Liste déroulante' %}
-                            <br><br>
+                        {% if question.typeQuestion =='Liste déroulante' and question.actif == 1 %}
+                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
+
                             {{ question.textQuestion }}
                             <br>
                             {{ question.descriptionQuestion }}
@@ -535,8 +538,9 @@
 
 
 
-                        {% if question.typeQuestion == 'Case à cocher' %}
-                            <br><br>
+                        {% if question.typeQuestion == 'Case à cocher' and question.actif == 1 %}
+                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
+
                             {{ question.textQuestion }}
                             <br>
                             {{ question.descriptionQuestion }}
@@ -556,8 +560,9 @@
 
 
 
-                        {% if question.typeQuestion =='Calculée' %}
-                            <br>
+                        {% if question.typeQuestion =='Calculée' and question.actif == 1 %}
+                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
+
                             {{ question.textQuestion }}
                             <br>
                             {{ question.descriptionQuestion }}<br>
