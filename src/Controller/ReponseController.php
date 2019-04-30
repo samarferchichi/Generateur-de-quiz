@@ -91,6 +91,46 @@ class ReponseController extends AbstractController
         ]);
     }
 
+
+
+
+    /**
+     * @Route("/{id}/editReponse2", name="reponse_edit2", methods={"GET","POST"})
+     */
+    public function editReponse2(Request $request, Reponse $reponse): Response
+    {
+        $form = $this->createForm(ReponseType::class, $reponse, [
+            'action' => $this->generateUrl('reponse_edit2', ['id' => $reponse->getId()])
+        ]);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            $page = $reponse->getQuestion()->getPage()->getId();
+
+            $quiz= $reponse->getQuestion()->getPage()->getQuiz()->getId();
+
+
+            return $this->redirectToRoute('modifier_page', [
+                'quiz'=>$quiz,
+                'page' => $page
+            ]);
+        }
+
+
+        return $this->render('reponse/edit.html.twig', [
+            'reponse' => $reponse,
+            'question' => $reponse->getQuestion(),
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
+
+
     /**
      * @Route("/{id}", name="reponse_delete", methods={"DELETE"})
      */

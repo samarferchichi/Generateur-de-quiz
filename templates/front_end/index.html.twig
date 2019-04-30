@@ -105,115 +105,618 @@
 
 
             <li><a href="{{ path('index') }}">Accueil</a></li>
-            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Quiz <span class="caret"></span></a>
 
-                <ul class="">
+            <style>
+                .dropdown-submenu{position:relative;}
+                .dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
+                .dropdown-submenu:hover>.dropdown-menu{display:block;}
+                .dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
+                .dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
+                .dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
+            </style>
+
+
+
+            <li class=""><a class="dropdown-toggle" data-toggle="dropdown" href="#">Quiz <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+
                     {% if listquiz|length == 0 %}
                         <li style="width: 350px;" class="menu-level-1">Liste Vide</li>
                     {% else %}
-                        {% for key, quiz in listquiz %}
-                            <div class="modal fade" id="test_{{ key }}" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">
+                        <ul class="dropdown-submenu"><a>Education</a>
+                            {% set nb =0 %}
 
-                                                {% set i=0 %}
-                                                {% for par in listparticipantquiz %}
-                                                    {% if par.user == userconct and par.quiz == quiz%}
-                                                        {% set i=i+1 %}
+                            <ul class="dropdown-menu">
+                                    {% for quiz in listquiz %}
+                                        {% if quiz.categorie == "Education" %}
+                                            {% set nb=nb+1 %}
+
+                                            {% for key, quiz in listquiz %}
+                                                <div class="modal fade" id="test_{{ key }}" role="dialog">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">
+
+                                                                    {% set i=0 %}
+                                                                    {% for par in listparticipantquiz %}
+                                                                        {% if par.user == userconct and par.quiz == quiz%}
+                                                                            {% set i=i+1 %}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+
+
+                                                                    Voulez vous vraiment participer au quiz  "<font color="blue"><b>{{ quiz.titre }}  </b></font>" ??<br><br>
+                                                                    {{ quiz.description }}
+
+                                                                </h4>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                                                    {% if i >= quiz.nbTentative %}
+                                                                        vous ne pouvez pas ! vous ete dépasser le nombre maximum de tentatives {{ quiz.nbTentative }}
+                                                                    {% else %}
+
+
+                                                                        {% if quiz.nbTentative < 100 %}
+                                                                            Nombre de tentative maximum est :<font color="blue"><b>{{ quiz.nbTentative }} </b></font><br>
+                                                                            Vous passer <font color="blue"><b>{{ i }}</font></b> tentative !<br>
+
+                                                                        {% else %}
+                                                                            Nombre de ilimiter !<br>
+                                                                        {% endif %}
+
+                                                                        {% if quiz.tempsDispo == 1 %}
+
+                                                                            Temps disponible pour passer le quiz est :<font color="blue"><b> {{ quiz.timequiz }} minutes   </b></font><br>
+                                                                        {% else %}
+                                                                            {% if quiz.tempsDispo == 0   %}
+                                                                                Temps disponible pour passer le quiz est :<font color="blue"><b> illimiter  </b></font><br>
+
+                                                                            {% endif %}
+                                                                        {% endif %}
+
+
+
+                                                                        <center>
+                                                                            <a class="btn btn-success"  href="{{ path('quizpublic' , {'quiz' : quiz.id }) }}" >go</a>
+                                                                        </center>
+                                                                    {% endif %}
+                                                                {% else %}
+                                                                    connecter !!
+                                                                    <li>
+                                                                        <a>
+                                                                            Facebook
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a>
+                                                                            Gmail
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{{ path('fos_user_registration_register') }}">
+                                                                            Register
+                                                                        </a>
+                                                                    </li>
+                                                                {% endif %}
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                {% if quiz.terminer == 1 %}
+                                                    {% if quiz.ouvrireQuiz <= date() and date() < quiz.fermerQuiz %}
+                                                        <li>
+
+                                                            <a data-target="#test_{{ key }}" data-toggle="modal" style="width: 350px;" class="menu-level-1">{{ quiz.titre }}</a>
+
+                                                        </li>
+
                                                     {% endif %}
-                                                {% endfor %}
+                                                    {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}
 
-
-                                                Voulez vous vraiment participer au quiz  "<font color="blue"><b>{{ quiz.titre }}  </b></font>" ??<br><br>
-                                                {{ quiz.description }}
-
-                                            </h4>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <div class="modal-body">
-
-                                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                                {% if i >= quiz.nbTentative %}
-                                                    vous ne pouvez pas ! vous ete dépasser le nombre maximum de tentatives {{ quiz.nbTentative }}
-                                                {% else %}
-
-
-                                                    {% if quiz.nbTentative < 100 %}
-                                                        Nombre de tentative maximum est :<font color="blue"><b>{{ quiz.nbTentative }} </b></font><br>
-                                                        Vous passer <font color="blue"><b>{{ i }}</font></b> tentative !<br>
-
-                                                    {% else %}
-                                                        Nombre de ilimiter !<br>
+                                                        <li style="width: 350px;" class="menu-level-1"><a data-target="#test_{{ key }}  " data-toggle="modal" style="width: 350px;" class="menu-level-1">{{ quiz.titre }}</a></li>
                                                     {% endif %}
 
-                                                    {% if quiz.tempsDispo == 1 %}
-
-                                                        Temps disponible pour passer le quiz est :<font color="blue"><b> {{ quiz.timequiz }} minutes   </b></font><br>
-                                                    {% else %}
-                                                        {% if quiz.tempsDispo == 0   %}
-                                                            Temps disponible pour passer le quiz est :<font color="blue"><b> illimiter  </b></font><br>
-
-                                                        {% endif %}
-                                                    {% endif %}
-
-
-
-                                                    <center>
-                                                        <a class="btn btn-success"  href="{{ path('quizpublic' , {'quiz' : quiz.id }) }}" >go</a>
-                                                    </center>
                                                 {% endif %}
-                                            {% else %}
-                                                connecter !!
-                                                <li>
-                                                    <a>
-                                                        Facebook
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a>
-                                                        Gmail
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ path('fos_user_registration_register') }}">
-                                                        Register
-                                                    </a>
-                                                </li>
+
+
+
+                                            {% endfor %}
+
+                                        {% endif %}
+
+                                {% endfor %}
+                                {% if nb == 0  %}
+                                    <li>
+                                        Liste vide
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </ul>
+
+                        <ul class="dropdown-submenu"><a>Santé</a>
+                            {% set nb =0 %}
+
+                            <ul class="dropdown-menu">
+                                    {% for quiz in listquiz %}
+                                        {% if quiz.categorie == "Santé" %}
+                                            {% set nb=nb+1 %}
+                                            {% for key, quiz in listquiz %}
+                                                <div class="modal fade" id="test_{{ key }}" role="dialog">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">
+
+                                                                    {% set i=0 %}
+                                                                    {% for par in listparticipantquiz %}
+                                                                        {% if par.user == userconct and par.quiz == quiz%}
+                                                                            {% set i=i+1 %}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+
+
+                                                                    Voulez vous vraiment participer au quiz  "<font color="blue"><b>{{ quiz.titre }}  </b></font>" ??<br><br>
+                                                                    {{ quiz.description }}
+
+                                                                </h4>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <div class="modal-body">
+
+                                                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                                                    {% if i >= quiz.nbTentative %}
+                                                                        vous ne pouvez pas ! vous ete dépasser le nombre maximum de tentatives {{ quiz.nbTentative }}
+                                                                    {% else %}
+
+
+                                                                        {% if quiz.nbTentative < 100 %}
+                                                                            Nombre de tentative maximum est :<font color="blue"><b>{{ quiz.nbTentative }} </b></font><br>
+                                                                            Vous passer <font color="blue"><b>{{ i }}</font></b> tentative !<br>
+
+                                                                        {% else %}
+                                                                            Nombre de ilimiter !<br>
+                                                                        {% endif %}
+
+                                                                        {% if quiz.tempsDispo == 1 %}
+
+                                                                            Temps disponible pour passer le quiz est :<font color="blue"><b> {{ quiz.timequiz }} minutes   </b></font><br>
+                                                                        {% else %}
+                                                                            {% if quiz.tempsDispo == 0   %}
+                                                                                Temps disponible pour passer le quiz est :<font color="blue"><b> illimiter  </b></font><br>
+
+                                                                            {% endif %}
+                                                                        {% endif %}
+
+
+
+                                                                        <center>
+                                                                            <a class="btn btn-success"  href="{{ path('quizpublic' , {'quiz' : quiz.id }) }}" >go</a>
+                                                                        </center>
+                                                                    {% endif %}
+                                                                {% else %}
+                                                                    connecter !!
+                                                                    <li>
+                                                                        <a>
+                                                                            Facebook
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a>
+                                                                            Gmail
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a href="{{ path('fos_user_registration_register') }}">
+                                                                            Register
+                                                                        </a>
+                                                                    </li>
+                                                                {% endif %}
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                {% if quiz.terminer == 1 %}
+                                                    {% if quiz.ouvrireQuiz <= date() and date() < quiz.fermerQuiz %}
+                                                        <li>
+
+                                                            <a data-target="#test_{{ key }}" data-toggle="modal" style="width: 450px;" class="menu-level-1">{{ quiz.titre }}</a>
+
+                                                        </li>
+
+                                                    {% endif %}
+                                                    {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}
+
+                                                        <li style="width: 350px;" class="menu-level-1"><a data-target="#test_{{ key }}  " data-toggle="modal" style="width: 450px;" class="menu-level-1">{{ quiz.titre }}</a></li>
+                                                    {% endif %}
+
+                                                {% endif %}
+
+
+
+                                            {% endfor %}
+
+
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                {% if nb == 0  %}
+                                    <li>
+                                        Liste vide
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </ul>
+
+
+                        <ul class="dropdown-submenu"><a>Ressources Humaines</a>
+                            {% set nb =0 %}
+
+                            <ul class="dropdown-menu">
+                                {% for quiz in listquiz %}
+                                    {% if quiz.categorie == "Ressources Humaines" %}
+                                        {% set nb=nb+1 %}
+
+                                        {% for key, quiz in listquiz %}
+                                            <div class="modal fade" id="test_{{ key }}" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">
+
+                                                                {% set i=0 %}
+                                                                {% for par in listparticipantquiz %}
+                                                                    {% if par.user == userconct and par.quiz == quiz%}
+                                                                        {% set i=i+1 %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+
+
+                                                                Voulez vous vraiment participer au quiz  "<font color="blue"><b>{{ quiz.titre }}  </b></font>" ??<br><br>
+                                                                {{ quiz.description }}
+
+                                                            </h4>
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                                                {% if i >= quiz.nbTentative %}
+                                                                    vous ne pouvez pas ! vous ete dépasser le nombre maximum de tentatives {{ quiz.nbTentative }}
+                                                                {% else %}
+
+
+                                                                    {% if quiz.nbTentative < 100 %}
+                                                                        Nombre de tentative maximum est :<font color="blue"><b>{{ quiz.nbTentative }} </b></font><br>
+                                                                        Vous passer <font color="blue"><b>{{ i }}</font></b> tentative !<br>
+
+                                                                    {% else %}
+                                                                        Nombre de ilimiter !<br>
+                                                                    {% endif %}
+
+                                                                    {% if quiz.tempsDispo == 1 %}
+
+                                                                        Temps disponible pour passer le quiz est :<font color="blue"><b> {{ quiz.timequiz }} minutes   </b></font><br>
+                                                                    {% else %}
+                                                                        {% if quiz.tempsDispo == 0   %}
+                                                                            Temps disponible pour passer le quiz est :<font color="blue"><b> illimiter  </b></font><br>
+
+                                                                        {% endif %}
+                                                                    {% endif %}
+
+
+
+                                                                    <center>
+                                                                        <a class="btn btn-success"  href="{{ path('quizpublic' , {'quiz' : quiz.id }) }}" >go</a>
+                                                                    </center>
+                                                                {% endif %}
+                                                            {% else %}
+                                                                connecter !!
+                                                                <li>
+                                                                    <a>
+                                                                        Facebook
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a>
+                                                                        Gmail
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="{{ path('fos_user_registration_register') }}">
+                                                                        Register
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            {% if quiz.terminer == 1 %}
+                                                {% if quiz.ouvrireQuiz <= date() and date() < quiz.fermerQuiz %}
+                                                    <li>
+
+                                                        <a data-target="#test_{{ key }}" data-toggle="modal" style="width: 350px;" class="menu-level-1">{{ quiz.titre }}</a>
+
+                                                    </li>
+
+                                                {% endif %}
+                                                {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}
+
+                                                    <li style="width: 350px;" class="menu-level-1"><a data-target="#test_{{ key }}  " data-toggle="modal" style="width: 350px;" class="menu-level-1">{{ quiz.titre }}</a></li>
+                                                {% endif %}
+
                                             {% endif %}
 
-                                        </div>
-                                    </div>
-                                </div>
 
-                            </div>
-                            {% if quiz.terminer == 1 %}
-                                {% if quiz.ouvrireQuiz <= date() and date() < quiz.fermerQuiz %}
+
+                                        {% endfor %}
+
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                                {% if nb == 0  %}
                                     <li>
-
-                                        <a data-target="#test_{{ key }}" data-toggle="modal" style="width: 350px;" class="menu-level-1">{{ quiz.titre }}</a>
-
+                                        Liste vide
                                     </li>
-
                                 {% endif %}
-                                {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}
+                            </ul>
+                        </ul>
 
-                                    <li style="width: 350px;" class="menu-level-1"><a data-target="#test_{{ key }}  " data-toggle="modal" style="width: 350px;" class="menu-level-1">{{ quiz.titre }}</a></li>
+                        <ul class="dropdown-submenu"><a>Evenementiel</a>
+                            {% set nb =0 %}
+
+                            <ul class="dropdown-menu">
+                                {% for quiz in listquiz %}
+                                    {% if quiz.categorie == "Evenementiel" %}
+                                        {% set nb=nb+1 %}
+
+                                        {% for key, quiz in listquiz %}
+                                            <div class="modal fade" id="test_{{ key }}" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">
+
+                                                                {% set i=0 %}
+                                                                {% for par in listparticipantquiz %}
+                                                                    {% if par.user == userconct and par.quiz == quiz%}
+                                                                        {% set i=i+1 %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+
+
+                                                                Voulez vous vraiment participer au quiz  "<font color="blue"><b>{{ quiz.titre }}  </b></font>" ??<br><br>
+                                                                {{ quiz.description }}
+
+                                                            </h4>
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                                                {% if i >= quiz.nbTentative %}
+                                                                    vous ne pouvez pas ! vous ete dépasser le nombre maximum de tentatives {{ quiz.nbTentative }}
+                                                                {% else %}
+
+
+                                                                    {% if quiz.nbTentative < 100 %}
+                                                                        Nombre de tentative maximum est :<font color="blue"><b>{{ quiz.nbTentative }} </b></font><br>
+                                                                        Vous passer <font color="blue"><b>{{ i }}</font></b> tentative !<br>
+
+                                                                    {% else %}
+                                                                        Nombre de ilimiter !<br>
+                                                                    {% endif %}
+
+                                                                    {% if quiz.tempsDispo == 1 %}
+
+                                                                        Temps disponible pour passer le quiz est :<font color="blue"><b> {{ quiz.timequiz }} minutes   </b></font><br>
+                                                                    {% else %}
+                                                                        {% if quiz.tempsDispo == 0   %}
+                                                                            Temps disponible pour passer le quiz est :<font color="blue"><b> illimiter  </b></font><br>
+
+                                                                        {% endif %}
+                                                                    {% endif %}
+
+
+
+                                                                    <center>
+                                                                        <a class="btn btn-success"  href="{{ path('quizpublic' , {'quiz' : quiz.id }) }}" >go</a>
+                                                                    </center>
+                                                                {% endif %}
+                                                            {% else %}
+                                                                connecter !!
+                                                                <li>
+                                                                    <a>
+                                                                        Facebook
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a>
+                                                                        Gmail
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="{{ path('fos_user_registration_register') }}">
+                                                                        Register
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            {% if quiz.terminer == 1 %}
+                                                {% if quiz.ouvrireQuiz <= date() and date() < quiz.fermerQuiz %}
+                                                    <li>
+
+                                                        <a data-target="#test_{{ key }}" data-toggle="modal" style="width: 350px;" class="menu-level-1">{{ quiz.titre }}</a>
+
+                                                    </li>
+
+                                                {% endif %}
+                                                {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}
+
+                                                    <li style="width: 350px;" class="menu-level-1"><a data-target="#test_{{ key }}  " data-toggle="modal" style="width: 350px;" class="menu-level-1">{{ quiz.titre }}</a></li>
+                                                {% endif %}
+
+                                            {% endif %}
+
+
+
+                                        {% endfor %}
+
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                                {% if nb == 0  %}
+                                    <li>
+                                        Liste vide
+                                    </li>
                                 {% endif %}
+                            </ul>
+                        </ul>
 
-                            {% endif %}
+
+                        <ul class="dropdown-submenu"><a>Autre</a>
+                            {% set nb =0 %}
+
+                            <ul class="dropdown-menu">
+                                {% for quiz in listquiz %}
+                                    {% if quiz.categorie == "Autre" %}
+                                        {% set nb=nb+1 %}
+
+                                        {% for key, quiz in listquiz %}
+                                            <div class="modal fade" id="test_{{ key }}" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">
+
+                                                                {% set i=0 %}
+                                                                {% for par in listparticipantquiz %}
+                                                                    {% if par.user == userconct and par.quiz == quiz%}
+                                                                        {% set i=i+1 %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+
+
+                                                                Voulez vous vraiment participer au quiz  "<font color="blue"><b>{{ quiz.titre }}  </b></font>" ??<br><br>
+                                                                {{ quiz.description }}
+
+                                                            </h4>
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                                                {% if i >= quiz.nbTentative %}
+                                                                    vous ne pouvez pas ! vous ete dépasser le nombre maximum de tentatives {{ quiz.nbTentative }}
+                                                                {% else %}
+
+
+                                                                    {% if quiz.nbTentative < 100 %}
+                                                                        Nombre de tentative maximum est :<font color="blue"><b>{{ quiz.nbTentative }} </b></font><br>
+                                                                        Vous passer <font color="blue"><b>{{ i }}</font></b> tentative !<br>
+
+                                                                    {% else %}
+                                                                        Nombre de ilimiter !<br>
+                                                                    {% endif %}
+
+                                                                    {% if quiz.tempsDispo == 1 %}
+
+                                                                        Temps disponible pour passer le quiz est :<font color="blue"><b> {{ quiz.timequiz }} minutes   </b></font><br>
+                                                                    {% else %}
+                                                                        {% if quiz.tempsDispo == 0   %}
+                                                                            Temps disponible pour passer le quiz est :<font color="blue"><b> illimiter  </b></font><br>
+
+                                                                        {% endif %}
+                                                                    {% endif %}
 
 
 
-                        {% endfor %}
+                                                                    <center>
+                                                                        <a class="btn btn-success"  href="{{ path('quizpublic' , {'quiz' : quiz.id }) }}" >go</a>
+                                                                    </center>
+                                                                {% endif %}
+                                                            {% else %}
+                                                                connecter !!
+                                                                <li>
+                                                                    <a>
+                                                                        Facebook
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a>
+                                                                        Gmail
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="{{ path('fos_user_registration_register') }}">
+                                                                        Register
+                                                                    </a>
+                                                                </li>
+                                                            {% endif %}
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            {% if quiz.terminer == 1 %}
+                                                {% if quiz.ouvrireQuiz <= date() and date() < quiz.fermerQuiz %}
+                                                    <li>
+
+                                                        <a data-target="#test_{{ key }}" data-toggle="modal" style="width: 350px;" class="menu-level-1">{{ quiz.titre }}</a>
+
+                                                    </li>
+
+                                                {% endif %}
+                                                {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}
+
+                                                    <li style="width: 350px;" class="menu-level-1"><a data-target="#test_{{ key }}  " data-toggle="modal" style="width: 350px;" class="menu-level-1">{{ quiz.titre }}</a></li>
+                                                {% endif %}
+
+                                            {% endif %}
+
+
+
+                                        {% endfor %}
+
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                                {% if nb == 0  %}
+                                    <li>
+                                        Liste vide
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </ul>
                     {% endif %}
                 </ul>
-
             </li>
-            <li><a href="#">Page 2</a></li>
-
         </ul>
+
+
         <ul class="nav navbar-nav navbar-right">
 
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}

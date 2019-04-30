@@ -93,6 +93,44 @@ class ParametreController extends AbstractController
         ]);
     }
 
+
+
+    /**
+     * @Route("/{id}/editParametre2", name="parametre_edit2", methods={"GET","POST"})
+     */
+    public function editparametre2(Request $request, Parametre $parametre): Response
+    {
+        $form = $this->createForm(ParametreType::class, $parametre, [
+            'action' => $this->generateUrl('parametre_edit2', ['id' => $parametre->getId()])
+        ]);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            $page = $parametre->getQuestion()->getPage()->getId();
+
+            $quiz= $parametre->getQuestion()->getPage()->getQuiz()->getId();
+
+
+            return $this->redirectToRoute('modifier_page', [
+                'quiz'=>$quiz,
+                'page' => $page
+            ]);
+        }
+
+        return $this->render('parametre/edit.html.twig', [
+            'parametre' => $parametre,
+            'question' => $parametre->getQuestion(),
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+
+
+
     /**
      * @Route("/{id}", name="parametre_delete", methods={"DELETE"})
      */

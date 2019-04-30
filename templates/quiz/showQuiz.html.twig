@@ -8,7 +8,8 @@
                 <div style="background-color: {{ p.bgColor  }}; width: 600px; height: auto;" >
 
                         <div style="">
-                        {% if p.titrePage == null %}
+
+                            {% if p.titrePage == "Vide" %}
                             <center>
                                 <label>
                                     <b>
@@ -22,13 +23,12 @@
                             <center>
                                 <font color="{{ p.colorTitrePage }}">
                                     <b>
-                                      <h2>
-                                          {{ p.titrePage }}
-                                      </h2>
+                                        <h2>
+                                            {{ p.titrePage }}
+                                        </h2>
                                     </b>
                                 </font>
                             </center>
-
                         {% endif %}
                         {% if p.question|length == 0 %}
 

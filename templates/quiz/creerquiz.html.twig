@@ -1,7 +1,7 @@
 {% extends '/bundles/EasyAdmin/default/layout.html.twig' %}
 
 
-{% set _content_title = 'Espace d administartion' %}
+{% set _content_title = 'Espace administrateur' %}
 
 {% block page_title -%}
     {{ _content_title }}
@@ -12,14 +12,11 @@
 
     <div class="form-group row" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
          xmlns="http://www.w3.org/1999/html">
-        <div>
 
-            <div class="aa"></div>
-            <div class="aa"></div>
-            <div class="aa"></div>
-        </div>
         &nbsp; &nbsp;
-    <h1 class="title">{{ _content_title }}</h1>
+
+        <h1 class="title">{{ _content_title }}</h1>
+
     </div>
 {% endblock %}
 {% block main %}
@@ -423,7 +420,7 @@
 
                                                      ' <div  class="row">' +
                                                      '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Description :</font></label></div>' +
-                                                     '    <div class="col-sm-8" style="background-color:;"><textarea  name="desnum[]" type="text" class="form-control"></textarea> </div>' +
+                                                         '    <div class="col-sm-8" style="background-color:;"><textarea  name="desnum[]" type="text" class="form-control"></textarea> </div>' +
                                                      '  </div><br>' +
                                                      '<div class="row"><br>' +
                                                      ' <div class="col-sm-4" style="background-color:;"><label><font size="3"> Reponse correcte n° :</font></label></div>' +
@@ -689,15 +686,17 @@
                                 overflow: scroll;
                                 ">
 
-
-                        &nbsp;&nbsp;
-                                <div class="col-sm-4">
+                            {% if quiz.brochure != "null" %}
+                                <div class="col-sm-1" style="background-color: ">
                                     <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
                                 </div>
-                                <div class="col-sm-6">
+                            {% endif %}
+
+                                <div class="col-sm-9" style="background-color: ">
 
 
                                     {% if quiz.gras == 1 and quiz.italique==1 %}
+                                    <center>
                                         <b>
                                             <i>
 
@@ -705,31 +704,40 @@
                                                     <h1>     {{ quiz.titre }}</h1></font>
                                             </i>
                                         </b>
+                                    </center>
+
                                     {% else %}
                                         {% if  quiz.gras == 1 and quiz.italique==0 %}
+                                    <center>
                                             <b>
                                                 <font color="{{ quiz.colorTitre }}" >
                                                     <h1>     {{ quiz.titre }}</h1></font>
 
                                             </b>
+                                    </center>
                                         {% else %}
                                             {% if  quiz.gras == 0 and quiz.italique==1 %}
+                                    <center>
                                                 <i>
                                                     <font color="{{ quiz.colorTitre }}" >
                                                         <h1>     {{ quiz.titre }}</h1></font>
 
                                                 </i>
+                                    </center>
                                             {% else %}
                                                 {% if  quiz.gras == 0 and quiz.italique== 0 %}
-
+                                    <center>
                                                     <font color="{{ quiz.colorTitre }}" >
                                                <h1>     {{ quiz.titre }}</h1>    </font>
-
+                                    </center>
                                                 {% endif %}
                                             {% endif %}
                                         {% endif %}
                                     {% endif %}
                                 </div>
+
+
+
                                 <div class="col-sm-6" >
                                     <div class="list-group">
                                         {% if pos == 1 %}
@@ -910,7 +918,7 @@
                                                                     {% if r.question == j %}
                                                                         <br>
                                                                         {{ r.descriptiondate }}
-                                                                        <input type="date">
+                                                                        <input type="date" class="form-control">
                                                                     {% endif %}
                                                                 {% endfor %}
                                                             {% endif %}
@@ -958,18 +966,21 @@
                                                                 )) }}
 
                                                                 {% for i in j.parametre %}
+                                                                    {% if i.formText != "date" %}
                                                                     {{ render(controller(
                                                                         'App\\Controller\\ParametreController::editparametre',
                                                                         { 'id': i.id }
                                                                     )) }}
+                                                                    {% endif %}
                                                                 {% endfor %}
-
+                                                                <h1>Edit les reponses </h1>
                                                                 {% for i in j.reponse %}
                                                                     {{ render(controller(
                                                                         'App\\Controller\\ReponseController::editReponse',
                                                                         { 'id': i.id }
                                                                     )) }}
                                                                 {% endfor %}
+
 
                                                             </div>
 

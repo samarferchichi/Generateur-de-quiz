@@ -53,7 +53,7 @@ class User extends BaseUser
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="ParticipantQuiz", mappedBy="quiz")
+     * @ORM\OneToMany(targetEntity="App\Entity\ParticipantQuiz", mappedBy="user", cascade={"persist","remove"})
      */
     private $participantquiz;
 

@@ -276,7 +276,28 @@ class QuizType extends AbstractType
                 ]
 
             ])
-            ->add('brochure',FileType::class, array('data_class' => null))
+            ->add('brochure',FileType::class,[
+                'required' =>  false,
+
+            ])
+
+            ->add('Categorie',ChoiceType::class,[
+                'choices' => [
+                    'Autre' => "Autre",
+                    'Education' => "Education",
+                    'Santé' => "Santé",
+                    'Ressources Humaines' => "Ressources Humaines",
+                    'Evenementiel' => "Evenementiel",
+                   ],
+                'label' => 'Categorie',
+                'attr' => [
+                    'class' => 'form-control',
+                ],
+                'label_attr' => [
+                    'style' => 'margin-left: 16px;'
+                ]
+
+            ])
 
         ;
     }

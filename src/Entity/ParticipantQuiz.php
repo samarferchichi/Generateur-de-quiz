@@ -129,13 +129,13 @@ class ParticipantQuiz
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="participantquiz")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id")
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="Quiz", inversedBy="participantquiz")
-     * @ORM\JoinColumn(name="quiz_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="quiz", referencedColumnName="id")
      */
     private $quiz;
 

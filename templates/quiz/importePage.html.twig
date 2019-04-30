@@ -45,7 +45,7 @@
                             <div id="accordion">
                                 <div id="test">
 
-                                    <a style="padding: 97%" href="{{ path('creerquiz', {'id':quiz.id , 'page':pageactuel.id}) }}"><i class="fa fa-reply"></i></a>
+                                    <a style="padding: 97%" href="{{ path('creerquiz', {'id':quizactuel.id , 'page':pageactuel.id}) }}"><i class="fa fa-reply"></i></a>
                                 {% for page in quiz.page %}
 
                                     <a class="btn btn-light" style="width: 100%" type="button" onclick="myFunctionaa( {{ page.id }} , {{ quizactuel.id }}, {{ pageactuel.id }} )" >
@@ -54,7 +54,6 @@
                                      <h3>Titre de page est vide</h3>
                                      {% else %}
                                          <h3>{{ page.titrePage }}</h3>
-                                         {{ page.id }}
                                      {% endif %}
                                      <div>
 

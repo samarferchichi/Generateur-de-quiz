@@ -31,9 +31,9 @@
                     <div class="modal-dialog modal-xl">
 
                         <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">{{ quiz.titre }}</h4>
+                        <div class="modal-content" style="background-color: ">
+                            <div class="modal-header" style="background-color: #7aba7b">
+                                <h2 class="modal-title">{{ quiz.titre }}</h2>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body" style=" overflow: scroll;">
@@ -47,54 +47,52 @@
                 </div>
 
 
-
-
                 <table>
-                <tr>
+                    <tr>
 
-                    <td colspan="2">
-                        <div class="container">
-                            <div class="row">
-                                <div >
-                                    <h4>
-                                        <a href="{{ path('showq',{ 'quiz': quiz.id }) }}" class="fa fa-eye" data-target="#showquiz-{{ quiz.id }}"  data-toggle="modal" ></a>
-                                    </h4>
+                        <td colspan="2">
+                            <div class="container">
+                                <div class="row">
+                                    <div >
+                                        <h4>
+                                            <a href="{{ path('showq',{ 'quiz': quiz.id }) }}" class="fa fa-eye" data-target="#showquiz-{{ quiz.id }}"  data-toggle="modal" ></a>
+                                        </h4>
+                                    </div>
+                                    &nbsp;&nbsp;
+                                    <div>
+                                        <h4>
+                                            <a href="{{ path('dupliqueAction',{ 'quiz': quiz.id }) }}" class="fa fa-files-o"></a>
+                                        </h4>
+                                    </div>&nbsp;&nbsp;
+                                    <div >
+                                        <h4>
+                                            {% if quiz.sendMail == 1 %}
+                                                <a href="{{ path('send', {'quiz': quiz.id})}}" class="fa fa-paper-plane"></a>
+                                            {% else %}
+                                                <i style="color: grey"  class="fa fa-paper-plane"></i>
+                                            {% endif %}
+
+                                        </h4>
+                                    </div>
+
+                                    &nbsp;&nbsp;
+                                    <div>
+                                        {% if quiz.imprimePdf == 1 %}
+                                            <h4>
+                                                <a href="{{ path('imprimerquiz', {'quiz': quiz.id }) }}"  class="fa fa-print"></a>
+                                            </h4>
+                                        {% else %}
+                                            <h4>
+                                                <i style="color: grey"  class="fa fa-print"></i>
+                                            </h4>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                                &nbsp;&nbsp;
-                                <div>
-                            <h4>
-                                <a href="{{ path('dupliqueAction',{ 'quiz': quiz.id }) }}" class="fa fa-files-o"></a>
-                            </h4>
-                                </div>&nbsp;&nbsp;
-                                <div >
-                            <h4>
-                                {% if quiz.sendMail == 1 %}
-                                <a href="{{ path('send', {'quiz': quiz.id})}}" class="fa fa-paper-plane"></a>
-                                {% else %}
-                                <i style="color: grey"  class="fa fa-paper-plane"></i>
-                                {% endif %}
-
-                            </h4>
-                                </div>
-
-                                &nbsp;&nbsp;
-                                <div>
-                                    {% if quiz.imprimePdf == 1 %}
-                                    <h4>
-                                     <a href="{{ path('imprimerquiz', {'quiz': quiz.id }) }}"  class="fa fa-print"></a>
-                                    </h4>
-                                    {% else %}
-                                    <h4>
-                                        <i style="color: grey"  class="fa fa-print"></i>
-                                    </h4>
-                                    {% endif %}
-                                </div>
-                        </div>
-                        </div>
+                            </div>
 
 
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
 
                 </table>
                 <div class="w3-panel w3-pale-green">
@@ -102,20 +100,25 @@
                     <div class="w3-panel w3-pale-green">
                         <div class="card-body">
 
+
+
+                            <div class="row">
+                                {% if quiz.brochure != "null" %}
+
+                                <div class="col-sm-2">
+                                    <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
+                                </div>
+                                {% endif %}
+
+                                <div class="col-sm-9">
+                                    <h2>  {{ quiz.titre }}</h2>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
                             <table class="table" >
                                 <tbody>
                                 <tr>
-
-                                    <th colspan="2">
-                                        <div style="padding-right: 450px;">
-                                            <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
-                                        </div>
-                                    <center>
-                                        {{ quiz.titre }}
-                                    </center>
-                                    </th>
-                                </tr>
-
                                 <tr>
                                     <th>Description</th>
                                     <td><div>
@@ -123,7 +126,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
+                                <!--   <tr>
                                     <th>Mode correction</th>
                                     <td> <label>{{ quiz.modeCorrection ? 'Oui' : 'Non' }}</label></td>
                                 </tr>
@@ -137,7 +140,7 @@
                                     {% endif %}
 
                                 </tr>
-                                <tr>
+                              <tr>
                                     <th>Melange les question</th>
                                     <td> <label>{{ quiz.melangeQuestion ? 'Oui' : 'Non' }}</label></td>
                                 </tr>
@@ -156,7 +159,7 @@
                                     {% else %}
                                     <td><label>Temps illimité</label></td>
                                     {% endif %}
-                                </tr>
+                                </tr> -->
                                 <tr>
                                     <th>Nombre actuel des pages</th>
                                     <td> <label>{{ quiz.page|length }}</label></td>

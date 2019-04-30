@@ -1,0 +1,76 @@
+{% extends '/bundles/EasyAdmin/default/layout.html.twig' %}
+
+{% set _content_title = 'ESPACE ADMINISTRATEUR' %}
+
+{% block page_title -%}
+    {{ _content_title }}
+
+{%- endblock %}
+
+{% block content_header %}
+    <div class="form-group row">
+
+        <h1 class="title">{{ _content_title }}</h1>
+    </div>
+{% endblock %}
+{% block main %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <body>
+    {% set nbpar=0 %}
+
+    <div class="w3-container" style="padding: 20px">
+      <h1> <font color="#1e90ff"> <i class="fa fa-history"></i> &nbsp; Historiques</font></h1>
+
+        <div style="padding-left: 75%; background-color: "> <input class="form-control" type="text" id="myInput" placeholder="Rechercher" title="Type in a name"></div>
+
+        <table class="w3-table-all">
+            <tr style="background-color: #ADD8E6">
+                <th><h3>Participant</h3></th>
+                <th><h3>Quiz</h3></th>
+                <th><h3>Resultat</h3></th>
+                <th></th>
+            </tr>
+            {% for p in participant %}
+                {% if p.user == user %}
+            <tbody id="myTable">
+
+            <tr class="w3-hover-gray">
+                        <td>{{ p.user }}</td>
+                        <td>{{ p.quiz }}</td>
+                        <td>{{ p.resultat }}</td>
+                        <td>
+                            <font size="4" color="#4169e1"><a href="{{ path('showHistorique') }}"><i class="fa fa-eye"></i></a></font>
+                        </td>
+                    </tr>
+            </tbody>
+
+                    {% set nbpar=nbpar + 1 %}
+                {% endif %}
+            {% endfor %}
+
+        <center>
+            {% if nbpar == 0 %}
+                <h1>Historique vide</h1>
+            {% endif %}
+        </center>
+        </table>
+    </div>
+
+    </body>
+
+
+{% endblock %}

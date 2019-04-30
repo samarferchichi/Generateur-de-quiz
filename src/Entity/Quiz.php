@@ -5,13 +5,12 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\User;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity
- * @Vich\Uploadable`
- *
+ * @Vich\Uploadable
  */
 class Quiz
 {
@@ -45,7 +44,7 @@ class Quiz
 
 
     /**
-     * @ORM\OneToMany(targetEntity="ParticipantQuiz", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\ParticipantQuiz", mappedBy="quiz", cascade={"persist","remove"})
      */
     private $participantquiz;
 
@@ -126,7 +125,7 @@ class Quiz
     /**
      * @ORM\Column(type="string")
      *
-     * @Assert\NotBlank(message="Please, upload the product brochure as a Image file.")
+     *
      * @Assert\File(mimeTypes={ "image/png" })
      */
     private $brochure;
@@ -143,8 +142,28 @@ class Quiz
         return $this;
     }
 
+    /**
+     * @ORM\Column(type="string")
+     *
+     *
+     */
+private $categorie;
 
+    /**
+     * @return mixed
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
 
+    /**
+     * @param mixed $categorie
+     */
+    public function setCategorie($categorie): void
+    {
+        $this->categorie = $categorie;
+    }
 
 
     /**
@@ -177,6 +196,11 @@ class Quiz
      * @var File
      */
     private $imageFile;
+
+
+
+
+
     /**
      * @ORM\Column(type="string", length=5000)
      */
@@ -482,6 +506,7 @@ class Quiz
         $this->message_e = $message_e;
         return $this;
     }
+
     public function __toString() {
         return $this->titre;
     }

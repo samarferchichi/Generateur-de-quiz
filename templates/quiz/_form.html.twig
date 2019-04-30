@@ -8,8 +8,10 @@
 {%- endblock %}
 
 {% block content_header %}
+    <div class="form-group row">
 
         <h1 class="title">{{ _content_title }}</h1>
+    </div>
 {% endblock %}
 {% block main %}
 
@@ -183,7 +185,7 @@
 
     <div class="panel panel-success">
         <div class="card bg-info text-white">
-            <div class="card-body"><b><h4><font color="white">QUIZ / Configuration quiz </font></h4></b></div>
+            <div class="card-body"><b><h4><font color="white">QUIZ / Configuration  </font></h4></b></div>
         </div>
 
         <div class="panel-body">
@@ -233,12 +235,35 @@
                                         </div>
                                         <br>
                                         <br>
+
+                                        <div>
+                                            <div class="col-xs-2">
+                                                <div class="row">
+                                                    <div class="col-xs-2">
+                                                        <label> {{ form_label(form.Categorie) }} :</label>
+                                                    </div>
+                                                    &nbsp;
+                                                    &nbsp;
+                                                        <div class="col-xs-4" style="width: 300px; height: ">
+                                                            {{ form_widget(form.Categorie) }}
+                                                            {{ form_errors(form.Categorie) }}
+                                                        </div>
+                                                    </div>
+
+
+                                            </div>
+                                        </div>
+
+
+                                        <br>
+                                        <br>
                                         <div>
                                             <div class="col-xs-2">
                                                  <label>Choisissez un logo :</label>
                                                       <div>
                                                           {{ form_label(form.image) }}
                                                           {{ form_widget(form.brochure) }}
+                                                          {{ form_errors(form.brochure) }}
                                                        </div>
                                             </div>
                                         </div>

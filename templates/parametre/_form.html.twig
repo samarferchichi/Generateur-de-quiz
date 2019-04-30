@@ -1,4 +1,33 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+
+{% if question.typeQuestion=='Réponse courte' %}
+
+            {% for p in question.parametre %}
+                {% if p.question == question %}
+                    {% if p.formText == "texte" %}
+                     {{ form_widget(form.nb_chiffre, { 'attr':{'hidden':'hidden'} }) }}
+                        Nombre des caracteres  {{ form_widget(form.nb_caractere, { 'attr':{'class':'form-control'} }) }}
+                        {{ form_widget(form.form_text, { 'attr':{'hidden':'hidden'} }) }}
+
+                    {% endif %}
+
+                    {% if p.formText == "number" %}
+                        Nombre des chiffres   {{ form_widget(form.nb_chiffre, { 'attr':{'class':'form-control'} }) }}
+                        {{ form_widget(form.nb_caractere, { 'attr':{'class':'form-control'} }) }}
+                        {{ form_widget(form.form_text, { 'attr':{'hidden':'hidden'} }) }}
+
+                    {% endif %}
+
+                    {% if p.formText == "date" %}
+                        {{ form_widget(form.nb_chiffre, { 'attr':{'hidden':'hidden'} }) }}
+                        {{ form_widget(form.nb_caractere, { 'attr':{'hidden':'hidden'} }) }}
+                        {{ form_widget(form.form_text, { 'attr':{'hidden':'hidden'} }) }}
+
+                    {% endif %}
+
+                {% endif %}
+            {% endfor %}
+{% endif %}
+
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ app.request.locale|split('_')|first|default('en') }}">
+
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -55,6 +56,7 @@
                         {{ easyadmin_config('site_name')|raw }}
                     </a>
                 {% endblock header_logo %}
+
             </div>
         </nav>
         {% block wrapper_wrapper %}
@@ -118,14 +120,17 @@
                             </div>
 
                         </div>
+
                     {% endblock header %}
+
                 </header>
 
 
 
 
                 {% block sidebar %}
-                <section class="sidebar">
+
+                    <section class="sidebar">
                     {% block main_menu_wrapper %}
                         {{ include([
                             _entity_config is defined ? _entity_config.templates.menu,

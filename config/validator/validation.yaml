@@ -20,7 +20,6 @@ App\Entity\Quiz:
           message: Description obligatoire.
 
 
-
 App\Entity\Question:
   properties:
     text_question:

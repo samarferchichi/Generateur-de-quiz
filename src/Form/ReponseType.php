@@ -12,12 +12,21 @@ class ReponseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('formule')
+            ->add('formule',null,[
+                'label' => 'Formule :'
+            ])
             ->add('destext')
             ->add('desnumber')
-            ->add('resultatformule')
-            ->add('descriptiondate')
-            ->add('descriptionformule')
+            ->add('resultatformule',null,[
+                'label' => 'Resultat :'
+            ])
+            ->add('descriptiondate',null,[
+                    'label' => 'Description date :'
+            ]
+)
+            ->add('descriptionformule',null,[
+                'label' => 'Description formule :'
+            ])
             ->add('reponse_valide')
             ->add('etatvf')
             ->add('etatlist')

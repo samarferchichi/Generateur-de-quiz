@@ -23,8 +23,11 @@ security:
         provider: fos_userbundle
         csrf_token_generator: security.csrf.token_manager
 
+
       logout:       true
       anonymous:    true
+
+
 
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used

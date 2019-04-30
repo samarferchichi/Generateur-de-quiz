@@ -36,6 +36,7 @@
         "symfony/webpack-encore-bundle": "^1.1",
         "symfony/yaml": "4.2.*",
         "vich/uploader-bundle": "^1.9"
+
     },
     "require-dev": {
         "symfony/debug-pack": "*",
@@ -89,4 +90,5 @@
             "require": "4.2.*"
         }
     }
+
 }

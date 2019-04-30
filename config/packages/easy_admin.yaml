@@ -95,7 +95,7 @@ easy_admin:
           - { entity: 'User' , icon: 'user-plus' }
           - { entity: 'User', icon: 'user', label: 'Participants'  }
       - { entity: 'Quiz', label: 'Statiqtique', icon: 'fa fa-pie-chart' }
-      - { entity: 'Quiz', label: 'Historique', icon: 'history' }
+      - { label: 'Historiques',route: 'historique', icon: 'history' }
 
     brand_color: '#1FC5F3'
     assets:

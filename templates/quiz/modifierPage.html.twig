@@ -400,13 +400,56 @@
                                                 <a href="#" data-toggle="popover" title="INFO !" data-content="{{ j.infoBulle }}"><i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
                                             </div>
                                         {% endif %}
+                                        <div  class="modal fade" id="editequestion-{{ j.id }}" role="dialog">
+                                            <div  class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title"></h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                                    </div>
+                                                    <div class="modal-body">
+
+
+                                                        {{ render(controller(
+                                                            'App\\Controller\\QuestionController::edit',
+                                                            { 'id': j.id }
+                                                        )) }}
+
+                                                        {% for i in j.parametre %}
+                                                            {% if i.formText != "date" %}
+                                                                {{ render(controller(
+                                                                    'App\\Controller\\ParametreController::editparametre2',
+                                                                    { 'id': i.id }
+                                                                )) }}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        <h1>Edit les reponses </h1>
+                                                        {% for i in j.reponse %}
+                                                            {{ render(controller(
+                                                                'App\\Controller\\ReponseController::editReponse2',
+                                                                { 'id': i.id }
+                                                            )) }}
+                                                        {% endfor %}
+
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
                                         <div class="container" style=" color: #3a87ad;">
 
                                          <table>
                                              <tr>
                                                  <td>
+
                                                     <div style="width: 25px">
-                                                        <a href="#" class="fa fa-pencil-square-o"></a>
+                                                        <a href="#" data-target="#editequestion-{{ j.id  }}" data-toggle="modal" class="fa fa-pencil-square-o"></a>
                                                     </div>
                                                  </td>
                                                  <td></td>
