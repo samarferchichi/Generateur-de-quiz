@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
@@ -10,6 +11,8 @@ use Doctrine\Common\Collections\Collection;
  * @ORM\Entity
  * @ORM\Table(name="user")
  */
+
+
 class User extends BaseUser
 {
     /**
@@ -53,25 +56,26 @@ class User extends BaseUser
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ParticipantQuiz", mappedBy="user", cascade={"persist","remove"})
+     * @ORM\Column(type="string", length=100)
      */
-    private $participantquiz;
+    protected $avatar;
 
     /**
      * @return mixed
      */
-    public function getParticipantquiz()
+    public function getAvatar()
     {
-        return $this->participantquiz;
+        return $this->avatar;
     }
 
     /**
-     * @param mixed $participantquiz
+     * @param mixed $avatar
      */
-    public function setParticipantquiz($participantquiz): void
+    public function setAvatar($avatar): void
     {
-        $this->participantquiz = $participantquiz;
+        $this->avatar = $avatar;
     }
+
 
 
     public function __constructt() {
@@ -80,6 +84,18 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(type="string")
+     *
+     * @ORM\Column(name="cellphone", type="string", length=25, nullable=true)
+     *
+     * @Assert\Length(
+     *     min=8,
+     *     max=8,
+     *     minMessage="Your cell phone is too short.",
+     *     maxMessage="Your cell phone is too long.",
+     *     groups={"Registration", "Profile"}
+     * )
+     *
+     *
      */
     private $numerotel;
 

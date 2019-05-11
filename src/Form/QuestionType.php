@@ -30,11 +30,12 @@ class QuestionType extends AbstractType
             ->add('type_question', ChoiceType::class, [
 
                 'choices' => [
-                    'Réponse courte' => 'Réponse courte',
                     'Vrai/faux' => 'Vrai/faux',
                     'Case à cocher'=>'Case à cocher',
                     'Liste déroulante'=> 'Liste déroulante',
                     'Calculée'=>'Calculée',
+                    'Date' => 'Date',
+                    'Nombre' => 'Nombre'
 
                 ],
 

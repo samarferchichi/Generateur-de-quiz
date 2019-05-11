@@ -44,21 +44,7 @@
                 'easyadmin-sidebar-width-' + (localStorage.getItem('easyadmin/sidebar/width') || 'normal')
             );
         </script>
-        <nav class="navbar" role="navigation">
-            <button id="navigation-toggler" type="button" aria-label="Toggle navigation">
-                <i class="fa fa-bars"></i>
-            </button>
 
-            <div id="header-logo">
-                {% block header_logo %}
-
-                    <a style="background-color: " class="logo {{ easyadmin_config('site_name')|length > 14 ? 'logo-long' }}" title="{{ easyadmin_config('site_name')|striptags }}" href="{{ path('easyadmin') }}">
-                        {{ easyadmin_config('site_name')|raw }}
-                    </a>
-                {% endblock header_logo %}
-
-            </div>
-        </nav>
         {% block wrapper_wrapper %}
         <div class="wrapper">
         {% block wrapper %}
@@ -103,9 +89,9 @@
                             {% endblock user_menu %}
                         {% endset %}
 
-                        <div  style="background-color: ; width: 200px; height: 100px" class="content-top navbar-custom-menu">
+                        <div  style="background-color:  ; width: 1000px; height: 100px" class="content-top navbar-custom-menu">
 
-                             <div class="user user-menu-wrapper {{ _user_is_impersonated ? 'user-is-impersonated' }}" data-toggle="popover" data-placement="bottom" data-container=".user-menu-wrapper" data-content="{{ _user_menu_content|e('html_attr') }}" data-html="true">
+                             <div style="width: 500px" class="user user-menu-wrapper {{ _user_is_impersonated ? 'user-is-impersonated' }}" data-toggle="popover" data-placement="bottom" data-container=".user-menu-wrapper" data-content="{{ _user_menu_content|e('html_attr') }}" data-html="true">
                                 {% if easyadmin_config('user.display_avatar') %}
                                     {% set _avatar_image_path = easyadmin_read_property(app.user, easyadmin_config('user.avatar_property_path')) %}
                                     {% if null == _avatar_image_path %}
@@ -130,7 +116,7 @@
 
                 {% block sidebar %}
 
-                    <section class="sidebar">
+                    <section class="sidebar"   style="background-color: ; height: 1000px" >
                     {% block main_menu_wrapper %}
                         {{ include([
                             _entity_config is defined ? _entity_config.templates.menu,

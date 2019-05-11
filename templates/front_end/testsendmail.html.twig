@@ -177,7 +177,7 @@
 
                                 {% endif %}
                                 {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}
-                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id , 'par' :par.id}) }}" >{{ quiz.titre }}</a></li>
+                                    <li style="width: 350px;" class="menu-level-1"><a href="#" >{{ quiz.titre }}</a></li>
                                 {% endif %}
 
                             {% endif %}
@@ -213,7 +213,7 @@
 
             </div>
         </div>
- </div>
+    </div>
 
 
 </div>
@@ -223,7 +223,7 @@
 <div style="background-color: ">
 
 
-    <form id="regForm"  action="{{ path('quizpublic', {'quiz':quiz.id, 'par':par.id}) }}" method="post" >
+    <form id="regForm"  action="" method="post" >
 
         <input value="{{ quiz.timequiz }}" hidden id="timequiz">
         <center>
@@ -244,7 +244,7 @@
                     {% endif %}
                 </font>
                 {% if quiz.brochure != "null" %}
-                <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
+                    <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
                 {% endif %}
             </h1>
         </center>
@@ -254,12 +254,7 @@
         {% set ii=0 %}
         {% set res=0 %}
 
-        {% for p in listparticipantquiz %}
-            {% if p.participant == par and p.quiz == quiz %}
-                {% set ii=ii+1 %}
-            {% endif %}
 
-        {% endfor %}
         {{ ii }} /  {{ quiz.nbTentative }} Tentative<br>
 
 
@@ -312,179 +307,179 @@
 
             {% for key,  i in quiz.page %}
 
-                <div  class="tab" style="background-color: {{ i.bgColor }}; padding: 20px">
+            <div  class="tab" style="background-color: {{ i.bgColor }}; padding: 20px">
 
-                    {% if key ==0  %}
-                        {{ quiz.entete }}
+                {% if key ==0  %}
+                    {{ quiz.entete }}
+                {% endif %}
+
+                <h2>page : {{ key + 1 }}</h2>
+                <h3>
+                    {% if i.titrePage == "Vide" %}
+                    {% else %}
+                        <font color="{{ i.colorTitrePage }} ">
+                            {{ i.titrePage   }}
+                        </font>
                     {% endif %}
+                </h3>
+                {% if i.question|length == 0  %}
+                    <h2>Cette page est vide !!</h2>
+                {% endif %}
+                {% for key2, question in i.question  %}
+                    <div class="vl">
+                    </div>
 
-                    <h2>page : {{ key + 1 }}</h2>
-                    <h3>
-                        {% if i.titrePage == "Vide" %}
-                        {% else %}
-                            <font color="{{ i.colorTitrePage }} ">
-                                {{ i.titrePage   }}
-                            </font>
+
+                    {% if question.typeQuestion == 'Date'   and question.actif == 1  %}
+                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
+                        {{ question.textQuestion }}<br>
+                        {{ question.descriptionQuestion }}<br>
+
+                        {% for r in question.reponse %}
+                            {% if r.question == question %}
+                                {{ r.descriptiondate }}
+
+                                <div style="width: 250px;">
+                                    <input  value="{{ question }}" hidden name="nbdate[]">
+
+                                    <input type="date" name="date[]" class="form-control">
+                                </div>
+
+                            {% endif %}
+                        {% endfor %}
+                        {% if question.infoBulle != '' %}
+                            <br>
+                            <a href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
                         {% endif %}
-                    </h3>
-                    {% if i.question|length == 0  %}
-                        <h2>Cette page est vide !!</h2>
                     {% endif %}
-                    {% for key2, question in i.question  %}
-                        <div class="vl">
-                        </div>
 
 
-                        {% if question.typeQuestion == 'Date'   and question.actif == 1  %}
-                                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                                        {{ question.textQuestion }}<br>
-                                        {{ question.descriptionQuestion }}<br>
+                    {% if question.typeQuestion == 'Nombre'   and question.actif == 1  %}
+                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
+                        {{ question.textQuestion }}<br>
+                        {{ question.descriptionQuestion }}<br>
 
-                                            {% for r in question.reponse %}
-                                                {% if r.question == question %}
-                                                    {{ r.descriptiondate }}
+                        {% for r in question.reponse %}
+                            {% if r.question == question %}
+                                {{ r.desnumber }}
+                                <input id="cc" onkeyup="showHintnumber(this.value)" type="number" oninput="this.className = ''"   >
 
-                                                    <div style="width: 250px;">
-                                                        <input  value="{{ question }}" hidden name="nbdate[]">
+                            {% endif %}
+                        {% endfor %}
+                        {% if question.infoBulle != '' %}
+                            <br>
+                            <a href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                        {% endif %}
 
-                                                        <input type="date" name="date[]" class="form-control">
-                                                    </div>
+                    {% endif %}
+                    <br>
 
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% if question.infoBulle != '' %}
-                                            <br>
-                                            <a href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
-                                        {% endif %}
-                                    {% endif %}
+                    {% if question.typeQuestion == 'Vrai/faux'   and question.actif == 1  %}
+                        <input type="number"   name="question[]"  value="{{ question.id }}">
+                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
+                        {{ question.textQuestion }}<br>
+                        {{ question.descriptionQuestion }}<br>
+                        {% for key, p in question.reponse %}
+                            {% if p.question == question %}
+
+                                {{ p.reponseValide }}
+                                <select style="width: 300px;" class="form-control" name="typevf[{{ question.id }}+{{ key }}]">
+
+                                    <option>
+                                        Vrai
+                                    </option>
+                                    <option>
+                                        Faux
+                                    </option>
+                                </select>
+
+                            {% endif %}
+                        {% endfor %}
+                        {% if question.infoBulle != '' %}
+
+                            <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                        {% endif %}
+                    {% endif %}
 
 
-                        {% if question.typeQuestion == 'Nombre'   and question.actif == 1  %}
-                                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                                        {{ question.textQuestion }}<br>
-                                        {{ question.descriptionQuestion }}<br>
+                    {% if question.typeQuestion =='Liste déroulante'   and question.actif == 1  %}
+                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
+                        {{ question.textQuestion }}
+                        <br>
+                        {{ question.descriptionQuestion }}
+                        <br>
+                        <select style="width: 350px;" class="form-control">
+                            {% for i in question.reponse %}
+                                {% if i.question == question %}
 
-                                    {% for r in question.reponse %}
-                                        {% if r.question == question %}
-                                            {{ r.desnumber }}
-                                        <input id="cc" onkeyup="showHintnumber(this.value)" type="number" oninput="this.className = ''"   >
-
-                                        {% endif %}
-                                    {% endfor %}
-                                        {% if question.infoBulle != '' %}
-                                            <br>
-                                            <a href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
-                                        {% endif %}
-
-                                    {% endif %}
-                                  <br>
-
-                        {% if question.typeQuestion == 'Vrai/faux'   and question.actif == 1  %}
-                            <input type="number"   name="question[]"  value="{{ question.id }}">
-                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                            {{ question.textQuestion }}<br>
-                            {{ question.descriptionQuestion }}<br>
-                            {% for key, p in question.reponse %}
-                                {% if p.question == question %}
-
-                                    {{ p.reponseValide }}
-                                    <select style="width: 300px;" class="form-control" name="typevf[{{ question.id }}+{{ key }}]">
-
-                                        <option>
-                                            Vrai
-                                        </option>
-                                        <option>
-                                            Faux
-                                        </option>
-                                    </select>
+                                    <option>
+                                        {{ i.reponseValide }}
+                                    </option>
 
                                 {% endif %}
                             {% endfor %}
-                            {% if question.infoBulle != '' %}
+                        </select>
+                        {% if question.infoBulle != '' %}
 
-                                <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
-                            {% endif %}
+                            <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
                         {% endif %}
-
-
-                        {% if question.typeQuestion =='Liste déroulante'   and question.actif == 1  %}
-                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                            {{ question.textQuestion }}
-                            <br>
-                            {{ question.descriptionQuestion }}
-                            <br>
-                            <select style="width: 350px;" class="form-control">
-                                {% for i in question.reponse %}
-                                    {% if i.question == question %}
-
-                                        <option>
-                                            {{ i.reponseValide }}
-                                        </option>
-
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                            {% if question.infoBulle != '' %}
-
-                                <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
-                            {% endif %}
-                        {% endif %}
-
-
-
-                        {% if question.typeQuestion == 'Case à cocher'  and question.actif == 1  %}
-                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                            {{ question.textQuestion }}
-                            <br>
-                            {{ question.descriptionQuestion }}
-
-                            {% for p in question.reponse %}
-                                {% if p.question == question %}
-                                    <br>
-                                    {{ p.reponseValide }}
-
-                                    <input  type="checkbox">
-
-
-
-                                {% endif %}
-                            {% endfor %}
-                            {% if question.infoBulle != '' %}
-
-                                <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
-                            {% endif %}
-                        {% endif %}
-
-
-
-                        {% if question.typeQuestion =='Calculée'  and question.actif == 1  %}
-                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                            {{ question.textQuestion }}
-                            <br>
-                            {{ question.descriptionQuestion }}<br>
-
-                            {% for p in question.reponse %}
-                                {% if p.question == question %}
-                                    {{ p.descriptionformule }}<br>
-                                    Formule:<br>
-                                    <input  class="form-control" type="text">
-                                    Resultat:
-                                    <input class="form-control" type="text">
-                                {% endif %}
-                            {% endfor %}
-                            {% if question.infoBulle != '' %}
-
-                                <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
-                            {% endif %}
-                        {% endif %}
-
-                    {% endfor %}
-
-                    {% if key == quiz.page|length %}
-                        {{ quiz.pied }}
                     {% endif %}
 
-                </div>
+
+
+                    {% if question.typeQuestion == 'Case à cocher'  and question.actif == 1  %}
+                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
+                        {{ question.textQuestion }}
+                        <br>
+                        {{ question.descriptionQuestion }}
+
+                        {% for p in question.reponse %}
+                            {% if p.question == question %}
+                                <br>
+                                {{ p.reponseValide }}
+
+                                <input  type="checkbox">
+
+
+
+                            {% endif %}
+                        {% endfor %}
+                        {% if question.infoBulle != '' %}
+
+                            <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                        {% endif %}
+                    {% endif %}
+
+
+
+                    {% if question.typeQuestion =='Calculée'  and question.actif == 1  %}
+                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
+                        {{ question.textQuestion }}
+                        <br>
+                        {{ question.descriptionQuestion }}<br>
+
+                        {% for p in question.reponse %}
+                            {% if p.question == question %}
+                                {{ p.descriptionformule }}<br>
+                                Formule:<br>
+                                <input  class="form-control" type="text">
+                                Resultat:
+                                <input class="form-control" type="text">
+                            {% endif %}
+                        {% endfor %}
+                        {% if question.infoBulle != '' %}
+
+                            <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                        {% endif %}
+                    {% endif %}
+
+                {% endfor %}
+
+                {% if key == quiz.page|length %}
+                    {{ quiz.pied }}
+                {% endif %}
+
+            </div>
 
 
 

@@ -69,26 +69,6 @@ class ReponseParticipant
     }
 
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $tentative;
-
-    /**
-     * @return mixed
-     */
-    public function getTentative()
-    {
-        return $this->tentative;
-    }
-
-    /**
-     * @param mixed $tentative
-     */
-    public function setTentative($tentative): void
-    {
-        $this->tentative = $tentative;
-    }
 
 
 

@@ -355,44 +355,32 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endif %}
-                                            {% if j.typeQuestion =='Réponse courte' %}
-                                                {{ j.descriptionQuestion }}
-
-                                                {% for p in j.parametre %}
-
-                                                    {% if p.question==j and p.formText =='texte' %}
-
-                                                                <textarea class="form-control"></textarea><br>
-
-                                                    {% endif %}
-
-                                                    {% if p.question==j and p.formText =='date' %}
-                                                        {% for r in j.reponse %}
-                                                            {% if r.question == j %}
-                                                                 {{ r.descriptiondate }}
-
-                                                                    <div style="width: 250px;">
-                                                                        <input type="date" class="form-control">
-                                                                    </div>
-
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    {% endif %}
 
 
 
 
-                                                    {% if p.question==j and p.formText =='number' %}
-                                                        {% for r in j.reponse %}
-                                                            {% if r.question == j %}
+                                        {% if j.typeQuestion =='Date' %}
+                                            {{ j.descriptionQuestion }}
+<br>
+                                            {% for p in j.reponse %}
+                                                {% if p.question == j %}
+                                                    {{ p.descriptiondate }}
+                                                    <input type="date" class="form-control">
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
 
-                                                                {{ r.desnumber }}
-                                                                <input type="number"  class="form-control">
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
+                                        {% if j.typeQuestion =='Nombre' %}
+                                            {{ j.descriptionQuestion }}
+<br>
+                                            {% for p in j.reponse %}
+                                                {% if p.question == j %}
+                                                    {{ p.desnumber }}
+                                                    <input type="number" class="form-control">
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+
 
                                         {% if j.infoBulle != '' %}
 
@@ -418,14 +406,7 @@
                                                             { 'id': j.id }
                                                         )) }}
 
-                                                        {% for i in j.parametre %}
-                                                            {% if i.formText != "date" %}
-                                                                {{ render(controller(
-                                                                    'App\\Controller\\ParametreController::editparametre2',
-                                                                    { 'id': i.id }
-                                                                )) }}
-                                                            {% endif %}
-                                                        {% endfor %}
+
                                                         <h1>Edit les reponses </h1>
                                                         {% for i in j.reponse %}
                                                             {{ render(controller(

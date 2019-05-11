@@ -1,18 +1,5 @@
 {% extends '/bundles/EasyAdmin/default/layout.html.twig' %}
 
-{% set _content_title = 'ESPACE ADMINISTRATEUR' %}
-
-{% block page_title -%}
-    {{ _content_title }}
-
-{%- endblock %}
-
-{% block content_header %}
-    <div class="form-group row">
-
-        <h1 class="title">{{ _content_title }}</h1>
-    </div>
-{% endblock %}
 {% block main %}
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,7 +22,7 @@
     <div class="w3-container" style="padding: 20px">
       <h1> <font color="#1e90ff"> <i class="fa fa-history"></i> &nbsp; Historiques</font></h1>
 
-        <div style="padding-left: 75%; background-color: "> <input class="form-control" type="text" id="myInput" placeholder="Rechercher" title="Type in a name"></div>
+        <div style="padding-left: 75%; background-color: "> <input class="form-control" type="search" id="myInput" placeholder="Rechercher" title="Type in a name"></div>
 
         <table class="w3-table-all">
             <tr style="background-color: #ADD8E6">
@@ -45,11 +32,11 @@
                 <th></th>
             </tr>
             {% for p in participant %}
-                {% if p.user == user %}
+                {% if p.quiz.user == user %}
             <tbody id="myTable">
 
             <tr class="w3-hover-gray">
-                        <td>{{ p.user }}</td>
+                        <td>{{ p.participant }}</td>
                         <td>{{ p.quiz }}</td>
                         <td>{{ p.resultat }}</td>
                         <td>
@@ -63,13 +50,15 @@
             {% endfor %}
 
         <center>
-            {% if nbpar == 0 %}
-                <h1>Historique vide</h1>
-            {% endif %}
+
         </center>
         </table>
     </div>
-
+   <center>
+       {% if nbpar == 0 %}
+           <h1>Historique vide</h1>
+       {% endif %}
+   </center>
     </body>
 
 

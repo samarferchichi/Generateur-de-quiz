@@ -66,181 +66,174 @@
 
 
                 <script>
+
                     if($('#question_type').val() == ''){
                         $('#question_type').on('change', function() {
                             var x = document.getElementById("question_type").value;
+
                             var i=0;
-                            if(x == 'Réponse courte') {
-                                $('#showType').html('<div id="demo" style="background-color: ">' +
-                                    '<div class="col-2"> <br><select name="selecttype" class="form-control" id="mySelect" onchange="myFunction()">' +
-                                    '<option  value="texte" selected>Texte</option>' +
-                                    '<option value="date">Date</option>' +
-                                    '<option value="number">Nombre</option></select></div><br><br>' +
-                                    ' <div class="row"><br>' +
-                                    '    <div class="col-sm-5" style="background-color:;">Nombre de caracteres autorisés - Entre 1 et 1000<br></div><br><br>' +
-                                    '    <div class="col-sm-2" style="background-color:;"><input name="nbcaractere" type="number" min="1" max="1000"  class="form-control"></div>' +
-                                    '  </div>' +
-                                    ' <div id="hide_0" class="row"><br><br>' +
-                                    '    <div class="col-sm-3" style="background-color:;"><label><font size="3"> Reponse correcte :</font></label></div>' +
-                                    '    <div class="col-sm-8" style="background-color:;"><input name="test[]" type="text" class="form-control"></div>' +
-                                    '    <div class="col-sm-" style="background-color:;"><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
-                                    '  </div>'+
+
+                            if(x == 'Vrai/faux') {
+                                $('#showType').html(
+                                    '<div id="demo" style="background-color: ">' +
+                                    '<div style="background-color: "><label>Choix réponses de votre question</label></div>' +
+
+                                    '<div id="hide_0"  class="row">' +
+                                    '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix :</font></label></div>' +
+                                    '    <div class="col-sm-6" style="background-color:;"><input name="vf[]"  type="text" class="form-control"></textarea> </div>' +
+                                    '    <div class="col-sm-3" style="background-color:;"><select class="form-control"  name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select></div>' +
+                                    '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+                                    ' <br><br>' +
+                                    ' </div>' +
                                     '<div id="showPlus"> </div>' +
-                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonction()" class="fa fa-plus-square"></i></a></font>' +
+
+                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonctiontypevraioufaux()" class="fa fa-plus-square"></i></a></font>' +
                                     '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
-                                    '</div></div>'
-                                );
-                            }else {
-                                if (x == 'Vrai/faux') {
-                                    $('#showType').html(
-                                        '<div id="demo" style="background-color: ">' +
-                                        '<div style="background-color: "><label>Choix réponses de votre question</label></div>' +
-                                        '<div id="hide_0"  class="row">' +
-                                        '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix :</font></label></div>' +
-                                        '    <div class="col-sm-6" style="background-color:;"><input name="vf[]"  type="text" class="form-control"></textarea> </div>' +
-                                        '    <div class="col-sm-3" style="background-color:;"><select class="form-control"  name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select></div>' +
-                                        '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
-                                        ' <br><br>' +
+                                    '</div>');
+                            }
+                            else {
+                                if (x=='Case à cocher') {
+                                    $('#showType').html('<div id="demo" style="background-color: ">' +
+                                        '<div  style="background-color: "><label>Choix des réponses afficher</label></div>' +
+
+
+                                        '<div id="hide_0" ><label><font size="3"> Repanse correcte n° :</font></label>' +
+                                        '<div class=""><input name="case[]"  type="text" class="form-control"></div>'+
+                                        '<div style="width: 150px">' +
+                                        '<select class="form-control" name="etatcase[]"><option value="1">Correcte</option><option value="0">Incorrecte</option></select></div>' +
+                                        '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div> <br>' +
                                         ' </div>' +
                                         '<div id="showPlus"> </div>' +
-                                        '<font size="6" color=#228b22><a><i type="button" onclick="fonctiontypevraioufaux()" class="fa fa-plus-square"></i></a></font>' +
+
+                                        '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncaseacocher()" class="fa fa-plus-square"></i></a></font>' +
                                         '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+
+                                        '<div id="divPlus"></div>' +
                                         '</div>');
-                                }
-                                else {
-                                    if (x=='Case à cocher') {
+                                }else{
+                                    if (x=='Liste déroulante') {
                                         $('#showType').html('<div id="demo" style="background-color: ">' +
-                                            '<div  style="background-color: "><label>Choix des réponses afficher</label></div>' +
-                                            '<div id="hide_0" ><label><font size="3"> Repanse correcte n° :</font></label>' +
-                                            '<div class=""><input name="case[]"  type="text" class="form-control"></div>'+
-                                            '<div style="width: 150px">' +
-                                            '<select class="form-control" name="etatcase[]"><option value="1">Correcte</option><option value="0">Incorrecte</option></select></div>' +
-                                            '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div> <br>' +
-                                            ' </div>' +
+                                            '<div  id="test" style="background-color: "><label>Choix réponses de votre liste</label>' +
+                                            '<div id="hide_0"  class="row" >' +
+
+                                            '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix réponse  :</font></label></div>' +
+                                            '    <div class="col-sm-6" style="background-color:;"><input name="list[]"  type="text" class="form-control"></div>' +
+                                            '    <div class="col-sm-3" style="background-color:;"><select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
+                                            '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+                                            ' <br><br>' +
+                                            ' </div>'+
                                             '<div id="showPlus"> </div>' +
-                                            '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncaseacocher()" class="fa fa-plus-square"></i></a></font>' +
+
+                                            '<font size="6" color=#228b22><a><i type="button" onclick="fonctionliste()" class="fa fa-plus-square"></i></a></font>' +
                                             '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+
                                             '<div id="divPlus"></div>' +
-                                            '</div>');
-                                    }else{
-                                        if (x=='Liste déroulante') {
+                                            '</div></div>');
+                                    }else {
+                                        if (x=='Calculée') {
                                             $('#showType').html('<div id="demo" style="background-color: ">' +
-                                                '<div  id="test" style="background-color: "><label>Choix réponses de votre liste</label>' +
-                                                '<div id="hide_0"  class="row" >' +
-                                                '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix réponse  :</font></label></div>' +
-                                                '    <div class="col-sm-6" style="background-color:;"><input name="list[]"  type="text" class="form-control"></div>' +
-                                                '    <div class="col-sm-3" style="background-color:;"><select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
+                                                '<div  style="background-color: "><label>Question calculée</label>' +
+
+
+                                                '<div id="hide_0" >' +
+                                                '<div  class="row" >' +
+
+                                                '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Description formule n° :</font></label></div>' +
+                                                '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Formule :</font></label></div>' +
+                                                '    <div class="col-sm-3" style="background-color:;"><label><font size="2"> Resultat :</font></label></div>' +
+
+                                                '</div>'+
+
+
+                                                '<div  class="row" >' +
+
+                                                '    <div class="col-sm-4" style="background-color:;"><input  name="descriptionF[]" type="text" class="form-control"></div>' +
+                                                '    <div class="col-sm-4" style="background-color:;"><input  name="formule[]" type="text" class="form-control"></div>' +
+                                                '    <div class="col-sm-3" style="background-color:;"><input  name="resultatF[]" type="text" class="form-control"></div>' +
                                                 '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
-                                                ' <br><br>' +
+
+                                                '</div>'+
+
+                                                ' <br>' +
                                                 ' </div>'+
+
                                                 '<div id="showPlus"> </div>' +
-                                                '<font size="6" color=#228b22><a><i type="button" onclick="fonctionliste()" class="fa fa-plus-square"></i></a></font>' +
+
+                                                '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncalcule()" class="fa fa-plus-square"></i></a></font>' +
                                                 '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+
                                                 '<div id="divPlus"></div>' +
                                                 '</div></div>');
+
                                         }else {
-                                            if (x=='Calculée') {
-                                                $('#showType').html('<div id="demo" style="background-color: ">' +
-                                                    '<div  style="background-color: "><label>Question calculée</label>' +
-                                                    '<div id="hide_0" >' +
-                                                    '<div  class="row" >' +
-                                                    '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Description formule n° :</font></label></div>' +
-                                                    '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Formule :</font></label></div>' +
-                                                    '    <div class="col-sm-3" style="background-color:;"><label><font size="2"> Resultat :</font></label></div>' +
+                                            if (x=='Nombre') {
+                                                $('#showType').html('<br><div id="demo" style="background-color: ">' +
+
+                                                    ' <div  class="row">' +
+                                                    '    <div class="col-sm-4" style="background-color:;">Nombre des chiffres autorisés</div>' +
+                                                    '    <div class="col-sm-2" style="background-color:;"><input  name="nbChiffre"  type="number" class="form-control"></div>' +
+                                                    '  </div>' +
+
+                                                    '<div id="hide_0" ><br>' +
+
+                                                    ' <div  class="row">' +
+                                                    '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Description :</font></label></div>' +
+                                                    '    <div class="col-sm-8" style="background-color:;"><textarea  name="desnum[]" type="text" class="form-control"></textarea> </div>' +
+                                                    '  </div><br>' +
+                                                    '<div class="row"><br>' +
+                                                    ' <div class="col-sm-4" style="background-color:;"><label><font size="3"> Reponse correcte n° :</font></label></div>' +
+                                                    ' <div class="col-sm-4" style="background-color:;"><input  name="number[]" type="number" class="form-control"></div>' +
+                                                    ' <div class="col-sm-" style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+
+                                                    '</div>' +
                                                     '</div>'+
-                                                    '<div  class="row" >' +
-                                                    '    <div class="col-sm-4" style="background-color:;"><input  name="descriptionF[]" type="text" class="form-control"></div>' +
-                                                    '    <div class="col-sm-4" style="background-color:;"><input  name="formule[]" type="text" class="form-control"></div>' +
-                                                    '    <div class="col-sm-3" style="background-color:;"><input  name="resultatF[]" type="text" class="form-control"></div>' +
-                                                    '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
-                                                    '</div>'+
-                                                    ' <br>' +
-                                                    ' </div>'+
                                                     '<div id="showPlus"> </div>' +
-                                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncalcule()" class="fa fa-plus-square"></i></a></font>' +
+                                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonctionnumber()" class="fa fa-plus-square"></i></a></font>' +
                                                     '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
-                                                    '<div id="divPlus"></div>' +
-                                                    '</div></div>');
+
+                                                    '</div></div> ');
+
+                                            }
+                                            else {
+                                                if (x == 'Date') {
+                                                    $('#showType').html('<br><div id="demo" style="background-color: ">' +
+
+                                                        ' <div id="hide_0" class="row"><br><br>' +
+                                                        '    <div class="col-sm-2" style="background-color:;"><label><font size="3">Description date :</font></label></div>' +
+                                                        '    <div class="col-sm-6" style="background-color:;"><textarea  type="text" name="desc[]"  class="form-control"></textarea> </div>' +
+                                                        '    <div class="col-sm-3" style="background-color:;"><input name="date[]" type="date" class="form-control"></i></a></font></div>' +
+                                                        '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+                                                        ' <br><br><br><br> </div>'+
+
+
+
+
+                                                        '</div>' +
+                                                        '<div id="showPlus"> </div>' +
+
+                                                        '<font size="6" color=#228b22><a><i type="button" onclick="fonctiondate()" class="fa fa-plus-square"></i></a></font>' +
+                                                        '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+
+                                                        '<div id="divPlus"></div>' +
+                                                        '</div></div>');
+                                                }
                                             }
                                         }
+
+
                                     }
+
                                 }
                             }
+
+
+
                         });
                     }else{
                         $('#showType').html('');
                     }
-                    function myFunction() {
-                        var a = document.getElementById("mySelect").value;
-                        //    document.getElementById("demo").innerHTML = ": " + x;
-                        if (a == 'date') {
-                            document.getElementById("showType").innerHTML = a;
-                            document.getElementById("showType").innerHTML = '<div id="showType" style="background-color: ">' +
-                                '<div class="col-2"> <br><select name="selecttype" class="form-control" id="mySelect" onchange="myFunction()">' +
-                                '<option  value="texte" >Texte</option>' +
-                                '<option value="date" selected>Date</option>' +
-                                '<option value="number">Nombre</option></select></div><br><br>' +
-                                ' <div id="hide_0" class="row"><br><br>' +
-                                '    <div class="col-sm-2" style="background-color:;"><label><font size="3">Description date :</font></label></div>' +
-                                '    <div class="col-sm-6" style="background-color:;"><textarea  type="text" name="desc[]"  class="form-control"></textarea> </div>' +
-                                '    <div class="col-sm-3" style="background-color:;"><input name="date[]" type="date" class="form-control"></i></a></font></div>' +
-                                '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
-                                ' <br><br><br><br> </div>'+
-                                '</div>' +
-                                '<div id="showPlus"> </div>' +
-                                '<font size="6" color=#228b22><a><i type="button" onclick="fonctiondate()" class="fa fa-plus-square"></i></a></font>' +
-                                '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
-                                '<div id="divPlus"></div>' +
-                                '</div></div>'
-                        }else {
-                            if (a == 'number') {
-                                document.getElementById("showType").innerHTML = a;
-                                document.getElementById("showType").innerHTML = '<div id="showType" style="background-color: ">' +
-                                    '<div class="col-2"> <br><select name="selecttype" class="form-control" id="mySelect" onchange="myFunction()">' +
-                                    '<option  value="texte" >Texte</option>' +
-                                    '<option value="date" >Date</option>' +
-                                    '<option value="number" selected>Nombre</option></select></div><br><br>' +
-                                    ' <div  class="row">' +
-                                    '    <div class="col-sm-5" style="background-color:;">Nombre des chiffres autorisés </div>' +
-                                    '    <div class="col-sm-2" style="background-color:;"><input  name="nbChiffre"  type="number" class="form-control"></div>' +
-                                    '  </div>' +
-                                    '<div id="hide_0" ><br>' +
-                                    ' <div  class="row">' +
-                                    '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Description :</font></label></div>' +
-                                    '    <div class="col-sm-8" style="background-color:;"><textarea  name="desnum[]" type="text" class="form-control"></textarea> </div>' +
-                                    '  </div><br>' +
-                                    '<div class="row"><br>' +
-                                    ' <div class="col-sm-4" style="background-color:;"><label><font size="3"> Reponse correcte n° :</font></label></div>' +
-                                    ' <div class="col-sm-4" style="background-color:;"><input  name="number[]" type="number" class="form-control"></div>' +
-                                    ' <div class="col-sm-" style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
-                                    '</div>' +
-                                    '</div>'+
-                                    '<div id="showPlus"> </div>' +
-                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonctionnumber()" class="fa fa-plus-square"></i></a></font>' +
-                                    '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
-                                    '</div></div>' ;
-                            }else if (a == 'texte'){
-                                document.getElementById("showType").innerHTML = '<div id="showType" style="background-color: ">' +
-                                    '<div class="col-2"> <br><select name="selecttype" class="form-control" id="mySelect" onchange="myFunction()">' +
-                                    '<option  value="texte" selected>Texte</option>' +
-                                    '<option value="date">Date</option>' +
-                                    '<option value="number">Nombre</option></select></div><br><br>' +
-                                    ' <div class="row">' +
-                                    '    <div class="col-sm-5" style="background-color:;">Nombre de caracteres autorisés - Entre 1 et 1000<br></div><br><br>' +
-                                    '    <div class="col-sm-2" style="background-color:;"><input name="nbcaractere" type="number" min="1" max="1000"  class="form-control"></div>' +
-                                    '  </div>' +
-                                    ' <div id="hide_0" class="row"><br><br>' +
-                                    '    <div class="col-sm-3" style="background-color:;"><label><font size="3"> Reponse correcte :</font></label></div>' +
-                                    '    <div class="col-sm-8" style="background-color:;"><input name="test[]" type="text" class="form-control"></div>' +
-                                    '    <div class="col-sm-" style="background-color:;"><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
-                                    '  </div>'+
-                                    '<div id="showPlus"> </div>' +
-                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonction()" class="fa fa-plus-square"></i></a></font>' +
-                                    '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
-                                    '</div></div>' ;
-                            }
-                        }
-                    }
+
+
                     function fonction()
                     {
                         var nbr = $("#showPlus").children('div').length;
@@ -252,7 +245,9 @@
                             '    <div class="col-sm-" style="background-color:;"><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
                             '  </div>' ;
                         $("#showPlus").append(innerHTML);
+
                     }
+
                     function fonctiondate()
                     {
                         var nbr = $("#showPlus").children('div').length;
@@ -267,11 +262,13 @@
                             ' <br><br><br><br> </div>' ;
                         $("#showPlus").append(innerHTML);
                     }
+
                     function fonctionnumber()
                     {
                         var nbr = $("#showPlus").children('div').length;
                         nbr = nbr +1;
                         var innerHTML ='<div id="hide_'+nbr+'"><br>' +
+
                             ' <div  class="row">' +
                             '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Description  :</font></label></div>' +
                             '    <div class="col-sm-8" style="background-color:;"><textarea name="desnum[]" type="text" class="form-control"> </textarea></div><br>' +
@@ -280,15 +277,20 @@
                             ' <div class="col-sm-4" style="background-color:;"><label><font size="3"> Reponse correcte n° :</font></label></div>' +
                             ' <div class="col-sm-4" style="background-color:;"><input  name="number[]" type="number" class="form-control"></div>' +
                             ' <div class="col-sm-" style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+
                             '</div>' +
                             '</div>' ;
                         $("#showPlus").append(innerHTML);
                     }
+
+
+
                     function fonctiontypevraioufaux()
                     {
                         var nbr = $("#showPlus").children('div').length;
                         nbr = nbr +1;
                         var innerHTML =
+
                             '<div id="hide_'+nbr+'"  class="row">' +
                             '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix :</font></label></div>' +
                             '    <div class="col-sm-6" style="background-color:;"><input name="vf[]"  type="text" class="form-control"></textarea> </div>' +
@@ -299,6 +301,8 @@
                         ;
                         $("#showPlus").append(innerHTML);
                     }
+
+
                     function fonctioncaseacocher()
                     {
                         var nbr = $("#showPlus").children('div').length;
@@ -311,46 +315,64 @@
                             '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' ;
                         $("#showPlus").append(innerHTML);
                     }
+
                     function fonctionliste()
                     {
                         var nbr = $("#showPlus").children('div').length;
                         nbr = nbr +1;
                         var innerHTML =
                             '<div id="hide_'+nbr+'"  class="row" >' +
+
                             '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix réponse  :</font></label></div>' +
                             '    <div class="col-sm-6" style="background-color:;"><input name="list[]"  type="text" class="form-control"></div>' +
                             '    <div class="col-sm-3" style="background-color:;"><select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
                             '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
                             ' <br><br>' +
                             ' </div>' ;
+
                         $("#showPlus").append(innerHTML);
                     }
+
+
                     function fonctioncalcule()
                     {
                         var nbr = $("#showPlus").children('div').length;
                         nbr = nbr +1;
                         var innerHTML =
+
                             '<div id="hide_'+nbr+'">' +
                             '<div  class="row" >' +
+
                             '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Description formule n° :</font></label></div>' +
                             '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Formule :</font></label></div>' +
                             '    <div class="col-sm-3" style="background-color:;"><label><font size="2"> Resultat :</font></label></div>' +
+
                             '</div>'+
+
                             '<div  class="row" >' +
+
                             '    <div class="col-sm-4" style="background-color:;"><input  name="descriptionF[]" type="text" class="form-control"></div>' +
                             '    <div class="col-sm-4" style="background-color:;"><input  name="formule[]" type="text" class="form-control"></div>' +
                             '    <div class="col-sm-3" style="background-color:;"><input  name="resultatF[]" type="text" class="form-control"></div>' +
                             '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+
                             '</div>'+
+
                             ' <br>' +
                             ' </div>'
+
                         $("#showPlus").append(innerHTML);
                     }
+
+
+
+
                     function fonctionhide(nbr) {
                         $('div#hide_'+nbr).remove();
-                    }
-                </script>
 
+                    }
+
+                </script>
                 <div id="showType"></div>
 
 

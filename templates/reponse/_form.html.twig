@@ -2,6 +2,8 @@
 
 {{ form_start(form) }}
 {% if question.typeQuestion == "Vrai/faux" %}
+    {% for p in question.reponse %}
+
     {{ form_widget(form.reponse_valide, { 'attr':{'class':'form-control'} }) }}
     {{ form_widget(form.formule, { 'attr':{'hidden':'hidden'} }) }}
     {{ form_widget(form.destext  , { 'attr':{'hidden':'hidden'} }) }}
@@ -12,34 +14,13 @@
     {{ form_widget(form.etatvf) }}<br>
     {{ form_widget(form.etatlist  , { 'attr':{'hidden':'hidden'} }) }}
     {{ form_widget(form.etatcaseacocher  , { 'attr':{'hidden':'hidden'} }) }}
+    {% endfor %}
+{% endif %}
 
-    {% else %}
-        {% if question.typeQuestion=='Réponse courte' %}
 
-            {% for p in question.parametre %}
-                {% if p.question == question %}
-                    {% if p.formText == "texte" %}
-
+                    {% if question.typeQuestion  == "Date" %}
                         {% for p in question.reponse %}
-                            {% if p.question == question %}
-                                {{ form_widget(form.reponse_valide, { 'attr':{'class':'form-control'} }) }}
-                                {{ form_widget(form.formule, { 'attr':{'hidden':'hidden'} }) }}
-                                {{ form_widget(form.destext  , { 'attr':{'hidden':'hidden'} }) }}
-                                {{ form_widget(form.desnumber  , { 'attr':{'hidden':'hidden'} }) }}
-                                {{ form_widget(form.resultatformule  , { 'attr':{'hidden':'hidden'} }) }}
-                                {{ form_widget(form.descriptiondate  , { 'attr':{'hidden':'hidden'} }) }}
-                                {{ form_widget(form.descriptionformule  , { 'attr':{'hidden':'hidden'} }) }}
-                                {{ form_widget(form.etatvf  , { 'attr':{'hidden':'hidden'} }) }}
-                                {{ form_widget(form.etatlist  , { 'attr':{'hidden':'hidden'} }) }}
-                                {{ form_widget(form.etatcaseacocher  , { 'attr':{'hidden':'hidden'} }) }}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
 
-                    {% if p.formText == "date" %}
-
-                        {% for p in question.reponse %}
-                            {% if p.question == question %}
                                 {{ form_widget(form.reponse_valide, { 'attr':{'class':'form-control'} }) }}
                                 {{ form_widget(form.formule, { 'attr':{'hidden':'hidden'} }) }}
                                 {{ form_widget(form.destext  , { 'attr':{'hidden':'hidden'} }) }}
@@ -50,14 +31,12 @@
                                 {{ form_widget(form.etatvf  , { 'attr':{'hidden':'hidden'} }) }}
                                 {{ form_widget(form.etatlist  , { 'attr':{'hidden':'hidden'} }) }}
                                 {{ form_widget(form.etatcaseacocher  , { 'attr':{'hidden':'hidden'} }) }}
-                            {% endif %}
-                        {% endfor %}
+{% endfor %}
                     {% endif %}
 
-                    {% if p.formText == "number" %}
-
+                    {% if question.typeQuestion == "Nombre" %}
                         {% for p in question.reponse %}
-                            {% if p.question == question %}
+
                                 {{ form_widget(form.desnumber , { 'attr':{'class':'form-control'} } ) }}
 
                                 {{ form_widget(form.reponse_valide, { 'attr':{'class':'form-control'} }) }}
@@ -69,15 +48,11 @@
                                 {{ form_widget(form.etatvf  , { 'attr':{'hidden':'hidden'} }) }}
                                 {{ form_widget(form.etatlist  , { 'attr':{'hidden':'hidden'} }) }}
                                 {{ form_widget(form.etatcaseacocher  , { 'attr':{'hidden':'hidden'} }) }}
-                            {% endif %}
-                        {% endfor %}
+{% endfor %}
                     {% endif %}
 
-                    {% endif %}
-            {% endfor %}
-    {% endif %}
 
-{% endif %}
+
   {% if question.typeQuestion=='Case à cocher' %}
 
       {% for p in question.reponse %}
@@ -107,7 +82,7 @@
          {{ form_widget(form.descriptiondate, { 'attr':{'hidden':'hidden'} } ) }}
          {{ form_widget(form.descriptionformule  , { 'attr':{'hidden':'hidden'} }) }}
          {{ form_widget(form.etatvf  , { 'attr':{'hidden':'hidden'} }) }}
-         {{ form_widget(form.etatlist , { 'attr':{'class':'form-control'} } ) }}
+         {{ form_widget(form.etatlist ) }}
          {{ form_widget(form.etatcaseacocher , { 'attr':{'hidden':'hidden'} } ) }}
      {% endfor %}
  {% endif %}

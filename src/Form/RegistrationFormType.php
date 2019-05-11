@@ -9,17 +9,22 @@
 namespace App\Form;
 
 
+use phpDocumentor\Reflection\File;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseRegistrationFormType;
+use Symfony\Component\HttpFoundation\File\MimeType\FileinfoMimeTypeGuesser;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('numerotel', TelType::class);
+            ->add('numerotel', TelType::class)
+            ->add('avatar', FileType::class);
+
     }
 
     public function getParent()

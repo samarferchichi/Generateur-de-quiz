@@ -10,8 +10,6 @@
 {% block content_header %}
 
     <div class="form-group row">
-        <img width="150" height="150" src="{{ asset('logoquiz/m.png' ) }}">
-
         <h1 class="title">{{ _content_title }}</h1>
     </div>
 {% endblock %}
@@ -126,12 +124,7 @@
 
                                                 {% else %}
 
-                                            {% for i in parquiz %}
-                                                {% if i.quiz == p and i.user == user %}
-                                                {{ i.user.id }}
-                                                {{ i.quiz.id }}
-                                                {% endif %}
-                                            {% endfor %}
+
 
                                                     {{  total }}
 

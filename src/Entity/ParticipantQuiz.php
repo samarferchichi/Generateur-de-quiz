@@ -23,6 +23,26 @@ class ParticipantQuiz
 
 
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $tentative;
+
+    /**
+     * @return mixed
+     */
+    public function getTentative()
+    {
+        return $this->tentative;
+    }
+
+    /**
+     * @param mixed $tentative
+     */
+    public function setTentative($tentative): void
+    {
+        $this->tentative = $tentative;
+    }
 
 
 
@@ -97,17 +117,17 @@ class ParticipantQuiz
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getParticipant()
     {
-        return $this->user;
+        return $this->participant;
     }
 
     /**
      * @param mixed $user
      */
-    public function setUser($user): void
+    public function setParticipant($participant): void
     {
-        $this->user = $user;
+        $this->participant = $participant;
     }
 
     /**
@@ -128,10 +148,10 @@ class ParticipantQuiz
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="participantquiz")
-     * @ORM\JoinColumn(name="user", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Participant", inversedBy="participantquiz")
+     * @ORM\JoinColumn(name="participant", referencedColumnName="id")
      */
-    private $user;
+    private $participant;
 
     /**
      * @ORM\ManyToOne(targetEntity="Quiz", inversedBy="participantquiz")
@@ -140,6 +160,11 @@ class ParticipantQuiz
     private $quiz;
 
 
+
+    public function __toString()
+    {
+        return $this->getQuiz()->getTitre();
+    }
 
 
 }

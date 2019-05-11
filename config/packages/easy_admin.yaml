@@ -1,5 +1,5 @@
 easy_admin:
-  site_name: '<font color=#1FC5F3><em style="font-size: 100%;">Quiz Back-Office .</em></font>'
+  site_name: 'Quiz Back-Office .'
 
 
   list:
@@ -12,6 +12,19 @@ easy_admin:
 
 
   entities:
+    Participant:
+      class: App\Entity\Participant
+
+      list:
+      action:
+        fields:
+          - { property: 'email', type: 'text' }
+      show:
+        fields:
+          - { property: 'email', type: 'text' }
+
+
+
 
     ParticipantQuiz:
       class: App\Entity\ParticipantQuiz
@@ -93,11 +106,9 @@ easy_admin:
         icon: 'users'
         children:
           - { entity: 'User' , icon: 'user-plus' }
-          - { entity: 'User', icon: 'user', label: 'Participants'  }
-      - { entity: 'Quiz', label: 'Statiqtique', icon: 'fa fa-pie-chart' }
+          - { entity: 'Participant', icon: 'user', label: 'Participants'  }
+      - { label: 'Statiqtique',route: 'statistique', icon: 'fa fa-pie-chart' }
       - { label: 'Historiques',route: 'historique', icon: 'history' }
-
-    brand_color: '#1FC5F3'
     assets:
       css:
         - 'css/admin.css'

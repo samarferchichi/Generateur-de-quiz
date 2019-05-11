@@ -173,7 +173,7 @@
 
                                 {% endif %}
                                 {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}
-                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id }) }}" >{{ quiz.titre }}</a></li>
+                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id, 'par':par.id }) }}" >{{ quiz.titre }}</a></li>
                                 {% endif %}
 
                             {% endif %}

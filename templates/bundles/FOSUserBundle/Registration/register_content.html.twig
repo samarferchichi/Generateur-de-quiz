@@ -39,7 +39,7 @@
 
 
         .card{
-            height: 520px;
+            height: 640px;
             margin-top: auto;
             margin-bottom: auto;
             width: 500px;
@@ -114,6 +114,13 @@
                     <input type="email" id="fos_user_registration_form_email" name="fos_user_registration_form[email]" placeholder="Email" required="required" class="form-control">
 
                 </div>
+                <h9>
+                    <font color="#a52a2a">   {{ form_errors(form.email) }}</font></h9>
+<br>
+
+                {{ form_widget(form.avatar) }}
+<br>
+<br>
 
                 <div class="input-group form-group">
 
@@ -122,6 +129,12 @@
 
                     </div>
                 </div>
+                <h9>
+                    <font color="#a52a2a">
+                           {{ form_errors(form.numerotel) }}
+
+                   </font>
+                </h9>
 
                 <div class="input-group form-group">
 
@@ -134,11 +147,21 @@
                     <input type="password" id="fos_user_registration_form_plainPassword_first" name="fos_user_registration_form[plainPassword][first]" placeholder="Mot de passe" required="required" autocomplete="new-password" class="form-control" aria-autocomplete="list">
                 </div>
 
+
                 <div class="input-group form-group">
 
                     <input type="password" id="fos_user_registration_form_plainPassword_second" name="fos_user_registration_form[plainPassword][second]" placeholder="Confirmer mot de passe" required="required" autocomplete="new-password" class="form-control">
                 </div>
+
+                <h9>
+                    <font color="#a52a2a">
+                        {{ form_errors(form.plainPassword.first) }}
+
+                        {{ form_errors(form.plainPassword.second) }}
+                    </font>
+                </h9>
                 <br><br><br>
+
                 <div class="form-group">
                     <input type="submit" value="{{ 'registration.submit'|trans }}" class="btn float-right login_btn" />
                 </div>
@@ -146,17 +169,16 @@
                 {{ form_widget(form._token) }}
                 {#{{ form_end(form) }}#}
                 </form>
+
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-center links">
                     Vous avez déjà un compte?
                     <a href="{{ path('fos_user_security_login') }}">Connecter !</a>
                 </div>
-                <div class="d-flex justify-content-center">
-                </div>
+
             </div>
         </div>
     </div>
-</div>
 </body>
 </html>

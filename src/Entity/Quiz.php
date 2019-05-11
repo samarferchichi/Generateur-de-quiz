@@ -72,8 +72,26 @@ class Quiz
     }
 
 
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $datecreerquiz = null;
 
+    /**
+     * @return mixed
+     */
+    public function getDatecreerquiz()
+    {
+        return $this->datecreerquiz;
+    }
 
+    /**
+     * @param mixed $datecreerquiz
+     */
+    public function setDatecreerquiz($datecreerquiz): void
+    {
+        $this->datecreerquiz = $datecreerquiz;
+    }
 
 
     /**

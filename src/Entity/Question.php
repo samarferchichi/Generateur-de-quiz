@@ -23,8 +23,6 @@ class Question
 
 
 
-
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ReponseParticipant", mappedBy="id_question", cascade={"persist","remove"})
      */
@@ -41,13 +39,6 @@ class Question
     {
         return $this->rep;
     }
-
-
-
-
-
-
-
 
 
 

@@ -1,0 +1,187 @@
+{% extends '/bundles/EasyAdmin/default/layout.html.twig' %}
+
+{% block main %}
+
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+<br>
+<br>
+<br>
+    <div id="container" style="min-width: 310px; height: 400px; margin-left: 5%; margin-right: 5%"></div>
+<br>    <br>
+    <div class="row" style="background-color: ; width: 100%">
+        <div id="cc" style="min-width: 310px; height: 400px; margin: 0 auto;" class="col-6"></div>
+        <div id="dd" style="min-width: 310px; height: 400px; margin: 0 auto" class="col-6"></div>
+
+    </div>
+
+    {% set nb=0 %}
+{% for i in participant %}
+    {% set nb=nb+i %}
+{% endfor %}
+    <script>
+        // Create the chart
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Les quiz avec les nbr des tentatives totale '
+            },
+            subtitle: {
+                text: new Date()
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                title: {
+                    text: 'Total percent market share'
+                }
+
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y}'
+                    }
+                }
+            },
+
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span> <b>{point.y}</b> de totale<br/>'
+            },
+
+            series: [
+                {
+                    name: "Quiz",
+                    colorByPoint: true,
+                    data: [
+                        {% for key, i in userquiz %}
+                        {
+                            name: "{{ i }}",
+                        }  ,
+
+                        {
+                            y:{{ participant[key] }},
+                            drilldown: "Chrome"
+                        },
+
+                        {% endfor %}
+                    ]
+                }
+            ],
+
+
+        });
+    </script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+<script>
+        Highcharts.chart('cc', {
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 45,
+                    beta: 0
+                }
+            },
+            title: {
+                text: '10 max des participants ili 3amlo akther quizet'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    depth: 35,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    ['Firefox', 45.0],
+                    ['IE', 26.8],
+                    {
+                        name: 'Chrome',
+                        y: 12.8,
+                        sliced: true,
+                        selected: true
+                    },
+                    ['Safari', 8.5],
+                    ['Opera', 6.2],
+                    ['Others', 0.7]
+                ]
+            }]
+        });
+</script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <script>
+    Highcharts.chart('dd', {
+        chart: {
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        title: {
+            text: '***'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                depth: 35,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Browser share',
+            data: [
+                ['Firefox', 45.0],
+                ['IE', 26.8],
+                {
+                    name: 'Chrome',
+                    y: 12.8,
+                    sliced: true,
+                    selected: true
+                },
+
+            ]
+        }]
+    });
+</script>
+{% endblock %}

@@ -126,6 +126,14 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>Date creation</th>
+                                    <td>
+                                        <div>
+                                            {{ quiz.datecreerquiz ? quiz.datecreerquiz|date('Y-m-d') : '' }}
+                                        </div>
+                                    </td>
+                                </tr>
                                 <!--   <tr>
                                     <th>Mode correction</th>
                                     <td> <label>{{ quiz.modeCorrection ? 'Oui' : 'Non' }}</label></td>

@@ -7,21 +7,29 @@
  */
 
 namespace App\Controller\front_end;
+use App\Entity\Participant;
 use App\Entity\ParticipantQuiz;
+use App\Entity\Question;
 use App\Entity\Quiz;
 use App\Entity\ReponseParticipant;
 use App\Entity\User;
+use App\Form\ParticipantType;
 use App\Repository\PageRepository;
 use App\Repository\ParticipantQuizRepository;
+use App\Repository\ParticipantRepository;
 use App\Repository\QuizRepository;
 use App\Repository\ReponseParticipantRepository;
+use Doctrine\DBAL\Types\IntegerType;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserInterface;
 
+use http\Env\Request;
 use http\Env\Response;
+use phpDocumentor\Reflection\Types\Integer;
+use PhpParser\Node\Scalar\String_;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,18 +45,20 @@ class IndexController extends Controller
     /**
      * @Route("/", name="index", methods={"GET" , "POST"})
      */
-    public function show( QuizRepository $quizRepository, ParticipantQuizRepository $participantQuizRepository)
+    public function show( QuizRepository $quizRepository, ParticipantQuizRepository $participantQuizRepository, ParticipantRepository $participantRepository)
     {
         $listquiz= $quizRepository->findAll();
         $listparticipantquiz= $participantQuizRepository->findAll();
 
+        $participant = $participantRepository->findAll();
 
 
 
         return $this->render('front_end/index.html.twig',[
             'listquiz'=> $listquiz,
             'userconct' => $this->getUser(),
-            'listparticipantquiz' => $listparticipantquiz
+            'listparticipantquiz' => $listparticipantquiz,
+            'participant' =>$participant
         ]);
 
     }
@@ -113,11 +123,11 @@ class IndexController extends Controller
 
 
     /**
-     * @Route("/resultat/{quiz}", name="resultat", methods={"GET" , "POST"})
+     * @Route("/resultat/{quiz}/{par}/{tentative}", name="resultat", methods={"GET" , "POST"})
      */
-    public function resultat( Quiz $quiz, ParticipantQuiz $p, QuizRepository $quizRepository,ParticipantQuizRepository $participantQuizRepository ,ReponseParticipantRepository $reponseParticipantRepository, \Symfony\Component\HttpFoundation\Request $request)
-    {
+    public function resultat( Quiz $quiz, $tentative  ,Participant $par,  QuizRepository $quizRepository,ParticipantQuizRepository $participantQuizRepository ,ReponseParticipantRepository $reponseParticipantRepository, \Symfony\Component\HttpFoundation\Request $request)
 
+{
 
         $listquiz= $quizRepository->findAll();
 
@@ -126,14 +136,13 @@ class IndexController extends Controller
         $listparticipantquiz= $participantQuizRepository->findAll();
         $reponseParticipant = $reponseParticipantRepository->findAll();
 
-        $max= max($reponseParticipant);
+       // $max= max($reponseParticipant);
 
 
 
-
-        $p->setResultat(1);
+      /*  $p->setResultat(1);
         $entityManager->persist($p);
-        $entityManager->flush();
+        $entityManager->flush();*/
 
         return $this->render('front_end/resultat.html.twig',[
             'quiz'=> $quiz,
@@ -141,7 +150,9 @@ class IndexController extends Controller
             'userconct' => $this->getUser(),
             'listparticipantquiz' => $listparticipantquiz,
             'reponseParticipant' => $reponseParticipant,
-            'max' => $max
+            'par'=>$par,
+            'tentative'=>$tentative
+
 
 
 
@@ -149,12 +160,45 @@ class IndexController extends Controller
         ]);
 
     }
+
+
+
+
+
     /**
-     * @Route("/quizpublic/{quiz}", name="quizpublic", methods={"GET" , "POST"})
+     * @Route("/testsendmail/{quiz}", name="testsendmail", methods={"GET" , "POST"})
      */
-    public function quizpublic( Quiz $quiz,ReponseParticipantRepository $reponseParticipantRepository, QuizRepository $quizRepository,ParticipantQuizRepository $participantQuizRepository , \Symfony\Component\HttpFoundation\Request $request)
+    public function testsendmail( Quiz $quiz,ReponseParticipantRepository $reponseParticipantRepository, QuizRepository $quizRepository,ParticipantQuizRepository $participantQuizRepository , \Symfony\Component\HttpFoundation\Request $request)
     {
-        $t=1;
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $listquiz= $quizRepository->findAll();
+
+
+        $listparticipantquiz= $participantQuizRepository->findAll();
+
+
+        return $this->render('front_end/testsendmail.html.twig',[
+            'quiz'=>$quiz,
+            'listquiz' => $listquiz,
+            'userconct' => $this->getUser(),
+            'listparticipantquiz' => $listparticipantquiz,
+        ]);
+
+
+    }
+
+
+
+
+
+    /**
+     * @Route("/quizpublic/{quiz}/{par}", name="quizpublic", methods={"GET" , "POST"})
+     */
+    public function quizpublic( Quiz $quiz,Participant $par,ReponseParticipantRepository $reponseParticipantRepository, QuizRepository $quizRepository,ParticipantQuizRepository $participantQuizRepository , \Symfony\Component\HttpFoundation\Request $request)
+    {
+
+
         $entityManager = $this->getDoctrine()->getManager();
 
         $listquiz= $quizRepository->findAll();
@@ -164,131 +208,96 @@ class IndexController extends Controller
 
 
 
+        $total=0;
 
+        foreach ($listparticipantquiz as $p){
 
-        $nbTentative=0;
-
-        for($i=0; $i < count($listparticipantquiz); $i++){
-
-            if ($listparticipantquiz[$i]->getUser()==$this->getUser() && $listparticipantquiz[$i]->getQuiz()==$quiz ){
-                $nbTentative=$nbTentative+1;
+            if ($p->getParticipant()== $par && $p->getQuiz() == $quiz){
+                $total=$total+1;
             }
         }
 
-        if ($nbTentative >= $quiz->getNbTentative()){
-            $this->render('front_end/index.html.twig',[
-                'listquiz'=> $listquiz,
-                'userconct' => $this->getUser(),
-                'listparticipantquiz' => $listparticipantquiz
-            ]);
+        if ($total < $quiz->getNbTentative()) {
+            $participantquiz = new ParticipantQuiz();
+
+            $participantquiz->setParticipant($par);
+            $participantquiz->setQuiz($quiz);
+            $participantquiz->setTentative($total);
+            $participantquiz->setResultat(20);
+
+            $entityManager->persist($participantquiz);
+
+
         }
+        $vf = $request->get('typevf');
+        $que = $request->get('question');
 
-        else{
-            $p=new ParticipantQuiz();
-
-            $p->setQuiz($quiz);
-
-            $p->setUser($this->getUser());
-            $p->setResultat(0);
-
-            $entityManager->persist($p);
-          //  $entityManager->flush();
-
-            $text = $request->get('typetext');
-            $nbtexte = $request->get('nbtext');
+        $findquestion =new Question();
 
 
-            if($text != null){
-
-                $entityManager->flush();
-
-                for ($i = 0; $i < count($nbtexte); $i++) {
-
-                        $rep = new ReponseParticipant();
+dump($vf);
+        if ($vf != null){
 
 
-                        foreach ($quiz->getPage() as $q)
-                            {foreach ($q->getQuestion() as $question) {
-                                if ($question == $nbtexte[$i])
-                                {
 
-                                    $rep->setReponse($text[$i]);
-                                    $rep->setParticipantquiz($p);
-                                    $rep->setIdQuestion($question);
-                                    $rep->setTentative($nbTentative+1+$p->getId());
+                foreach ($quiz->getPage() as $q) {
+                    foreach ($q->getQuestion() as $question) {
+                           // dump($question->getId());
+                        foreach ($que as $qq) {
 
+                            if($question->getId() == $qq)
+                                 $findquestion=$question;
+                           // dump($findquestion);
 
-                                    $entityManager->persist($rep);
-                                    $entityManager->flush();
 
 
                                 }
-                            }
 
-                            }
-
-              }
-/*
-                $date = $request->get('date');
-                $nbdate = $request->get('nbdate');
-
-                for ($i = 0; $i < count($nbdate); $i++) {
-
-                    $rep = new ReponseParticipant();
-
-
-                    foreach ($quiz->getPage() as $q)
-                    {foreach ($q->getQuestion() as $question) {
-                        if ($question == $nbdate[$i])
-                        {
-
-                            $rep->setReponse($date[$i]);
-                            $rep->setParticipantquiz($p);
-                            $rep->setIdQuestion($question);
-                            $rep->setTentative($nbTentative+1+$p->getId());
-
-                            $entityManager->persist($rep);
-                            $entityManager->flush();
-
-
-                        }
-                    }
 
                     }
-
-                }*/
-
-
-
+                }
+exit;
+            foreach ($vf as $rep) {
 
 
+                $reponseparticipant = new ReponseParticipant();
+                $reponseparticipant->setIdQuestion($findquestion);
+                $reponseparticipant->setParticipantquiz($participantquiz);
+                //     $reponseparticipant->setReponse($v);
+                $entityManager->persist($reponseparticipant);
+
+            }
+            $entityManager->flush();
 
                 return $this->redirectToRoute('resultat',[
                     'quiz'=> $quiz->getId(),
-                    'text' => $text,
-                    'p' => $p
+                    'par'=>$par->getId(),
+                    'tentative'=>$total
                 ]);
-
-
             }
 
 
 
 
-        }
-
-        return $this->render('front_end/quizpublic.html.twig',[
-            'quiz'=> $quiz,
-            'listquiz'=> $listquiz,
-            'userconct' => $this->getUser(),
-            'listparticipantquiz' => $listparticipantquiz,
-
+    return $this->render('front_end/quizpublic.html.twig', [
+        'quiz' => $quiz,
+        'listquiz' => $listquiz,
+        'userconct' => $this->getUser(),
+        'listparticipantquiz' => $listparticipantquiz,
+        'par' => $par
 
 
+    ]);
 
-        ]);
 
     }
+
+
+
+
+
+
+
 
 
 
@@ -310,6 +319,9 @@ class IndexController extends Controller
 
         ]);
     }
+
+
+
 
 
 }

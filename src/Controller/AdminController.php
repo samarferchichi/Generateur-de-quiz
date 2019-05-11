@@ -18,6 +18,7 @@ use App\Repository\ReponseRepository;
 use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManager;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -120,199 +121,7 @@ class AdminController extends EasyAdminController
         if ($formq->isSubmitted() && $formq->isValid()) {
 
 
-            if ($question->getTypeQuestion() == "Réponse courte") {
-                $desnum=$request->get('desnum');
-
-                $selecttype = $request->get('selecttype');
-                if ($selecttype == 'texte') {
-
-                    $nbcaractere = $request->get('nbcaractere');
-
-                    $parametre = new Parametre();
-                    $entityManager = $this->getDoctrine()->getManager();
-
-                    $parametre->setFormText("texte");
-                    $parametre->setQuestion($question);
-                    $parametre->setNbCaractere($nbcaractere);
-                    $entityManager->persist($parametre);
-
-                    $reptext = $request->get('test');
-
-                    if($reptext == null )
-                    {
-                        $this->addFlash('danger','Il faut ajouter une reponse');
-
-                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
-
-                    }
-
-
-
-                    $data = [''];
-                    foreach ($reptext as $p) {
-                        if($p == null )
-                        {
-                            $this->addFlash('danger','Une champ est vide !! il faut remplire touts les champs !');
-
-                            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
-
-                        }else {
-                            array_push($data, $p);
-                        }
-                    }
-
-                    $datatext = [''];
-                    foreach ($data as $p) {
-
-                            array_push($datatext, $p);
-
-                    }
-
-
-
-                    for ($i = 1; $i < count($data); $i++) {
-                        $reponse = new Reponse();
-                        $reponse->setQuestion($question);
-                        $reponse->setReponseValide($data[$i]);
-                        $entityManager->persist($reponse);
-
-                    }
-                    $this->addFlash('success','Question est bien ajouter a la page');
-
-                } elseif ($selecttype == 'date') {
-
-                    $parametre = new Parametre();
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $parametre->setFormText("date");
-                    $parametre->setQuestion($question);
-                    $entityManager->persist($parametre);
-
-                    $date = $request->get('date');
-
-                    if($date == null )
-                    {
-                        $this->addFlash('danger','Il faut ajouter une reponse');
-
-                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
-
-                    }
-
-
-                    $data = [''];
-                    foreach ($date as $p) {
-                        if($p == null )
-                        {
-                            $this->addFlash('danger','Une champ Date est vide !! il faut remplire touts les dates !');
-
-                            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
-
-                        }else {
-                            array_push($data, $p);
-                        }
-                    }
-
-                    $data_desc = $request->get('desc');
-
-                    $datad = [''];
-                    foreach ($data_desc as $p) {
-                        if ($p == null) {
-                            $this->addFlash('danger', 'Une champ description de date est vide !! il faut remplire touts les descriptions !');
-
-                            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
-
-                        } else {
-                            array_push($datad, $p);
-                        }
-
-                    }
-
-
-                    for ($i = 1; $i < count($datad); $i++) {
-
-                        $reponse = new Reponse();
-
-                        $reponse->setQuestion($question);
-                        $reponse->setReponseValide($data[$i]);
-
-                        $reponse->setDescriptiondate($datad[$i]);
-                        $entityManager->persist($reponse);
-
-                    }
-                    $this->addFlash('success','Question est bien ajouter a la page');
-
-                } elseif ($selecttype == 'number') {
-
-
-                    $parametre = new Parametre();
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $parametre->setFormText("number");
-                    $parametre->setQuestion($question);
-                    $parametre->setNbChiffre($request->get('nbChiffre'));
-                    $entityManager->persist($parametre);
-
-
-
-                    $number = $request->get('number');
-
-                    if($number == null )
-                    {
-                        $this->addFlash('danger','Il faut ajouter une reponse');
-
-                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
-
-                    }
-
-                    $desnum = $request->get('desnum');
-
-
-                    $datanum = [''];
-                    foreach ($desnum as $p) {
-                        if ($p == null) {
-                            $this->addFlash('danger', 'Une champ description est vide !! il faut remplire touts les description !');
-
-                            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
-
-                        } else {
-                            array_push($datanum, $p);
-                        }
-                    }
-
-
-
-                    $datanumber = [''];
-                    foreach ($number as $p) {
-                        if ($p == null) {
-                            $this->addFlash('danger', 'Une champ numero est vide !! il faut remplire touts les champs !');
-
-                            return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
-
-                        } else {
-                            array_push($datanumber, $p);
-                        }
-                    }
-
-
-
-
-
-                    $data = [''];
-                    foreach ($number as $p) {
-                        array_push($data, $p);
-                    }
-                    for ($i = 1; $i < count($data); $i++) {
-                        $reponse = new Reponse();
-                        $reponse->setQuestion($question);
-                        $reponse->setDesnumber($datanum[$i]);
-
-                        $reponse->setReponseValide($data[$i]);
-                        $entityManager->persist($reponse);
-
-                    }
-                    $this->addFlash('success','Question est bien ajouter a la page');
-
-                }
-
-            } elseif ($question->getTypeQuestion() == "Vrai/faux") {
+            if  ($question->getTypeQuestion() == "Vrai/faux") {
                 $entityManager = $this->getDoctrine()->getManager();
 
                 $etat = $request->get('etat');
@@ -499,7 +308,135 @@ class AdminController extends EasyAdminController
                 $this->addFlash('success','Question est bien ajouter a la page');
 
             }
+            elseif ($question->getTypeQuestion() == 'Date') {
 
+                $parametre = new Parametre();
+                $entityManager = $this->getDoctrine()->getManager();
+                $parametre->setFormText("date");
+                $parametre->setQuestion($question);
+                $entityManager->persist($parametre);
+
+                $date = $request->get('date');
+
+                if($date == null )
+                {
+                    $this->addFlash('danger','Il faut ajouter une reponse');
+
+                    return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+
+                }
+
+
+                $data = [''];
+                foreach ($date as $p) {
+                    if($p == null )
+                    {
+                        $this->addFlash('danger','Une champ Date est vide !! il faut remplire touts les dates !');
+
+                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+
+                    }else {
+                        array_push($data, $p);
+                    }
+                }
+
+                $data_desc = $request->get('desc');
+
+                $datad = [''];
+                foreach ($data_desc as $p) {
+                    if ($p == null) {
+                        $this->addFlash('danger', 'Une champ description de date est vide !! il faut remplire touts les descriptions !');
+
+                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+
+                    } else {
+                        array_push($datad, $p);
+                    }
+
+                }
+
+                for ($i = 1; $i < count($datad); $i++) {
+
+
+                    $reponse = new Reponse();
+
+                    $reponse->setQuestion($question);
+                    $reponse->setReponseValide($data[$i]);
+
+                    $reponse->setDescriptiondate($datad[$i]);
+                    $entityManager->persist($reponse);
+
+                }
+                $this->addFlash('success','Question est bien ajouter a la page');
+
+            } elseif ($question->getTypeQuestion() == 'Nombre') {
+
+
+                $parametre = new Parametre();
+                $entityManager = $this->getDoctrine()->getManager();
+                $parametre->setFormText("number");
+                $parametre->setQuestion($question);
+                $parametre->setNbChiffre($request->get('nbChiffre'));
+                $entityManager->persist($parametre);
+
+
+
+                $number = $request->get('number');
+
+                if($number == null )
+                {
+                    $this->addFlash('danger','Il faut ajouter une reponse');
+
+                    return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+
+                }
+
+                $desnum = $request->get('desnum');
+
+                $datanum = [''];
+                foreach ($desnum as $p) {
+                    if ($p == null) {
+                        $this->addFlash('danger', 'Une champ description est vide !! il faut remplire touts les description !');
+
+                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+
+                    } else {
+                        array_push($datanum, $p);
+                    }
+                }
+
+
+
+                $datanumber = [''];
+                foreach ($number as $p) {
+                    if ($p == null) {
+                        $this->addFlash('danger', 'Une champ numero est vide !! il faut remplire touts les champs !');
+
+                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+
+                    } else {
+                        array_push($datanumber, $p);
+                    }
+                }
+
+                $data = [''];
+                foreach ($number as $p) {
+                    array_push($data, $p);
+                }
+
+
+                for ($i = 1; $i < count($data); $i++) {
+                    $reponse = new Reponse();
+                    $reponse->setQuestion($question);
+                    $reponse->setDesnumber($datanum[$i]);
+
+                    $reponse->setReponseValide($data[$i]);
+                    $entityManager->persist($reponse);
+
+                }
+                $this->addFlash('success','Question est bien ajouter a la page');
+
+            }
             $entityManager = $this->getDoctrine()->getManager();
 
             $question->setDescriptionQuestion($question->getDescriptionQuestion());
@@ -553,7 +490,7 @@ class AdminController extends EasyAdminController
 
             $page = new Page();
             $page->setQuiz($quiz);
-            $page->setBgColor('	#FFFFFF	');
+            $page->setBgColor($page->getBgColor());
             $page->setColorTitrePage('');
             $page->setTitrePage('Vide');
             $ordre = $pageRepository->getMaxOrdre($quiz->getId());
@@ -611,7 +548,7 @@ class AdminController extends EasyAdminController
 
         return $this->render('quiz/list.html.twig',[
                'listequiz' => $listquiz,
-            'user' => $user
+            'user' => $user,
 
         ]);
     }
@@ -702,7 +639,7 @@ class AdminController extends EasyAdminController
 
             $transport = (new \Swift_SmtpTransport('smtp.googlemail.com', 465, 'ssl'))
                 ->setUsername('samarferchichi61@gmail.com')
-                ->setPassword('samarferchichi123');
+                ->setPassword('samarferchichi1234');
 
             // Create the Mailer using your created Transport
             $mailer = new \Swift_Mailer($transport);
@@ -712,7 +649,7 @@ class AdminController extends EasyAdminController
             // templates/emails/registration.html.twig
                 'emails/send_quiz.html.twig', ['quiz' => $quiz, 'message' =>$des]);
             $message = (new \Swift_Message('Email Through Swift Mailer'))
-                ->setFrom(['amarferchichi61@gmail.com' => 'Quiz'])
+                ->setFrom(['samarferchichi61@gmail.com' => 'Quiz'])
                 ->setTo([$to])
                 //    ->setCc(['RECEPIENT_2_EMAIL_ADDRESS'])
                 //   ->setBcc(['RECEPIENT_3_EMAIL_ADDRESS'])
@@ -741,6 +678,13 @@ class AdminController extends EasyAdminController
         public function dupliqueAction(QuizRepository $quizRepository, Quiz $quiz)
     {
         $entityManager = $this->getDoctrine()->getManager();
+$copie=0;
+
+$quizs=$quizRepository->findAll();
+        foreach($quizs as $d){
+            $aux = explode($d->getTitre().'_Copie(', $quiz->getTitre());
+            $copie=$copie+1;
+        }
 
         $qui =new Quiz();
         if($quiz->getNbQuestion())
@@ -754,11 +698,10 @@ class AdminController extends EasyAdminController
 
         if($quiz->getUser())
             $qui->setUser($quiz->getUser());
-
-        $listquiz=$quizRepository->findAll();
+        $qui->setDatecreerquiz($quiz->getDatecreerquiz());
 
         if($quiz->getTitre())
-            $qui->setTitre($quiz->getTitre());
+            $qui->setTitre($quiz->getTitre()."_($copie)");
         if($quiz->getColorTitre())
             $qui->setColorTitre($quiz->getColorTitre());
         if($quiz->getBrochure())
@@ -856,10 +799,22 @@ class AdminController extends EasyAdminController
                 }
                 }
         }
+        $listquiz=$quizRepository->findAll();
+
+        foreach ( $listquiz as $q){
+
+            if ($q->getTitre() == $qui->getTitre()){
+                $copie=$copie+1;
+            }
+        }
+
         $entityManager->flush();
+
+
 
         return $this->redirectToRoute('list_quiz',[
             'listequiz' => $listquiz,
+            'copie' => $copie
 
         ]);
     }
@@ -900,6 +855,7 @@ class AdminController extends EasyAdminController
            if ($quiz->getOuvrireQuiz())
                $quiz->setOuvrireQuiz(new \DateTime($quiz->getOuvrireQuiz()));
 
+           $quiz->setDatecreerquiz(new \DateTime("now"));
 
             $quiz->setBrochure($fileName);
 
@@ -1034,99 +990,7 @@ class AdminController extends EasyAdminController
         if ($formq->isSubmitted() && $formq->isValid()) {
 
 
-            if ($question->getTypeQuestion() == "Réponse courte") {
-                $des = $request->get('destext');
-
-                $desnum = $request->get('desnum');
-
-                $selecttype = $request->get('selecttype');
-                if ($selecttype == 'texte') {
-                    $nbcaractere = $request->get('nbcaractere');
-                    $parametre = new Parametre();
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $parametre->setFormText("texte");
-                    $parametre->setQuestion($question);
-                    $parametre->setNbCaractere($nbcaractere);
-                    $entityManager->persist($parametre);
-
-                    $reptext = $request->get('test');
-                    $data = [];
-                    foreach ($reptext as $p) {
-                        array_push($data, $p);
-                    }
-
-                    $datatext = [];
-
-                    foreach ($data as $p) {
-                        array_push($datatext, $p);
-                    }
-                    for ($i = 0; $i < count($data); $i++) {
-                        $reponse = new Reponse();
-                        $reponse->setQuestion($question);
-                        $reponse->setReponseValide($data[$i]);
-                        $entityManager->persist($reponse);
-                    }
-
-                } elseif ($selecttype == 'date') {
-
-                    $parametre = new Parametre();
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $parametre->setFormText("date");
-                    $parametre->setQuestion($question);
-                    $entityManager->persist($parametre);
-
-                    $date = $request->get('date');
-                    $data = [];
-                    foreach ($date as $p) {
-                        array_push($data, $p);
-                    }
-
-                    $data_desc = $request->get('desc');
-                    $datad = [];
-                    foreach ($data_desc as $p) {
-                        array_push($datad, $p);
-                    }
-
-
-                    for ($i = 0; $i < count($datad); $i++) {
-
-                        $reponse = new Reponse();
-
-                        $reponse->setQuestion($question);
-                        $reponse->setDescriptiondate($datad[$i]);
-                        $entityManager->persist($reponse);
-
-                    }
-                } elseif ($selecttype == 'number') {
-                    $datanum = [];
-                    foreach ($desnum as $p) {
-                        array_push($datanum, $p);
-                    }
-
-                    $parametre = new Parametre();
-                    $entityManager = $this->getDoctrine()->getManager();
-                    $parametre->setFormText("number");
-                    $parametre->setQuestion($question);
-                    $parametre->setNbChiffre($request->get('nbChiffre'));
-                    $entityManager->persist($parametre);
-                    $number = $request->get('number');
-                    $data = [];
-                    foreach ($number as $p) {
-                        array_push($data, $p);
-                    }
-                    for ($i = 0 ; $i < count($data); $i++) {
-                        $reponse = new Reponse();
-                        $reponse->setQuestion($question);
-                        $reponse->setDesnumber($datanum[$i]);
-
-                        $reponse->setReponseValide($data[$i]);
-                        $entityManager->persist($reponse);
-
-                    }
-
-                }
-
-            } elseif ($question->getTypeQuestion() == "Vrai/faux") {
+            if ($question->getTypeQuestion() == "Vrai/faux") {
                 $entityManager = $this->getDoctrine()->getManager();
                 $etat = $request->get('etat');
                 $dataetat = [];
@@ -1184,7 +1048,7 @@ class AdminController extends EasyAdminController
                     $reponse = new Reponse();
                     $reponse->setQuestion($question);
                     $reponse->setReponseValide($caseetat[$i]);
-                    $reponse->setEtatcaseacocher($data[$i]);
+                    $reponse->setEtatlist($data[$i]);
                     $entityManager->persist($reponse);
 
                 }
@@ -1220,7 +1084,136 @@ class AdminController extends EasyAdminController
 
                 }
 
+            }elseif ($question->getTypeQuestion() == 'Date') {
+
+                $parametre = new Parametre();
+                $entityManager = $this->getDoctrine()->getManager();
+                $parametre->setFormText("date");
+                $parametre->setQuestion($question);
+                $entityManager->persist($parametre);
+
+                $date = $request->get('date');
+
+                if($date == null )
+                {
+                    $this->addFlash('danger','Il faut ajouter une reponse');
+
+                    return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+
+                }
+
+
+                $data = [''];
+                foreach ($date as $p) {
+                    if($p == null )
+                    {
+                        $this->addFlash('danger','Une champ Date est vide !! il faut remplire touts les dates !');
+
+                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+
+                    }else {
+                        array_push($data, $p);
+                    }
+                }
+
+                $data_desc = $request->get('desc');
+
+                $datad = [''];
+                foreach ($data_desc as $p) {
+                    if ($p == null) {
+                        $this->addFlash('danger', 'Une champ description de date est vide !! il faut remplire touts les descriptions !');
+
+                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+
+                    } else {
+                        array_push($datad, $p);
+                    }
+
+                }
+
+                for ($i = 1; $i < count($datad); $i++) {
+
+
+                    $reponse = new Reponse();
+
+                    $reponse->setQuestion($question);
+                    $reponse->setReponseValide($data[$i]);
+
+                    $reponse->setDescriptiondate($datad[$i]);
+                    $entityManager->persist($reponse);
+
+                }
+                $this->addFlash('success','Question est bien ajouter a la page');
+
+            }elseif ($question->getTypeQuestion() == 'Nombre') {
+
+
+                $parametre = new Parametre();
+                $entityManager = $this->getDoctrine()->getManager();
+                $parametre->setFormText("number");
+                $parametre->setQuestion($question);
+                $parametre->setNbChiffre($request->get('nbChiffre'));
+                $entityManager->persist($parametre);
+
+
+
+                $number = $request->get('number');
+
+                if($number == null )
+                {
+                    $this->addFlash('danger','Il faut ajouter une reponse');
+
+                    return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+
+                }
+
+                $desnum = $request->get('desnum');
+
+                $datanum = [''];
+                foreach ($desnum as $p) {
+                    if ($p == null) {
+                        $this->addFlash('danger', 'Une champ description est vide !! il faut remplire touts les description !');
+
+                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+
+                    } else {
+                        array_push($datanum, $p);
+                    }
+                }
+
+
+
+                $datanumber = [''];
+                foreach ($number as $p) {
+                    if ($p == null) {
+                        $this->addFlash('danger', 'Une champ numero est vide !! il faut remplire touts les champs !');
+
+                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+
+                    } else {
+                        array_push($datanumber, $p);
+                    }
+                }
+
+                $data = [''];
+                foreach ($number as $p) {
+                    array_push($data, $p);
+                }
+
+
+                for ($i = 1; $i < count($data); $i++) {
+                    $reponse = new Reponse();
+                    $reponse->setQuestion($question);
+                    $reponse->setDesnumber($datanum[$i]);
+
+                    $reponse->setReponseValide($data[$i]);
+                    $entityManager->persist($reponse);
+
+                }
+                $this->addFlash('success','Question est bien ajouter a la page');
+
             }
+
 
             $entityManager = $this->getDoctrine()->getManager();
             $question->setPage($page);
@@ -1352,9 +1345,6 @@ class AdminController extends EasyAdminController
      */
     public function admin()
     {
-
-
-
         return $this->render('admin');
     }
 

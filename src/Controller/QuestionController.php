@@ -115,6 +115,8 @@ class QuestionController extends AbstractController
                     $r->setEtatvf($rep->getEtatvf());
                 if($rep->getReponseValide())
                     $r->setReponseValide($rep->getReponseValide());
+                if($rep->getDesnumber())
+                    $r->setDesnumber($rep->getDesnumber());
 
                 $r->setQuestion($q);
 
@@ -185,6 +187,8 @@ class QuestionController extends AbstractController
                     $r->setEtatvf($rep->getEtatvf());
                 if($rep->getReponseValide())
                     $r->setReponseValide($rep->getReponseValide());
+                if($rep->getDesnumber())
+                     $r->setDesnumber($rep->getDesnumber());
 
                 $r->setQuestion($q);
 
@@ -252,6 +256,9 @@ class QuestionController extends AbstractController
                     $r->setEtatvf($rep->getEtatvf());
                 if($rep->getReponseValide())
                     $r->setReponseValide($rep->getReponseValide());
+                if($rep->getDesnumber())
+                    $r->setDesnumber($rep->getDesnumber());
+
 
                 $r->setQuestion($q);
 

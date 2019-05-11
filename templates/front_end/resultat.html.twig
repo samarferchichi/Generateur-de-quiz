@@ -169,7 +169,7 @@
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Quiz <span class="caret"></span></a>
                 <ul class="dropdown-menu">
 
-                    {% if listquiz|length == 0 %}
+                 {% if listquiz|length == 0 %}
                         <li style="width: 350px;" class="menu-level-1">Liste Vide</li>
                     {% else %}
                         {% for quiz in listquiz %}
@@ -179,7 +179,7 @@
 
                                 {% endif %}
                                 {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}
-                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id }) }}" >{{ quiz.titre }}</a></li>
+                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id, 'par' : par.id}) }}" >{{ quiz.titre }}</a></li>
                                 {% endif %}
 
                             {% endif %}
@@ -189,67 +189,7 @@
             </li>
             <li><a href="#">Page 2</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
 
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-
-            <li> <a href="{{ path('fos_user_security_logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-            <ul>
-                <li>
-                    <div>
-                        <font color="#1e90ff">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} </font> |
-
-                    </div>
-                    {% else %}
-                <li>
-
-                <li>
-                    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-                </li>
-
-                <li>
-                    <a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Inscrire</a>
-
-                    <ul style="background-color: #d1ecf1" class="dropdown-menu">
-
-                        <li>
-                            <a>
-                                Facebook
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                Gmail
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ path('fos_user_registration_register') }}">
-                                Register
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                </li>
-                {% endif %}
-
-                {% if app.request.hasPreviousSession %}
-                    {% for type, messages in app.session.flashbag.all() %}
-                        {% for message in messages %}
-                            <div class="flash-{{ type }}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    {% endfor %}
-                {% endif %}
-
-                <div>
-                    {% block fos_user_content %}
-                    {% endblock fos_user_content %}
-                </div>
-            </ul>
-
-
-        </ul>
     </div>
 </nav>
 
@@ -268,50 +208,6 @@
         </font>
     </center>
 
-    <div class="panel panel-success">
-
-        <div class="card bg-info text-white">
-            <div class="card-body">
-
-                Profile
-
-            </div>
-        </div>
-        <div class="panel-body">
-
-            <div class="row">
-                <div class="col">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div style="padding: 20px" class="fos_user_user_show">
-                                <p>Nom utilisateur: {{ userconct.username }}</p>
-                                <p>Email: {{ userconct.email }}</p>
-                                <p>Telephone: {{ userconct.numerotel }}</p>
-
-                            </div>
-
-                        </div>
-                        <a><button onclick="fonctionmodifier()" class="btn btn-success">Modifier profile</button></a>
-                        <script>
-                            function fonctionmodifier() {
-                                $('#modifier').html('uuuuuuuuuuuu' );
-
-                            }
-                        </script>
-                        <div id="modifier"><font color="aqua">
-                                ddsssssssssssssss
-                            </font> </div>
-
-                        <a class="fos_user_change_password" href="{{ path('fos_user_change_password') }}"><button class="btn btn-success">Changer mot de passe</button></a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-        </div></div>
 
 
 </div>
@@ -342,7 +238,10 @@
                         {% endif %}
                     {% endif %}
                 </font>
+                {% if quiz.brochure != "null" %}
+
                 <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
+                {% endif %}
 
             </h1>
         </center>
@@ -492,10 +391,26 @@
 
 
                         {% if question.typeQuestion == 'Vrai/faux' and question.actif == 1 %}
+
+
+
                             <h5><b>Question n°: {{ key2+1 }}</b></h5>
 
                             {{ question.textQuestion }}<br>
                             {{ question.descriptionQuestion }}<br>
+                            {% for r in reponseParticipant  %}
+                                {% for p in listparticipantquiz  %}
+
+                                    {% if r.idQuestion == question and r.participantQuiz == p  and p.tentative == tentative  %}
+
+                                        {{ dump(r) }}
+
+                                    {% endif %}
+
+
+
+                                {% endfor %}
+                            {% endfor %}
                             {% for p in question.reponse %}
                                 {% if p.question == question %}
 

@@ -169,43 +169,34 @@
 
 
 
-                                    {% if j.typeQuestion =='Réponse courte' %}
-                                        {{ j.textQuestion }}<br>
-                                        {{ j.descriptionQuestion }}
 
-                                        {% for p in j.parametre %}
+                                {% if j.typeQuestion =='Date' %}
+                                    {{ j.textQuestion }}
+                                    <br>
+                                    {{ j.descriptionQuestion }}
+                                    <br>
+                                    {% for p in j.reponse %}
+                                        {% if p.question == j %}
+                                            {{ p.descriptiondate }}<br>
+                                            {{ p.desnumber }}
+                                            <input type="date" class="form-control">
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
 
-                                            {% if p.question==j and p.formText =='texte' %}
-
-                                                <textarea class="form-control"></textarea><br>
-                                            {% endif %}
-
-                                            {% if p.question==j and p.formText =='date' %}
-                                                {% for r in j.reponse %}
-                                                    {% if r.question == j %}
-                                                        <br>
-                                                        {{ r.descriptiondate }}
-                                                        <input type="date">
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-
-
-
-
-                                            {% if p.question==j and p.formText =='number' %}
-                                                {% for r in j.reponse %}
-                                                    {% if r.question == j %}
-
-                                                        {{ r.descriptiondate }}<br>
-                                                        {{ r.desnumber }}
-                                                        <input type="number" class="form-control">
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-
+                                {% if j.typeQuestion =='Nombre' %}
+                                    {{ j.textQuestion }}
+                                    <br>
+                                    {{ j.descriptionQuestion }}
+                                    <br>
+                                    {% for p in j.reponse %}
+                                        {% if p.question == j %}
+                                            {{ p.descriptiondate }}<br>
+                                            {{ p.desnumber }}
+                                            <input type="number" class="form-control">
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
 
 
 
