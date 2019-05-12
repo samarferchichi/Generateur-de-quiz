@@ -83,19 +83,6 @@ class QuestionController extends AbstractController
             $entityManager->persist($q);
 
 
-            foreach ($question->getParametre() as $par){
-                $p = new Parametre();
-
-                if($par->getNbCaractere())
-                    $p->setNbCaractere($par->getNbCaractere());
-                if($par->getNbChiffre())
-                    $p->setNbChiffre($par->getNbChiffre());
-                if($par->getFormText())
-                    $p->setFormText($par->getFormText());
-                $p->setQuestion($q);
-
-                $entityManager->persist($p);
-            }
 
             foreach ($question->getReponse() as $rep){
                 $r = new Reponse();
@@ -132,8 +119,6 @@ class QuestionController extends AbstractController
 
 
 
-
-
     public function questionDepAction(Request $request,ReponseRepository $reponseRepository, Question $question, Reponse $reponse): Response
     {
 
@@ -155,19 +140,6 @@ class QuestionController extends AbstractController
             $entityManager->persist($q);
 
 
-            foreach ($question->getParametre() as $par){
-                $p = new Parametre();
-
-                if($par->getNbCaractere())
-                    $p->setNbCaractere($par->getNbCaractere());
-                if($par->getNbChiffre())
-                    $p->setNbChiffre($par->getNbChiffre());
-                if($par->getFormText())
-                    $p->setFormText($par->getFormText());
-                $p->setQuestion($q);
-
-                $entityManager->persist($p);
-            }
 
             foreach ($question->getReponse() as $rep){
                 $r = new Reponse();
@@ -224,19 +196,7 @@ class QuestionController extends AbstractController
             $entityManager->persist($q);
 
 
-            foreach ($question->getParametre() as $par){
-                $p = new Parametre();
 
-                if($par->getNbCaractere())
-                    $p->setNbCaractere($par->getNbCaractere());
-                if($par->getNbChiffre())
-                    $p->setNbChiffre($par->getNbChiffre());
-                if($par->getFormText())
-                    $p->setFormText($par->getFormText());
-                $p->setQuestion($q);
-
-                $entityManager->persist($p);
-            }
 
             foreach ($question->getReponse() as $rep){
                 $r = new Reponse();

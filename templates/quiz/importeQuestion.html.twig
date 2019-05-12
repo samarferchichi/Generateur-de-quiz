@@ -132,19 +132,11 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endif %}
-                                            {% if j.typeQuestion =='Réponse courte' %}
+                                            {% if j.typeQuestion =='Date' %}
+
                                                 {{ j.descriptionQuestion }}
-
-                                                {% for p in j.parametre %}
-
-                                                    {% if p.question==j and p.formText =='texte' %}
-
-                                                        <textarea class="form-control"></textarea><br>
-
-                                                    {% endif %}
-
-                                                    {% if p.question==j and p.formText =='date' %}
-                                                        {% for r in j.reponse %}
+                                                <br>
+                                                 {% for r in j.reponse %}
                                                             {% if r.question == j %}
                                                                 {{ r.descriptiondate }}
 
@@ -157,28 +149,34 @@
                                                     {% endif %}
 
 
+                                            {% if j.typeQuestion =='Nombre' %}
 
+                                                {{ j.descriptionQuestion }}
+                                                <br>
 
-                                                    {% if p.question==j and p.formText =='number' %}
-                                                        {% for r in j.reponse %}
-                                                            {% if r.question == j %}
+                                                {% for r in j.reponse %}
+                                                    {% if r.question == j %}
+                                                        {{ r.desnumber }}
 
-                                                                {{ r.desnumber }}
-                                                                <input type="number"  class="form-control">
-                                                            {% endif %}
-                                                        {% endfor %}
+                                                        <div style="width: 250px;">
+                                                            <input type="number" class="form-control">
+                                                        </div>
+
                                                     {% endif %}
                                                 {% endfor %}
                                             {% endif %}
 
 
+
                                             <div class="row" style=" color: #3a87ad; padding-left: 95%">
 
-                                                                <a  href="#" class="fa fa-eye"></a>
                                                 &nbsp;
                                                 &nbsp;
 
-                                                                <a href="{{ path('question_importe', {'question': j.id, 'quizactuel': quizactuel, 'pageactuel': pageactuel} )}}" class="fa fa-plus"></a>
+                                                               <h2>
+                                                                   <a href="{{ path('question_importe', {'question': j.id, 'quizactuel': quizactuel, 'pageactuel': pageactuel} )}}" class="fa fa-plus"></a>
+
+                                                               </h2>
 
                                         </div>
                                     </div>

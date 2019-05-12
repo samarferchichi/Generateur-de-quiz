@@ -832,7 +832,7 @@ $quizs=$quizRepository->findAll();
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
 
-            /** @var Symfony\Component\HttpFoundation\File\UploadedFile $file */
+
             $file = $quiz->getBrochure();
 
             if($file == null){
@@ -981,7 +981,7 @@ $quizs=$quizRepository->findAll();
         $formq = $this->createForm(QuestionType::class, $question, [
             'action' => $this->generateUrl('newQuestion', [
                 'quiz' => $quiz->getId(),
-                'page' => $page->getId()
+                'page' => $page->getId(),
             ])
         ]);
         $formq->handleRequest($request);
@@ -990,19 +990,37 @@ $quizs=$quizRepository->findAll();
         if ($formq->isSubmitted() && $formq->isValid()) {
 
 
-            if ($question->getTypeQuestion() == "Vrai/faux") {
+            if  ($question->getTypeQuestion() == "Vrai/faux") {
                 $entityManager = $this->getDoctrine()->getManager();
+
                 $etat = $request->get('etat');
-                $dataetat = [];
+                if($etat == null )
+                {
+                    $this->addFlash('danger','Il faut ajouter une reponse');
+
+                    return $this->redirectToRoute('modifier_page', ['quiz' => $quiz->getId(), 'page' => $page->getId()]);
+
+                }
+
+                $dataetat = [''];
                 foreach ($etat as $p) {
                     array_push($dataetat, $p);
                 }
+
                 $vf = $request->get('vf');
-                $data = [];
+                $data = [''];
                 foreach ($vf as $p) {
-                    array_push($data, $p);
+                    if ($p == null) {
+                        $this->addFlash('danger', 'Une champ est vide !! il faut remplire touts les champs !');
+
+                        return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
+
+                    } else {
+                        array_push($data, $p);
+                    }
                 }
-                for ($i = 0; $i < count($data); $i++) {
+
+                for ($i = 1; $i < count($data); $i++) {
                     $reponse = new Reponse();
                     $reponse->setQuestion($question);
                     $reponse->setReponseValide($data[$i]);
@@ -1010,21 +1028,43 @@ $quizs=$quizRepository->findAll();
                     $reponse->setEtatvf($dataetat[$i]);
                     $entityManager->persist($reponse);
                 }
+                $this->addFlash('success','Question est bien ajouter a la page');
 
             } elseif ($question->getTypeQuestion() == "Case à cocher") {
                 $entityManager = $this->getDoctrine()->getManager();
+
+
                 $etatcase = $request->get('case');
-                $caseetat = [];
+
+                if($etatcase == null )
+                {
+                    $this->addFlash('danger','Il faut ajouter une reponse');
+
+                    return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
+
+                }
+
+
+                $caseetat = [''];
                 foreach ($etatcase as $p) {
-                    array_push($caseetat, $p);
+                    if ($p == null) {
+                        $this->addFlash('danger', 'Une champ est vide !! il faut remplire touts les champs !');
+
+                        return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
+
+                    } else {
+                        array_push($caseetat, $p);
+                    }
                 }
 
                 $case = $request->get('etatcase');
-                $data = [];
+                $data = [''];
                 foreach ($case as $p) {
+
                     array_push($data, $p);
+
                 }
-                for ($i = 0; $i < count($data); $i++) {
+                for ($i = 1; $i < count($data); $i++) {
                     $reponse = new Reponse();
                     $reponse->setQuestion($question);
                     $reponse->setReponseValide($caseetat[$i]);
@@ -1032,19 +1072,38 @@ $quizs=$quizRepository->findAll();
                     $entityManager->persist($reponse);
 
                 }
+                $this->addFlash('success','Question est bien ajouter a la page');
+
             } elseif ($question->getTypeQuestion() == "Liste déroulante") {
                 $entityManager = $this->getDoctrine()->getManager();
+
                 $etatcase = $request->get('list');
-                $caseetat = [];
-                foreach ($etatcase as $p) {
-                    array_push($caseetat, $p);
+                if($etatcase == null )
+                {
+                    $this->addFlash('danger','Il faut ajouter une reponse');
+
+                    return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
+
                 }
+
+                $caseetat = [''];
+                foreach ($etatcase as $p) {
+                    if ($p == null) {
+                        $this->addFlash('danger', 'Une champ est vide !! il faut remplire touts les champs !');
+
+                        return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
+
+                    } else {
+                        array_push($caseetat, $p);
+                    }
+                }
+
                 $case = $request->get('etatlist');
-                $data = [];
+                $data = [''];
                 foreach ($case as $p) {
                     array_push($data, $p);
                 }
-                for ($i = 0; $i < count($data); $i++) {
+                for ($i = 1; $i < count($data); $i++) {
                     $reponse = new Reponse();
                     $reponse->setQuestion($question);
                     $reponse->setReponseValide($caseetat[$i]);
@@ -1052,29 +1111,61 @@ $quizs=$quizRepository->findAll();
                     $entityManager->persist($reponse);
 
                 }
+                $this->addFlash('success','Question est bien ajouter a la page');
 
             } elseif ($question->getTypeQuestion() == "Calculée") {
                 $entityManager = $this->getDoctrine()->getManager();
+
+
                 $descriptionf = $request->get('descriptionF');
-                $data_description = [];
+                if($descriptionf == null )
+                {
+                    $this->addFlash('danger','Il faut ajouter une reponse');
+
+                    return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
+
+                }
+
+                $data_description = [''];
                 foreach ($descriptionf as $p) {
-                    array_push($data_description, $p);
+                    if ($p == null) {
+                        $this->addFlash('danger', 'Une champ de description est vide !! il faut remplire touts les description !');
+
+                        return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
+
+                    } else {
+                        array_push($data_description, $p);
+                    }
                 }
 
 
                 $formule = $request->get('formule');
-                $data_formule = [];
+                $data_formule = [''];
                 foreach ($formule as $p) {
-                    array_push($data_formule, $p);
+                    if ($p == null) {
+                        $this->addFlash('danger', 'Une champ de formule est vide !! il faut remplire touts les formule !');
+
+                        return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
+
+                    } else {
+                        array_push($data_formule, $p);
+                    }
                 }
 
                 $resultatf = $request->get('resultatF');
-                $data_resultat = [];
+                $data_resultat = [''];
                 foreach ($resultatf as $p) {
-                    array_push($data_resultat, $p);
+                    if ($p == null) {
+                        $this->addFlash('danger', 'Une champ de resultat est vide !! il faut remplire touts les resultat !');
+
+                        return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
+
+                    } else {
+                        array_push($data_resultat, $p);
+                    }
                 }
 
-                for ($i = 0; $i < count($data_resultat); $i++) {
+                for ($i = 1; $i < count($data_resultat); $i++) {
                     $reponse = new Reponse();
                     $reponse->setDescriptionformule($data_description[$i]);
                     $reponse->setQuestion($question);
@@ -1083,8 +1174,10 @@ $quizs=$quizRepository->findAll();
                     $entityManager->persist($reponse);
 
                 }
+                $this->addFlash('success','Question est bien ajouter a la page');
 
-            }elseif ($question->getTypeQuestion() == 'Date') {
+            }
+            elseif ($question->getTypeQuestion() == 'Date') {
 
                 $parametre = new Parametre();
                 $entityManager = $this->getDoctrine()->getManager();
@@ -1098,7 +1191,7 @@ $quizs=$quizRepository->findAll();
                 {
                     $this->addFlash('danger','Il faut ajouter une reponse');
 
-                    return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+                    return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
 
                 }
 
@@ -1109,7 +1202,7 @@ $quizs=$quizRepository->findAll();
                     {
                         $this->addFlash('danger','Une champ Date est vide !! il faut remplire touts les dates !');
 
-                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+                        return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
 
                     }else {
                         array_push($data, $p);
@@ -1123,7 +1216,7 @@ $quizs=$quizRepository->findAll();
                     if ($p == null) {
                         $this->addFlash('danger', 'Une champ description de date est vide !! il faut remplire touts les descriptions !');
 
-                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+                        return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
 
                     } else {
                         array_push($datad, $p);
@@ -1145,7 +1238,7 @@ $quizs=$quizRepository->findAll();
                 }
                 $this->addFlash('success','Question est bien ajouter a la page');
 
-            }elseif ($question->getTypeQuestion() == 'Nombre') {
+            } elseif ($question->getTypeQuestion() == 'Nombre') {
 
 
                 $parametre = new Parametre();
@@ -1163,7 +1256,7 @@ $quizs=$quizRepository->findAll();
                 {
                     $this->addFlash('danger','Il faut ajouter une reponse');
 
-                    return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+                    return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
 
                 }
 
@@ -1174,7 +1267,7 @@ $quizs=$quizRepository->findAll();
                     if ($p == null) {
                         $this->addFlash('danger', 'Une champ description est vide !! il faut remplire touts les description !');
 
-                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+                        return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
 
                     } else {
                         array_push($datanum, $p);
@@ -1188,7 +1281,7 @@ $quizs=$quizRepository->findAll();
                     if ($p == null) {
                         $this->addFlash('danger', 'Une champ numero est vide !! il faut remplire touts les champs !');
 
-                        return $this->redirectToRoute('creerquiz', ['id' => $quiz->getId(), 'page' => $page->getId()]);
+                        return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
 
                     } else {
                         array_push($datanumber, $p);
@@ -1213,20 +1306,16 @@ $quizs=$quizRepository->findAll();
                 $this->addFlash('success','Question est bien ajouter a la page');
 
             }
-
-
             $entityManager = $this->getDoctrine()->getManager();
+
+            $question->setDescriptionQuestion($question->getDescriptionQuestion());
             $question->setPage($page);
             $question->setActif(true);
-
-
             $entityManager->persist($question);
-
             $this->getDoctrine()->getManager()->flush();
 
 
-
-            return $this->redirectToRoute('modifier_page', ['quiz' => $quiz->getId(), 'page' => $page->getId()]);
+            return $this->redirectToRoute('modifier_page', ['quiz'  => $quiz->getId(), 'page' => $page->getId()]);
 
         }
 
@@ -1239,6 +1328,8 @@ $quizs=$quizRepository->findAll();
                 'listquestion' => $listquestion,
                 'pos'   => $pos,
                 'listquiz'=>$listquiz,
+                'user' => $this->getUser()
+
 
             ]
         );

@@ -88,7 +88,6 @@
 {% set usernb=0 %}
 {% set total=0 %}
     {% set idquiz = 0 %}
-    <h2 style="text-align:center">Welcome</h2>
     <br>
     <center>
             {% if quiz|length != 0 %}
@@ -105,13 +104,16 @@
                                     <div class="flip-card-front">
                                         {% if p.brochure == "null" %}
                                             <br>
+                                            <div class="container">
+                                                {{ p.titre }}
+                                                <img width="250" height="250" src="{{ asset('logoquiz/logonull.png' ) }}">
 
-                                            <img width="250" height="250" src="{{ asset('logoquiz/logonull.png' ) }}">
-
+                                            </div>
                                             {% else %}
-
-                                            <img src="{{ asset('uploads/brochures/' ~ p.brochure) }}" alt="Avatar" style="width:300px;height:300px;">
-
+                                        <div class="container">
+                                            {{ p.titre }}
+                                            <img src="{{ asset('uploads/brochures/' ~ p.brochure) }}" alt="Avatar" style="width:250px;height:250px;">
+                                        </div>
                                                 {% endif %}
                                     </div>
                                     <div class="flip-card-back">
@@ -124,17 +126,11 @@
 
                                                 {% else %}
 
-
-
                                                     {{  total }}
 
                                             {% endif %}
 
                                             {% set total=total + nbquiz %}
-
-
-
-
 
                                             {% set nb=0 %}
 

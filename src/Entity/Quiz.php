@@ -204,17 +204,6 @@ private $categorie;
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $italique;
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @var string
-     */
-    private $image;
-    /**
-     * @Vich\UploadableField(mapping="product_images", fileNameProperty="image")
-     * @var File
-     */
-    private $imageFile;
-
 
 
 
@@ -369,18 +358,7 @@ private $categorie;
         $this->italique = $italique;
         return $this;
     }
-    public function getImageFile()
-    {
-        return $this->imageFile;
-    }
-    public function setImage($image)
-    {
-        $this->image = $image;
-    }
-    public function getImage()
-    {
-        return $this->image;
-    }
+
     public function getDescription(): ?string
     {
         return $this->description;

@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Component\HttpFoundation\File\File;
 class QuizType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -64,10 +64,7 @@ class QuizType extends AbstractType
                 ],
                 'data' => true
             ])
-            ->add('image', null, [
-                'required' =>  false,
-                'label'=> 'Image/Logo à faire apparaitre en debut de votre quiz'
-            ])
+
             ->add('description',TextareaType::class, [
                 'attr' =>
                     [
@@ -278,6 +275,10 @@ class QuizType extends AbstractType
             ])
             ->add('brochure',FileType::class,[
                 'required' =>  false,
+                'data_class' => null,
+                'label'=> 'Image/Logo à faire apparaitre en debut de votre quiz',
+
+
 
             ])
 

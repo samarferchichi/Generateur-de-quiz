@@ -1,9 +1,9 @@
 easy_admin:
   site_name: 'Quiz Back-Office .'
 
+  disabled_actions: ['new']
 
   list:
-    batch_actions: ['delete']
     actions:
       - { name: 'edit', icon: 'pencil' , label: false }
       - { name: 'delete', icon: 'trash', label: false }
@@ -28,6 +28,8 @@ easy_admin:
 
     ParticipantQuiz:
       class: App\Entity\ParticipantQuiz
+      controller: App\Controller\ParticipantQuizController
+
       label: 'Participant'
       list:
       show:
@@ -36,13 +38,12 @@ easy_admin:
     Quiz:
       class: App\Entity\Quiz
       controller: App\Controller\QuizController
-
-      label: 'Lister Quiz'
       list:
+        title: "Liste quiz"
+
       action:
         fields:
           - { property: 'titre', type: 'text' }
-          - { property: 'brochure', type: 'image', base_path: 'brochures_directory' }
           - { property: 'description', type: 'text' }
           - { property: 'mode_correction', type: 'boolean' }
           - { property: 'mode_score', type: 'boolean' }
@@ -62,10 +63,11 @@ easy_admin:
             - { type: 'group', columns: 4, label: 'Basic information' }
             - { property: 'description', type: 'text' }
             - { property: 'mode_correction', type: 'boolean' }
-            - { property: 'brochure', type: 'image', base_path: 'brochures_directory' }
+
 
     User:
       class: App\Entity\User
+      controller: App\Controller\UserController
       label: 'Admines'
       list:
 
@@ -74,6 +76,7 @@ easy_admin:
             - { property: 'username', label: 'Nom utilisateur' }
             - { property: 'email', label: 'Email' }
             - { property: 'numerotel', label: 'Telephone' }
+            - { property: 'avatar', label: 'Avatar' }
             - enabled
             - { property: 'lastLogin', label: 'Dernier login' }
             - { property: 'confirmation_token', label: 'Confermation code' , type: 'text', type_options: { required: false } }
@@ -87,6 +90,7 @@ easy_admin:
           - { property: 'email', label: 'Email' }
           - { property: 'plainPassword', type: 'text', type_options: { required: false } }
           - { property: 'numerotel', type: 'tel' , label: 'Telephone'}
+          - { property: 'avatar', label: 'Avatar', type: 'file' }
 
           - { type: 'group', label: 'securite information', icon: 'phone', columns: 6 }
           - enabled
@@ -100,7 +104,7 @@ easy_admin:
         icon: 'file'
         children:
           - { label: 'Créer Quiz', route: 'quiz_new', icon: 'wpforms' }
-          - { label: 'Lister Quizzz', route: 'list_quiz', icon: 'list-ol' }
+          - { label: 'Lister Quiz', route: 'list_quiz', icon: 'list-ol' }
       - { entity: 'Quiz', label: 'Configuration', icon: 'cogs', }
       - label: 'Utilisateurs'
         icon: 'users'
