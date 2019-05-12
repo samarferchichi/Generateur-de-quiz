@@ -280,6 +280,7 @@
             </center>
         {% else %}
         {% if quiz.tempsDispo == 1 and quiz.timequiz != 0 %}
+        <img width="50" height="50" src="{{ asset('logoFB_Gmail/time.png' ) }}">
 
             Temps disponible pour passer le quiz est :<font color="blue"><b> {{ quiz.timequiz }}  minutes   </b></font><br>
             <div><span id="counter_session"></span></div>

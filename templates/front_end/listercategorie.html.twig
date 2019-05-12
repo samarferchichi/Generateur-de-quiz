@@ -108,9 +108,10 @@
         .card button:hover {
             opacity: 0.7;
         }
+
+
     </style>
 
-    <!-- Scroll Bars -->
 
 </head>
 <head>
@@ -146,7 +147,7 @@
             </style>
 
 
-            <li class="dropdown-submenu"> <a href="#" tabindex="-1">  Categories quiz</a>
+            <li class="dropdown-submenu"> <a href="#" tabindex="-1">  Toutes nos catégories</a>
                 <ul class="dropdown-menu">
 
                     <li>
@@ -191,19 +192,27 @@
     </div>
 </nav>
 
-<div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
-</div>
 {% set nb =0 %}
+<div style="padding:; background-color: #f0ad4e">
+    <div style="padding: 20px; background-color:">
+       <div class="row" style="background-color: ">
 
+        <div class="col-sm-5" style="background-color:;">
+
+            <font size="10" color="white">
+                {{ categorie }}
+            </font>
+        </div>
+
+       </div>
+
+    </div>
+</div>
 <div class="row">
 
+    <div style="padding: 80px">
 
-    <div style="padding: 100px">
+
         {% for q in listquiz %}
             {% if q.categorie == categorie %}
                 {% set nb = nb + 1 %}
@@ -217,7 +226,8 @@
             <div class="row">
 
             {% for key, q in listquiz %}
-                <div class="modal fade" id="test_{{ key }}" role="dialog">
+
+                    <div class="modal fade" id="test_{{ key }}" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -282,29 +292,22 @@ OU
                 </div>
                 {% if q.categorie == categorie and q.terminer == 1%}
 
+                                <div class="col-sm-3" style="background-color:;">
+                                    <div class="card">
+                                        {% if q.brochure == "null" %}
+                                            <img width="150" height="150" src="{{ asset('logoquiz/logonull.png' ) }}">
 
-                <div class="col-sm-3" style="background-color:;">
+                                        {% else %}
 
-
-                    <div class="card">
-                        {% if q.brochure == "null" %}
-                                <img width="150" height="250" src="{{ asset('logoquiz/logonull.png' ) }}">
-
-                        {% else %}
-
-                                <img src="{{ asset('uploads/brochures/' ~ q.brochure) }}" alt="Avatar" style="width:150px;height:150px;">
-                        {% endif %}
-                        <p class="titrequiz">{{ q.titre }}</p>
-                        <p> {{ q.description }}</p>
-                        <p><button data-target="#test_{{ key }}  " data-toggle="modal" style="width: px;" class="menu-level-1">Go
-                            </button></p>
-                    </div>
-
-</div>
-
+                                            <img src="{{ asset('uploads/brochures/' ~ q.brochure) }}" alt="Avatar" style="width:150px;height:150px;">
+                                        {% endif %}
+                                        <p class="titrequiz">{{ q.titre }}</p>
+                                        <p> {{ q.description }}</p>
+                                        <p><button data-target="#test_{{ key }}  " data-toggle="modal" style="width: px;" class="menu-level-1">Go</button></p>
+                                    </div>
+                                </div>
 
                 {% endif %}
-
             {% endfor %}
             </div>
 
@@ -332,7 +335,26 @@ OU
 </script>
 
 
-
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            tr = tr[i].getElementsByTagName("tr")[0];
+            if (tr) {
+                txtValue = tr.textContent || tr.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 
 
 

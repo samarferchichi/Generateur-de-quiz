@@ -193,7 +193,6 @@ class IndexController extends Controller
         return $this->render('front_end/testsendmail.html.twig',[
             'quiz'=>$quiz,
             'listquiz' => $listquiz,
-            'userconct' => $this->getUser(),
             'listparticipantquiz' => $listparticipantquiz,
         ]);
 
@@ -247,7 +246,6 @@ class IndexController extends Controller
         $findquestion =new Question();
 
 
-dump($vf);
         if ($vf != null){
 
 
@@ -268,14 +266,13 @@ dump($vf);
 
                     }
                 }
-exit;
             foreach ($vf as $rep) {
 
 
                 $reponseparticipant = new ReponseParticipant();
                 $reponseparticipant->setIdQuestion($findquestion);
                 $reponseparticipant->setParticipantquiz($participantquiz);
-                //     $reponseparticipant->setReponse($v);
+                     $reponseparticipant->setReponse($rep);
                 $entityManager->persist($reponseparticipant);
 
             }
