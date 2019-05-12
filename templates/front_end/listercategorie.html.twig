@@ -77,6 +77,7 @@
         .pagination a:hover:not(.active) {background-color: #ddd;}
 
     </style>
+
     <style>
         .card {
             box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
@@ -108,7 +109,6 @@
             opacity: 0.7;
         }
     </style>
-
 
     <!-- Scroll Bars -->
 
@@ -149,34 +149,34 @@
             <li class="dropdown-submenu"> <a href="#" tabindex="-1">  Categories quiz</a>
                 <ul class="dropdown-menu">
 
-                  <li>
-                      <a href="{{ path('listerquiz', {'categorie': 'Education'}) }}">
+                    <li>
+                        <a href="{{ path('listerquiz', {'categorie': 'Education'}) }}">
 
-                          Education
-                      </a>
-                  </li>
+                            Education
+                        </a>
+                    </li>
                     <li>
                         <a href="{{ path('listerquiz', {'categorie': 'Santé'}) }}">
 
-                        Santé
+                            Santé
                         </a>
                     </li>
                     <li>
                         <a  href="{{ path('listerquiz', {'categorie': 'Ressources Humaines'}) }}">
 
-                        Ressources Humaines
+                            Ressources Humaines
                         </a>
                     </li>
                     <li>
                         <a  href="{{ path('listerquiz', {'categorie': 'Evenementiel'}) }}">
 
-                        Evenementiel
+                            Evenementiel
                         </a>
                     </li>
                     <li>
                         <a  href="{{ path('listerquiz', {'categorie': 'Autre'}) }}">
 
-                        Autre
+                            Autre
                         </a>
                     </li>
                 </ul>
@@ -198,95 +198,115 @@
     <a href="#">Clients</a>
     <a href="#">Contact</a>
 </div>
+{% set nb =0 %}
 
-<div class="row" style="width:px">
-    <div style="padding: 50px">
-
-           {% for key ,q in listquiz %}
-               <div class="modal fade" id="test_{{ key }}" role="dialog">
-                   <div class="modal-dialog">
-                       <div class="modal-content">
-                           <div class="modal-header">
-                               <h4 class="modal-title">
+<div class="row">
 
 
-                                   Voulez vous vraiment participer au quiz  "<font color="blue"><b>{{ q.titre }}  </b></font>" ??<br><br>
-                                   {{ q.description }}
+    <div style="padding: 100px">
+        {% for q in listquiz %}
+            {% if q.categorie == categorie %}
+                {% set nb = nb + 1 %}
+            {% endif %}
+        {% endfor %}
 
-                               </h4>
+        {% if nb == 0 %}
 
+            <h1>Cette categorie est vide :( </h1>
+        {% endif %}
+            <div class="row">
 
-
-                               {% if q.nbTentative < 100 %}
-                                   Nombre de tentative maximum est :<font color="blue"><b>{{ q.nbTentative }} </b></font><br>
-
-                               {% else %}
-                                   Nombre de tentative ilimiter !<br>
-                               {% endif %}
-
-                               {% if q.tempsDispo == 1 %}
-
-                                   Temps disponible pour passer le quiz est :<font color="blue"><b> {{ q.timequiz }} minutes   </b></font><br>
-                               {% else %}
-                                   {% if q.tempsDispo == 0   %}
-                                       Temps disponible pour passer le quiz est :<font color="blue"><b> illimiter  </b></font><br>
-
-                                   {% endif %}
-                               {% endif %}
+            {% for key, q in listquiz %}
+                <div class="modal fade" id="test_{{ key }}" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">
 
 
-                               <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    Voulez vous vraiment participer au quiz  "<font color="blue"><b>{{ q.titre }}  </b></font>" ??<br><br>
+                                    {{ q.description }}
 
-                           </div>
-                           <div class="modal-body">
-
-                               <center>
-                                   <a href="#"><img width="60" height="60" src="{{ asset('logoFB_Gmail/fb.png' ) }}"></a>
-                                   &nbsp;
-                                   &nbsp;
-                                   &nbsp;
-                                   <a href="#"> <img width="60" height="60" src="{{ asset('logoFB_Gmail/gmail.png' ) }}"></a>
-                                   <br>
-                                   <br>
-                                   <br>
-                                   <br>
-                                   OU
-                               </center>
-                               <br>
-                               <br>
-                               <label>Entre votre email</label>
-                               {{ render(controller(
-                                   'App\\Controller\\ParticipantController::newparticipant',{'quiz':q }
-
-                               )) }}
-
-                           </div>
-
-                       </div>
-                   </div>
-
-               </div>
-                {% if  q.terminer == 1 %}
-                    <div class="col-sm-3" >
+                                </h4>
 
 
-                        <div class="card">
-                            {% if q.brochure == "null" %}
+
+                                {% if q.nbTentative < 100 %}
+                                    Nombre de tentative maximum est :<font color="blue"><b>{{ q.nbTentative }} </b></font><br>
+
+                                {% else %}
+                                    Nombre de tentative ilimiter !<br>
+                                {% endif %}
+
+                                {% if q.tempsDispo == 1 %}
+
+                                    Temps disponible pour passer le quiz est :<font color="blue"><b> {{ q.timequiz }} minutes   </b></font><br>
+                                {% else %}
+                                    {% if q.tempsDispo == 0   %}
+                                        Temps disponible pour passer le quiz est :<font color="blue"><b> illimiter  </b></font><br>
+
+                                    {% endif %}
+                                {% endif %}
+
+
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                            </div>
+                            <div class="modal-body">
+
+                              <center>
+                                 <a href="#"><img width="60" height="60" src="{{ asset('logoFB_Gmail/fb.png' ) }}"></a>
+                                  &nbsp;
+                                  &nbsp;
+                                  &nbsp;
+                                  <a href="#"> <img width="60" height="60" src="{{ asset('logoFB_Gmail/gmail.png' ) }}"></a>
+                                  <br>
+                                  <br>
+                                  <br>
+                                  <br>
+OU
+                              </center>
+                                <br>
+                                <br>
+                                <label>Entre votre email</label>
+                                {{ render(controller(
+                                    'App\\Controller\\ParticipantController::newparticipant',{'quiz':q }
+
+                                )) }}
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                {% if q.categorie == categorie and q.terminer == 1%}
+
+
+                <div class="col-sm-3" style="background-color:;">
+
+
+                    <div class="card">
+                        {% if q.brochure == "null" %}
                                 <img width="150" height="250" src="{{ asset('logoquiz/logonull.png' ) }}">
 
-                            {% else %}
+                        {% else %}
 
                                 <img src="{{ asset('uploads/brochures/' ~ q.brochure) }}" alt="Avatar" style="width:150px;height:150px;">
-                            {% endif %}
-                            <p class="titrequiz">{{ q.titre }}</p>
-                            <p> {{ q.description }}</p>
-                            <p><button data-target="#test_{{ key }}  " data-toggle="modal" style="width: px;" class="menu-level-1">Go
-                                </button></p>
-                        </div>
-
+                        {% endif %}
+                        <p class="titrequiz">{{ q.titre }}</p>
+                        <p> {{ q.description }}</p>
+                        <p><button data-target="#test_{{ key }}  " data-toggle="modal" style="width: px;" class="menu-level-1">Go
+                            </button></p>
                     </div>
-               {% endif %}
-           {% endfor %}
+
+</div>
+
+
+                {% endif %}
+
+            {% endfor %}
+            </div>
 
     </div>
 
@@ -310,3 +330,12 @@
 
 
 </script>
+
+
+
+
+
+
+
+
+

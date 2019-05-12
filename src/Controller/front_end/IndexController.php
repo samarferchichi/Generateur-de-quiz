@@ -164,6 +164,18 @@ class IndexController extends Controller
 
 
 
+    /**
+     * @Route("/listerquiz/{categorie}", name="listerquiz", methods={"GET" , "POST"})
+     */
+    public function listerquiz( String $categorie, QuizRepository $quizRepository)
+    {
+        $listquiz = $quizRepository->findAll();
+        return $this->render('front_end/listercategorie.html.twig', ['categorie' => $categorie, 'listquiz' =>$listquiz]);
+    }
+
+
+
+
 
     /**
      * @Route("/testsendmail/{quiz}", name="testsendmail", methods={"GET" , "POST"})

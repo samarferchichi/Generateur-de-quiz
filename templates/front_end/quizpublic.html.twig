@@ -156,67 +156,69 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand"  href="{{ path('index') }}">Quiz accueil</a>
+            <a class="navbar-brand"  href="{{ path('index') }}">Quiz </a>
         </div>
         <ul class="nav navbar-nav">
             <li>
                 <span style="color:white;  font-size:40px;cursor:pointer" onclick="openNav()">&#9776;</span>
             </li>
 
+
+
+            <style>
+                .dropdown-submenu{position:relative;}
+                .dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
+                .dropdown-submenu:hover>.dropdown-menu{display:block;}
+                .dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
+                .dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
+                .dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
+            </style>
+
+
             <li><a href="{{ path('index') }}">Accueil</a></li>
-            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Quiz <span class="caret"></span></a>
+
+            <li class="dropdown-submenu"> <a href="#" tabindex="-1">  Categories quiz</a>
                 <ul class="dropdown-menu">
 
-                    {% if listquiz|length == 0 %}
-                        <li style="width: 350px;" class="menu-level-1">Liste Vide</li>
-                    {% else %}
-                        {% for quiz in listquiz %}
-                            {% if quiz.terminer == 1 %}
-                                {% if quiz.ouvrireQuiz <= date() and date() < quiz.fermerQuiz %}
-                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id, 'par':par.id }) }}" onclick="MyFunction()">{{ quiz.titre }}</a></li>
+                    <li>
+                        <a href="{{ path('listerquiz', {'categorie': 'Education'}) }}">
 
-                                {% endif %}
-                                {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}
-                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id , 'par' :par.id}) }}" >{{ quiz.titre }}</a></li>
-                                {% endif %}
+                            Education
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('listerquiz', {'categorie': 'Santé'}) }}">
 
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
+                            Santé
+                        </a>
+                    </li>
+                    <li>
+                        <a  href="{{ path('listerquiz', {'categorie': 'Ressources Humaines'}) }}">
+
+                            Ressources Humaines
+                        </a>
+                    </li>
+                    <li>
+                        <a  href="{{ path('listerquiz', {'categorie': 'Evenementiel'}) }}">
+
+                            Evenementiel
+                        </a>
+                    </li>
+                    <li>
+                        <a  href="{{ path('listerquiz', {'categorie': 'Autre'}) }}">
+
+                            Autre
+                        </a>
+                    </li>
                 </ul>
             </li>
-            <li><a href="#">Page 2</a></li>
 
         </ul>
 
     </div>
 </nav>
 
-<div id="mySidenav" class="sidenav">
 
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
-    <center>
-        <font color="#7fffd4" >
-            <h2>
-                About
-            </h2>
-        </font>
-    </center>
-
-    <div class="panel panel-success">
-
-        <div class="card bg-info text-white">
-            <div class="card-body">
-
-                Profile
-
-            </div>
-        </div>
- </div>
-
-
-</div>
 
 
 
