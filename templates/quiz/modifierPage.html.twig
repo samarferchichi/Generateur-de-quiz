@@ -105,7 +105,7 @@
             position: relative;
             cursor: pointer;
         }
-        input[type=checkbox]:before {
+        table input[type=checkbox]:before {
             content: "";
             display: block;
             position: absolute;
@@ -117,7 +117,7 @@
             border-radius: 3px;
             background-color: white;
         }
-        input[type=checkbox]:checked:after {
+        table input[type=checkbox]:checked:after {
             content: "";
             display: block;
             width: 5px;
@@ -231,9 +231,7 @@
                                     <br>
                                 <div class="col-sm-11"  >
 
-                                    <div style="border-bottom: 1px solid ;
-
-                                            ">
+                                    <div style="border-bottom: 1px solid ;">
                                     <label>
                                       <b>
                                           <i>
@@ -389,7 +387,7 @@
                                             </div>
                                         {% endif %}
                                         <div  class="modal fade" id="editequestion-{{ j.id }}" role="dialog">
-                                            <div  class="modal-dialog">
+                                            <div  class="modal-dialog modal-xl">
 
                                                 <!-- Modal content-->
                                                 <div class="modal-content">

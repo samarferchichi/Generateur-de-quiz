@@ -1,4 +1,16 @@
+<style>
+    .navbar {
+        overflow: hidden;
+        background-color: #333;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
 
+    .mb-5 {
+        margin-bottom: 5px ! important;
+    }
+</style>
 
 {{ form_start(form) }}
 {% if question.typeQuestion == "Vrai/faux" %}
@@ -64,34 +76,46 @@
   {% if question.typeQuestion=='Case à cocher' %}
 
       {% for p in question.reponse %}
-          {{ form_widget(form.desnumber , { 'attr':{'hidden':'hidden'} } ) }}
+          <div class="row">
+              <div class="col-sm-10">
+                  {{ form_widget(form.desnumber , { 'attr':{'hidden':'hidden'} } ) }}
+                  {{ form_widget(form.reponse_valide, { 'attr':{'class':'form-control'} }) }}
+                  {{ form_widget(form.formule, { 'attr':{'hidden':'hidden'} }) }}
+                  {{ form_widget(form.destext  , { 'attr':{'hidden':'hidden'} }) }}
+                  {{ form_widget(form.resultatformule  , { 'attr':{'hidden':'hidden'} }) }}
+                  {{ form_widget(form.descriptiondate, { 'attr':{'hidden':'hidden'} } ) }}
+                  {{ form_widget(form.descriptionformule  , { 'attr':{'hidden':'hidden'} }) }}
+                  {{ form_widget(form.etatvf  , { 'attr':{'hidden':'hidden'} }) }}
+                  {{ form_widget(form.etatlist  , { 'attr':{'hidden':'hidden'} }) }}
+              </div>
+              <div class="col-sm-2">
+                  {{ form_widget(form.etatcaseacocher, { 'attr':{'class':'form-control'} }  ) }}
+              </div>
+          </div>
 
-          {{ form_widget(form.reponse_valide, { 'attr':{'class':'form-control'} }) }}
-          {{ form_widget(form.formule, { 'attr':{'hidden':'hidden'} }) }}
-          {{ form_widget(form.destext  , { 'attr':{'hidden':'hidden'} }) }}
-          {{ form_widget(form.resultatformule  , { 'attr':{'hidden':'hidden'} }) }}
-          {{ form_widget(form.descriptiondate, { 'attr':{'hidden':'hidden'} } ) }}
-          {{ form_widget(form.descriptionformule  , { 'attr':{'hidden':'hidden'} }) }}
-          {{ form_widget(form.etatvf  , { 'attr':{'hidden':'hidden'} }) }}
-          {{ form_widget(form.etatlist  , { 'attr':{'hidden':'hidden'} }) }}
-          {{ form_widget(form.etatcaseacocher, { 'attr':{'class':'form-control'} }  ) }}
       {% endfor %}
     {% endif %}
 
  {% if question.typeQuestion=='Liste déroulante' %}
 
      {% for p in question.reponse %}
-         {{ form_widget(form.desnumber , { 'attr':{'hidden':'hidden'} } ) }}
+        <div class="row">
+            <div class="col-sm-10">
+                 {{ form_widget(form.desnumber , { 'attr':{'hidden':'hidden'} } ) }}
 
-         {{ form_widget(form.reponse_valide, { 'attr':{'class':'form-control'} }) }}
-         {{ form_widget(form.formule, { 'attr':{'hidden':'hidden'} }) }}
-         {{ form_widget(form.destext  , { 'attr':{'hidden':'hidden'} }) }}
-         {{ form_widget(form.resultatformule  , { 'attr':{'hidden':'hidden'} }) }}
-         {{ form_widget(form.descriptiondate, { 'attr':{'hidden':'hidden'} } ) }}
-         {{ form_widget(form.descriptionformule  , { 'attr':{'hidden':'hidden'} }) }}
-         {{ form_widget(form.etatvf  , { 'attr':{'hidden':'hidden'} }) }}
-         {{ form_widget(form.etatlist ) }}
-         {{ form_widget(form.etatcaseacocher , { 'attr':{'hidden':'hidden'} } ) }}
+                 {{ form_widget(form.reponse_valide, { 'attr':{'class':'form-control'} }) }}
+                 {{ form_widget(form.formule, { 'attr':{'hidden':'hidden'} }) }}
+                 {{ form_widget(form.destext  , { 'attr':{'hidden':'hidden'} }) }}
+                 {{ form_widget(form.resultatformule  , { 'attr':{'hidden':'hidden'} }) }}
+                 {{ form_widget(form.descriptiondate, { 'attr':{'hidden':'hidden'} } ) }}
+                 {{ form_widget(form.descriptionformule  , { 'attr':{'hidden':'hidden'} }) }}
+                 {{ form_widget(form.etatvf  , { 'attr':{'hidden':'hidden'} }) }}
+                 {{ form_widget(form.etatcaseacocher , { 'attr':{'hidden':'hidden'} } ) }}
+            </div>
+            <div class="col-sm-2">
+                {{ form_widget(form.etatlist, { 'attr':{'class':'form-control'} } ) }}
+            </div>
+        </div>
      {% endfor %}
  {% endif %}
 
