@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Vote online</title>
+    <link href="{{ asset('template/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('template/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('template/css/font-awesome.min.css') }}" rel="stylesheet">
+
+
+    <!--[if lt IE 9]>
+    <script src="{{ asset('template/js/html5shiv.js') }}"></script>
+    <script src="{{ asset('template/js/respond.min.js') }}"></script>
+    <![endif]-->
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="{{ asset('template/images/favicon.ico') }}">
+</head><!--/head-->
+
+<body>
+
+<!--.preloader-->
+<div class="preloader"> <i class="fa fa-circle-o-notch fa-spin"></i></div>
+<!--/.preloader-->
+
+<header id="home">
+    <div id="home-slider" class="carousel slide carousel-fade" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="item active" style="background-image: url({{ asset('template/images/slider/1.jpg') }})">
+                <div class="caption">
+                    <h1 class="animated fadeInLeftBig">Bienvenue chez <span>Quiz</span></h1>
+
+                    <a data-scroll class="btn btn-start animated fadeInUpBig" href="{{ path('fos_user_security_login') }}">Prêt à démarrer ?</a>
+                </div>
+            </div>
+            <div class="item" style="background-image: url({{ asset('template/images/slider/2.jpg') }})">
+                <div class="caption">
+                    <h1 class="animated fadeInLeftBig">Créer votre propre <span>Quiz</span></h1>
+
+                    <a data-scroll class="btn btn-start animated fadeInUpBig" href="{{ path('fos_user_security_login') }}">Prêt à démarrer ?</a>
+                </div>
+            </div>
+
+        </div>
+        <a class="left-control" href="#home-slider" data-slide="prev"><i class="fa fa-angle-left"></i></a>
+        <a class="right-control" href="#home-slider" data-slide="next"><i class="fa fa-angle-right"></i></a>
+
+
+
+    </div><!--/#home-slider-->
+
+</header>
+<script type="text/javascript" src="{{ asset('template/js/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/js/jquery.inview.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/js/wow.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/js/mousescroll.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/js/smoothscroll.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/js/jquery.countTo.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/js/lightbox.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('template/js/main.js') }}"></script>
+
+</body>
+</html>
