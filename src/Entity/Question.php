@@ -28,10 +28,6 @@ class Question
      */
     private $rep;
 
-    public function __constructa()
-    {
-        $this->rep = new ArrayCollection();
-    }
     /**
      * @return Collection|ReponseParticipant[]
      */
@@ -50,6 +46,7 @@ class Question
 
     public function __construct() {
         $this->reponse = new ArrayCollection();
+        $this->rep = new ArrayCollection();
     }
     /**
      * @return Collection|Reponse[]

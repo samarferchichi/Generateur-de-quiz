@@ -17,6 +17,9 @@ class DefaultController extends AbstractController
      */
     public function index(): Response
     {
+        if($this->getUser()){
+            return $this->redirectToRoute('admin_dashboard');
+        }
         return $this->render('/index.html.twig', [
         ]);
     }

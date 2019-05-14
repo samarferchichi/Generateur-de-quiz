@@ -1,4 +1,4 @@
-index:
+index_h_p:
     path: /
     controller: App\Controller\DefaultController::index
 

@@ -32,6 +32,7 @@ class Quiz
     public function __construct()
     {
         $this->page = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
     /**
      * @return Collection|Page[]
@@ -47,12 +48,6 @@ class Quiz
      * @ORM\OneToMany(targetEntity="App\Entity\ParticipantQuiz", mappedBy="quiz", cascade={"persist","remove"})
      */
     private $participantquiz;
-
-
-
-    public function __constructm() {
-        $this->user = new ArrayCollection();
-    }
 
 
     /**

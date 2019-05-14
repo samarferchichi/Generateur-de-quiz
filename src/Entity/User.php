@@ -43,8 +43,9 @@ class User extends BaseUser
      */
     private $quiz;
 
-    public function __constructa()
+    public function __construct()
     {
+        $this->quiz = new ArrayCollection();
         $this->quiz = new ArrayCollection();
     }
     /**
@@ -76,11 +77,6 @@ class User extends BaseUser
         $this->avatar = $avatar;
     }
 
-
-
-    public function __constructt() {
-        $this->quiz = new ArrayCollection();
-    }
 
     /**
      * @ORM\Column(type="string")
