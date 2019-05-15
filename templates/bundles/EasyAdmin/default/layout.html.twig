@@ -274,11 +274,12 @@
                 filter: opacity(100%);
                 color: #fff;
             }
+
         </style>
     </head>
 
     {% block body %}
-    <body style="    background: white;"  id="{% block body_id %}{% endblock %}" class="easyadmin {% block body_class %}{% endblock %}">
+    <body style="background: white;"  id="{% block body_id %}{% endblock %}" class="easyadmin {% block body_class %}{% endblock %}">
         <script>
             document.body.classList.add(
                 'easyadmin-content-width-' + (localStorage.getItem('easyadmin/content/width') || 'normal'),
@@ -290,7 +291,7 @@
         <div class="wrapper">
         {% block wrapper %}
 
-            <aside class="main-sidebar">
+            <aside class="main-sidebar" style="border-radius: 50px;">
                 <header class="main-header">
                     {% block header %}
 

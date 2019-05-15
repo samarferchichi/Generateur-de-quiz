@@ -82,8 +82,8 @@
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
+    {% set nb = 0 %}
 
-{% set nb=0 %}
 {% set nbquiz=1 %}
 {% set usernb=0 %}
 {% set total=0 %}
@@ -96,6 +96,7 @@
                 {% for p in quiz %}
 
                     {% if p.user == user %}
+                        {% set nb = nb+1 %}
                         <div class="col-sm-3" style="background-color:;">
                             <div class="flip-card">
 
@@ -143,21 +144,19 @@
                             <br>
                         </div>
 
-
-
                     {% endif %}
-
-
-
                 {% endfor %}
+
+                    {% else %}
+                        Aucun quiz exist
 
                 </div>
 
-            {% else %}
-                Aucun quiz exist
+                        {% if nb == 0 %}
+                            Aucun quiz exist
+                        {% endif %}
             {% endif %}
     </center>
-
 
 
 

@@ -5,7 +5,7 @@
         /* make the base font size smaller */
         --font-size-base: 20px;
         /* remove all border radius to make corners straight */
-        --border-radius: 20px;
+        --border-radius: 50px;
         background-color: white;
 
         --border-color: #ADFFE1;
