@@ -1,0 +1,100 @@
+{% extends '/bundles/EasyAdmin/default/layout.html.twig' %}
+
+{% set _content_title = 'Espace d administartion' %}
+
+{% block page_title -%}
+    {{ _content_title }}
+
+{%- endblock %}
+
+{% block content_header %}
+
+    <div class="form-group row">
+        <div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+            <div class="aa"></div>
+        </div>
+        &nbsp; &nbsp;
+        <h1 class="title">{{ _content_title }}</h1>
+    </div>
+{% endblock %}
+{% block main %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    </head>
+    <body>
+    <div class="panel panel-success">
+
+        <div class="card bg-info text-white">
+            <div class="card-body">
+
+
+                Profile
+
+            </div>
+        </div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="col-sm-12">
+<div style="padding: 20px">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="nav-tabs-custom">
+                <div class="tab-content">
+                    {% for flashMessage in app.session.flashbag.get('success') %}
+                        <div class="alert alert-success">{{ flashMessage }}</div>
+                    {% endfor %}
+                    {% for flashMessage in app.session.flashbag.get('danger') %}
+                        <div class="alert alert-danger">{{ flashMessage }}</div>
+                    {% endfor %}
+                    {% for flashMessage in app.session.flashbag.get('warning') %}
+                        <div class="alert alert-warning">{{ flashMessage }}</div>
+                    {% endfor %}
+
+                    <div class="active tab-pane" id="profile">
+                        {{ form_start(form, { 'action': path('fos_user_profile_edit_photo'), 'attr': { 'enctype': 'multipart/form-data' } }) }}
+                        <center>
+
+                                <div class="photo">
+                                    <img src='{{ asset('uploads/brochures/' ~ profile.avatar) }}' width="160px"height="160px" style="border: 1px solid #4bb5c1; border-radius: 4px;"/>
+                                </div>
+                                <br>
+
+
+                            <div>
+                                {{ form_widget(form.image) }}
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <div class=" col-sm-12 center">
+                                    <button type="submit" class="btn btn-success">Change</button>
+                                    <a href="{{ path('fos_user_profile_show') }}" class="btn btn-primary">Retour</a>
+                                </div>
+                            </div>
+                        </center>
+                        </div>
+                    {{ form_end(form) }}
+                </div><!-- /.tab-pane -->
+            </div><!-- /.tab-content -->
+        </div><!-- /.nav-tabs-custom -->
+    </div>
+</div>
+
+                        </div>
+                    </div></div>
+            </div></div></div>
+
+
+    </body>
+
+{% endblock %}

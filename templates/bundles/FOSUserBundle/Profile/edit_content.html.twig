@@ -75,26 +75,53 @@
 
         {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
 
+        <div class="row">
+            <div class="col-sm-2">
+                {{ form_label(form.username) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_widget(form.username, {'attr': {'class': 'form-control'} }) }}
+                <span style="color: red">{{ form_errors(form.username) }}</span>
+            </div>
+        </div>
 
-        {{ form_label(form.username) }}
+        <div class="row">
+            <div class="col-sm-2">
+                {{ form_label(form.email) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_widget(form.email, {'attr': {'class': 'form-control'} }) }}
+                <span style="color: red">{{ form_errors(form.email) }}</span>
+            </div>
+        </div>
 
-        {{ form_widget(form.username) }}<br>
+        <div class="row">
+            <div class="col-sm-2">
+                {{ form_label(form.numerotel) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_widget(form.numerotel, {'attr': {'class': 'form-control'} }) }}
+                <span style="color: red">{{ form_errors(form.numerotel) }}</span>
+            </div>
+        </div>
 
-        {{ form_label(form.email) }}
+        <div class="row">
+            <div class="col-sm-2">
+                {{ form_label(form.current_password) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_widget(form.current_password, {'attr': {'class': 'form-control'} }) }}
+                <span style="color: red">{{ form_errors(form.current_password) }}</span>
+            </div>
+        </div>
 
-        {{ form_widget(form.email) }}<br>
-
-        {{ form_label(form.numerotel) }}
-
-        {{ form_widget(form.numerotel) }}<br>
-
-
-        {{ form_widget(form.plainPassword) }}<br>
-
+        <br>
 
         <div>
             <input type="submit" class="btn btn-success" value="Modifier" />
+            <a href="{{ path('fos_user_profile_show') }}" class="btn btn-primary">Retour</a>
         </div>
+        <br>
         {{ form_end(form) }}
     </div>
 

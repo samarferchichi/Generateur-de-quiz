@@ -58,6 +58,7 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(type="string", length=100)
+     *
      */
     protected $avatar;
 
