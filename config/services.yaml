@@ -33,3 +33,12 @@ services:
         class: App\Form\RegistrationFormType
         tags:
             - { name: form.type }
+
+
+    App\Controller\RegistrationController:
+        arguments:
+            $formFactory: '@fos_user.registration.form.factory'
+
+    App\Controller\ProfileController:
+            arguments:
+                $formFactory: '@fos_user.profile.form.factory'
