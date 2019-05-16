@@ -26,3 +26,6 @@ yarn-error.log
 
 ### Ignore Config PhpStorm ###
 .idea/
+
+### Ignore brochures ###
+/public/uploads/brochures/
