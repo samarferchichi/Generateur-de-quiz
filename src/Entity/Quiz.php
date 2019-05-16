@@ -33,6 +33,7 @@ class Quiz
     {
         $this->page = new ArrayCollection();
         $this->user = new ArrayCollection();
+        $this->terminer = false;
     }
     /**
      * @return Collection|Page[]
@@ -138,8 +139,6 @@ class Quiz
     /**
      * @ORM\Column(type="string")
      *
-     *
-     * @Assert\File(mimeTypes={ "image/png" })
      */
     private $brochure;
 
