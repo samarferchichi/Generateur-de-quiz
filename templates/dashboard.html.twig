@@ -1,4 +1,4 @@
-{% extends '/bundles/EasyAdmin/default/layout.html.twig' %}
+{% extends '/bundles/EasyAdminBundle/default/layout.html.twig' %}
 
 {% set _content_title = 'ESPACE ADMINISTRATEUR' %}
 
@@ -147,17 +147,20 @@
                     {% endif %}
                 {% endfor %}
 
+                {% set idquiz = nb %}
+
                     {% else %}
                         Aucun quiz exist
 
                 </div>
 
-                        {% if nb == 0 %}
-                            Aucun quiz exist
-                        {% endif %}
+
             {% endif %}
     </center>
-
-
+{% if idquiz != 0 %}
+    liste quiz :
+    {% else %}
+    vide
+    {% endif %}
 
 {% endblock %}

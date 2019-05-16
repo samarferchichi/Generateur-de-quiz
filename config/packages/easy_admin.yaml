@@ -35,6 +35,7 @@ easy_admin:
       show:
         fields:
           - { property: 'User', type: 'integer' }
+
     Quiz:
       class: App\Entity\Quiz
       controller: App\Controller\QuizController
@@ -65,38 +66,6 @@ easy_admin:
             - { property: 'mode_correction', type: 'boolean' }
 
 
-    User:
-      class: App\Entity\User
-      controller: App\Controller\UserController
-      label: 'Admines'
-      list:
-
-          title: "Liste utilisateurs"
-          fields:
-            - { property: 'username', label: 'Nom utilisateur' }
-            - { property: 'email', label: 'Email' }
-            - { property: 'numerotel', label: 'Telephone' }
-            - { property: 'avatar', label: 'Avatar' }
-            - enabled
-            - { property: 'lastLogin', label: 'Dernier login' }
-            - { property: 'confirmation_token', label: 'Confermation code' , type: 'text', type_options: { required: false } }
-
-      form:
-        fields:
-          - { type: 'group', columns: 4, label: 'Basic information' }
-
-            # if administrators are allowed to edit users' passwords and roles, add this:
-          - { property: 'username', label: 'Nom utilisateur' }
-          - { property: 'email', label: 'Email' }
-          - { property: 'plainPassword', type: 'text', type_options: { required: false } }
-          - { property: 'numerotel', type: 'tel' , label: 'Telephone'}
-          - { property: 'avatar', label: 'Avatar', type: 'file' }
-
-          - { type: 'group', label: 'securite information', icon: 'phone', columns: 6 }
-          - enabled
-          - lastLogin
-          - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
-
   design:
     menu:
       - { label: 'Dashboard', route: 'admin_dashboard', icon: 'tachometer', default: true }
@@ -109,7 +78,6 @@ easy_admin:
       - label: 'Utilisateurs'
         icon: 'users'
         children:
-          - { entity: 'User' , icon: 'user-plus' }
           - { entity: 'Participant', icon: 'user', label: 'Participants'  }
       - { label: 'Statiqtique',route: 'statistique', icon: 'fa fa-pie-chart' }
       - { label: 'Historiques',route: 'historique', icon: 'history' }

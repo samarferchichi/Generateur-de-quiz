@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale|split('_')|first|default('en') }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noodp, noimageindex, notranslate, nocache" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="generator" content="EasyAdmin" />
+
+    <title>{% block page_title %}{{ block('content_title')|striptags|raw }}{% endblock %}</title>
+
+    {% block head_stylesheets %}
+        <link rel="stylesheet" href="{{ asset('bundles/easyadmin/app.css') }}">
+
+        <style>
+            :root { --color-primary: {{ easyadmin_config('design.brand_color') }}; }
+        </style>
+    {% endblock %}
+
+    {% for css_asset in easyadmin_config('design.assets.css') %}
+        <link rel="stylesheet" href="{{ asset(css_asset) }}">
+    {% endfor %}
+
+    {% block head_favicon %}
+        {% set favicon = easyadmin_config('design.assets.favicon') %}
+        <link rel="icon" type="{{ favicon.mime_type }}" href="{{ asset(favicon.path) }}" />
+    {% endblock %}
+
+    {% block head_javascript %}
+        <script src="{{ asset('bundles/easyadmin/app.js') }}"></script>
+    {% endblock head_javascript %}
+
+    {% if easyadmin_config('design.rtl') %}
+        <link rel="stylesheet" href="{{ asset('bundles/easyadmin/app-rtl.css') }}">
+    {% endif %}
+    <style>
+        .main-header {
+            padding-right: 0;
+        }
+        .main-sidebar .user-panel {
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .user-panel {
+            position: relative;
+            width: 100%;
+            padding: 15px 10px;
+            overflow: hidden;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .user-panel .image img {
+            width: 100%;
+            max-width: 100px;
+            height: auto;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 5px;
+        }
+        .img-circle {
+            border-radius: 50%;
+        }
+        .user-panel .info {
+            padding: 0 5px 0 5px;
+            line-height: 1;
+        }
+        .user-panel .info p {
+            font-weight: 500;
+            margin-bottom: 9px;
+            color: #fff;
+            margin: 5px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .user-panel .info a {
+            text-decoration: none;
+            padding-right: 5px;
+            margin-top: 3px;
+            font-size: 11px;
+            color: #37a000 !important;
+            text-decoration: none !important;
+        }
+        .main-sidebar {
+            padding-top: 24px;
+            min-height: 100%;
+            width: 210px;
+            z-index: 810;
+            -webkit-transition: -webkit-transform 0.3s ease-in-out, width 0.3s ease-in-out;
+            -webkit-transition: width 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+            transition: width 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out, width 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
+            background-color: #2c3136;
+        }
+
+        /* Sidebar Menu */
+        .sidebar-menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar-menu > li {
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar-menu > li > a {
+            padding: 12px 5px 12px 15px;
+            display: block;
+            color: #a6a6a6;
+            position: relative;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            text-decoration: none;
+        }
+        .sidebar-menu .fa {
+            color: inherit;
+        }
+        .sidebar-menu li > a > .pull-right-container {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            margin-top: -7px;
+        }
+        .sidebar-menu > li.menu-open > a:before {
+            background: #37a000;
+            content: "";
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 3px;
+        }
+        .sidebar-menu > li > a > i {
+            margin-right: 10px;
+            display: inline-block;
+        }
+        .sidebar-menu > li.active > a:before {
+            background: #37a000;
+            content: "";
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 3px;
+        }
+        .sidebar-menu > li:hover > a,
+        .sidebar-menu > li.active > a {
+            color: #fff;
+            background: #33383e;
+        }
+        .sidebar-menu > li > a > .fa,
+        .sidebar-menu > li > a > .glyphicon,
+        .sidebar-menu > li > a > .ion {
+            width: 20px;
+        }
+        .sidebar-menu > li .label,
+        .sidebar-menu > li .badge {
+            margin-right: 5px;
+        }
+        .sidebar-menu > li .badge {
+            margin-top: 3px;
+        }
+        .sidebar-menu li.header {
+            padding: 10px 25px 10px 15px;
+            font-size: 12px;
+            color: #fff;
+        }
+        .sidebar-menu li > a > .fa-angle-left,
+        .sidebar-menu li > a > .pull-right-container > .fa-angle-left {
+            width: auto;
+            height: auto;
+            padding: 0;
+            margin-right: 10px;
+        }
+        .sidebar-menu li.active > a > .fa-angle-left,
+        .sidebar-menu li.active > a > .pull-right-container > .fa-angle-left {
+            -webkit-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+        }
+        .sidebar-menu li.active > .treeview-menu {
+            display: block;
+        }
+        .sidebar-menu .treeview-menu {
+            position: relative;
+            display: none;
+            list-style: none;
+            padding: 5px 0 10px;
+            margin: 0;
+            padding-left: 35px;
+            background-color: #1c1f22;
+        }
+        .sidebar-menu .treeview-menu:before {
+            width: 2px;
+            bottom: 0;
+            background: rgba(59, 70, 72, 0.5);
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 33px;
+        }
+        .sidebar-menu .treeview-menu .treeview-menu {
+            padding-left: 20px;
+        }
+        .sidebar-menu .treeview-menu > li {
+            margin: 0;
+            position: relative;
+        }
+        .sidebar-menu .treeview-menu > li > a {
+            padding: 5px 5px 5px 20px;
+            display: block;
+            color: #a6a6a6;
+            letter-spacing: 0.3px;
+        }
+        .sidebar-menu .treeview-menu li.disabled a {
+            cursor: not-allowed;
+            filter: alpha(opacity=65);
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            opacity: .65;
+        }
+        .sidebar-menu .treeview-menu > li.active > a,
+        .sidebar-menu .treeview-menu > li:hover > a {
+            color: #fff;
+        }
+        .sidebar-menu .treeview-menu > li::before {
+            left: 0;
+            top: 13px;
+            width: 15px;
+            content: ' ';
+            position: absolute;
+            display: inline-block;
+            border: 1px solid rgba(59, 70, 72, 0.5);
+        }
+        .sidebar-menu .treeview-menu > li > a > .fa,
+        .sidebar-menu .treeview-menu > li > a > .glyphicon,
+        .sidebar-menu .treeview-menu > li > a > .ion {
+            width: 20px;
+        }
+        .sidebar-menu .treeview-menu > li > a > .pull-right-container > .fa-angle-left,
+        .sidebar-menu .treeview-menu > li > a > .pull-right-container > .fa-angle-down,
+        .sidebar-menu .treeview-menu > li > a > .fa-angle-left,
+        .sidebar-menu .treeview-menu > li > a > .fa-angle-down {
+            width: auto;
+        }
+        .sidebar-menu,
+        .main-sidebar .user-panel,
+        .sidebar-menu > li.header {
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .sidebar-menu:hover {
+            overflow: visible;
+        }
+        .sidebar-menu > li.header {
+            overflow: hidden;
+            text-overflow: clip;
+        }
+        .sidebar-menu > li.header {
+            letter-spacing: 1px;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(59, 70, 72, 0.5);
+            color: #a6a6a6;
+        }
+        .sidebar-menu li > a > {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            margin-top: -7px;
+        }
+        .sidebar-menu li:not(.submenu-active).active a, .sidebar-menu li:not(.submenu-active).active .fa {
+            filter: opacity(100%);
+            color: #fff;
+        }
+
+    </style>
+</head>
+
+{% block body %}
+    <body style="background: white;"  id="{% block body_id %}{% endblock %}" class="easyadmin {% block body_class %}{% endblock %}">
+    <script>
+        document.body.classList.add(
+            'easyadmin-content-width-' + (localStorage.getItem('easyadmin/content/width') || 'normal'),
+            'easyadmin-sidebar-width-' + (localStorage.getItem('easyadmin/sidebar/width') || 'normal')
+        );
+    </script>
+
+    {% block wrapper_wrapper %}
+        <div class="wrapper">
+            {% block wrapper %}
+
+                <aside class="main-sidebar" style="border-radius: 50px;">
+                    <header class="main-header">
+                        {% block header %}
+
+
+                            {% set _user_name = easyadmin_read_property(app.user, easyadmin_config('user.name_property_path'))|default('user.unnamed'|trans(domain = 'EasyAdminBundle')) %}
+                            {% set _logout_path = easyadmin_logout_path() %}
+                            {% set _user_has_logout = _logout_path is not empty %}
+                            {% set _user_is_impersonated = is_granted('ROLE_PREVIOUS_ADMIN') %}
+                            {% set _user_menu_content %}
+                                <div class="popover-content-section user-details {{ _user_has_logout or _user_is_impersonated ? 'user-has-actions' }}">
+                                    <p class="small text-muted mb-0">{{ 'user.logged_in_as'|trans(domain = 'EasyAdminBundle') }}</p>
+                                    <p class="user-details-name">
+                                        {% if app.user|default(false) == false %}
+                                            {{ 'user.anonymous'|trans(domain = 'EasyAdminBundle') }}
+                                        {% else %}
+                                            <br>
+                                            {{ _user_name }}
+                                        {% endif %}
+                                    </p>
+                                </div>
+
+                                {% block user_menu %}
+                                    {% if _user_has_logout or _user_is_impersonated %}
+                                        <div class="popover-content-section user-menu">
+                                            {% if _user_has_logout %}
+                                                <a class="fos_user_user_show" href="{{ path('fos_user_profile_show') }}"> Profile</a>
+
+                                                <a class="user-action user-action-logout" href="{{ _logout_path }}">{{ 'user.signout'|trans(domain = 'EasyAdminBundle') }}</a>
+
+
+                                            {% endif %}
+                                            {% if _user_is_impersonated %}
+                                                <a class="user-action user-action-exit-impersonation" href="?_switch_user=_exit">{{ 'user.exit_impersonation'|trans(domain = 'EasyAdminBundle') }}</a>
+                                            {% endif %}
+                                        </div>
+                                    {% endif %}
+                                {% endblock user_menu %}
+                            {% endset %}
+
+
+                            {#<div style="" class="user user-menu-wrapper {{ _user_is_impersonated ? 'user-is-impersonated' }}" data-toggle="popover" data-placement="bottom" data-container=".user-menu-wrapper" data-content="{{ _user_menu_content|e('html_attr') }}" data-html="true">#}
+                            <div class="user-panel text-center" data-toggle="popover" data-placement="bottom" data-container=".user-menu-wrapper" data-content="{{ _user_menu_content|e('html_attr') }}" data-html="true">
+                                <div class="image">
+                                    {% if easyadmin_config('user.display_avatar') %}
+                                        {% set _avatar_image_path = easyadmin_read_property(app.user, easyadmin_config('user.avatar_property_path')) %}
+                                        {% if null == _avatar_image_path %}
+                                            <!--  <i class="fa {{ app.user is not null ? 'fa-user-circle' : 'fa-user-times' }} user-avatar"></i>-->
+                                            {#<img class="img-circle" src="{{ asset('logoquiz/admin3.png' ) }} ">#}
+                                            <img class="img-circle" src="{{ asset('uploads/brochures/' ~ app.user.avatar) }} ">
+                                        {% else %}
+                                            <img class="img-circle" src="{{ _avatar_image_path }}" />
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                                <br>
+                                {% if easyadmin_config('user.display_name') %}
+                                    <div class="info">
+                                        <p>{{ _user_name }}</p>
+                                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                                    </div>
+                                    <a href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ _user_menu_content|e('html_attr') }}" data-html="true">
+                                        <i class="fa fa-cogs"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+
+
+                        {% endblock header %}
+
+                    </header>
+
+
+                    <br>
+
+                    {% block sidebar %}
+
+                        <section class="sidebar" >
+                            {% block main_menu_wrapper %}
+                                {{ include([
+                                    _entity_config is defined ? _entity_config.templates.menu,
+                                    easyadmin_config('design.templates.menu'),
+                                    '@EasyAdmin/default/menu.html.twig'
+                                ]) }}
+                            {% endblock main_menu_wrapper %}
+                        </section>
+
+                    {% endblock sidebar %}
+                </aside>
+
+                <div class="content-wrapper">
+                    {% block flash_messages %}
+                        {{ include(_entity_config is defined ? _entity_config.templates.flash_messages : '@EasyAdmin/default/flash_messages.html.twig') }}
+                    {% endblock flash_messages %}
+
+                    <div id="sidebar-resizer-handler" class="resizer-handler resizer-handler-left"></div>
+
+                    {% block content %}
+                        <div class="content">
+                            {% block content_header_wrapper %}
+                                {% set _has_content_help = _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
+                                <section class="content-header {{ _has_content_help ? 'has-content-help' }}">
+                                    {% block content_header %}
+                                        <div class="d-flex flex-row justify-content-between align-content-center w-100">
+                                            <div class="content-header-title">
+                                                <h1 class="title">{% block content_title %}{% endblock %}</h1>
+                                            </div>
+
+                                            {% block global_actions_wrapper %}
+                                                <div class="global-actions">{% block global_actions %}{% endblock %}</div>
+                                            {% endblock %}
+                                        </div>
+
+                                        {% block content_help %}
+                                            {% if _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
+                                                <div class="content-header-help">
+                                                    {{ _entity_config[app.request.query.get('action')]['help']|trans(domain = _entity_config.translation_domain)|raw }}
+                                                </div>
+                                            {% endif %}
+                                        {% endblock content_help %}
+                                    {% endblock content_header %}
+                                </section>
+                            {% endblock content_header_wrapper %}
+
+                            <section id="main" class="content-body">
+                                {% block main %}{% endblock %}
+                            </section>
+
+                            {% block content_footer_wrapper %}
+                                <section class="content-footer">
+                                    {% block content_footer %}{% endblock %}
+                                </section>
+                            {% endblock %}
+                        </div>
+                    {% endblock content %}
+
+                    <div id="content-resizer-handler" class="resizer-handler resizer-handler-right"></div>
+                </div>
+            {% endblock wrapper %}
+        </div>
+    {% endblock wrapper_wrapper %}
+
+    {% block body_javascript %}{% endblock body_javascript %}
+
+    {% for js_asset in easyadmin_config('design.assets.js') %}
+        <script src="{{ asset(js_asset) }}"></script>
+    {% endfor %}
+
+    </body>
+{% endblock body %}
+</html>
