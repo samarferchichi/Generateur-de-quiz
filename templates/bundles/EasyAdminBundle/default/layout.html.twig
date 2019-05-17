@@ -291,7 +291,7 @@
         <div class="wrapper">
             {% block wrapper %}
 
-                <aside class="main-sidebar" style="border-radius: 50px; margin-bottom: 20px;">
+                <aside class="main-sidebar" style="border-radius: 50px; ">
                     <header class="main-header">
                         {% block header %}
 
@@ -368,7 +368,7 @@
 
                     {% block sidebar %}
 
-                        <section class="sidebar" >
+                        <section class="sidebar" style="margin-bottom: 20px;">
                             {% block main_menu_wrapper %}
                                 {{ include([
                                     _entity_config is defined ? _entity_config.templates.menu,

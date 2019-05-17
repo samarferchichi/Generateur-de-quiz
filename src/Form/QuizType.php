@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Quiz;
 use Doctrine\DBAL\Types\DateType;
+use Doctrine\DBAL\Types\IntegerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -250,6 +251,10 @@ class QuizType extends AbstractType
             ])
 
 
+
+
+
+
             ->add('nb_tentative', ChoiceType::class, [
                 'choices' => [
                     'Nombre illimité de tentatives'=>100,
@@ -281,6 +286,8 @@ class QuizType extends AbstractType
 
 
             ])
+
+
 
             ->add('Categorie',ChoiceType::class,[
                 'choices' => [
