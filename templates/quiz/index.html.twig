@@ -22,7 +22,6 @@
                 <th>Titre</th>
                 <th>Description</th>
                 <th>Mode_correction</th>
-                <th>Mode_score</th>
 
                 <th>Temps_dispo</th>
 
@@ -61,7 +60,6 @@
                 <td>{{ quiz.description }}</td>
 
                 <td>{{ quiz.modeCorrection ? 'Yes' : 'No' }}</td>
-                <td>{{ quiz.modeScore ? 'Yes' : 'No' }}</td>
 
                 <td>{{ quiz.tempsDispo ? quiz.tempsDispo|date('Y-m-d H:i:s') : '' }}</td>
 
@@ -90,9 +88,7 @@
 
 
                 <td>
-                    <a href="{{ path('quiz_show', {'id': quiz.id}) }}">show</a>
-                    <a href="{{ path('quiz_edit', {'id': quiz.id}) }}">edit</a>
-                    <a href="{{ path('quiz_delete', {'id': quiz.id}) }}">delete</a>
+
 
                 </td>
             </tr>

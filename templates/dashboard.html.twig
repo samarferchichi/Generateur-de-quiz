@@ -54,7 +54,7 @@
             }
 
             .flip-card-front {
-                background-color: #bbb;
+                background-color: white;
                 color: black;
                 z-index: 2;
             }
@@ -81,17 +81,40 @@
 
     <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js"></script>
     <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myDIV *").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
     {% set nb = 0 %}
 
 {% set nbquiz=1 %}
 {% set usernb=0 %}
 {% set total=0 %}
     {% set idquiz = 0 %}
-    <br>
+        <center>
+            <br>
+    <div style="padding-left: 20px  " class="row">
+           <div  class="col-0">
+               <h2>   <font color="#a9a9a9"  ><i class="fa fa-search" ></i></font></h2>
+           </div>
+           <div class="col-5">
+               <input id="myInput" class="form-control" type="text" placeholder="Recherche..">
+
+           </div>
+       </div>
+     </center>
+    <div>
+        <br>
     <center>
             {% if quiz|length != 0 %}
-                <div class="row"><br><br>
+                <div class="row"  id="myDIV" ><br><br>
 
 
 
@@ -100,8 +123,8 @@
 
                     {% if p.user == user %}
                         {% set nb = nb+1 %}
-                        <div class="col-sm-3" style="background-color:;">
-                            <div class="flip-card">
+                        <div class="col-sm-3"  >
+                            <div class="flip-card" style="background-color:;" id="myDIV">
 
                                 <div class="flip-card-inner">
 
@@ -140,7 +163,9 @@
 
                                         </p>
                                         <p>{{ p.description }}</p>
-                                        <button href="#" class="btn btn-success">Voir</button>
+                                      <div>
+                                          <button href="#" class="btn btn-success">Voir</button>
+                                      </div>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +183,7 @@
             {% endif %}
     </center>
 
-
+    </div>
     {% for quiz in quiz %}
 
         {% if quiz.user == user %}
