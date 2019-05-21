@@ -33,7 +33,7 @@
                         <!-- Modal content-->
                         <div class="modal-content" style="background-color: ">
                             <div class="modal-header" style="background-color: #7aba7b">
-                                <h2 class="modal-title"><font color="white"> Visualiser les pages de quiz   <p class="titrequiz">{% if quiz.titre|length > 50 %}{{ quiz.titre|slice(0, 30) ~ '...' }}{% else %}{{ quiz.titre }}{% endif %}</p></font></h2>
+                                <h2 class="modal-title"><font color="white"> Visualiser les pages de quiz <span class="titrequiz">" {% if quiz.titre|length > 50 %}{{ quiz.titre|slice(0, 30) ~ '...' }}{% else %}{{ quiz.titre }}{% endif %}</span> "</font></h2>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body" style=" overflow: scroll;">
@@ -142,15 +142,18 @@
 
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">{{ quiz.titre }}</h4>
+                                                    <div class="modal-header" style="background: #7aba7a;">
+                                                        {#<h4 class="modal-title">{{ quiz.titre }}</h4>#}
+                                                        <h5 class="modal-title">
+                                                            <font color="white"> Modifier Nombre maximum des pages</font>
+                                                        </h5>
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                     </div>
                                                     <div class="modal-body-update-max-page">
 
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-id="{{ quiz.id }}" id="btn-update-max-page">Update</button>
+                                                        <button type="button" class="btn btn-success" data-id="{{ quiz.id }}" id="btn-update-max-page">Update</button>
                                                     </div>
                                                 </div>
 
