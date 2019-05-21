@@ -114,7 +114,8 @@ class QuizType extends AbstractType
                     '7' => 7,
                     '8' => 8,
                     '9' => 9,
-                    'illimité'=>'1000'
+                    '10' => 10,
+                    'illimité'=>1000
                 ],
 
                 'attr' => [
@@ -137,7 +138,8 @@ class QuizType extends AbstractType
                     '7' => 7,
                     '8' => 8,
                     '9' => 9,
-                    'illimité'=>'100'
+                    '10' => 10,
+                    'illimité'=>1000
                 ],
                 'attr' => [
                     'class' => 'form-control'
@@ -257,7 +259,7 @@ class QuizType extends AbstractType
 
             ->add('nb_tentative', ChoiceType::class, [
                 'choices' => [
-                    'Nombre illimité de tentatives'=>100,
+                    'Nombre illimité de tentatives'=>1000,
                     '1' => 1,
                     '2' => 2,
                     '3' => 3,

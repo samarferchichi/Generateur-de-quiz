@@ -764,18 +764,7 @@ $quizs=$quizRepository->findAll();
                 $newquestion->setActif($quest->getActif());
                 $newquestion->setPage($newpage);
                 $entityManager->persist($newquestion);
-                foreach ($quest->getParametre() as $param) {
-                    $parametre = new Parametre();
-                    if($param->getNbCaractere())
-                        $parametre->setNbCaractere($param->getNbCaractere());
-                    if($param->getNbChiffre())
-                        $parametre->setNbChiffre($param->getNbChiffre());
-                    if ($param->getFormText())
-                        $parametre->setFormText($param->getFormText());
-                    $parametre->setQuestion($newquestion);
-                    $entityManager->persist($parametre);
 
-                }
                 foreach ($quest->getReponse() as $rep) {
 
                     $newrep = new Reponse();
@@ -792,6 +781,9 @@ $quizs=$quizRepository->findAll();
                     $newrep->setEtatcaseacocher($rep->getEtatcaseacocher());
                     if ($rep->getEtatcaseacocher())
                         $newrep->setEtatvf($rep->getEtatvf());
+                    if ($rep->getDesnumber())
+                        $newrep->setDesnumber($rep->getDesnumber());
+
                     if ($rep->getReponseValide())
                         $newrep->setReponseValide($rep->getReponseValide());
                     $newrep->setQuestion($newquestion);

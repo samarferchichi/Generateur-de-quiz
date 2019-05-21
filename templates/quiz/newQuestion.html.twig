@@ -117,7 +117,7 @@
 
             function importe() {
                 document.getElementById("importe").innerHTML = '<div class="row"><div class="col-sm-4" ><h3>Selectionner un quiz</h3></div><div style="padding-left:58%" class="col-sm-4" >' +
-                    '<h3><a style="padding:%" href="{{ path('newQuestion', {'quiz':quiz.id , 'page':page.id}) }}"><i class="fa fa-reply"></i></a></h3></div></div><div class="form-group row"> <div class="col-xs-1" >' +
+                    '<h3><a style="padding:%" href="{{ path('modifier_page', {'quiz':quiz.id , 'page':page.id}) }}"><i class="fa fa-reply"></i></a></h3></div></div><div class="form-group row"> <div class="col-xs-1" >' +
                     '<input type="text" id="myInput" onkeyup="myFunctiona()" placeholder="Search for names.." title="Type in a name">' +
                     '                                <div style=" width:373px; ">' +
                     '                                    <ul id="myUL">' +
@@ -134,22 +134,13 @@
         </script>
         <div id="question"  style="border-radius: 10px ;">
 
-
             <br>
 
-
-
-
-            <div style="background-color:;" id="importe">
+            <div id="importe">
                 <button href="#" type="button" onclick="importe()" style="width: 100%" class="btn btn-outline-info">Importer question d'un autre quiz</button>
                 <br>
                 <br>
                 <br>
-
-
-
-
-
 
             <div id="question"  style="border-radius: 10px;">
                 <table  >
@@ -163,11 +154,15 @@
                             &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-                            &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 
                         </td>
                         <td colspan="">
-                            <i> {{ page.question|length }} / {{ quiz.nbQuestion }} questions dans la page {{ pos }}</i>
+                            {% if quiz.nbQuestion == 1000 %}
+                                {{ page.question|length }} questions dans la page  {{ pos }}
+                            {% else %}
+                                {{ page.question|length }} / {{ quiz.nbQuestion }} questions dans la page {{ pos }}
+                            {% endif %}
                         </td>
                     </tr>
 

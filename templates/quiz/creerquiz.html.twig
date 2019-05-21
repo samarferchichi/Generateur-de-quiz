@@ -170,7 +170,11 @@
 
                                     </td>
                                     <td colspan="">
+                                    {% if quiz.nbQuestion == 1000 %}
+                                        {{ page.question|length }} questions dans la page  {{ pos }}
+                                        {% else %}
                                         {{ page.question|length }} / {{ quiz.nbQuestion }} questions dans la page {{ pos }}
+                                        {% endif %}
                                     </td>
                                 </tr>
                                     <tr>
@@ -1109,8 +1113,9 @@
                                     <!-- Trigger the modal with a button -->
                                     <div class="form-group row" >
                                         <div class="col-xs-2">
+                                            &nbsp;&nbsp;&nbsp;&nbsp;
 
-                                                <font size="5">
+                                                <font size="4">
 
 
                                                     {% if pos == 1 %}
@@ -1118,8 +1123,12 @@
                                                     {% else %}
                                                         <a href="{{ path('precedentPage', {'quiz':quiz.id ,'page': page.id}) }}" class="fa fa-chevron-circle-left"></a>
                                                     {% endif %}
-                                                    {{ pos }} / {{ quiz.nbPage}} page
 
+                                                    {% if quiz.nbPage < 1000 %}
+                                                    {{ pos }} / {{ quiz.nbPage}} page
+                                                        {% else %}
+                                                          Page  {{ pos }}
+{% endif %}
 
                                                     {% if pos < quiz.nbPage %}
                                                         <a class="fa fa-chevron-circle-right" href="{{ path('creatNextPage', {'quiz':quiz.id, 'page': page.id}) }}"></a>
@@ -1142,18 +1151,20 @@
                                             &nbsp;&nbsp;&nbsp;
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             &nbsp;&nbsp;&nbsp;&nbsp;
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            &nbsp;&nbsp;&nbsp;
 
 
 
-                                            <font size="5">
+                                            <font size="4">
                                                 <a href="#" data-target="#myModal" data-toggle="modal" class="fa fa-pencil"></a>
                                             </font>
                                                 &nbsp;
-                                            <font size="5">
+                                            <font size="4">
                                                 <a href="{{ path("page_ajout", { 'id': quiz.id, 'page': page.id } ) }}" class="fa fa-plus-square-o" ></a>
                                             </font>
                                                 &nbsp;
-                                            <font size="5">
+                                            <font size="4">
                                                 <a href="#"  data-target="#removepage-{{ page.id }}" data-toggle="modal"  class="fa fa-trash-o" ></a>
                                             </font>
                                         </div>

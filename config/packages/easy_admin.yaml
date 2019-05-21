@@ -82,6 +82,9 @@ easy_admin:
           - { property: 'gras' ,type: 'boolean' }
           - { property: 'italique' ,type: 'boolean' }
           - { property: 'colorTitre' ,type: 'color'  }
+          - { property: 'nb_page' , type: 'integer' }
+          - { property: 'nb_question' , type: 'integer' }
+
       show:
         fields:
           - { property: 'titre', label: 'Titre de quiz'  }
@@ -97,6 +100,8 @@ easy_admin:
           - { property: 'fermer_quiz' }
           - { property: 'mode_correction' }
           - { property: 'nb_tentative' ,label: 'Nombre de tentative disiponible' }
+          - { property: 'nb_page' ,label: 'Nombre des pages' }
+          - { property: 'nb_question' ,label: 'Nombre des questions par pages' }
           - { property: 'terminer' }
           - { property: 'brochure' ,label: 'Logo' , type: 'file' }
           - { property: 'gras' ,label: 'Titre en gras' }
@@ -122,6 +127,8 @@ easy_admin:
           - { property: 'fermer_quiz' }
           - { property: 'mode_correction' }
           - { property: 'nb_tentative' ,label: 'Nombre de tentative disiponible' }
+          - { property: 'nb_page' ,label: 'Nombre des pages' }
+          - { property: 'nb_question' ,label: 'Nombre des questions par pages' }
           - { property: 'terminer' }
           - { type: 'tab', label: 'Logo', icon: 'download' }
           - { property: 'brochure' ,label: 'Logo' }
