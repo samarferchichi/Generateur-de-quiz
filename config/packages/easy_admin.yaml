@@ -28,21 +28,26 @@ easy_admin:
 
     ParticipantQuiz:
       class: App\Entity\ParticipantQuiz
+      controller: App\Controller\ParticipantQuizController
+
+      disabled_actions: ['edit','delete']
 
       label: 'Participants'
       list:
         fields:
-          - { property: 'participant' , type: 'email' , label: 'email participant'}
-          - { property: 'quiz', type: 'text' , label: 'quiz '}
+          - { property: 'participant' , type: 'email' , label: 'Email participant'}
+          - { property: 'quiz', type: 'text' , label: 'Quiz '}
 
       show:
         fields:
-          - { property: 'participant', label: 'email participant', type: 'email' }
+          - { property: 'participant', label: 'Email participant', type: 'email' }
+          - { property: 'quiz', label: 'Quiz '}
+
 
       form:
         fields:
-          - { property: 'participant', type: 'email' , label: 'email participant'}
-          - { property: 'quiz', type: 'text' , label: 'quiz '}
+          - { property: 'participant', type: 'email' , label: 'Email participant'}
+          - { property: 'quiz', type: 'text' , label: 'Quiz '}
 
 
     Quiz:

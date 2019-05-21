@@ -52,8 +52,11 @@ class ParticipantQuizController extends EasyAdminController
             'sort_direction' => $sortDirection,
         ]);
 
-        $queryBuilder->andWhere('entity.quiz = :role')->setParameter('role', $this->getUser());
+        foreach($this->getUser()->getQuiz() as $q){
+        $queryBuilder->andWhere('entity.quiz = :role')->setParameter('role', $q->getId());
+        dump($q);
 
+    }
 
         return $this->get('easyadmin.paginator')->createOrmPaginator($queryBuilder, $page, $maxPerPage);
     }
