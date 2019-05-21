@@ -301,8 +301,9 @@ OU
 
                                             <img src="{{ asset('uploads/brochures/' ~ q.brochure) }}" alt="Avatar" style="width:150px;height:150px;">
                                         {% endif %}
-                                        <p class="titrequiz">{{ q.titre }}</p>
-                                        <p> {{ q.description }}</p>
+                                        <p class="titrequiz">{% if q.titre|length > 21 %}{{ q.titre|slice(0, 20) ~ '...' }}{% else %}{{ q.titre }}{% endif %}</p>
+                                        <p> {% if q.description|length > 21 %}{{ q.description|slice(0, 25) ~ '...' }}{% else %}{{ q.description }}{% endif %}</p>
+                                        <br>
                                         <p><button data-target="#test_{{ key }}  " data-toggle="modal" style="width: px;" class="menu-level-1">Go</button></p>
                                     </div>
                                 </div>

@@ -866,7 +866,7 @@ $quizs=$quizRepository->findAll();
 
             $page = new Page();
             $page->setQuiz($quiz);
-            $page->setBgColor('	#FFFFFF	');
+            $page->setBgColor('	');
             $page->setColorTitrePage('');
             $page->setTitrePage('Vide');
             $page->setOrdre(1);
@@ -948,6 +948,48 @@ $quizs=$quizRepository->findAll();
 
         ]);
     }
+
+
+
+
+    /**
+     * @Route("/infoPage2/{quiz}/{quizactuel}/{pageactuel}", name="infoPage2", methods={"GET", "POST"})
+     */
+    public function infoPage2(Quiz $quiz ,Quiz $quizactuel, Page $pageactuel, Request $request)
+    {
+
+        return $this->render('quiz/importePage2.html.twig', [
+            'quiz' => $quiz,
+            'quizactuel' => $quizactuel,
+            'pageactuel' => $pageactuel
+        ]);
+    }
+
+
+
+    /**
+     * @Route("/infoQuestion2/{page}/{quizactuel}/{pageactuel}", name="infoQuestion2", methods={"GET", "POST"})
+     */
+    public function infoQuestion2(Page $page,Quiz $quizactuel, Page $pageactuel, QuestionRepository $questionRepository, ParametreRepository $parametreRepository, ReponseRepository $reponseRepository, Request $request)
+    {
+
+        $listquestion = $questionRepository->findBy(array('page' => $page->getId()));
+
+
+
+        return $this->render('quiz/importeQuestion2.html.twig', [
+            'page' => $page,
+            'listquestion' => $questionRepository->findAll(),
+            'listparametre' => $parametreRepository->findAll(),
+            'listreponse' => $reponseRepository->findAll(),
+            'question' => $listquestion,
+            'quizactuel' =>$quizactuel->getId(),
+            'pageactuel'=>$pageactuel->getId()
+
+
+        ]);
+    }
+
 
 
 
@@ -1469,7 +1511,7 @@ $quizs=$quizRepository->findAll();
         if($quiz->getNbPage() > count($quiz->getPage())){
             $page = new Page();
             $page->setQuiz($quiz);
-            $page->setBgColor('	#FFFFFF	');
+            $page->setBgColor('');
             $page->setColorTitrePage('');
             $page->setTitrePage('Vide');
             $ordre = $pageRepository->getMaxOrdre($quiz->getId());

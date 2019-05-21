@@ -75,6 +75,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+
+
     <div class="panel panel-success">
         <div class="card bg-info text-white">
             <div class="card-body"><h2><font color="white"> QUIZ / Créer quiz</font> </h2></div>
@@ -149,9 +151,8 @@
 
 
 
-
 <div style="background-color:;" id="importe">
-    <a href="#" type="button" onclick="importe()" style="width: 100%" class="btn btn-warning">Importer question d'un autre quiz</a>
+    <button href="#"  onclick="importe()" style="width: 100%" class="btn btn-outline-info">Importer question d'un autre quiz</button>
 <br>
 <br>
 <br>
@@ -188,19 +189,26 @@
                                             </div>
                                     </td>
                                 </tr>
+        <tr>
+            <td>
+                <div class="form-group row">
+                    <div class="col-xs-2">
+
+                    {{ form_label(formq.type_question) }}
+                    </div>
+                    <div class="col-sm-7">
+                        {{ form_widget(formq.type_question, { 'id': 'question_type' }) }}
+                        <small style="color: red">
+                            <font size="2">
+                                {{ form_errors(formq.type_question) }}
+                            </font>
+                        </small>
+                    </div>
+
+                </div>
+            </td>
+        </tr>
                              </table>
-
-
-                                {{ form_label(formq.type_question) }}
-
-                                            <div class="col-sm-7">
-                                                {{ form_widget(formq.type_question, { 'id': 'question_type' }) }}
-                                                <small style="color: red">
-                                                    <font size="2">
-                                                {{ form_errors(formq.type_question) }}
-                                                    </font>
-                                                </small>
-                                            </div>
 
 
 
@@ -511,26 +519,40 @@
 
                                          <div id="showType"></div>
 
+    <tr>
+        <td>
+            <div class="form-group row">
+                <div class="col-xs-2">
 
                                             <div class="col-xs-7">
                                                 {{ form_label(formq.description_question) }}
                                             </div>
-                                            <div class="col-xs-2">
+                </div>
+                                            <div style="width: 650px">
                                                 {{ form_widget(formq.description_question) }}
                                                 {{ form_errors(formq.description_question) }}
                                             </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="form-group row">
+
+                    <div class="col-xs-2">
                                 <br><i class="fa fa-question-circle"></i>
                                 {{ form_label(formq.info_bulle) }}
+                    </div>
 
-
-                                <div  class="row" >
-
-                                <div class="col-sm-12" style="background-color:;"> {{ form_widget(formq.info_bulle) }}</div>
-                                </div> <br>
-
+                    <div class="col-xs-4">
+                        <div class="col-sm-12" style="background-color:; width: 900px"> {{ form_widget(formq.info_bulle) }}</div>
+                    </div>
+            </div>
+        </td>
+    </tr>
   <center>
       <div  class="row" >
-        <div class="col-sm-6">  <button class="btn btn-info">Ajouter à la page</button></div>
+        <div class="col-sm-6">  <button class="btn btn-info" >Ajouter à la page</button></div>
 
         <div class="col-sm-4">  <a href="{{ path('terminerQuiz', {'quiz':quiz.id }) }}" style="width: 240px" class="btn btn-info">Terminer la création de Quiz</a></div>
     </div>
@@ -538,12 +560,7 @@
     {{ form_end(formq) }}
 </div>
 
-
-
-
-
-
-                            </div>
+   </div>
                             {% else %}
                                 <div style="border-radius: 10px;"><br><br><br>
                                     <div style="background-color: 	#b9def0">
@@ -859,22 +876,17 @@
 
                                                         <!-- Modal content-->
                                                         <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title"></h4>
+                                                            <div class="modal-header" style="background-color: #31b0d5">
+                                                                <h4 class="modal-title"><font color="white"> Modifier question</font></h4>
                                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
 
                                                             </div>
                                                             <div class="modal-body">
-                                                                <h1>Modifier question</h1>
-
                                                                 {{ render(controller(
                                                                     'App\\Controller\\QuestionController::edit',
                                                                     { 'id': j.id }
                                                                 )) }}
-<style>
-    .mb-5{ margin-bottom: 5px ! important;}
 
-</style>
 
                                                                 <h1>Modifier les reponses </h1>
                                                                 {% for i in j.reponse %}
@@ -883,7 +895,6 @@
                                                                             { 'id': i.id }
                                                                         )) }}
                                                                 {% endfor %}
-
 
                                                             </div>
 
@@ -898,7 +909,7 @@
 
                                                         <!-- Modal content-->
                                                         <div class="modal-content">
-                                                            <div class="modal-header">
+                                                            <div class="modal-header" style="background-color:red">
                                                                 <h4 class="modal-title"></h4>
                                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                             </div>
@@ -919,22 +930,23 @@
                                             <table>
                                                 <tr>
                                                     <td>
-                                                       <font size="5">
-                                                           <a href="#" data-target="#removequestion-{{ j.id }}" data-toggle="modal" class="fa fa-trash-o" ></a>
-                                                       </font>
-
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <font size="5">
-                                                        <a href="#" data-target="#editequestion-{{ j.id  }}" data-toggle="modal" class="fa fa-pencil"></a>
+                                                        <font size="4">
+                                                            <a href="#" data-target="#editequestion-{{ j.id  }}" data-toggle="modal" class="fa fa-pencil"></a>
                                                         </font>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <font size="5">
+                                                       <font size="4">
+                                                           <a href="#" data-target="#removequestion-{{ j.id }}" data-toggle="modal" class="fa fa-trash-o" ></a>
+                                                       </font>
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        <font size="4">
                                                         {% if page.question|length < page.quiz.nbQuestion %}
                                                             <a class="fa fa-file-o" href="{{ path('question_dep', {'question': j.id} )}}"></a>
                                                         {% else %}
@@ -946,7 +958,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <font size="5">
+                                                        <font size="4">
                                                         {% if j.actif == false  %}
                                                             <a class="fa fa-circle" href="{{ path('actif', {'question': j.id} )}}" style="color:grey"  ></a>
                                                         {% else %}
@@ -987,8 +999,8 @@
 
                                     <!-- Modal content-->
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h1 class="modal-title">Page de quiz "{{ quiz.titre }}"</h1>
+                                        <div class="modal-header" style="background-color: #31b0d5">
+                                            <h1 class="modal-title">Modifier page </h1>
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
 
                                         </div>
@@ -1155,7 +1167,7 @@
 
                                     <!-- Modal content-->
                                     <div class="modal-content">
-                                        <div class="modal-header">
+                                        <div class="modal-header" style="background-color:red">
                                             <h4 class="modal-title">Supprimer page</h4>
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                                         </div>

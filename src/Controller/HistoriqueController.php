@@ -8,7 +8,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Participant;
+use App\Entity\Quiz;
 use App\Repository\ParticipantQuizRepository;
+use phpDocumentor\Reflection\Types\Integer;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Routing\Annotation\Route;
 
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
@@ -38,14 +42,14 @@ class HistoriqueController  extends EasyAdminController
     }
 
     /**
-     * @Route("/showHistorique", name="showHistorique")
+     * @Route("/showHistorique/{quiz}/{par}/{tentative}", name="showHistorique")
      */
-    public function showHistorique(ParticipantQuizRepository $participantQuizRepository)
+    public function showHistorique(Quiz $quiz, Participant $par, $tentative, ParticipantQuizRepository $participantQuizRepository)
     {
         $parquiz = $participantQuizRepository->findAll();
 
         $user = $this->getUser();
-        return $this->render('quiz/showHistorique.html.twig');
+        return $this->render('quiz/showHistorique.html.twig',['quiz' => $quiz, 'par' => $par, 'tentative' => $tentative]);
     }
 
 

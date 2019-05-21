@@ -5,13 +5,14 @@
 {% block title %}Delete page{% endblock %}
 
 {% block body %}
-    <h1>Delete page</h1>
-    <h3>Are you sure you want to delete this item?</h3>
-
+    <h3>Êtes-vous sûr de vouloir supprimer cette page?</h3>
+<br>
+<br>
+<br>
     {{ form_start(form) }}
     <div style="color:red">{{ form_errors(form) }}</div>
     {{ form_widget(form) }}
-    <button class="btn">Supprimer</button>
+    <center><button style="background-color:red" class="btn btn-danger">Supprimer</button></center>
     {{ form_end(form) }}
 
 

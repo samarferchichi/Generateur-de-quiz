@@ -7,7 +7,69 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
 
+
+    .aa {
+        width: 35px;
+        height: 4px;
+        background-color: #1f6377;
+        margin: 6px 0;
+    }
+    div.sticky {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        padding: 5px;
+        background-color: #cae8ca;
+        border: 2px solid #4CAF50;
+    }
+    input[type=text]:focus {
+        background-color: lightblue;
+    }
+
+    input[type=number]:focus {
+        background-color: #7aba7b;
+    }
+    * {
+        box-sizing: border-box;
+    }
+
+    #myInput {
+        background-position: 10px 12px;
+        background-repeat: no-repeat;
+        width: 220%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+    }
+
+    #myUL {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+    }
+
+    #myUL li a {
+        border: 1px solid #ddd;
+        margin-top: -1px; /* Prevent double borders */
+        background-color: #f6f6f6;
+        padding: 12px;
+        text-decoration: none;
+        font-size: 18px;
+        color: black;
+        display: block;
+
+    }
+
+    #myUL li a:hover:not(.header) {
+        background-color: #eee;
+
+    }
+
+</style>
 
 
     <div class="">
@@ -35,7 +97,7 @@
             }
 
             function myFunctionaa(p1, p2, p3) {
-                var url = '{{ path('infoPage', {'quiz': 'quiz_id' , 'quizactuel': 'quiz_actuel' , 'pageactuel': 'page_actuel'}) }}';
+                var url = '{{ path('infoPage2', {'quiz': 'quiz_id' , 'quizactuel': 'quiz_actuel' , 'pageactuel': 'page_actuel'}) }}';
                 url = url.replace("quiz_id", p1);
                 url = url.replace("quiz_actuel", p2);
                 url = url.replace("page_actuel", p3);
@@ -79,7 +141,7 @@
 
 
             <div style="background-color:;" id="importe">
-                <a href="#" type="button" onclick="importe()" style="width: 100%" class="btn btn-warning">Importer question d'un autre quiz</a>
+                <button href="#" type="button" onclick="importe()" style="width: 100%" class="btn btn-outline-info">Importer question d'un autre quiz</button>
                 <br>
                 <br>
                 <br>

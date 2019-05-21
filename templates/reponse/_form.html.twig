@@ -55,6 +55,7 @@
                     {% endif %}
 
                     {% if question.typeQuestion == "Nombre" %}
+
                         {% for p in question.reponse %}
 
                                 {{ form_widget(form.desnumber , { 'attr':{'class':'form-control'} } ) }}
@@ -140,8 +141,9 @@
      {% endfor %}
  {% endif %}
 
-<div class="col-sm-4" style="background-color:;">
-    <button class="fa fa-pencil"></button>
+<div class="col-sm-4" style="background-color:; padding-left: 91.5%;">
+    <br>
+    <button style="color: #31b0d5" class="fa fa-pencil"></button>
 
 </div>
 {{ form_end(form) }}

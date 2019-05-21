@@ -42,26 +42,6 @@ class PageController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="page_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, Page $page): Response
-    {
-        $form = $this->createForm(PageType::class, $page);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-            return $this->redirectToRoute('page_index', [
-                'id' => $page->getId(),
-            ]);
-        }
-
-        return $this->render('page/edit.html.twig', [
-            'page' => $page,
-            'form' => $form->createView(),
-        ]);
-    }
 
 
 

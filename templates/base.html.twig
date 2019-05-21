@@ -20,7 +20,6 @@
         {% endfor %}
         </nav>
 
-
         <nav class="navbar navbar-expand-lg navbar-dark navbar-bg {{ app.session.flashbag.peek('danger')|length > 0 ? '' : 'mb-5' }}">
 
             {% for message in app.flashes('danger') %}

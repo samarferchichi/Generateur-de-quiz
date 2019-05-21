@@ -117,6 +117,63 @@ class QuestionController extends AbstractController
     }
 
 
+    /**
+     * @Route("/question_importe2/{question}/{quizactuel}/{pageactuel}", name="question_importe2", methods={"GET" , "POST"})
+     */
+    public function question_importe2(Request $request, Page $pageactuel, Quiz $quizactuel,ReponseRepository $reponseRepository, Question $question, Reponse $reponse): Response
+    {
+
+        if(count($question->getPage()->getQuestion()) < $question->getPage()->getQuiz()->getNbQuestion()){
+
+            $entityManager = $this->getDoctrine()->getManager();
+
+            $q = new Question();
+            $q->setPage($pageactuel);
+            $q->setTextQuestion($question->getTextQuestion());
+            $q->setTypeQuestion($question->getTypeQuestion());
+            if($question->getDescriptionQuestion())
+                $q->setDescriptionQuestion($question->getDescriptionQuestion());
+            if($question->getInfoBulle())
+                $q->setInfoBulle($question->getInfoBulle());
+
+            $q->setActif($question->getActif());
+
+            $entityManager->persist($q);
+
+
+
+            foreach ($question->getReponse() as $rep){
+                $r = new Reponse();
+
+                if($rep->getDescriptiondate())
+                    $r->setDescriptiondate($rep->getDescriptiondate());
+                if($rep->getDescriptionformule())
+                    $r->setDescriptionformule($rep->getDescriptionformule());
+                if($rep->getResultatformule())
+                    $r->setResultatformule($rep->getResultatformule());
+                if($rep->getFormule())
+                    $r->setFormule($rep->getFormule());
+                if($rep->getEtatlist())
+                    $r->setEtatlist($rep->getEtatlist());
+                $r->setEtatcaseacocher($rep->getEtatcaseacocher());
+                if($rep->getEtatcaseacocher())
+                    $r->setEtatvf($rep->getEtatvf());
+                if($rep->getReponseValide())
+                    $r->setReponseValide($rep->getReponseValide());
+                if($rep->getDesnumber())
+                    $r->setDesnumber($rep->getDesnumber());
+
+                $r->setQuestion($q);
+
+                $entityManager->persist($r);
+            }
+
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('modifier_page', ['quiz' => $quizactuel->getId(), 'page' => $pageactuel->getId()]);
+    }
+
 
 
     public function questionDepAction(Request $request,ReponseRepository $reponseRepository, Question $question, Reponse $reponse): Response
@@ -329,7 +386,35 @@ class QuestionController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}/edit2", name="question_edit2", methods={"GET","POST"})
+     */
+    public function edit2(Request $request, Question $question): Response
+    {
 
+        $form = $this->createForm(QuestionType::class, $question, [
+            'action' => $this->generateUrl('question_edit2', ['id' => $question->getId() ])
+
+        ]);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid() ) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('modifier_page', [
+                'quiz' => $question->getPage()->getQuiz()->getId(),
+                'page' => $question->getPage()->getId(),
+            ]);
+        }
+
+
+        return $this->render('question/editQuestion.html.twig', [
+            'question' => $question,
+            'form' => $form->createView(),
+
+        ]);
+    }
 
 
 

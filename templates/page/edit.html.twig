@@ -1,11 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Page{% endblock %}
+{% block title %}Modifier page{% endblock %}
 
 {% block body %}
-    <h1>Edit Page</h1>
 
-{{ page.ordre }}
 
     {{ form_start(form) }}
            <div id="page">
@@ -23,9 +21,10 @@
             </div>
 
 
-
-    </div>
-        <button class="btn">Update</button>
+    </div><br>
+     <center>
+         <button class="btn btn-info">Modifier</button>
+     </center>
     {{ form_end(form) }}
     </form>
 

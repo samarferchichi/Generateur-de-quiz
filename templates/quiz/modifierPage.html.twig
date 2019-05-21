@@ -154,7 +154,7 @@
                     <div class="col-sm-12">
 
 
-                        <h2>Modifier page </h2>
+                        <h2>Titre: {{ page }} </h2>
 
                         {{ form_start(form) }}
                         <div id="page">
@@ -173,8 +173,8 @@
 
                         </div><br>
                        <center>
-                           <button class="btn">Modifier</button>
-                           <button href="{{ path('get_info_quiz', {'quiz': quiz} )}}" class="btn">Retour à la liste des quiz</button>
+                           <button class="btn btn-outline-info">Modifier</button>
+                           <button href="{{ path('get_info_quiz', {'quiz': quiz} )}}" class="btn btn-outline-info">Retour</button>
                        </center>
                         {{ form_end(form) }}
 
@@ -184,7 +184,7 @@
             <div class="col-sm-7" style="background-color: ">
                 <div class="panel panel-success">
                     <div class="card bg-info text-white">
-                        <div class="card-body"> <center>CONTINUE DE PAGE</center> </div>
+                        <div class="card-body"> <center>CONTENUE DE PAGE</center> </div>
                     </div>
                     <div  class="col-sm-12">
                         <div class="col">
@@ -208,7 +208,7 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <h2>Question de page</h2>
+                                        <h2>Questions de page</h2>
                                     </td>
                                     <td>
                                         <div style="width: 33px; padding-left: 580px; background-color: " >
@@ -229,152 +229,187 @@
                                 {% else %}
                                 {% for key, j in question %}
                                     <br>
-                                <div class="col-sm-11"  >
-
-                                    <div style="border-bottom: 1px solid ;">
                                     <label>
-                                      <b>
-                                          <i>
-                                              Question n° : {{ key + 1 }}
-                                          </i>
-                                      </b>
-                                    </label><br>
+                                        <b>
+                                            <i>
+                                                Question n° : {{ key + 1 }}
+                                            </i>
+                                        </b>
+                                    </label>
 
-                                            {{ j.textQuestion }}
+
+                                <div class="col-sm-11" style="border-bottom: 1px solid ; padding-left: 20px"  >
+
+
                                         <br>
-                                   {% if j.typeQuestion =='Vrai/faux' %}
+                                        {% if j.typeQuestion =='Vrai/faux' %}
+                                            {{ j.textQuestion }}
+                                            <br>
+                                            {{ j.descriptionQuestion }}
+                                            <br>
+                                            {% for p in j.reponse %}
+                                                {% if p.question == j %}
 
-                                       {{ j.descriptionQuestion }}
-                                       {% for p in j.reponse %}
-                                           {% if p.question == j %}
-                                               <table>
-                                                   <tr>
-                                                       <td colspan="3">
-                                                           {{ p.reponseValide }}
-                                                       </td>
-                                                       <td colspan="3">
-                                                           <div style="width: 100px;">
+                                                    <div class="row" >
+                                                        <div class="col-8">
+                                                            {{ p.reponseValide }}
 
-                                                               <select style="width: 150px;" class="form-control">
-                                                                   <option>
-                                                                       Vrai
-                                                                   </option>
-                                                                   <option>
-                                                                       Faux
-                                                                   </option>
-                                                               </select>
-                                                           </div>
-                                                       </td>
-                                                   </tr>
-                                               </table>
-
-                                           {% endif %}
-                                       {% endfor %}
-
-
-                                   {% endif %}
-                                            {% if j.typeQuestion =='Liste déroulante' %}
-
-                                                {{ j.descriptionQuestion }}
-
-                                                <table>
-                                                    <tr>
-                                                        <td colspan="3">
+                                                        </div>
+                                                        <div class="col-1">
                                                             <div style="width: 100px;">
-                                                                <select style="width: 350px;" class="form-control">
-                                                                    {% for i in j.reponse %}
-                                                                        {% if i.question == j %}
 
-                                                                            <option>
-                                                                                {{ i.reponseValide }}
-                                                                            </option>
-
-                                                                        {% endif %}
-                                                                    {% endfor %}
+                                                                <select style="width: 150px;" class="form-control">
+                                                                    <option>
+                                                                        Vrai
+                                                                    </option>
+                                                                    <option>
+                                                                        Faux
+                                                                    </option>
                                                                 </select>
                                                             </div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                                        </div>
+                                                        <br>
+                                                        <br>
+                                                        <br>
+                                                    </div>
 
-                                            {% endif %}
 
-                                            {% if j.typeQuestion == 'Case à cocher' %}
 
-                                                {{ j.descriptionQuestion }}
 
-                                                {% for p in j.reponse %}
-                                                    {% if p.question == j %}
-                                                        <table>
-                                                            <tr>
-                                                                <td colspan="8">
-                                                                    {{ p.reponseValide }}
-                                                                </td>
-                                                                <td>
-                                                                    <div style="width: 100px;">
-                                                                        <input type="checkbox">
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
+                                                {% endif %}
+                                            {% endfor %}
 
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                            {% if j.typeQuestion =='Calculée' %}
+                                        {% endif %}
 
-                                                {{ j.descriptionQuestion }}
+                                        {% if j.typeQuestion =='Liste déroulante' %}
+                                            {{ j.textQuestion }}
+                                            <br>
+                                            <div class="row" >
+                                                <div class="col">
+                                                    {{ j.descriptionQuestion }}
+                                                </div>
+                                            </div>
 
-                                                {% for p in j.reponse %}
-                                                    {% if p.question == j %}
-                                                        <table>
-                                                            <tr>
-                                                                <td colspan="3">
-                                                                    {{ p.descriptionformule }}
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    Formule:
-                                                                </td>
-                                                                <td colspan="3">
-                                                                    <input  class="form-control" type="text">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    Resultat:
-                                                                </td>
-                                                                <td>
-                                                                    <input class="form-control" type="text">
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
+                                            <div style="width: 100px;">
+                                                <select style="width: 350px;" class="form-control">
+                                                    {% for i in j.reponse %}
+                                                        {% if i.question == j %}
+
+                                                            <option>
+                                                                {{ i.reponseValide }}
+                                                            </option>
+
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <br>
+                                            <br>
+                                            <br>
+
+                                        {% endif %}
+
+                                        {% if j.typeQuestion == 'Case à cocher' %}
+
+                                            {{ j.textQuestion }}
+                                            <br>
+                                            {{ j.descriptionQuestion }}
+
+                                            {% for p in j.reponse %}
+                                                {% if p.question == j %}
+                                                    <div class="row" >
+                                                        <div class="col-8">
+                                                            {{ p.reponseValide }}
+                                                        </div>
+                                                        <div class="col-4">
+
+                                                            <div style="width: 100px;">
+                                                                <input type="checkbox"  >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
+
+
+
+                                        {% if j.typeQuestion =='Calculée' %}
+                                            {{ j.textQuestion }}
+                                            <br>
+                                            {{ j.descriptionQuestion }}
+
+                                            {% for p in j.reponse %}
+                                                {% if p.question == j %}
+                                                    <table>
+                                                        <tr>
+                                                            <td colspan="3">
+                                                                {{ p.descriptionformule }}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <b> Formule:</b>
+                                                            </td>
+                                                            <td colspan="3">
+                                                                <input  style="width: 400px;" class="form-control" type="text" >
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <b>Resultat:</b>
+                                                            </td>
+                                                            <td>
+                                                                <input style="width: 400px;" class="form-control" type="text">
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
 
 
 
 
                                         {% if j.typeQuestion =='Date' %}
+                                            {{ j.textQuestion }}
+                                            <br>
                                             {{ j.descriptionQuestion }}
-<br>
+                                            <br>
+                                            <br>
                                             {% for p in j.reponse %}
                                                 {% if p.question == j %}
-                                                    {{ p.descriptiondate }}
-                                                    <input type="date" class="form-control">
+                                                    <div class="row" >
+                                                        <div class="col-8">
+                                                            {{ p.descriptiondate }}<br>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <input type="date" class="form-control">
+                                                        </div>
+                                                    </div>
                                                 {% endif %}
                                             {% endfor %}
+                                            <br>
                                         {% endif %}
 
+
                                         {% if j.typeQuestion =='Nombre' %}
+                                            {{ j.textQuestion }}
+                                            <br>
                                             {{ j.descriptionQuestion }}
-<br>
+                                            <br>
                                             {% for p in j.reponse %}
                                                 {% if p.question == j %}
-                                                    {{ p.desnumber }}
-                                                    <input type="number" class="form-control">
+                                                    <div class="row" >
+                                                        <div class="col-8">
+                                                            {{ p.desnumber }}<br><br>
+                                                        </div>
+                                                        <div class="col-3">
+
+                                                            <input type="number" class="form-control">
+                                                        </div>
+                                                    </div>
                                                 {% endif %}
                                             {% endfor %}
                                         {% endif %}
@@ -391,8 +426,8 @@
 
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title"></h4>
+                                                    <div class="modal-header" style="background-color: #31b0d5">
+                                                        <h2 class="modal-title"><font color="white"> Modifier question</font></h2>
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
 
                                                     </div>
@@ -400,12 +435,12 @@
 
 
                                                         {{ render(controller(
-                                                            'App\\Controller\\QuestionController::edit',
+                                                            'App\\Controller\\QuestionController::edit2',
                                                             { 'id': j.id }
                                                         )) }}
 
 
-                                                        <h1>Edit les reponses </h1>
+                                                        <div style="background-color: "><h2>Modifier les reponses </h2></div>
                                                         {% for i in j.reponse %}
                                                             {{ render(controller(
                                                                 'App\\Controller\\ReponseController::editReponse2',
@@ -468,13 +503,12 @@
 
 
                                     </div>
-                                 </div>
                                     <div class="modal fade" id="removequestion-{{ j.id }}" role="dialog">
                                         <div class="modal-dialog">
 
                                             <!-- Modal content-->
                                             <div class="modal-content">
-                                                <div class="modal-header">
+                                                <div class="modal-header" style="background-color:red">
                                                     <h4 class="modal-title"></h4>
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                 </div>

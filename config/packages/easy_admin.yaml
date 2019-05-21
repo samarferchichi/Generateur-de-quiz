@@ -28,22 +28,21 @@ easy_admin:
 
     ParticipantQuiz:
       class: App\Entity\ParticipantQuiz
-      controller: App\Controller\ParticipantQuizController
 
-      label: 'Participant'
+      label: 'Participants'
       list:
+        fields:
+          - { property: 'participant' , type: 'email' , label: 'email participant'}
+          - { property: 'quiz', type: 'text' , label: 'quiz '}
+
       show:
         fields:
-          - { property: 'participant' }
-          - { property: 'quiz' , label: 'Quiz ' }
-          - { property: 'tentative' }
-          - { property: 'resultat' }
+          - { property: 'participant', label: 'email participant', type: 'email' }
+
       form:
         fields:
-          - { property: 'participant' }
-          - { property: 'quiz' , label: 'Quiz ' }
-          - { property: 'tentative' }
-          - { property: 'resultat' }
+          - { property: 'participant', type: 'email' , label: 'email participant'}
+          - { property: 'quiz', type: 'text' , label: 'quiz '}
 
 
     Quiz:
@@ -51,11 +50,21 @@ easy_admin:
       controller: App\Controller\QuizController
 
       list:
-        title: "Liste quiz"
+        title: "Configuration"
+        fields:
+          - { property: 'titre', label: 'Titre de quiz'}
+          - { property: 'terminer', label: 'Terminer' }
+          - { property: 'ouvrire_quiz', label: 'Ouverture de quiz' }
+          - { property: 'fermer_quiz', label: 'Fermeture de quiz'}
+          - { property: 'timequiz'  , label: 'Temps' }
+          - { property: 'nb_tentative', label: 'Nombre de tentative' }
+          - { property: 'brochure', label: 'Logo' }
+          - { property: 'melange_question', label: 'Mélanger les questions' }
+
 
       action:
         fields:
-          - { property: 'titre', type: 'text' }
+          - { property: 'titre', type: 'text' , label: 'Titre de quiz'}
           - { property: 'description', type: 'text'  }
           - { property: 'mode_correction', type: 'boolean' }
           - { property: 'temps_dispo', type: 'datetime' }
@@ -68,8 +77,11 @@ easy_admin:
           - { property: 'message_e', type: 'text' }
           - { property: 'nb_tentative', type: 'integer' }
           - { property: 'terminer', type: 'boolean' }
-          - { property: 'brochure', type: 'ImageType' }
+          - { property: 'brochure', type: 'file' }
           - { property: 'timequiz' ,type: 'integer' }
+          - { property: 'gras' ,type: 'boolean' }
+          - { property: 'italique' ,type: 'boolean' }
+          - { property: 'colorTitre' ,type: 'color'  }
       show:
         fields:
           - { property: 'titre', label: 'Titre de quiz'  }
@@ -86,11 +98,17 @@ easy_admin:
           - { property: 'mode_correction' }
           - { property: 'nb_tentative' ,label: 'Nombre de tentative disiponible' }
           - { property: 'terminer' }
-          - { property: 'brochure' ,label: 'Logo' }
+          - { property: 'brochure' ,label: 'Logo' , type: 'file' }
+          - { property: 'gras' ,label: 'Titre en gras' }
+          - { property: 'italique' ,label: 'Titre en italique' }
+          - { property: 'colorTitre' ,label: 'Couleur de titre' }
       form:
         fields:
           - { type: 'tab', label: 'Info quiz' ,icon: 'wpforms' }
           - { property: 'titre', label: 'Titre de quiz'  }
+          - { property: 'gras' ,label: 'Titre en gras' }
+          - { property: 'italique' ,label: 'Titre en italique' }
+          - { property: 'colorTitre' ,label: 'Couleur de titre', type: 'color' }
           - { property: 'description', label: 'Description de quiz' }
           - { property: 'entete' , label: 'Entete de quiz' }
           - { property: 'pied' , label: 'Pied de quiz'}
@@ -112,19 +130,19 @@ easy_admin:
 
   design:
     menu:
-      - { label: 'Dashboard', route: 'admin_dashboard', icon: 'tachometer', default: true }
+      - { label: 'Dashboard', route: 'admin_dashboard', icon: 'tachometer' }
       - label: 'Quiz'
         icon: 'file'
         children:
           - { label: 'Créer Quiz', route: 'quiz_new', icon: 'wpforms' }
           - { label: 'Lister Quiz', route: 'list_quiz', icon: 'list-ol' }
-      - { entity: 'Quiz', label: 'Configuration', icon: 'cogs', }
+      - { entity: 'Quiz', label: 'Configuration', icon: 'cogs' }
       - label: 'Utilisateurs'
         icon: 'users'
         children:
           - { entity: 'ParticipantQuiz', icon: 'user', label: 'Participants'  }
       - { label: 'Statiqtique',route: 'statistique', icon: 'fa fa-pie-chart' }
-      - { label: 'Historiques',route: 'historique', icon: 'history' }
+      - { label: 'Historiques',route: 'historique', icon: 'history' ,css_class: 'text-bold' }
     assets:
       css:
         - 'css/admin.css'

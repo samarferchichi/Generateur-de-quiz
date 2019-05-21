@@ -1,0 +1,72 @@
+<script xmlns="http://www.w3.org/1999/html">
+    $( function() {
+        $( "#accordion" ).accordion({
+            collapsible: true
+        });
+    } );
+    $( function() {
+        $( "#selectable" ).selectable();
+    } );
+</script>
+<script>
+    $( function() {
+        $( "#menu" ).menu();
+    } );
+</script>
+<style>
+
+    .ui-menu { width: 150px; }
+</style>
+
+
+
+<script>
+    function myFunctionaa(p1, p2, p3) {
+        var url = '{{ path('infoQuestion2', {'page': 'page_id', 'quizactuel': 'quiz_actuel' , 'pageactuel': 'page_actuel'}) }}';
+        url = url.replace("page_id", p1);
+        url = url.replace("quiz_actuel", p2);
+        url = url.replace("page_actuel", p3);
+
+        $.ajax({
+            url: url,
+            method: 'POST',
+            success: function(result){
+                $("#test").html(result);
+            }
+        });
+
+    }
+
+</script>
+<div class="w3-panel w3-pale-green" >
+
+
+                            <div id="accordion">
+                                <div id="test">
+
+                                    <a style="padding: 97%" href="{{ path('modifier_page', {'quiz':quizactuel.id , 'page':pageactuel.id}) }}"><i class="fa fa-reply"></i></a>
+                                {% for page in quiz.page %}
+
+                                    <a class="btn btn-light" style="width: 100%" type="button" onclick="myFunctionaa( {{ page.id }} , {{ quizactuel.id }}, {{ pageactuel.id }} )" >
+                                  {% if page.titrePage == "Vide" %}
+
+                                     <h3>Titre de page est vide</h3>
+                                     {% else %}
+                                         <h3>{{ page.titrePage }}</h3>
+                                     {% endif %}
+                                     <div>
+
+                                         <label>Nombre des questions :   {{ page.question|length }}</label>
+
+                                     </div>
+
+                                    </a>
+                                    <br>
+                                    <br>
+                                {% endfor %}
+
+
+                            </div>
+                            </div>
+</div>
+

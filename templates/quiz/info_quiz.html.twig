@@ -33,7 +33,7 @@
                         <!-- Modal content-->
                         <div class="modal-content" style="background-color: ">
                             <div class="modal-header" style="background-color: #7aba7b">
-                                <h2 class="modal-title">{{ quiz.titre }}</h2>
+                                <h2 class="modal-title"><font color="white"> Visualiser les pages de quiz   <p class="titrequiz">{% if quiz.titre|length > 50 %}{{ quiz.titre|slice(0, 30) ~ '...' }}{% else %}{{ quiz.titre }}{% endif %}</p></font></h2>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
                             <div class="modal-body" style=" overflow: scroll;">
@@ -46,25 +46,20 @@
 
                 </div>
 
+                            <div class="container" style="padding-left: ">
 
-                <table>
-                    <tr>
-
-                        <td colspan="2">
-                            <div class="container">
-                                <div class="row">
-                                    <div >
+                                  <div class="row">
+                                    <div class="col-1">
                                         <h4>
                                             <a href="{{ path('showq',{ 'quiz': quiz.id }) }}" class="fa fa-eye" data-target="#showquiz-{{ quiz.id }}"  data-toggle="modal" ></a>
                                         </h4>
                                     </div>
-                                    &nbsp;&nbsp;
-                                    <div>
+                                    <div class="col-1">
                                         <h4>
                                             <a href="{{ path('dupliqueAction',{ 'quiz': quiz.id }) }}" class="fa fa-files-o"></a>
                                         </h4>
-                                    </div>&nbsp;&nbsp;
-                                    <div >
+                                    </div>
+                                    <div class="col-1" >
                                         <h4>
                                             {% if quiz.sendMail == 1 %}
                                                 <a href="{{ path('send', {'quiz': quiz.id})}}" class="fa fa-paper-plane"></a>
@@ -75,8 +70,7 @@
                                         </h4>
                                     </div>
 
-                                    &nbsp;&nbsp;
-                                    <div>
+                                    <div class="col-1">
                                         {% if quiz.imprimePdf == 1 %}
                                             <h4>
                                                 <a href="{{ path('imprimerquiz', {'quiz': quiz.id }) }}"  class="fa fa-print"></a>
@@ -91,10 +85,7 @@
                             </div>
 
 
-                        </td>
-                    </tr>
 
-                </table>
                 <div class="w3-panel w3-pale-green">
 
                     <div class="w3-panel w3-pale-green">
@@ -105,8 +96,8 @@
                             <div class="row">
                                 {% if quiz.brochure != "null" %}
 
-                                <div class="col-sm-2">
-                                    <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
+                                <div class="col-sm-3">
+                                    <img width="150" height="150" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
                                 </div>
                                 {% endif %}
 
@@ -116,58 +107,28 @@
                             </div>
                             <br>
                             <br>
-                            <table class="table" >
-                                <tbody>
-                                <tr>
-                                <tr>
-                                    <th>Description</th>
-                                    <td><div>
+
+
+                                 <label>
+                                   <font color="black">
+                                       Description
+                                   </font>
+                                 </label>
+                                   <div>
                                             <label>{{ quiz.description }}</label>
                                         </div>
-                                    </td>
-                                </tr>
+
+                            <table class="table" >
+<tbody>
                                 <tr>
                                     <th>Date creation</th>
                                     <td>
                                         <div>
-                                            {{ quiz.datecreerquiz ? quiz.datecreerquiz|date('Y-m-d') : '' }}
+                                            <font size="5"> {{ quiz.datecreerquiz ? quiz.datecreerquiz|date('Y-m-d') : '' }}</font>
                                         </div>
                                     </td>
                                 </tr>
-                                <!--   <tr>
-                                    <th>Mode correction</th>
-                                    <td> <label>{{ quiz.modeCorrection ? 'Oui' : 'Non' }}</label></td>
-                                </tr>
 
-                                <tr>
-                                    <th>Temps disponible</th>
-                                    {% if quiz.tempsDispo == 1 %}
-                                        <td> <label>temps 1 minute</label></td>
-                                    {% else %}
-                                        <td> <label>temps 0 minute</label></td>
-                                    {% endif %}
-
-                                </tr>
-                              <tr>
-                                    <th>Melange les question</th>
-                                    <td> <label>{{ quiz.melangeQuestion ? 'Oui' : 'Non' }}</label></td>
-                                </tr>
-                                <tr>
-                                    <th>Ouvreture de quiz</th>
-                                    {% if quiz.ouvrireQuiz != null %}
-                                    <td>{{ quiz.ouvrireQuiz ? quiz.ouvrireQuiz|date('Y-m-d H:i:s') : '' }}</td>
-                                    {% else %}
-                                        <td>  <label>Temps illimité</label></td>
-                                    {% endif %}
-                                </tr>
-                                <tr>
-                                    <th>Fermerture de quiz</th>
-                                    {% if quiz.fermerQuiz != null %}
-                                    <td>{{ quiz.fermerQuiz ? quiz.fermerQuiz|date('Y-m-d H:i:s') : '' }}</td>
-                                    {% else %}
-                                    <td><label>Temps illimité</label></td>
-                                    {% endif %}
-                                </tr> -->
                                 <tr>
                                     <th>Nombre actuel des pages</th>
                                     <td> <label>{{ quiz.page|length }}</label></td>
@@ -194,6 +155,8 @@
                                                 </div>
 
                                             </div>
+
+                                        </div>
                                     </td>
 
                                 </tr>
@@ -266,7 +229,7 @@
                                     <i class="fa fa-plus-square-o" ></i>
                                 </button>
                             {% else %}
-                                <button style="background-color: grey; width: 30px; height: 30px">
+                                <button disabled style="background-color: ; width: 30px; height: 30px">
                                     <i class="fa fa-plus-square-o" ></i>
                                 </button>
                             {% endif %}
@@ -275,32 +238,34 @@
 
                                 {% for page in quiz.page %}
 
-                                  {% if page.titrePage == null %}
-                                    <h3>Titre de page est vide</h3>
+
+                                  {% if page.titrePage == "Vide" %}
+                                <center>  Titre de page est vide</center>
                                     {% else %}
-                                    <h3>{{ page.titrePage }}</h3>
+                                        <center>  {{ page.titrePage }}</center>
                                         {% endif %}
                                     <div>
-                                        <label>Titre de page:</label>{% if page.titrePage == null %}
-                                        <h3>VIDE</h3>
+                                       <center> <label>Titre de page:</label>
+                                           {% if page.titrePage == null %}
+                                            <h3>VIDE</h3>
                                     {% else %}
-                                        <h3>{{ page.titrePage }}</h3>
-                                        {% endif %}
+                                         <h3>{{ page.titrePage }}</h3>
+                                           {% endif %}
 
-                                        <label>Nombre des questions :   {{ page.question|length }}</label>
+                                       <label>Nombre des questions :   {{ page.question|length }}</label>
 
-
+                                       </center>
 
                                         <div class="modal fade" id="showpagequestion-{{ page.id }}" role="dialog">
                                             <div class="modal-dialog modal-lg">
 
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">{{ quiz.titre }}</h4>
+                                                    <div class="modal-header" style="background-color: #33b5e5">
+                                                        <h4 class="modal-title"><font color="white"> Visualiser la page</font></h4>
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                     </div>
-                                                    <div class="modal-body" style=" overflow: scroll;">
+                                                    <div class="modal-body" style=" background-color: {{ page.bgColor }}; overflow: scroll;">
                                                         {{ render(controller(
                                                             'App\\Controller\\AdminController::showpagequestion',{'page': page.id}
                                                         )) }}
@@ -316,8 +281,8 @@
 
                                                 <!-- Modal content-->
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">Supprimer page</h4>
+                                                    <div class="modal-header" style="background-color:red">
+                                                        <h4 class="modal-title"><font  color="white">Supprimer page</font></h4>
                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                     </div>
                                                     <div class="modal-body">
@@ -334,16 +299,18 @@
 
                                         <br>
                                         <br>
-                                        <button style="background-color: #b9def0; width: 40px; height: 40px">
-                                          <a href="{{ path('modifier_page', {'quiz':quiz.id ,'page': page.id}) }}" class="fa fa-pencil"></a>
-                                        </button>
-                                        <button style="background-color: #b9def0; width: 40px; height: 40px">
-                                           <a  href="#"  data-target="#removepage-{{ page.id }}" data-toggle="modal" class="fa fa-trash-o"></a>
-                                        </button>
-                                        <button style="background-color: #b9def0; width: 40px; height: 40px">
-                                            <i class="fa fa-eye" data-target="#showpagequestion-{{ page.id }}"  data-toggle="modal"></i>
-                                        </button>
+                                       <center>
+                                           <button style="background-color: #b9def0; width: 40px; height: 40px">
+                                               <a href="{{ path('modifier_page', {'quiz':quiz.id ,'page': page.id}) }}" class="fa fa-pencil"></a>
+                                           </button>
+                                           <button style="background-color: #b9def0; width: 40px; height: 40px">
+                                               <a  href="#"  data-target="#removepage-{{ page.id }}" data-toggle="modal" class="fa fa-trash-o"></a>
+                                           </button>
+                                           <button style="background-color: #b9def0; width: 40px; height: 40px">
+                                               <i class="fa fa-eye" data-target="#showpagequestion-{{ page.id }}"  data-toggle="modal"></i>
+                                           </button>
 
+                                       </center>
 
                                     </div>
 

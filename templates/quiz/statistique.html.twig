@@ -16,7 +16,7 @@
         <div id="dd" style="min-width: 310px; height: 400px; margin: 0 auto" class="col-6"></div>
 
     </div>
-
+{{ dump(participant) }}
 
     {% set nb=0 %}
 {% for i in participant %}
@@ -68,7 +68,7 @@
                     data: [
                         {% for key, i in userquiz %}
                         {
-                            name: "{{ i }}",
+                            name: "{% if i|length > 21 %}{{ i|slice(0, 20) ~ '...' }}{% else %}{{ i }}{% endif %}",
                         }  ,
 
                         {

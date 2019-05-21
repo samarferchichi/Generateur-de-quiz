@@ -2,9 +2,15 @@
 
 {% block main %}
 
+    <meta charset="utf-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     <script>
         $(document).ready(function(){
             $("#myInput").on("keyup", function() {
@@ -22,25 +28,32 @@
     <div class="w3-container" style="padding: 20px">
       <h1> <font color="#1e90ff"> <i class="fa fa-history"></i> &nbsp; Historiques</font></h1>
 
-        <div style="padding-left: 75%; background-color: "> <input class="form-control" type="search" id="myInput" placeholder="Rechercher" title="Type in a name"></div>
+        <div style="padding-left: 75%; background-color: "> <input class="form-control" type="search" id="myInput" placeholder="Rechercher"></div>
 
-        <table class="w3-table-all">
-            <tr style="background-color: #ADD8E6">
-                <th><h3>Participant</h3></th>
-                <th><h3>Quiz</h3></th>
-                <th><h3>Resultat</h3></th>
-                <th></th>
-            </tr>
+        <div class="row wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead class="blue-grey lighten-4">
+                            <tr>
+                                <th>Participant</th>
+                                <th>Quiz</th>
+                                <th>Résultat</th>
+                            </tr>
+                            </thead>
+
             {% for p in participant %}
                 {% if p.quiz.user == user %}
             <tbody id="myTable">
 
-            <tr class="w3-hover-gray">
+            <tr class="w3-hover-grey">
                         <td>{{ p.participant }}</td>
                         <td>{{ p.quiz }}</td>
                         <td>{{ p.resultat }}</td>
                         <td>
-                            <font size="4" color="#4169e1"><a href="{{ path('showHistorique') }}"><i class="fa fa-eye"></i></a></font>
+                            <font size="4" color="#4169e1"><a href="{{ path('showHistorique', { 'quiz' : p.quiz.id , 'par' : p.participant.id , 'tentative' : p.tentative }) }}"><i class="fa fa-eye"></i></a></font>
                         </td>
                     </tr>
             </tbody>
@@ -49,10 +62,12 @@
                 {% endif %}
             {% endfor %}
 
-        <center>
 
-        </center>
         </table>
+                    </div>
+                </div>
+            </div>
+            </div>
     </div>
    <center>
        {% if nbpar == 0 %}

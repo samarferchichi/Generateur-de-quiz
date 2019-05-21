@@ -89,7 +89,8 @@ $thisuser=new User();
                 //array_push($userquiz,$a->getTitre());
                 array_push($quiz,$a);
 
-                foreach ($participant as $p){
+                foreach ($participant as $p)
+                {
                     if ($p->getQuiz() == $a){
                         $find=1;
                     }
@@ -116,11 +117,15 @@ $thisuser=new User();
 
                     array_push($participantquiz,$result[$i]['num']);
 
-                    $i=$i+1;
+                   if ($a->getUser() == $this->getUser())
+                   {
+                       $i=$i+1;
+
+                   }
+
                 }
             }
         }
-
 
         return $this->render('quiz/statistique.html.twig',
             [

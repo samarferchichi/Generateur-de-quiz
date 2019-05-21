@@ -1,45 +1,58 @@
-<div style="background-color:{{ p.bgColor }}">
+<div style="background-color:{{ p.bgColor }}; padding-left: -200px">
 
- <table>
-    <tr>
-        <td>
+   <center>
+       <h2>Titre page :<br><font color="{{ p.colorTitrePage }}">{{ p.titrePage }}</font></h2>
+   </center>
 {% if p.question|length == 0 %}
 
-    <label>
-        Page vide !
-    </label>
+    <center>
+     <div style="background-color: #e5e5e5">
+         <h1>
+             Page vide !
+         </h1>
+     </div>
+    </center>
 {% else %}
     {% for key,j in p.question %}
+       <div style="padding-left: 10px ; border-top: 1px solid ">
+           <h3>Question n° {{ key+1 }}</h3>
+       </div>
 
-<h3>Question n° {{ key+1 }}</h3>
+        <div style="padding-left: 20px">
 
         {% if j.typeQuestion =='Vrai/faux' %}
             {{ j.textQuestion }}
             <br>
             {{ j.descriptionQuestion }}
-
+<br>
             {% for p in j.reponse %}
                 {% if p.question == j %}
-                    <table>
-                        <tr>
-                            <td colspan="3">
-                                {{ p.reponseValide }}
-                            </td>
-                            <td colspan="3">
-                                <div style="width: 100px;">
 
-                                    <select style="width: 150px;" class="form-control">
-                                        <option>
-                                            Vrai
-                                        </option>
-                                        <option>
-                                            Faux
-                                        </option>
-                                    </select>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                    <div class="row" >
+                        <div class="col-8">
+                            {{ p.reponseValide }}
+
+                        </div>
+                        <div class="col-1">
+                            <div style="width: 100px;">
+
+                                <select style="width: 150px;" class="form-control">
+                                    <option>
+                                        Vrai
+                                    </option>
+                                    <option>
+                                        Faux
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+
+
+
 
                 {% endif %}
             {% endfor %}
@@ -50,13 +63,13 @@
         {% if j.typeQuestion =='Liste déroulante' %}
             {{ j.textQuestion }}
             <br>
-
+            <div class="row" >
+                <div class="col">
             {{ j.descriptionQuestion }}
+                </div>
+            </div>
 
-            <table>
-                <tr>
-                    <td colspan="3">
-                        <div style="width: 100px;">
+                <div style="width: 100px;">
                             <select style="width: 350px;" class="form-control">
                                 {% for i in j.reponse %}
                                     {% if i.question == j %}
@@ -69,33 +82,33 @@
                                 {% endfor %}
                             </select>
                         </div>
-                    </td>
-                </tr>
-            </table>
+    <br>
+    <br>
+    <br>
 
         {% endif %}
 
 
 
         {% if j.typeQuestion == 'Case à cocher' %}
+
             {{ j.textQuestion }}
             <br>
             {{ j.descriptionQuestion }}
 
             {% for p in j.reponse %}
                 {% if p.question == j %}
-                    <table>
-                        <tr>
-                            <td colspan="8">
+                    <div class="row" >
+                        <div class="col-8">
                                 {{ p.reponseValide }}
-                            </td>
-                            <td>
-                                <div style="width: 100px;">
+                        </div>
+                        <div class="col-4">
+
+                        <div style="width: 100px;">
                                     <input type="checkbox" >
                                 </div>
-                            </td>
-                        </tr>
-                    </table>
+                        </div>
+                    </div>
 
                 {% endif %}
             {% endfor %}
@@ -116,7 +129,7 @@
                         </tr>
                         <tr>
                             <td>
-                                Formule:
+                                <b> Formule:</b>
                             </td>
                             <td colspan="3">
                                 <input  style="width: 400px;" class="form-control" type="text">
@@ -124,7 +137,7 @@
                         </tr>
                         <tr>
                             <td>
-                                Resultat:
+                                <b>Resultat:</b>
                             </td>
                             <td>
                                 <input style="width: 400px;" class="form-control" type="text">
@@ -141,13 +154,20 @@
             <br>
             {{ j.descriptionQuestion }}
             <br>
+            <br>
             {% for p in j.reponse %}
                 {% if p.question == j %}
+            <div class="row" >
+                <div class="col-8">
                     {{ p.descriptiondate }}<br>
-                    {{ p.desnumber }}
+                </div>
+                <div class="col-3">
                     <input type="date" class="form-control">
+                </div>
+            </div>
                 {% endif %}
             {% endfor %}
+            <br>
         {% endif %}
 
         {% if j.typeQuestion =='Nombre' %}
@@ -157,9 +177,15 @@
             <br>
             {% for p in j.reponse %}
                 {% if p.question == j %}
-                    {{ p.descriptiondate }}<br>
-                    {{ p.desnumber }}
-                    <input type="number" class="form-control">
+            <div class="row" >
+                <div class="col-8">
+                    {{ p.desnumber }}<br><br>
+                </div>
+                <div class="col-3">
+
+                <input type="number" class="form-control">
+                </div>
+            </div>
                 {% endif %}
             {% endfor %}
         {% endif %}
@@ -169,18 +195,16 @@
 
 
         {% if j.infoBulle != '' %}
-
-            <div style="padding-left: 570px;" class="container">
+<br>
+            <div style="padding-left: 700px;" class="container">
                 <a href="#" data-toggle="popover" title="{{ j.infoBulle }}" data-content="{{ j.infoBulle }}"><i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
             </div>
         {% endif %}
 
-
+</div>
     {% endfor %}
 
 
 {% endif %}
-        </td>
-    </tr>
-    </table>
+
 </div>

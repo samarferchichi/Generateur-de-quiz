@@ -72,6 +72,35 @@
                     <div class="card bg-info text-white">
                         <div class="card-body"><center>LISTE QUIZ</center></div>
                     </div>
+                    <table>
+                        {% set copie =0 %}
+                        <tr>
+                            <td colspan="" >
+                                <div class="form-group row">
+                                    <div class="col-xs-1" >
+                                        <input type="text" id="myInput" onkeyup="myFunctiona()" placeholder="Search for names.." title="Type in a name">
+                                        <div style=" width:373px;border-bottom: 1px solid ;
+                                                             color: #3a87ad; ">
+                                            <ul id="myUL">
+                                                {% for q in listequiz %}
+                                                    {% if q.user == user %}
+
+
+
+                                                        <li><a style="width: 373px" href="#" onclick="myFunction( '{{ q.id }}' )" >{{ q.titre }}</a></li>
+
+
+                                                    {% endif %}
+
+
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
             <div class="col-sm-9" style="background-color: ">
@@ -79,99 +108,70 @@
                     <div class="card bg-info text-white">
                         <div class="card-body"> <center>CONTENUE DE QUIZ</center></div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col">
-                    <div class="row">
-                        <div class="col-sm-3" >
-                            <table>
-{% set copie =0 %}
-                                <tr>
-                                    <td colspan="" >
-                                        <div class="form-group row">
-                                            <div class="col-xs-1" >
-                                                <input type="text" id="myInput" onkeyup="myFunctiona()" placeholder="Search for names.." title="Type in a name">
-                                                <div style=" width:373px;border-bottom: 1px solid ;
-                                                             color: #3a87ad; ">
-                                                    <ul id="myUL">
-                                                        {% for q in listequiz %}
-                                                            {% if q.user == user %}
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-3" >
 
 
+                                        <script>
 
-                                                                <li><a style="width: 373px" href="#" onclick="myFunction( '{{ q.id }}' )" >{{ q.titre }}</a></li>
+                                            function myFunction(p1) {
+                                                var url = '{{ path('get_info_quiz', {'quiz': 'quiz_id'}) }}';
+                                                url = url.replace("quiz_id", p1);
+
+                                                $.ajax({
+                                                    url: url,
+                                                    method: 'POST',
+                                                    success: function(result){
+                                                        $("#test").html(result);
+                                                    }
+                                                });
+
+                                            }
+
+                                            function myFunctiona() {
+                                                var input, filter, ul, li, a, i, txtValue;
+                                                input = document.getElementById("myInput");
+                                                filter = input.value.toUpperCase();
+                                                ul = document.getElementById("myUL");
+                                                li = ul.getElementsByTagName("li");
+                                                for (i = 0; i < li.length; i++) {
+                                                    a = li[i].getElementsByTagName("a")[0];
+                                                    txtValue = a.textContent || a.innerText;
+                                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                                        li[i].style.display = "";
+                                                    } else {
+                                                        li[i].style.display = "none";
+                                                    }
+                                                }
+                                            }
+
+                                        </script>
 
 
-                                                            {% endif %}
+                                    </div>
+                                    <div class="">
 
-
-                                                        {% endfor %}
-                                                    </ul>
+                                        <div class="form-group col">
+                                            <div id="test" style="background-color:  ; width: auto; height: auto; ">
+                                                <div style="padding-left: 150px"><br><br>
+                                                    <img src="{{ asset('logoquiz/' ~ 'test1.png' ) }}" alt="Avatar" style="width:300px;height:300px;">
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
+                                            <br>
 
-                            <script>
-
-                                function myFunction(p1) {
-                                    var url = '{{ path('get_info_quiz', {'quiz': 'quiz_id'}) }}';
-                                    url = url.replace("quiz_id", p1);
-
-                                    $.ajax({
-                                        url: url,
-                                        method: 'POST',
-                                        success: function(result){
-                                            $("#test").html(result);
-                                        }
-                                    });
-
-                                }
-
-                                function myFunctiona() {
-                                    var input, filter, ul, li, a, i, txtValue;
-                                    input = document.getElementById("myInput");
-                                    filter = input.value.toUpperCase();
-                                    ul = document.getElementById("myUL");
-                                    li = ul.getElementsByTagName("li");
-                                    for (i = 0; i < li.length; i++) {
-                                        a = li[i].getElementsByTagName("a")[0];
-                                        txtValue = a.textContent || a.innerText;
-                                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                            li[i].style.display = "";
-                                        } else {
-                                            li[i].style.display = "none";
-                                        }
-                                    }
-                                }
-
-                            </script>
-
-
-                        </div>
-                        <div class="col-sm-9">
-
-                            <div class="form-group col">
-                                <center>
-                                    <div id="test" style="background-color:  ; width: auto; height: auto; ">
-                                        <div style="padding-left: 440px"><br><br>
-                                            <img src="{{ asset('logoquiz/' ~ 'test1.png' ) }}" alt="Avatar" style="width:300px;height:300px;">
                                         </div>
                                     </div>
-                                    <br>
+                                </div>
 
-                                </center>
                             </div>
+
                         </div>
                     </div>
 
                 </div>
-
             </div>
         </div>
     </div>
