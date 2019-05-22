@@ -914,7 +914,7 @@
                                                         <!-- Modal content-->
                                                         <div class="modal-content">
                                                             <div class="modal-header" style="background-color:red">
-                                                                <h4 class="modal-title"></h4>
+                                                                <h4 class="modal-title"><font color="white"> Supprimer question</font></h4>
                                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                             </div>
                                                             <div class="modal-body">
@@ -934,14 +934,14 @@
                                             <table>
                                                 <tr>
                                                     <td>
-                                                        <font size="4">
+                                                        <font size="3">
                                                             <a href="#" data-target="#editequestion-{{ j.id  }}" data-toggle="modal" class="fa fa-pencil"></a>
                                                         </font>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                       <font size="4">
+                                                       <font size="3">
                                                            <a href="#" data-target="#removequestion-{{ j.id }}" data-toggle="modal" class="fa fa-trash-o" ></a>
                                                        </font>
 
@@ -950,7 +950,7 @@
 
                                                 <tr>
                                                     <td>
-                                                        <font size="4">
+                                                        <font size="3">
                                                         {% if page.question|length < page.quiz.nbQuestion %}
                                                             <a class="fa fa-file-o" href="{{ path('question_dep', {'question': j.id} )}}"></a>
                                                         {% else %}
@@ -962,7 +962,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <font size="4">
+                                                        <font size="3">
                                                         {% if j.actif == false  %}
                                                             <a class="fa fa-circle" href="{{ path('actif', {'question': j.id} )}}" style="color:grey"  ></a>
                                                         {% else %}

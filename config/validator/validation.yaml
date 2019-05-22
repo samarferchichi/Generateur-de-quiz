@@ -32,10 +32,9 @@ App\Entity\Question:
 App\Entity\User:
   properties:
     email:
-      - NotBlank:
-          message: username obligatoire.
+      - Email:
+          message: The email "{{ value }}" is not a valid email.
+          checkMX: true
 
-    numerotel:
-      - NotBlank:
-          message: username obligatoire.
+
 

@@ -1,24 +1,6 @@
 {% extends '/bundles/EasyAdminBundle/default/layout.html.twig' %}
 
-{% set _content_title = 'Espace d administartion' %}
 
-{% block page_title -%}
-    {{ _content_title }}
-
-{%- endblock %}
-
-{% block content_header %}
-
-    <div class="form-group row">
-        <div>
-            <div class="aa"></div>
-            <div class="aa"></div>
-            <div class="aa"></div>
-        </div>
-        &nbsp; &nbsp;
-        <h1 class="title">{{ _content_title }}</h1>
-    </div>
-{% endblock %}
 
 {% block main %}
 
@@ -52,14 +34,16 @@
 
         <div class="card bg-info text-white">
             <div class="card-body">
-                <a href="{{ path('fos_user_profile_show') }}">
-                    <font size="4">
-                        <i class="fa fa-reply" ></i>
-                    </font>
-                </a>
-                &nbsp;
 
-                Modifier profile
+                <div class="row">
+
+                    <div class="col-4">
+                        <h2> <font color="white">Modifier profile</font></h2>
+
+                    </div>
+                    </div>
+
+
 
             </div>
         </div>
@@ -84,7 +68,7 @@
                 <span style="color: red">{{ form_errors(form.username) }}</span>
             </div>
         </div>
-
+<br>
         <div class="row">
             <div class="col-sm-2">
                 {{ form_label(form.email) }}
@@ -94,6 +78,7 @@
                 <span style="color: red">{{ form_errors(form.email) }}</span>
             </div>
         </div>
+        <br>
 
         <div class="row">
             <div class="col-sm-2">
@@ -104,6 +89,7 @@
                 <span style="color: red">{{ form_errors(form.numerotel) }}</span>
             </div>
         </div>
+        <br>
 
         <div class="row">
             <div class="col-sm-2">
@@ -115,6 +101,7 @@
             </div>
         </div>
 
+        <br>
         <br>
 
         <div>

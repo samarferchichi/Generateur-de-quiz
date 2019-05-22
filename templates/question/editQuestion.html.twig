@@ -1,7 +1,21 @@
 
 
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_label(form.text_question) }}
+    {{ form_widget(form.text_question) }}
+    {{ form_errors(form.text_question) }}
+
+    {{ form_label(form.info_bulle) }}
+{{ form_widget(form.info_bulle) }}
+
+
+ {{ form_label(form.description_question) }}
+{{ form_widget(form.description_question) }}
+
+
+
+{{ form_label(form.type_question  ) }}
+{{ form_widget(form.type_question) }}
 <br>
 <br>
 

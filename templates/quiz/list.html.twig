@@ -67,10 +67,10 @@
     <div class="panel panel-success">
 
         <div class="row">
-            <div class="col-sm-3" style="background-color: ">
+            <div class="col-sm-3" >
                 <div class="panel panel-success">
                     <div class="card bg-info text-white">
-                        <div class="card-body"><center>LISTE QUIZ</center></div>
+                        <div class="card-body"><center><h3><font color="white"> Quiz</font></h3></center></div>
                     </div>
                     <table>
                         {% set copie =0 %}
@@ -78,17 +78,14 @@
                             <td colspan="" >
                                 <div class="form-group row">
                                     <div class="col-xs-1" >
-                                        <input type="text" id="myInput" onkeyup="myFunctiona()" placeholder="Search for names.." title="Type in a name">
+                                        <input type="text" id="myInput" onkeyup="myFunctiona()" placeholder="Recherche quiz.." >
                                         <div style=" width:373px;border-bottom: 1px solid ;
-                                                             color: #3a87ad; ">
-                                            <ul id="myUL">
+                                                             color: #3a87ad;overflow: scroll; height: 650px ">
+                                            <ul id="myUL" >
                                                 {% for q in listequiz %}
                                                     {% if q.user == user %}
 
-
-
                                                         <li><a style="width: 373px" href="#" onclick="myFunction( '{{ q.id }}' )" >{{ q.titre }}</a></li>
-
 
                                                     {% endif %}
 
@@ -106,7 +103,7 @@
             <div class="col-sm-9" style="background-color: ">
                 <div class="panel panel-success">
                     <div class="card bg-info text-white">
-                        <div class="card-body"> <center>CONTENUE DE QUIZ</center></div>
+                        <div class="card-body"> <center><h3><font color="white"> Contenue de quiz</font></h3></center></div>
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -156,7 +153,7 @@
 
                                         <div class="form-group col">
                                             <div id="test" style="background-color:  ; width: auto; height: auto; ">
-                                                <div style="padding-left: 150px"><br><br>
+                                                <div style="padding-left: 150px"><br><br><br><br>
                                                     <img src="{{ asset('logoquiz/' ~ 'test1.png' ) }}" alt="Avatar" style="width:300px;height:300px;">
                                                 </div>
                                             </div>

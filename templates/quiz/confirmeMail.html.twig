@@ -1,11 +1,7 @@
 {% extends '/bundles/EasyAdminBundle/default/layout.html.twig' %}
 
-
-
-{% block content_header %}
-
-{% endblock %}
 {% block main %}
+
     <meta charset="utf-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,28 +20,6 @@
     </div>
 
 
-    {{ form_start(form) }}
-    E-mail : {{ form_widget(form.email) }}
-    <br>
-    <br>
-    Description : <br> {{ form_widget(form.description) }}
-    <br>
-    <div class="row" style="padding-left: 20px">
-        <div class="col-1">
-            <input type="submit" value="Envoyer" class="btn btn-success">
-
-        </div>
-        <div class="col-">
-            <a href="{{ path('list_quiz') }}" class="btn btn-primary">
-                Retour
-            </a>
-        </div>
-    </div>
-
-
-
-
-    {{ form_end(form) }}
-
+    <div style="padding:50px "> <h3>Le quiz : {{ quiz }} est envoyer avec succés à {{ to }}</h3></div>
 
 {% endblock %}
