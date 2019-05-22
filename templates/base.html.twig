@@ -14,9 +14,13 @@
         <nav class="navbar navbar-expand-lg navbar-dark navbar-bg {{ app.session.flashbag.peek('success')|length > 0 ? '' : 'mb-5' }}">
 
         {% for message in app.flashes('success') %}
+
             <div class="alert alert-success">
+
                 {{ message }}
-            </div>
+                </div>
+
+
         {% endfor %}
         </nav>
 

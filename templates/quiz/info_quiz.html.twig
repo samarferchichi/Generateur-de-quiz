@@ -24,15 +24,15 @@
 
         <div class="row">
 
-            <div class="col-sm-8" style="background-color:; width: 750px ">
+            <div class="col-sm-8" style=" width: 750px ">
 
 
                 <div class="modal fade" id="showquiz-{{ quiz.id }}" role="dialog">
                     <div class="modal-dialog modal-xl">
 
                         <!-- Modal content-->
-                        <div class="modal-content" style="background-color: ">
-                            <div class="modal-header" style="background-color: #7aba7b">
+                        <div class="modal-content" >
+                            <div class="modal-header" style="background-color: #31b0d5">
                                 <h2 class="modal-title"><font color="white"> Visualiser les pages de quiz <span class="titrequiz">" {% if quiz.titre|length > 50 %}{{ quiz.titre|slice(0, 30) ~ '...' }}{% else %}{{ quiz.titre }}{% endif %}</span> "</font></h2>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
@@ -46,7 +46,7 @@
 
                 </div>
 
-                            <div class="container" style="padding-left: ">
+                            <div class="container" >
 
                                   <div class="row">
                                     <div class="col-1">
@@ -121,7 +121,7 @@
                             <table class="table" >
 <tbody>
                                 <tr>
-                                    <th>Date creation</th>
+                                    <th>Date création de quiz</th>
                                     <td>
                                         <div>
                                             <font size="5"> {{ quiz.datecreerquiz ? quiz.datecreerquiz|date('Y-m-d') : '' }}</font>

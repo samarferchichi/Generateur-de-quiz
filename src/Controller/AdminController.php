@@ -19,6 +19,7 @@ use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManager;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 use phpDocumentor\Reflection\Types\Integer;
+use Symfony\Bundle\MakerBundle\Str;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -40,6 +41,8 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * Common features needed in admin controllers.
@@ -609,6 +612,24 @@ class AdminController extends EasyAdminController
 
 
     /**
+     * @Route("/confirmeMail/{quiz}/{to}", name="confirmeMail", methods={"GET","POST"})
+     */
+    public function confirmeMail( Quiz $quiz, String $to, QuizRepository $quizRepository)
+    {
+        $listquiz = $quizRepository->findAll();
+
+        return $this->render('quiz/confirmeMail.html.twig',[
+            'quiz'=>$quiz,
+            'to' => $to
+        ]);
+    }
+
+
+
+
+
+
+    /**
      * @Route("/send/{quiz}", name="send", methods={"GET","POST"})
      */
     public function sendAction(Request $request, Quiz $quiz)
@@ -644,11 +665,13 @@ class AdminController extends EasyAdminController
             // Create the Mailer using your created Transport
             $mailer = new \Swift_Mailer($transport);
 
+
+
             // Create a message
             $body = $this->renderView(
             // templates/emails/registration.html.twig
                 'emails/send_quiz.html.twig', ['quiz' => $quiz, 'message' =>$des]);
-            $message = (new \Swift_Message('Email Through Swift Mailer'))
+            $message = (new \Swift_Message('Quiz'))
                 ->setFrom(['samarferchichi61@gmail.com' => 'Quiz'])
                 ->setTo([$to])
                 //    ->setCc(['RECEPIENT_2_EMAIL_ADDRESS'])
@@ -660,15 +683,13 @@ class AdminController extends EasyAdminController
             // Send the message
             $mailer->send($message);
 
-            return $this->redirectToRoute('send', ['quiz' => $quiz->getId()]);
+            return $this->redirectToRoute('confirmeMail', ['quiz' => $quiz->getId(), 'to'=> $to] );
         }
-
 
         return $this->render('quiz/send.html.twig', [
             'form' => $form->createView(),
         ]);
     }
-
 
 
 

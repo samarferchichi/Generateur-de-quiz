@@ -53,14 +53,15 @@
             text-align: center;
         }
         .user-panel .image img {
-            width: 100%;
-            max-width: 100px;
-            height: auto;
+            width: 130%;
+            max-width: 130px;
+            height: 130px;
             border: 2px solid rgba(255, 255, 255, 0.1);
             padding: 5px;
         }
         .img-circle {
             border-radius: 50%;
+
         }
         .user-panel .info {
             padding: 0 5px 0 5px;
@@ -289,10 +290,13 @@
     </script>
 
     {% block wrapper_wrapper %}
+    <div class="panel panel-success">
+
         <div class="wrapper">
             {% block wrapper %}
 
                 <aside class="main-sidebar" style="border-radius: 50px; ">
+
                     <header class="main-header">
                         {% block header %}
 
@@ -341,7 +345,7 @@
                                         {% if null == _avatar_image_path %}
                                             <!--  <i class="fa {{ app.user is not null ? 'fa-user-circle' : 'fa-user-times' }} user-avatar"></i>-->
                                             {#<img class="img-circle" src="{{ asset('logoquiz/admin3.png' ) }} ">#}
-                                            <img class="img-circle" src="{{ asset('uploads/brochures/' ~ app.user.avatar) }} ">
+                                            <img class="img-circle" src="{{ asset('uploads/brochures/' ~ app.user.avatar) }} " >
                                         {% else %}
                                             <img class="img-circle" src="{{ _avatar_image_path }}" />
                                         {% endif %}
@@ -351,10 +355,10 @@
                                 {% if easyadmin_config('user.display_name') %}
                                     <div class="info">
                                         <p>{{ _user_name }}</p>
-                                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                                        <a href="#"> <font size="2"><i class="fa fa-circle text-success"></i> Online</font></a>
                                     </div>
                                     <a href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-content="{{ _user_menu_content|e('html_attr') }}" data-html="true">
-                                        <i class="fa fa-cogs"></i>
+                                        <font size="5" color="#1e90ff"> <i class="fa fa-cogs"></i></font>
                                     </a>
                                 {% endif %}
                             </div>
@@ -390,6 +394,7 @@
                     <div id="sidebar-resizer-handler" class="resizer-handler resizer-handler-left"></div>
 
                     {% block content %}
+
                         <div class="content">
                             {% block content_header_wrapper %}
                                 {% set _has_content_help = _entity_config is defined and _entity_config[app.request.query.get('action')]['help']|default(false) %}
@@ -417,7 +422,8 @@
                             {% endblock content_header_wrapper %}
 
                             <section id="main" class="content-body">
-                                {% block main %}{% endblock %}
+                                {% block main %}
+                                {% endblock %}
                             </section>
 
                             {% block content_footer_wrapper %}
@@ -439,7 +445,7 @@
     {% for js_asset in easyadmin_config('design.assets.js') %}
         <script src="{{ asset(js_asset) }}"></script>
     {% endfor %}
-
+    </div>
     </body>
 {% endblock body %}
 </html>

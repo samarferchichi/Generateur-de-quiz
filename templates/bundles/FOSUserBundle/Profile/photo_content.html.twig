@@ -1,24 +1,6 @@
 {% extends '/bundles/EasyAdminBundle/default/layout.html.twig' %}
 
-{% set _content_title = 'Espace d administartion' %}
 
-{% block page_title -%}
-    {{ _content_title }}
-
-{%- endblock %}
-
-{% block content_header %}
-
-    <div class="form-group row">
-        <div>
-            <div class="aa"></div>
-            <div class="aa"></div>
-            <div class="aa"></div>
-        </div>
-        &nbsp; &nbsp;
-        <h1 class="title">{{ _content_title }}</h1>
-    </div>
-{% endblock %}
 {% block main %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -35,7 +17,7 @@
             <div class="card-body">
 
 
-                Profile
+                <h1> <font color="white">Modifier photo</font></h1>
 
             </div>
         </div>
@@ -66,7 +48,7 @@
                         <center>
 
                                 <div class="photo">
-                                    <img src='{{ asset('uploads/brochures/' ~ profile.avatar) }}' width="160px"height="160px" style="border: 1px solid #4bb5c1; border-radius: 4px;"/>
+                                    <img src='{{ asset('uploads/brochures/' ~ profile.avatar) }}' width="300px"height="300px" style="border: 1px solid #4bb5c1; border-radius: 4px;"/>
                                 </div>
                                 <br>
 
