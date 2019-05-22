@@ -64,75 +64,22 @@ class StatistiqueController extends EasyAdminController
     public function statistique( QuizRepository $quizRepository, ParticipantQuizRepository $participantQuizRepository )
     {
 
-        $listquiz = $quizRepository->findAll();
-        $participant = $participantQuizRepository->findAll();
-        $listparticipantquiz=$participantQuizRepository->findAll();
-$tentative=0;
-        $userquiz = array();
-        $quiz = array();
-        $participantquiz = array();
+        $participants = $participantQuizRepository->getParticipants($this->getUser()->getId());
 
-        $test=0;
-        $find=0;
-        $tro=0;
-        $i=0;
-        $j=0;
+        $data = [];
 
-
-
-$thisuser=new User();
-
-        foreach ($listquiz as $a)
-        {
-            if ($a->getUser() == $this->getUser()){
-
-                //array_push($userquiz,$a->getTitre());
-                array_push($quiz,$a);
-
-                foreach ($participant as $p)
-                {
-                    if ($p->getQuiz() == $a){
-                        $find=1;
-                    }
-                }
-                if ($find == 0)
-                array_push($participantquiz,0);
-                else{
-
-                    $find=0;
-
-                    $em = $this->getDoctrine()->getManager();
-
-
-
-
-                    $query = 'select count(*) as num from participant_quiz group by quiz ';
-
-
-                    $statement = $em->getConnection()->prepare($query);
-
-                    $statement->execute();
-
-                    $result = $statement->fetchAll();
-
-                    array_push($participantquiz,$result[$i]['num']);
-
-                   if ($a->getUser() == $this->getUser())
-                   {
-                       $i=$i+1;
-
-                   }
-
-                }
-            }
+        foreach ($participants as $p){
+            $d = [
+                'name' => $p['titleQuiz'],
+                'y'    => intval($p['NbParticipant'])
+            ];
+            array_push($data, $d);
         }
 
         return $this->render('quiz/statistique.html.twig',
             [
-                'userquiz' =>$quiz,
-                'participant' =>$participantquiz,
-
-
+                'userquiz' => json_encode($data),
+                'participant' => [],
             ]);
     }
 

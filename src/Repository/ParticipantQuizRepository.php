@@ -19,6 +19,21 @@ class ParticipantQuizRepository extends ServiceEntityRepository
         parent::__construct($registry, ParticipantQuiz::class);
     }
 
+    public function getParticipants ($user){
+        $qb = $this->createQueryBuilder('p')
+            ->select('p AS Part, count(q) AS NbParticipant, q.titre AS titleQuiz, q.id AS idQuiz')
+            ->join('p.quiz', 'q')
+            ->join('q.user', 'u')
+            ->where('u.id = ?1')
+            ->setParameter(1, $user)
+            ->groupBy('q')
+            ->orderBy('NbParticipant', 'desc')
+            ->setMaxResults(10)
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
+
     // /**
     //  * @return ParticipantQuiz[] Returns an array of ParticipantQuiz objects
     //  */

@@ -6,30 +6,41 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/data.js"></script>
     <script src="https://code.highcharts.com/modules/drilldown.js"></script>
-<br>
-<br>
-<br>
-    <div id="container" style="min-width: 310px; height: 400px; margin-left: 5%; margin-right: 5%"></div>
-<br>    <br>
-    <div class="row" style="background-color: ; width: 100%">
-        <div id="cc" style="min-width: 310px; height: 400px; margin: 0 auto;" class="col-6"></div>
-        <div id="dd" style="min-width: 310px; height: 400px; margin: 0 auto" class="col-6"></div>
 
+
+
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+
+
+<br>
+<br>
+<br>
+
+    <input type="hidden" id="userquiz" data-chart="{{userquiz}}" />
+
+    <div id="container" style="min-width: 310px; height: 400px; margin-left: 5%; margin-right: 5%"></div>
+    <br><hr><br>
+    <div class="row" style="width: 100%">
+        <div id="cc" style="min-width: 310px; height: 400px; margin: 0 auto; border-right: 1px solid #ccd6eb;" class="col-6"></div>
+        <div id="dd" style="min-width: 310px; height: 400px; margin: 0 auto" class="col-6"></div>
     </div>
-{{ dump(participant) }}
 
     {% set nb=0 %}
 {% for i in participant %}
     {% set nb=nb+i %}
 {% endfor %}
     <script>
+        var userquiz = $('#userquiz').data('chart');
         // Create the chart
         Highcharts.chart('container', {
             chart: {
                 type: 'column'
             },
             title: {
-                text: 'Les quiz avec les nbr des tentatives totale '
+                text: 'Les 10 premières quiz ayant maximums participants'
             },
             subtitle: {
                 text: new Date()
@@ -39,7 +50,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Total percent market share'
+                    text: 'Total participant'
                 }
 
             },
@@ -58,36 +69,21 @@
 
             tooltip: {
                 headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-                pointFormat: '<span style="color:{point.color}">{point.name}</span> <b>{point.y}</b> de totale<br/>'
+                pointFormat: '<span style="color:{point.color}">{point.name}</span> <b> : {point.y}</b> participant(s)<br/>'
             },
 
             series: [
                 {
                     name: "Quiz",
                     colorByPoint: true,
-                    data: [
-                        {% for key, i in userquiz %}
-                        {
-                            name: "{% if i|length > 21 %}{{ i|slice(0, 20) ~ '...' }}{% else %}{{ i }}{% endif %}",
-                        }  ,
-
-                        {
-                            y:{{ participant[key] }},
-                            drilldown: "Chrome"
-                        },
-
-                        {% endfor %}
-                    ]
+                    data: userquiz
                 }
             ],
 
 
         });
     </script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
 
 <script>
         Highcharts.chart('cc', {
@@ -136,10 +132,7 @@
         });
 </script>
 
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
 
     <script>
     Highcharts.chart('dd', {
