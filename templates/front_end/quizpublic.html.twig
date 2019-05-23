@@ -254,12 +254,12 @@
         <p>{{ quiz.description }}.</p>
 
 
-        {% set ii=0 %}
+        {% set ii=1 %}
         {% set res=0 %}
 
         {% for p in listparticipantquiz %}
             {% if p.participant == par and p.quiz == quiz %}
-                {% set ii=ii+1 %}
+                {% set ii= p.tentative  %}
             {% endif %}
 
         {% endfor %}

@@ -12,6 +12,7 @@ use App\Entity\ParticipantQuiz;
 use App\Entity\Question;
 use App\Entity\Quiz;
 use App\Entity\ReponseParticipant;
+use App\Entity\Resultat;
 use App\Entity\User;
 use App\Form\ParticipantType;
 use App\Repository\PageRepository;
@@ -217,65 +218,91 @@ class IndexController extends Controller
 
         $listparticipantquiz= $participantQuizRepository->findAll();
 
-
-
         $total=0;
+
+        $intro=null;
 
         foreach ($listparticipantquiz as $p){
 
             if ($p->getParticipant()== $par && $p->getQuiz() == $quiz){
-                $total=$total+1;
+                $p->setTentative($p->getTentative()+1);
+
+                $resultat =  new Resultat();
+                $resultat->setParticipantQuiz($p);
+                $resultat->setTentative($p->getTentative());
+                $resultat->setResultat(20);
+
+                $entityManager->persist($resultat);
+
+
+                $reponseparticipant = new ReponseParticipant();
+                $reponseparticipant->setResultat($resultat);
+
+                $intro =1;
+            }else{
+                $intro =0;
+
             }
         }
 
-        if ($total < $quiz->getNbTentative()) {
+
+        if ($intro == 0){
             $participantquiz = new ParticipantQuiz();
+
+
 
             $participantquiz->setParticipant($par);
             $participantquiz->setQuiz($quiz);
-            $participantquiz->setTentative($total);
-            $participantquiz->setResultat(20);
+            $participantquiz->setTentative(1);
+
+            $resultat =  new Resultat();
+
+            $resultat->setParticipantQuiz($participantquiz);
+            $resultat->setTentative($participantquiz->getTentative());
+            $resultat->setResultat(20);
+
+            $entityManager->persist($resultat);
 
             $entityManager->persist($participantquiz);
 
+            $reponseparticipant = new ReponseParticipant();
+            $reponseparticipant->setResultat($resultat);
 
         }
+
         $vf = $request->get('typevf');
         $que = $request->get('question');
+
+        dump($vf);
+        exit();
 
         $findquestion =new Question();
 
 
+
         if ($vf != null){
-
-
 
                 foreach ($quiz->getPage() as $q) {
                     foreach ($q->getQuestion() as $question) {
-                           // dump($question->getId());
+
                         foreach ($que as $qq) {
 
-                            if($question->getId() == $qq)
-                                 $findquestion=$question;
-                           // dump($findquestion);
+
+                            foreach ($vf as $rep) {
+                                if($question->getId() == $qq)
+                                    $findquestion=$question;
 
 
+                                $reponseparticipant->setIdQuestion($findquestion);
+                                $reponseparticipant->setReponse($rep);
+                                $entityManager->persist($reponseparticipant);
+                            }
 
                                 }
-
-
                     }
                 }
-            foreach ($vf as $rep) {
 
 
-                $reponseparticipant = new ReponseParticipant();
-                $reponseparticipant->setIdQuestion($findquestion);
-                $reponseparticipant->setParticipantquiz($participantquiz);
-                     $reponseparticipant->setReponse($rep);
-                $entityManager->persist($reponseparticipant);
-
-            }
             $entityManager->flush();
 
                 return $this->redirectToRoute('resultat',[
@@ -284,8 +311,6 @@ class IndexController extends Controller
                     'tentative'=>$total
                 ]);
             }
-
-
 
 
     return $this->render('front_end/quizpublic.html.twig', [
@@ -300,15 +325,6 @@ class IndexController extends Controller
 
 
     }
-
-
-
-
-
-
-
-
-
 
 
     /**

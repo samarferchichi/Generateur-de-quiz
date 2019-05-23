@@ -56,7 +56,8 @@
                             <tr>
                                 <th>Participant</th>
                                 <th>Quiz</th>
-                                <th>Résultat</th>
+                                <th>Tentatives</th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -67,9 +68,9 @@
             <tr class="w3-hover-grey">
                         <td>{{ p.participant }}</td>
                         <td>{{ p.quiz }}</td>
-                        <td>{{ p.resultat }}</td>
+                        <td>{{ p.tentative }}</td>
                         <td>
-                            <font size="4" color="#4169e1"><a href="{{ path('showHistorique', { 'quiz' : p.quiz.id , 'par' : p.participant.id , 'tentative' : p.tentative }) }}"><i class="fa fa-eye"></i></a></font>
+                            <font size="4" color="#4169e1"><a href="{{ path('showHistorique', { 'p' : p.id }) }}"><i class="fa fa-eye"></i></a></font>
                         </td>
                     </tr>
             </tbody>

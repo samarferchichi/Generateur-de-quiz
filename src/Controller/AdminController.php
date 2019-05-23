@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Page;
 use App\Entity\Parametre;
+use App\Entity\ParticipantQuiz;
 use App\Entity\Question;
 use App\Entity\Reponse;
 use App\Entity\User;
@@ -921,7 +922,6 @@ $quizs=$quizRepository->findAll();
             'quiz' => $quiz,
         ]);
     }
-
 
 
     /**

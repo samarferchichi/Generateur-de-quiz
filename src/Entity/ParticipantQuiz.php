@@ -21,6 +21,20 @@ class ParticipantQuiz
 
 
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Resultat", mappedBy="participantquiz", cascade={"persist","remove"})
+     * @ORM\OrderBy({"ordre" = "ASC"})
+     */
+    private $resultat;
+
+
+    /**
+     * @return Collection|Resultat[]
+     */
+    public function getResultat(): Collection
+    {
+        return $this->resultat;
+    }
 
 
     /**
@@ -49,51 +63,9 @@ class ParticipantQuiz
 
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ReponseParticipant", mappedBy="participantquiz", cascade={"persist","remove"})
-     */
-    private $reponseparticipant;
 
 
 
-    public function __construct()
-    {
-        $this->reponseparticipant = new ArrayCollection();
-    }
-    /**
-     * @return Collection|ReponseParticipant[]
-     */
-    public function getreponseparticipant(): Collection
-    {
-        return $this->reponseparticipant;
-    }
-
-
-
-
-
-
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $resultat;
-
-    /**
-     * @return mixed
-     */
-    public function getResultat()
-    {
-        return $this->resultat;
-    }
-
-    /**
-     * @param mixed $resultat
-     */
-    public function setResultat($resultat): void
-    {
-        $this->resultat = $resultat;
-    }
 
 
 

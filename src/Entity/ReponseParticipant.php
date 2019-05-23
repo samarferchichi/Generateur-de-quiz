@@ -18,30 +18,25 @@ class ReponseParticipant
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ParticipantQuiz",inversedBy="reponseparticipant")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Resultat",inversedBy="reponseparticipant")
      */
-    private $participantquiz;
+    private $resultat;
 
     /**
      * @return mixed
      */
-    public function getParticipantquiz()
+    public function getResultat()
     {
-        return $this->participantquiz;
+        return $this->resultat;
     }
 
     /**
-     * @param mixed $participantquiz
+     * @param mixed $resultat
      */
-    public function setParticipantquiz($participantquiz): void
+    public function setResultat($resultat): void
     {
-        $this->participantquiz = $participantquiz;
+        $this->resultat = $resultat;
     }
-
-
-
-
-
 
 
 

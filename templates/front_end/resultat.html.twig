@@ -429,19 +429,7 @@
 
                             {{ question.textQuestion }}<br>
                             {{ question.descriptionQuestion }}<br>
-                            {% for r in reponseParticipant  %}
-                                {% for p in listparticipantquiz  %}
 
-                                    {% if r.idQuestion == question and r.participantQuiz == p  and p.tentative == tentative  %}
-
-                                        {{ dump(r) }}
-
-                                    {% endif %}
-
-
-
-                                {% endfor %}
-                            {% endfor %}
                             {% for p in question.reponse %}
                                 {% if p.question == question %}
 
