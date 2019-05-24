@@ -18,7 +18,7 @@ class Resultat
      */
     private $id;
 
-    
+
 
 
     /**
@@ -44,7 +44,7 @@ class Resultat
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ReponseParticipant", mappedBy="resultat", cascade={"persist","remove"})
-     * @ORM\OrderBy({"ordre" = "ASC"})
+     *
      */
     private $reponseparticipant;
 

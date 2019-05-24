@@ -48,11 +48,9 @@ class HistoriqueController  extends EasyAdminController
     /**
      * @Route("/showHistorique/{p}", name="showHistorique")
      */
-    public function showHistorique(ParticipantQuiz $p, ParticipantQuizRepository $participantQuizRepository)
+    public function showHistorique(ParticipantQuiz $p)
     {
-        $parquiz = $participantQuizRepository->findAll();
 
-        $user = $this->getUser();
         return $this->render('quiz/showHistorique.html.twig',['p' => $p]);
     }
 

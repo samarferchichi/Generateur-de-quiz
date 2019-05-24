@@ -23,7 +23,7 @@ class ParticipantQuiz
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Resultat", mappedBy="participantquiz", cascade={"persist","remove"})
-     * @ORM\OrderBy({"ordre" = "ASC"})
+     *
      */
     private $resultat;
 

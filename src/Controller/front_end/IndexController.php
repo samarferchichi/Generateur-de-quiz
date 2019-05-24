@@ -273,8 +273,7 @@ class IndexController extends Controller
         $vf = $request->get('typevf');
         $que = $request->get('question');
 
-        dump($vf);
-        exit();
+
 
         $findquestion =new Question();
 

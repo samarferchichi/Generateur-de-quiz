@@ -14,15 +14,14 @@
 
     {% if i.tentative == tentative and i.participantquiz == participantquiz %}
         {% for j in allreponse %}
-            {% if  j.participantquiz == participantquiz %}
+            {% if  j.resultat == i %}
 
             {{ dump(j.reponse) }}
+
             {% endif %}
 
         {% endfor %}
-
     {% endif %}
-
 {% endfor %}
 
 
