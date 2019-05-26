@@ -10,19 +10,6 @@
 {{ participantquiz }}
 
 
-{% for i in allresultat %}
-
-    {% if i.tentative == tentative and i.participantquiz == participantquiz %}
-        {% for j in allreponse %}
-            {% if  j.resultat == i %}
-
-            {{ dump(j.reponse) }}
-
-            {% endif %}
-
-        {% endfor %}
-    {% endif %}
-{% endfor %}
 
 
 <div style="padding-left:20px; width: 900px;">

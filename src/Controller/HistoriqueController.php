@@ -64,8 +64,8 @@ class HistoriqueController  extends EasyAdminController
         $allresultat = $resultatRepository->findAll();
         $allreponse = $reponseParticipantRepository->findAll();
         return $this->render('quiz/showdetail.html.twig', [
+            'tentative' => $tentative,
             'participantquiz' => $participantQuiz,
-            'tentative' =>$tentative,
             'allresultat' => $allresultat,
             'allreponse' => $allreponse
         ]);

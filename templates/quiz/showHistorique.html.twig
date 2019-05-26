@@ -110,12 +110,10 @@
 
 
             <script>
-
                 function myFunction(p1, p2) {
                     var url = '{{ path('recuperer', {'participantquiz': 'pq' , 'tentative':'t'}) }}';
                     url = url.replace("pq", p1);
                     url = url.replace("t", p2);
-
                     $.ajax({
                         url: url,
                         method: 'POST',
@@ -123,9 +121,7 @@
                             $("#test").html(result);
                         }
                     });
-
                 }
-
             </script>
 
             <div class="row">
@@ -135,18 +131,11 @@
                     <button class="btn btn-outline-info" style="width: 200px; height: 40px">Choisissez une tentative</button>
                     <div class="dropdown-content">
                         {% for i in 1..p.tentative %}
-                        {% for j in p.resultat %}
-                           {% if j.tentative == i  %}
-                               <a style="width: 200px;" href="#" onclick="myFunction( '{{ p.id }}' , '{{ j.tentative }}' )">
+
+                               <a style="width: 200px;" href="#"  onclick="myFunction( '{{ p.id }}' , '{{ i }}' )">
                                    {{ i }}
 
                                </a>
-{{ p.id }} {{ j.tentative }}
-
-                           {% endif %}
-                            {{ j.resultat.participantquiz }}
-                        {% endfor %}
-
 
                         {% endfor %}
                     </div>
