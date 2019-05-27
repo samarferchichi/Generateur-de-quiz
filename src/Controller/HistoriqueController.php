@@ -57,19 +57,19 @@ class HistoriqueController  extends EasyAdminController
 
 
     /**
-     * @Route("/recuperer/{participantquiz}/{tentative}", name="recuperer", methods={"GET", "POST"})
+     * @Route("/infoparticipant/{participantquiz}/{tentative}", name="infoparticipant")
      */
-    public function recuperer(ParticipantQuiz $participantQuiz, $tentative, ResultatRepository $resultatRepository, ReponseParticipantRepository $reponseParticipantRepository)
+    public function infoparticipant(ParticipantQuiz $participantquiz, $tentative, ReponseParticipantRepository $reponseparticipantrepository ,ResultatRepository $resultatrepository)
     {
-        $allresultat = $resultatRepository->findAll();
-        $allreponse = $reponseParticipantRepository->findAll();
-        return $this->render('quiz/showdetail.html.twig', [
-            'tentative' => $tentative,
-            'participantquiz' => $participantQuiz,
-            'allresultat' => $allresultat,
-            'allreponse' => $allreponse
-        ]);
+
+        $reponseparticipant = $reponseparticipantrepository->findAll();
+        $resultat = $resultatrepository->findAll();
+        return $this->render('quiz/showDetail.html.twig',['p' => $participantquiz, 't' => $tentative, "reponseparticipant" =>$reponseparticipant, "resultat"=>$resultat ]);
     }
+
+
+
+
 
 
 }

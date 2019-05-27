@@ -109,11 +109,13 @@
             </style>
 
 
+
             <script>
-                function myFunction(p1, p2) {
-                    var url = '{{ path('recuperer', {'participantquiz': 'pq' , 'tentative':'t'}) }}';
-                    url = url.replace("pq", p1);
-                    url = url.replace("t", p2);
+                function myFunctionaa(p1, p2) {
+                    var url = '{{ path('infoparticipant', {'participantquiz': 'participantquiz', 'tentative': 'tentative' }) }}';
+                    url = url.replace("participantquiz", p1);
+                    url = url.replace("tentative", p2);
+
                     $.ajax({
                         url: url,
                         method: 'POST',
@@ -121,7 +123,9 @@
                             $("#test").html(result);
                         }
                     });
+
                 }
+
             </script>
 
             <div class="row">
@@ -132,7 +136,7 @@
                     <div class="dropdown-content">
                         {% for i in 1..p.tentative %}
 
-                               <a style="width: 200px;" href="#"  onclick="myFunction( '{{ p.id }}' , '{{ i }}' )">
+                               <a style="width: 200px;" href="#"  onclick="myFunctionaa( {{ p.id }} , {{ i }} )">
                                    {{ i }}
 
                                </a>

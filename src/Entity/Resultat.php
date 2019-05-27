@@ -72,7 +72,7 @@ class Resultat
     /**
      * @ORM\Column(type="integer")
      */
-    private $resultat;
+    private $resultatparticipation;
 
     public function getId(): ?int
     {
@@ -91,14 +91,14 @@ class Resultat
         return $this;
     }
 
-    public function getResultat(): ?int
+    public function getResultatparticipation(): ?int
     {
-        return $this->getResultat();
+        return $this->getResultatparticipation();
     }
 
-    public function setResultat(int $resultat): self
+    public function setResultatparticipation(int $resultatparticipation): self
     {
-        $this->resultat = $resultat;
+        $this->resultatparticipation = $resultatparticipation;
 
         return $this;
     }

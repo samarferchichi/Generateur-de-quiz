@@ -1,0 +1,12 @@
+{{ p }}<br>{{ t }}<br>{{ dump(reponseparticipant) }}<br>
+{{ dump(resultat) }}
+
+
+{% for i in resultat %}
+
+    {% if i.participantquiz == p and i.tentative == t %}
+        {{ i.tentative }}
+{{ dump(i.resultatparticipation) }}
+
+    {% endif %}
+{% endfor %}
