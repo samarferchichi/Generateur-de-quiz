@@ -65,6 +65,7 @@
                 transform: rotateY(180deg);
                 z-index: 1;
             }
+            .font-family: Verdana,sans-serif;
 
         </style>
     </head>
@@ -92,8 +93,8 @@
             });
         });
     </script>
-    {% set nb = 0 %}
 
+    {% set nb = 0 %}
 {% set nbquiz=1 %}
 {% set usernb=0 %}
 {% set total=0 %}
@@ -110,13 +111,65 @@
        </div>
         <br>
     <center>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
 
             {% if quiz|length != 0 %}
                 <div class="row" id="myDIV"><br><br>
 
-
-
                 {% for p in quiz %}
+                    <div class="modal fade" id="show-{{ p.id }}" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color:	#87CEEB">
+                                    <h2 class="modal-title text-white">Détail quiz</h2>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body" style="text-align: left;     font-family: Verdana,sans-serif;">
+                                    <b>Titre : </b> <font color="{{p.colorTitre}}">{{ p }}</font><br><br>
+                                    <b>Déscription : </b>{{ p.description }}<br><br>
+                                    <b> Nombre des tentatives : </b>{% if p.nbTentative ==1000 %}
+                                    Illimité
+                                    {% else %}
+                                        {{ p.nbTentative }}
+                                        {% endif %}
+                                    <br>
+                                    <br>
+                                    <b>Date céartion :</b> {{ p.datecreerquiz ? p.datecreerquiz|date('Y-m-d') : '' }}<br><br>
+
+                                    <b>Date ouverture de quiz : </b>
+                                    {% if p.ouvrireQuiz == null %}
+                                        Illimité
+                                    {% else %}
+                                    {{ p.ouvrireQuiz ? p.ouvrireQuiz|date('Y-m-d') : '' }}
+                                    {% endif %}
+                                    <br>
+                                    <br>
+                                    <b>Date fermeture de quiz : </b>
+                                    {% if p.fermerQuiz == null %}
+                                        Illimité
+                                    {% else %}
+                                        {{ p.fermerQuiz ? p.fermerQuiz|date('Y-m-d') : '' }}<br><br>
+                                    {% endif %}
+
+                                    {% if p.brochure == "null" %}
+
+
+                                      <center>  <img width="180" height="180" src="{{ asset('logoquiz/logonull.png' ) }}"></center>
+                                {% else %}
+                                    <center>
+                                    <img src="{{ asset('uploads/brochures/' ~ p.brochure) }}" alt="Avatar" style="width:180px;height:180px;">
+                                    </center>
+                                {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
 
 
                     {% if p.user == user %}
@@ -129,41 +182,44 @@
                                     <div class="flip-card-front">
                                         {% if p.brochure == "null" %}
                                             <br>
-                                            <div class="container">
+                                            <div class="container"  >
 
-                                                <p class="titrequiz">{% if p.titre|length > 21 %}{{ p.titre|slice(0, 20) ~ '...' }}{% else %}{{ p.titre }}{% endif %}</p>
-
-                                                <img width="200" height="200" src="{{ asset('logoquiz/logonull.png' ) }}">
+                                                <div style="height: px; background-color: #ADD8E6; ">
+                                                    <div class="card-body" style="height: 59px; ">
+                                                        <p class="titrequiz">{% if p.titre|length > 21 %}{{ p.titre|slice(0, 20) ~ '...' }}{% else %}{{ p.titre }}{% endif %}</p>
+                                                    </div>
+                                                </div><br>
+                                                <img width="180" height="180" src="{{ asset('logoquiz/logonull.png' ) }}">
 
                                             </div>
                                             {% else %}
-                                        <div class="container">
-                                            <p class="titrequiz">{% if p.titre|length > 21 %}{{ p.titre|slice(0, 20) ~ '...' }}{% else %}{{ p.titre }}{% endif %}</p>
-
-                                            <img src="{{ asset('uploads/brochures/' ~ p.brochure) }}" alt="Avatar" style="width:250px;height:250px;">
+                                                <br>
+                                        <div class="container" >
+                                            <div style="height: px;background-color: #ADD8E6; ">
+                                                <div class="card-body" style="height: 60px; ">
+                                                    <p class="titrequiz">{% if p.titre|length > 21 %}{{ p.titre|slice(0, 20) ~ '...' }}{% else %}{{ p.titre }}{% endif %}</p>
+                                                </div>
+                                            </div><br>
+                                            <img src="{{ asset('uploads/brochures/' ~ p.brochure) }}" alt="Avatar" style="width:180px;height:180px;">
                                         </div>
                                                 {% endif %}
                                     </div>
                                     <div class="flip-card-back">
-
+<br><br>
                                         <p class="titrequiz">{% if p.titre|length > 21 %}{{ p.titre|slice(0, 20) ~ '...' }}{% else %}{{ p.titre }}{% endif %}</p>
 
-                                            {% if parquiz|length == 0  %}
-                                               0 participant
+                                            {% for h in participant %}
 
-                                                {% else %}
+                                                {% if p.id == h.idQuiz %}
+                                                    <b>{{ h.NbParticipant }} participants</b>
 
-                                                    {{  total }}
+                                                {% endif %}
 
-                                            {% endif %}
+                                            {% endfor %}
 
-                                            {% set total=total + nbquiz %}
-
-                                            {% set nb=0 %}
-
-                                        <p> {% if p.description|length > 21 %}{{ p.description|slice(0, 220) ~ '...' }}{% else %}{{ p.description }}{% endif %}</p>
+                                        <p> {% if p.description|length > 21 %}{{ p.description|slice(0, 200) ~ '...' }}{% else %}{{ p.description }}{% endif %}</p>
                                       <div>
-                                          <button href="#" class="btn btn-success">Voir</button>
+                                          <a href="#" class="btn btn-success"  data-target="#show-{{ p.id }}" data-toggle="modal"   >Voir</a>
                                       </div>
                                     </div>
                                 </div>
@@ -174,10 +230,7 @@
                     {% endif %}
                 {% endfor %}
 
-
-
                 </div>
-
 
             {% endif %}
     </center>
@@ -192,6 +245,5 @@
         <center><h1>Aucun résultat trouvé
             </h1></center><br>
     {% endif %}
-
 
 {% endblock %}

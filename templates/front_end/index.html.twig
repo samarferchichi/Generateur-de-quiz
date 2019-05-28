@@ -222,13 +222,6 @@
     </div>
 </nav>
 
-<div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
-</div>
 
 <div>
     <div style="padding: 50px">
@@ -237,29 +230,29 @@
                <div class="modal fade" id="test_{{ key }}" role="dialog">
                    <div class="modal-dialog">
                        <div class="modal-content">
-                           <div class="modal-header" style="background: #f7f9fa;">
+                           <div class="modal-header " style="background: #87CEEB;">
                                <h4 class="modal-title col-xs-11">
-                                   Voulez vous vraiment participer au quiz  "<font color="blue"><b>{{ q.titre }}  </b></font>" ??
+                                 <font color="white">  Voulez vous vraiment participer au quiz
+                                   <br>
+                                   <b>{{ q.titre }}  </b> ??</font>
                                </h4>
                                <button type="button" class="close col-xs-1" data-dismiss="modal">&times;</button>
                            </div>
                            <div class="modal-body">
                                <p>{{ q.description }}</p>
                                {% if q.nbTentative < 100 %}
-                                   Nombre de tentative maximum est :<font color="blue"><b>{{ q.nbTentative }} </b></font><br>
+                                   Nombre de tentative maximum est : {{ q.nbTentative }}  <br>
 
                                {% else %}
                                    Nombre de tentative ilimiter !<br>
                                {% endif %}
 
-                               {% if q.tempsDispo == 1 %}
+                               {% if q.tempsDispo == 1 and q.timequiz != 0 %}
 
-                                   Temps disponible pour passer le quiz est :<font color="blue"><b> {{ q.timequiz }} minutes   </b></font><br>
+                                   Temps disponible pour passer le quiz est :  {{ q.timequiz }} minutes   <br>
                                {% else %}
-                                   {% if q.tempsDispo == 0   %}
-                                       Temps disponible pour passer le quiz est :<font color="blue"><b> illimiter  </b></font><br>
+                                   Temps disponible pour passer le quiz est : Illimité    <br>
 
-                                   {% endif %}
                                {% endif %}
                                <br><br>
                                <button type="button" class="btn btn-block btn-social btn-facebook m-b-5">
@@ -296,7 +289,7 @@
                             {% endif %}
                             <p class="titrequiz">{% if q.titre|length > 21 %}{{ q.titre|slice(0, 20) ~ '...' }}{% else %}{{ q.titre }}{% endif %}</p>
                             <p> {% if q.description|length > 21 %}{{ q.description|slice(0, 20) ~ '...' }}{% else %}{{ q.description }}{% endif %}</p>
-                            <p><button data-target="#test_{{ key }}  " data-toggle="modal" style="width: px;" class="menu-level-1">Go
+                            <p><button data-target="#test_{{ key }}  " data-toggle="modal" style="width: px;" class="menu-level-1">Commencer ?
                                 </button></p>
                         </div>
 

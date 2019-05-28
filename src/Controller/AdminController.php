@@ -80,8 +80,10 @@ class AdminController extends EasyAdminController
 
             $quiz = $em->getRepository('App:Quiz')->findAll();
 
+        $participants = $participantQuizRepository->getAllParticipants($this->getUser()->getId());
 
-        return $this->render('/dashboard.html.twig', array('quiz'=>$quiz, 'user'=>$user, 'parquiz'=>$parquiz));
+
+        return $this->render('/dashboard.html.twig', array('quiz'=>$quiz, 'user'=>$user, 'parquiz'=>$parquiz , 'participant' => $participants));
     }
 
 

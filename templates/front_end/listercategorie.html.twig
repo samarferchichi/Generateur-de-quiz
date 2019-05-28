@@ -77,7 +77,6 @@
         .pagination a:hover:not(.active) {background-color: #ddd;}
 
     </style>
-
     <style>
         .card {
             box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
@@ -110,6 +109,33 @@
         }
 
 
+
+        .btn-social{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn-social>:first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}
+        .btn-social.btn-lg{padding-left:61px}.btn-social.btn-lg>:first-child{line-height:45px;width:45px;font-size:1.8em}
+        .btn-social.btn-sm{padding-left:38px}.btn-social.btn-sm>:first-child{line-height:28px;width:28px;font-size:1.4em}
+        .btn-social.btn-xs{padding-left:30px}.btn-social.btn-xs>:first-child{line-height:20px;width:20px;font-size:1.2em}
+        .btn-social-icon{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;height:34px;width:34px;padding:0}.btn-social-icon>:first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}
+        .btn-social-icon.btn-lg{padding-left:61px}.btn-social-icon.btn-lg>:first-child{line-height:45px;width:45px;font-size:1.8em}
+        .btn-social-icon.btn-sm{padding-left:38px}.btn-social-icon.btn-sm>:first-child{line-height:28px;width:28px;font-size:1.4em}
+        .btn-social-icon.btn-xs{padding-left:30px}.btn-social-icon.btn-xs>:first-child{line-height:20px;width:20px;font-size:1.2em}
+        .btn-social-icon>:first-child{border:none;text-align:center;width:100% !important}
+        .btn-social-icon.btn-lg{height:45px;width:45px;padding-left:0;padding-right:0}
+        .btn-social-icon.btn-sm{height:30px;width:30px;padding-left:0;padding-right:0}
+        .btn-social-icon.btn-xs{height:22px;width:22px;padding-left:0;padding-right:0}
+
+        .btn-facebook{color:#fff;background-color:#3b5998;border-color:rgba(0,0,0,0.2)}.btn-facebook:focus,.btn-facebook.focus{color:#fff;background-color:#2d4373;border-color:rgba(0,0,0,0.2)}
+        .btn-facebook:hover{color:#fff!important;background-color:#2d4373;border-color:rgba(0,0,0,0.2)}
+        .btn-facebook:active,.btn-facebook.active,.open>.dropdown-toggle.btn-facebook{color:#fff;background-color:#2d4373;border-color:rgba(0,0,0,0.2)}.btn-facebook:active:hover,.btn-facebook.active:hover,.open>.dropdown-toggle.btn-facebook:hover,.btn-facebook:active:focus,.btn-facebook.active:focus,.open>.dropdown-toggle.btn-facebook:focus,.btn-facebook:active.focus,.btn-facebook.active.focus,.open>.dropdown-toggle.btn-facebook.focus{color:#fff;background-color:#23345a;border-color:rgba(0,0,0,0.2)}
+        .btn-facebook:active,.btn-facebook.active,.open>.dropdown-toggle.btn-facebook{background-image:none}
+        .btn-facebook.disabled:hover,.btn-facebook[disabled]:hover,fieldset[disabled] .btn-facebook:hover,.btn-facebook.disabled:focus,.btn-facebook[disabled]:focus,fieldset[disabled] .btn-facebook:focus,.btn-facebook.disabled.focus,.btn-facebook[disabled].focus,fieldset[disabled] .btn-facebook.focus{background-color:#3b5998;border-color:rgba(0,0,0,0.2)}
+        .btn-facebook .badge{color:#3b5998;background-color:#fff}
+
+        .btn-google{color:#fff;background-color:#dd4b39;border-color:rgba(0,0,0,0.2)}.btn-google:focus,.btn-google.focus{color:#fff;background-color:#c23321;border-color:rgba(0,0,0,0.2)}
+        .btn-google:hover{color:#fff!important;background-color:#c23321;border-color:rgba(0,0,0,0.2)}
+        .btn-google:active,.btn-google.active,.open>.dropdown-toggle.btn-google{color:#fff;background-color:#c23321;border-color:rgba(0,0,0,0.2)}.btn-google:active:hover,.btn-google.active:hover,.open>.dropdown-toggle.btn-google:hover,.btn-google:active:focus,.btn-google.active:focus,.open>.dropdown-toggle.btn-google:focus,.btn-google:active.focus,.btn-google.active.focus,.open>.dropdown-toggle.btn-google.focus{color:#fff;background-color:#a32b1c;border-color:rgba(0,0,0,0.2)}
+        .btn-google:active,.btn-google.active,.open>.dropdown-toggle.btn-google{background-image:none}
+        .btn-google.disabled:hover,.btn-google[disabled]:hover,fieldset[disabled] .btn-google:hover,.btn-google.disabled:focus,.btn-google[disabled]:focus,fieldset[disabled] .btn-google:focus,.btn-google.disabled.focus,.btn-google[disabled].focus,fieldset[disabled] .btn-google.focus{background-color:#dd4b39;border-color:rgba(0,0,0,0.2)}
+        .btn-google .badge{color:#dd4b39;background-color:#fff}
     </style>
 
 
@@ -226,91 +252,76 @@
         {% endif %}
             <div class="row">
 
-            {% for key, q in listquiz %}
-
+                {% for key ,q in listquiz %}
                     <div class="modal fade" id="test_{{ key }}" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header " style="background: #87CEEB;">
+                                    <h4 class="modal-title col-xs-11">
+                                        <font color="white">  Voulez vous vraiment participer au quiz
+                                            <br>
+                                            <b>{{ q.titre }}  </b> ??</font>
+                                    </h4>
+                                    <button type="button" class="close col-xs-1" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{ q.description }}</p>
+                                    {% if q.nbTentative < 100 %}
+                                        Nombre de tentative maximum est : {{ q.nbTentative }}  <br>
 
+                                    {% else %}
+                                        Nombre de tentative ilimiter !<br>
+                                    {% endif %}
 
-                                    Voulez vous vraiment participer au quiz  "<font color="blue"><b>{{ q.titre }}  </b></font>" ??<br><br>
-                                    {{ q.description }}
+                                    {% if q.tempsDispo == 1 and q.timequiz != 0 %}
 
-                                </h4>
-
-
-
-                                {% if q.nbTentative < 100 %}
-                                    Nombre de tentative maximum est :<font color="blue"><b>{{ q.nbTentative }} </b></font><br>
-
-                                {% else %}
-                                    Nombre de tentative ilimiter !<br>
-                                {% endif %}
-
-                                {% if q.tempsDispo == 1 %}
-
-                                    Temps disponible pour passer le quiz est :<font color="blue"><b> {{ q.timequiz }} minutes   </b></font><br>
-                                {% else %}
-                                    {% if q.tempsDispo == 0   %}
-                                        Temps disponible pour passer le quiz est :<font color="blue"><b> illimiter  </b></font><br>
+                                        Temps disponible pour passer le quiz est :  {{ q.timequiz }} minutes   <br>
+                                    {% else %}
+                                        Temps disponible pour passer le quiz est : Illimité    <br>
 
                                     {% endif %}
-                                {% endif %}
+                                    <br><br>
+                                    <button type="button" class="btn btn-block btn-social btn-facebook m-b-5">
+                                        <span class="fa fa-facebook"></span> Sign in with Facebook
+                                    </button>
+                                    <button type="button" class="btn btn-block btn-social btn-google m-b-5">
+                                        <span class="fa fa-google"></span> Sign in with Google
+                                    </button>
+                                    <br><br>
+                                    <center>OU</center>
+                                    <br><br>
+                                    <center><label>Entre votre email</label></center>
+                                    {{ render(controller(
+                                        'App\\Controller\\ParticipantController::newparticipant',{'quiz':q }
 
-
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    )) }}
+                                </div>
 
                             </div>
-                            <div class="modal-body">
+                        </div>
 
-                              <center>
-                                 <a href="#"><img width="60" height="60" src="{{ asset('logoFB_Gmail/fb.png' ) }}"></a>
-                                  &nbsp;
-                                  &nbsp;
-                                  &nbsp;
-                                  <a href="#"> <img width="60" height="60" src="{{ asset('logoFB_Gmail/gmail.png' ) }}"></a>
-                                  <br>
-                                  <br>
-                                  <br>
-                                  <br>
-OU
-                              </center>
-                                <br>
-                                <br>
-                                <label>Entre votre email</label>
-                                {{ render(controller(
-                                    'App\\Controller\\ParticipantController::newparticipant',{'quiz':q }
+                    </div>
+                    {% if  q.terminer == 1 %}
+                        <div class="col-sm-3" >
 
-                                )) }}
 
+                            <div class="card">
+                                {% if q.brochure == "null" %}
+                                    <img width="150" height="150" src="{{ asset('logoquiz/logonull.png' ) }}">
+
+                                {% else %}
+
+                                    <img src="{{ asset('uploads/brochures/' ~ q.brochure) }}" alt="Avatar" style="width:150px;height:150px;">
+                                {% endif %}
+                                <p class="titrequiz">{% if q.titre|length > 21 %}{{ q.titre|slice(0, 20) ~ '...' }}{% else %}{{ q.titre }}{% endif %}</p>
+                                <p> {% if q.description|length > 21 %}{{ q.description|slice(0, 20) ~ '...' }}{% else %}{{ q.description }}{% endif %}</p>
+                                <p><button data-target="#test_{{ key }}  " data-toggle="modal" style="width: px;" class="menu-level-1">Commencer ?
+                                    </button></p>
                             </div>
 
                         </div>
-                    </div>
-
-                </div>
-                {% if q.categorie == categorie and q.terminer == 1%}
-
-                                <div class="col-sm-3" style="background-color:;">
-                                    <div class="card">
-                                        {% if q.brochure == "null" %}
-                                            <img width="150" height="150" src="{{ asset('logoquiz/logonull.png' ) }}">
-
-                                        {% else %}
-
-                                            <img src="{{ asset('uploads/brochures/' ~ q.brochure) }}" alt="Avatar" style="width:150px;height:150px;">
-                                        {% endif %}
-                                        <p class="titrequiz">{% if q.titre|length > 21 %}{{ q.titre|slice(0, 20) ~ '...' }}{% else %}{{ q.titre }}{% endif %}</p>
-                                        <p> {% if q.description|length > 21 %}{{ q.description|slice(0, 25) ~ '...' }}{% else %}{{ q.description }}{% endif %}</p>
-                                        <br>
-                                        <p><button data-target="#test_{{ key }}  " data-toggle="modal" style="width: px;" class="menu-level-1">Go</button></p>
-                                    </div>
-                                </div>
-
-                {% endif %}
-            {% endfor %}
+                    {% endif %}
+                {% endfor %}
             </div>
 
     </div>
