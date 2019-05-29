@@ -263,8 +263,10 @@
             {% endif %}
 
         {% endfor %}
-        {{ ii }} /  {{ quiz.nbTentative }} Tentative<br>
 
+        {% if ii <= quiz.nbTentative %}
+        {{ ii }} /  {{ quiz.nbTentative }} tentatives<br>
+        {% endif %}
 
 
         <input type="number" hidden id="quiz">
@@ -272,12 +274,15 @@
 
 
 
-        {% if ii == quiz.nbTentative  %}
+        {% if ii > quiz.nbTentative  %}
 
             <center>
+             <h2>
+                 {{ ii-1 }} /  {{ quiz.nbTentative }} tentatives<br>
+             </h2>
 
-                Vos ete terminé le nombre de tentatives      <br>
-                <a class="btn btn-success" href="{{ path('index') }}"> Back </a>
+                <h2>Vos ete terminé le nombre de tentatives autouriser   </h2>  <br>
+                <a class="btn btn-success" href="{{ path('index') }}"> Retour </a>
             </center>
         {% else %}
         {% if quiz.tempsDispo == 1 and quiz.timequiz != 0 %}
