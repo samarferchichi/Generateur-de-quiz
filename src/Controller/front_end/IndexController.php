@@ -9,34 +9,15 @@
 namespace App\Controller\front_end;
 use App\Entity\Participant;
 use App\Entity\ParticipantQuiz;
-use App\Entity\Question;
 use App\Entity\Quiz;
 use App\Entity\ReponseParticipant;
 use App\Entity\Resultat;
-use App\Entity\User;
-use App\Form\ParticipantType;
-use App\Repository\PageRepository;
 use App\Repository\ParticipantQuizRepository;
 use App\Repository\ParticipantRepository;
+use App\Repository\QuestionRepository;
 use App\Repository\QuizRepository;
 use App\Repository\ReponseParticipantRepository;
-use Doctrine\DBAL\Types\IntegerType;
-use FOS\UserBundle\Event\FilterUserResponseEvent;
-use FOS\UserBundle\Event\FormEvent;
-use FOS\UserBundle\Event\GetResponseUserEvent;
-use FOS\UserBundle\FOSUserEvents;
-use FOS\UserBundle\Model\UserInterface;
-
-use http\Env\Request;
-use http\Env\Response;
-use phpDocumentor\Reflection\Types\Integer;
-use PhpParser\Node\Scalar\String_;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\Routing\Annotation\Route;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Validator\Tests\Fixtures\ToString;
 
 /**
  * @Route("/index")
@@ -207,121 +188,80 @@ class IndexController extends Controller
     /**
      * @Route("/quizpublic/{quiz}/{par}", name="quizpublic", methods={"GET" , "POST"})
      */
-    public function quizpublic( Quiz $quiz,Participant $par,ReponseParticipantRepository $reponseParticipantRepository, QuizRepository $quizRepository,ParticipantQuizRepository $participantQuizRepository , \Symfony\Component\HttpFoundation\Request $request)
+    public function quizpublic( Quiz $quiz,Participant $par,ReponseParticipantRepository $reponseParticipantRepository, QuizRepository $quizRepository,ParticipantQuizRepository $participantQuizRepository, QuestionRepository $questionRepository, \Symfony\Component\HttpFoundation\Request $request)
     {
-
-
         $entityManager = $this->getDoctrine()->getManager();
 
-        $listquiz= $quizRepository->findAll();
+        $listquiz = $quizRepository->findAll();
 
+        $listparticipantquiz = $participantQuizRepository->findAll();
 
-        $listparticipantquiz= $participantQuizRepository->findAll();
+        $form = $this->createFormBuilder(null, [
+                        'action' => $this->generateUrl('quizpublic', [
+                            'quiz' => $quiz->getId(),
+                            'par' => $par->getId()
+                        ])
+                    ])
+                     ->getForm();
+        $form->handleRequest($request);
 
-        $total=0;
+        if ($form->isSubmitted() && $form->isValid()) {
+            $typevf = $request->get('typevf');
+            $data = [];
 
-        $intro=null;
-
-        foreach ($listparticipantquiz as $p){
-
-            if ($p->getParticipant()== $par && $p->getQuiz() == $quiz){
-                $p->setTentative($p->getTentative()+1);
-
-                $resultat =  new Resultat();
-                $resultat->setParticipantQuiz($p);
-                $resultat->setTentative($p->getTentative());
-                $resultat->setResultat(20);
-
-                $entityManager->persist($resultat);
-
-
-                $reponseparticipant = new ReponseParticipant();
-                $reponseparticipant->setResultat($resultat);
-
-                $intro =1;
-            }else{
-                $intro =0;
-
+            foreach ($typevf as $key => $tvf){
+                $d = explode('+', $key);
+                array_push($d, $tvf);
+                array_push($data, $d);
             }
-        }
 
+            $ParticipantQuiz = $participantQuizRepository->findBy(['participant' => $par->getId(), 'quiz' => $quiz->getId()]);
+            if(count($ParticipantQuiz) == 1){
+                $ParticipantQuiz[0]->setTentative($ParticipantQuiz[0]->getTentative() + 1);
+                $ParticipantQuiz_new = $ParticipantQuiz[0];
+            }else{
+                $ParticipantQuiz_new = new ParticipantQuiz();
 
-        if ($intro == 0){
-            $participantquiz = new ParticipantQuiz();
-
-
-
-            $participantquiz->setParticipant($par);
-            $participantquiz->setQuiz($quiz);
-            $participantquiz->setTentative(1);
+                $ParticipantQuiz_new->setTentative(1);
+                $ParticipantQuiz_new->setParticipant($par);
+                $ParticipantQuiz_new->setQuiz($quiz);
+                $entityManager->persist($ParticipantQuiz_new);
+            }
 
             $resultat =  new Resultat();
 
-            $resultat->setParticipantQuiz($participantquiz);
-            $resultat->setTentative($participantquiz->getTentative());
+            $resultat->setParticipantQuiz($ParticipantQuiz_new);
+            $resultat->setTentative($ParticipantQuiz_new->getTentative());
             $resultat->setResultat(20);
 
             $entityManager->persist($resultat);
 
-            $entityManager->persist($participantquiz);
+            foreach ($data as $d){
+                $rep_participant = new ReponseParticipant();
 
-            $reponseparticipant = new ReponseParticipant();
-            $reponseparticipant->setResultat($resultat);
-
-        }
-
-        $vf = $request->get('typevf');
-        $que = $request->get('question');
-
-
-
-        $findquestion =new Question();
-
-
-
-        if ($vf != null){
-
-                foreach ($quiz->getPage() as $q) {
-                    foreach ($q->getQuestion() as $question) {
-
-                        foreach ($que as $qq) {
-
-
-                            foreach ($vf as $rep) {
-                                if($question->getId() == $qq)
-                                    $findquestion=$question;
-
-
-                                $reponseparticipant->setIdQuestion($findquestion);
-                                $reponseparticipant->setReponse($rep);
-                                $entityManager->persist($reponseparticipant);
-                            }
-
-                                }
-                    }
-                }
-
-
-            $entityManager->flush();
-
-                return $this->redirectToRoute('resultat',[
-                    'quiz'=> $quiz->getId(),
-                    'par'=>$par->getId(),
-                    'tentative'=>$total
-                ]);
+                $rep_participant->setResultat($resultat);
+                $rep_participant->setReponse($d[2]);
+                $rep_participant->setIdQuestion($questionRepository->find($d[0]));
+                $entityManager->persist($rep_participant);
             }
 
+//            $entityManager->flush();
 
-    return $this->render('front_end/quizpublic.html.twig', [
-        'quiz' => $quiz,
-        'listquiz' => $listquiz,
-        'userconct' => $this->getUser(),
-        'listparticipantquiz' => $listparticipantquiz,
-        'par' => $par
+            exit();
+        }
+
+        //TODO => redirect to interface resultat with correction
+
+        return $this->render('front_end/quizpublic.html.twig', [
+            'quiz' => $quiz,
+            'listquiz' => $listquiz,
+            'userconct' => $this->getUser(),
+            'listparticipantquiz' => $listparticipantquiz,
+            'par' => $par,
+            'form' => $form->createView()
 
 
-    ]);
-
+        ]);
 
     }
 

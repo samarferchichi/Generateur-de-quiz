@@ -34,6 +34,21 @@ class ParticipantQuizRepository extends ServiceEntityRepository
         return $qb->getArrayResult();
     }
 
+    public function getMaxTentatives ($user){
+        $qb = $this->createQueryBuilder('p')
+                   ->select('p')
+                   ->join('p.quiz', 'q')
+                   ->join('q.user', 'u')
+                   ->where('u.id = ?1')
+                   ->setParameter(1, $user)
+//                   ->groupBy('q')
+//                   ->orderBy('NbParticipant', 'desc')
+                   ->setMaxResults(10)
+                   ->getQuery();
+
+        return $qb->getResult();
+    }
+
 
     public function getAllParticipants ($user){
         $qb = $this->createQueryBuilder('p')

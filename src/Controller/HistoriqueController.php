@@ -63,8 +63,17 @@ class HistoriqueController  extends EasyAdminController
     {
 
         $reponseparticipant = $reponseparticipantrepository->findAll();
-        $resultat = $resultatrepository->findAll();
-        return $this->render('quiz/showDetail.html.twig',['p' => $participantquiz, 't' => $tentative, "reponseparticipant" =>$reponseparticipant, "resultat"=>$resultat ]);
+        $resultat = $resultatrepository->findBy(['participantquiz' => $participantquiz->getId(), 'tentative' => $tentative]);
+
+        dump($resultat);
+        exit();
+
+        return $this->render('quiz/showDetail.html.twig', [
+            'p' => $participantquiz,
+            't' => $tentative,
+            "reponseparticipant" => $reponseparticipant,
+            "resultat"=>$resultat
+        ]);
     }
 
 

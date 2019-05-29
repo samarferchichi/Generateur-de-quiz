@@ -226,7 +226,8 @@
 <div style="background-color: ">
 
 
-    <form id="regForm"  action="{{ path('quizpublic', {'quiz':quiz.id, 'par':par.id}) }}" method="post" >
+    {#<form id="regForm"  action="{{ path('quizpublic', {'quiz':quiz.id, 'par':par.id}) }}" method="post" >#}
+{{ form_start(form, {'attr': {'id': 'regForm'}}) }}
 
         <input value="{{ quiz.timequiz }}" hidden id="timequiz">
         <center>
@@ -515,7 +516,8 @@
 
 
 
-    </form>
+    {#</form>#}
+    {{ form_end(form) }}
 
 </div>
 </div>

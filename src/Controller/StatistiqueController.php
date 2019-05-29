@@ -65,6 +65,10 @@ class StatistiqueController extends EasyAdminController
     {
 
         $participants = $participantQuizRepository->getParticipants($this->getUser()->getId());
+        $tentatives = $participantQuizRepository->getMaxTentatives($this->getUser()->getId());
+
+        dump($tentatives);
+        exit();
 
         $data = [];
 
