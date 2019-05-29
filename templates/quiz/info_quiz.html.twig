@@ -51,20 +51,20 @@
                                   <div class="row">
                                     <div class="col-1">
                                         <h4>
-                                            <a href="{{ path('showq',{ 'quiz': quiz.id }) }}" class="fa fa-eye" data-target="#showquiz-{{ quiz.id }}"  data-toggle="modal" ></a>
+                                            <font color="red"> <a href="{{ path('showq',{ 'quiz': quiz.id }) }}" style="font-size:35px;color:	#1E90FF;" class="fa fa-eye" data-target="#showquiz-{{ quiz.id }}"  data-toggle="modal" ></a></font>
                                         </h4>
                                     </div>
                                     <div class="col-1">
                                         <h4>
-                                            <a href="{{ path('dupliqueAction',{ 'quiz': quiz.id }) }}" class="fa fa-files-o"></a>
+                                            <a href="{{ path('dupliqueAction',{ 'quiz': quiz.id }) }}" style="font-size:35px;color:#1E90FF;" class="fa fa-files-o"></a>
                                         </h4>
                                     </div>
                                     <div class="col-1" >
                                         <h4>
                                             {% if quiz.sendMail == 1 %}
-                                                <a href="{{ path('send', {'quiz': quiz.id})}}" class="fa fa-paper-plane"></a>
+                                                <a href="{{ path('send', {'quiz': quiz.id})}}" style="font-size:35px;color:#1E90FF;" class="fa fa-paper-plane"></a>
                                             {% else %}
-                                                <i style="color: grey"  class="fa fa-paper-plane"></i>
+                                                <i style="color: grey" style="font-size:35px;color:#1E90FF;"  class="fa fa-paper-plane"></i>
                                             {% endif %}
 
                                         </h4>
@@ -73,11 +73,11 @@
                                     <div class="col-1">
                                         {% if quiz.imprimePdf == 1 %}
                                             <h4>
-                                                <a href="{{ path('imprimerquiz', {'quiz': quiz.id }) }}"  class="fa fa-print"></a>
+                                                <a href="{{ path('imprimerquiz', {'quiz': quiz.id }) }}" style="font-size:35px;color:#1E90FF;" class="fa fa-print"></a>
                                             </h4>
                                         {% else %}
                                             <h4>
-                                                <i style="color: grey"  class="fa fa-print"></i>
+                                                <i style="color: grey"  style="font-size:35px;color:#1E90FF;" class="fa fa-print"></i>
                                             </h4>
                                         {% endif %}
                                     </div>
@@ -99,11 +99,16 @@
                                 <div class="col-sm-3">
                                     <img width="150" height="150" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
                                 </div>
+                                    <div class="col-sm-9" style="padding-left:20px">
+                                        <h2>  {{ quiz.titre }}</h2>
+                                    </div>
+                                    {% else %}
+                                        <div class="" style="padding-left:20px">
+                                            <h2>  {{ quiz.titre }}</h2>
+                                        </div>
                                 {% endif %}
 
-                                <div class="col-sm-9">
-                                    <h2>  {{ quiz.titre }}</h2>
-                                </div>
+
                             </div>
                             <br>
                             <br>
@@ -136,7 +141,7 @@
                                 </tr>
                                 <tr>
                                     <th>Nombre maximum des pages</th>
-                                    <td> <label><div id="value-max-page">{{ quiz.nbPage }}</div></label> &nbsp;&nbsp;<a id="update-max-page"  data-id="{{ quiz.id }}" href="javascript:;" class="fa fa-pencil"></a>
+                                    <td> <label><div id="value-max-page">{{ quiz.nbPage }}</div></label> &nbsp;&nbsp;<a id="update-max-page"   style="font-size:25px;color:#1E90FF;"  data-id="{{ quiz.id }}" href="javascript:;" class="fa fa-pencil"></a>
                                         <div class="modal fade" id="moodal-update-max-page" role="dialog">
                                             <div class="modal-dialog modal-xm">
 
@@ -224,19 +229,28 @@
 
 
             <div class="col-sm-4" style="background-color: ;">
-                <div>
-                    <div class="card bg-info text-white" style="background-color: #b9def0; width: 410px;">
+
+                 <div class="card bg-info text-white" style="background-color: #b9def0; width: 410px;">
                         <div class="card-body" style="background-color: #b9def0; width: 400px; ">
-                            {% if(quiz.nbPage  > quiz.page|length) %}
-                                <button style="background-color: #b9def0; width: 30px; height: 30px" data-id="{{ quiz.id }}" id="add-page-to-quiz">
-                                    <i class="fa fa-plus-square-o" ></i>
-                                </button>
-                            {% else %}
-                                <button disabled style="background-color: ; width: 30px; height: 30px">
-                                    <i class="fa fa-plus-square-o" ></i>
-                                </button>
-                            {% endif %}
-                            <center>PAGE</center>
+
+                            <div class="row">
+                                <div class="col-2">
+                                    {% if(quiz.nbPage  > quiz.page|length) %}
+                                        <button style=" width: 40px; height: 40" data-id="{{ quiz.id }}" class="btn btn-info" id="add-page-to-quiz">
+                                            <i class="fa fa-plus-square-o" ></i>
+                                        </button>
+                                    {% else %}
+                                        <button disabled style="background-color: ; width: 40px; height: 40px">
+                                            <i class="fa fa-plus-square-o" ></i>
+                                        </button>
+                                    {% endif %}
+                                </div>
+                                <div class="col-8">
+                                    <center><h3>PAGES</h3></center>
+
+                                </div>
+                            </div>
+
                             <div id="accordion">
 
                                 {% for page in quiz.page %}
@@ -323,7 +337,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
 
 
