@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Quiz!{% endblock %}</title>
+    <link href="{{ asset('template/front/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('template/front/starter-template.css') }}" rel="stylesheet">
+    <link href="{{ asset('template/front/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-fixed-top navbar-dark bg-inverse">
+    <span><img src="{{ asset('template/images/quiz_2.png') }}" style="width: 38px; float: left; margin-right: 10px;" /></span><a class="navbar-brand" href="#" style="margin-right: 100px">Quiz</a>
+
+    <ul class="nav navbar-nav">
+        <li class="nav-item {% if app.request.get('_route') in ['index'] %}active{% endif %}">
+            <a class="nav-link" href="{{ path('index') }}">Accueil</a>
+        </li>
+        {% if app.request.get('_route') in ['listerquiz'] %}
+        <li class="nav-item dropdown {% if app.request.get('_route') in ['listerquiz'] %}active{% endif %}">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Toutes nos catégories</a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item {% if categorie == 'Education' %}active{% endif %}" href="{{ path('listerquiz', {'categorie': 'Education'}) }}">Education</a>
+                <a class="dropdown-item {% if categorie == 'Santé' %}active{% endif %}" href="{{ path('listerquiz', {'categorie': 'Santé'}) }}">Santé</a>
+                <a class="dropdown-item {% if categorie == 'Ressources Humaines' %}active{% endif %}" href="{{ path('listerquiz', {'categorie': 'Ressources Humaines'}) }}">Ressources Humaines</a>
+                <a class="dropdown-item {% if categorie == 'Evenementiel' %}active{% endif %}" href="{{ path('listerquiz', {'categorie': 'Evenementiel'}) }}">Evenementiel</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item {% if categorie == 'Autre' %}active{% endif %}" href="{{ path('listerquiz', {'categorie': 'Autre'}) }}">Autre</a>
+            </div>
+        </li>
+        {% else %}
+            <li class="nav-item dropdown {% if app.request.get('_route') in ['listerquiz'] %}active{% endif %}">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Toutes nos catégories</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ path('listerquiz', {'categorie': 'Education'}) }}">Education</a>
+                    <a class="dropdown-item" href="{{ path('listerquiz', {'categorie': 'Santé'}) }}">Santé</a>
+                    <a class="dropdown-item" href="{{ path('listerquiz', {'categorie': 'Ressources Humaines'}) }}">Ressources Humaines</a>
+                    <a class="dropdown-item" href="{{ path('listerquiz', {'categorie': 'Evenementiel'}) }}">Evenementiel</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('listerquiz', {'categorie': 'Autre'}) }}">Autre</a>
+                </div>
+            </li>
+        {% endif %}
+    </ul>
+</nav>
+
+<div class="container">
+    <div class="starter-template">
+        {% block body %}
+            <h1>Bienvenue</h1>
+            <p class="lead">Bienvenue, Bienvenue, Bienvenue, Bienvenue, Bienvenue ....</p>
+        {% endblock %}
+    </div>
+
+</div>
+</body>
+<script src="{{ asset('template/front/jquery.js') }}" ></script>
+<script src="{{ asset('template/front/bootstrap.js') }}"></script>
+</html>

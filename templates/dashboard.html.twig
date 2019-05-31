@@ -95,12 +95,12 @@
     </script>
 
     {% set nb = 0 %}
-{% set nbquiz=1 %}
-{% set usernb=0 %}
-{% set total=0 %}
+    {% set nbquiz=1 %}
+    {% set usernb=0 %}
+    {% set total=0 %}
     {% set idquiz = 0 %}
             <br>
-    <div style="padding-left: 20px  " class="row">
+        <div style="padding-left: 20px  " class="row">
            <div  class="col-0">
                <h2>   <font color="#a9a9a9"  ><i class="fa fa-search" ></i></font></h2>
            </div>
@@ -108,7 +108,7 @@
                <input id="myInput" class="form-control" type="text" placeholder="Recherche..">
 
            </div>
-       </div>
+        </div>
         <br>
     <center>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -132,23 +132,22 @@
                                 <div class="modal-body" style="text-align: left;     font-family: Verdana,sans-serif;">
                                     <b>Titre : </b> <font color="{{p.colorTitre}}">{{ p }}</font><br><br>
                                     <b>Déscription : </b>{{ p.description }}<br><br>
-                                    <b> Nombre des tentatives : </b>{% if p.nbTentative ==1000 %}
-                                    Illimité
+                                    <b> Nombre des tentatives : </b>
+                                    {% if p.nbTentative ==1000 %}
+                                        Illimité
                                     {% else %}
                                         {{ p.nbTentative }}
-                                        {% endif %}
-                                    <br>
-                                    <br>
+                                    {% endif %}
+                                    <br><br>
                                     <b>Date céartion :</b> {{ p.datecreerquiz ? p.datecreerquiz|date('Y-m-d') : '' }}<br><br>
 
                                     <b>Date ouverture de quiz : </b>
                                     {% if p.ouvrireQuiz == null %}
                                         Illimité
                                     {% else %}
-                                    {{ p.ouvrireQuiz ? p.ouvrireQuiz|date('Y-m-d') : '' }}
+                                        {{ p.ouvrireQuiz ? p.ouvrireQuiz|date('Y-m-d') : '' }}
                                     {% endif %}
-                                    <br>
-                                    <br>
+                                    <br><br>
                                     <b>Date fermeture de quiz : </b>
                                     {% if p.fermerQuiz == null %}
                                         Illimité
@@ -157,14 +156,12 @@
                                     {% endif %}
 
                                     {% if p.brochure == "null" %}
-
-
                                       <center>  <img width="180" height="180" src="{{ asset('logoquiz/logonull.png' ) }}"></center>
-                                {% else %}
-                                    <center>
-                                    <img src="{{ asset('uploads/brochures/' ~ p.brochure) }}" alt="Avatar" style="width:180px;height:180px;">
-                                    </center>
-                                {% endif %}
+                                    {% else %}
+                                        <center>
+                                            <img src="{{ asset('uploads/brochures/' ~ p.brochure) }}" alt="Avatar" style="width:180px;height:180px;">
+                                        </center>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -192,38 +189,38 @@
                                                 <img width="180" height="180" src="{{ asset('logoquiz/logonull.png' ) }}">
 
                                             </div>
-                                            {% else %}
+                                        {% else %}
                                                 <br>
-                                        <div class="container" >
-                                            <div style="height: px;background-color: #ADD8E6; ">
-                                                <div class="card-body" style="height: 60px; ">
-                                                    <p class="titrequiz">{% if p.titre|length > 21 %}{{ p.titre|slice(0, 20) ~ '...' }}{% else %}{{ p.titre }}{% endif %}</p>
-                                                </div>
-                                            </div><br>
-                                            <img src="{{ asset('uploads/brochures/' ~ p.brochure) }}" alt="Avatar" style="width:180px;height:180px;">
-                                        </div>
-                                                {% endif %}
+                                            <div class="container" >
+                                                <div style="height: px;background-color: #ADD8E6; ">
+                                                    <div class="card-body" style="height: 60px; ">
+                                                        <p class="titrequiz">{% if p.titre|length > 21 %}{{ p.titre|slice(0, 20) ~ '...' }}{% else %}{{ p.titre }}{% endif %}</p>
+                                                    </div>
+                                                </div><br>
+                                                <img src="{{ asset('uploads/brochures/' ~ p.brochure) }}" alt="Avatar" style="width:180px;height:180px;">
+                                            </div>
+                                        {% endif %}
                                     </div>
-                                    <div class="flip-card-back">
-<br><br>
-                                        <p class="titrequiz">{% if p.titre|length > 21 %}{{ p.titre|slice(0, 20) ~ '...' }}{% else %}{{ p.titre }}{% endif %}</p>
+                                        <div class="flip-card-back">
+                                            <br><br>
+                                            <p class="titrequiz">{% if p.titre|length > 21 %}{{ p.titre|slice(0, 20) ~ '...' }}{% else %}{{ p.titre }}{% endif %}</p>
 
-                                            {% for h in participant %}
+                                                {% for h in participant %}
 
-                                                {% if p.id == h.idQuiz %}
-                                                    <b>{{ h.NbParticipant }} participants</b>
+                                                    {% if p.id == h.idQuiz %}
+                                                        <b>{{ h.NbParticipant }} participants</b>
 
-                                                {% endif %}
+                                                    {% endif %}
 
-                                            {% endfor %}
+                                                {% endfor %}
 
-                                        <p> {% if p.description|length > 21 %}{{ p.description|slice(0, 200) ~ '...' }}{% else %}{{ p.description }}{% endif %}</p>
-                                      <div>
-                                          <a href="#" class="btn btn-success"  data-target="#show-{{ p.id }}" data-toggle="modal"   >Voir</a>
-                                      </div>
+                                            <p> {% if p.description|length > 21 %}{{ p.description|slice(0, 200) ~ '...' }}{% else %}{{ p.description }}{% endif %}</p>
+                                            <div>
+                                                <a href="#" class="btn btn-success"  data-target="#show-{{ p.id }}" data-toggle="modal"   >Voir</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             <br>
                         </div>
 
@@ -242,8 +239,7 @@
         {% endif %}
     {% endfor %}
     {% if nb == 0 %}
-        <center><h1>Aucun résultat trouvé
-            </h1></center><br>
+        <center><h1>Aucun résultat trouvé</h1></center><br>
     {% endif %}
 
 {% endblock %}

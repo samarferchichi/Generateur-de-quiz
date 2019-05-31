@@ -1,255 +1,39 @@
-<html lang="en">
+{% extends '/front_end/base_front.html.twig' %}
 
-<head>
-
-    <style>
-        .center {
-            margin: auto;
-            width: 60%;
-            border: 0.5px solid #eeeeee ;
-            padding: 10px;
-        }
-        .img2 {
-            float: right;
-        }
-        body {
-            font-family: "Lato", sans-serif;
-            transition: background-color .5s;
-        }
-
-        .sidenav {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: #111;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
-
-        .sidenav a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-        }
-
-        .sidenav a:hover {
-            color: #2a85a0;
-        }
-
-        .sidenav .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-
-        #main {
-            transition: margin-left .5s;
-            padding: 16px;
-        }
-
-        @media screen and (max-height: 450px) {
-            .sidenav {padding-top: 15px;}
-            .sidenav a {font-size: 18px;}
-        }
-
-        .pagination a {
-            color: black;
-            float: left;
-            padding: 8px 16px;
-            text-decoration: none;
-            transition: background-color .3s;
-        }
-
-        .pagination a.active {
-            background-color: dodgerblue;
-            color: white;
-        }
-
-        .pagination a:hover:not(.active) {background-color: #ddd;}
-
-    </style>
-    <style>
-        .card {
-            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            margin: auto;
-            text-align: center;
-            font-size: 20px;
-            font-family: "Tlwg Typo";
-        }
-
-        .titrequiz {
-            color: #31b0d5;
-            font-size: 25px;
-        }
-
-        .card button {
-            border: none;
-            outline: 0;
-            padding: 12px;
-            color: white;
-            background-color: #3a87ad;
-            text-align: center;
-            cursor: pointer;
-            width: 100%;
-            font-size: 18px;
-        }
-
-        .card button:hover {
-            opacity: 0.7;
-        }
+{% block body %}
 
 
+    {% set nb =0 %}
+    <div style="padding:; background-color: #f0ad4e">
+        <div style="padding: 20px; background-color:">
+            <div class="row" style="background-color: ">
 
-        .btn-social{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.btn-social>:first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}
-        .btn-social.btn-lg{padding-left:61px}.btn-social.btn-lg>:first-child{line-height:45px;width:45px;font-size:1.8em}
-        .btn-social.btn-sm{padding-left:38px}.btn-social.btn-sm>:first-child{line-height:28px;width:28px;font-size:1.4em}
-        .btn-social.btn-xs{padding-left:30px}.btn-social.btn-xs>:first-child{line-height:20px;width:20px;font-size:1.2em}
-        .btn-social-icon{position:relative;padding-left:44px;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;height:34px;width:34px;padding:0}.btn-social-icon>:first-child{position:absolute;left:0;top:0;bottom:0;width:32px;line-height:34px;font-size:1.6em;text-align:center;border-right:1px solid rgba(0,0,0,0.2)}
-        .btn-social-icon.btn-lg{padding-left:61px}.btn-social-icon.btn-lg>:first-child{line-height:45px;width:45px;font-size:1.8em}
-        .btn-social-icon.btn-sm{padding-left:38px}.btn-social-icon.btn-sm>:first-child{line-height:28px;width:28px;font-size:1.4em}
-        .btn-social-icon.btn-xs{padding-left:30px}.btn-social-icon.btn-xs>:first-child{line-height:20px;width:20px;font-size:1.2em}
-        .btn-social-icon>:first-child{border:none;text-align:center;width:100% !important}
-        .btn-social-icon.btn-lg{height:45px;width:45px;padding-left:0;padding-right:0}
-        .btn-social-icon.btn-sm{height:30px;width:30px;padding-left:0;padding-right:0}
-        .btn-social-icon.btn-xs{height:22px;width:22px;padding-left:0;padding-right:0}
+                <div class="col-sm-5" style="background-color:;">
 
-        .btn-facebook{color:#fff;background-color:#3b5998;border-color:rgba(0,0,0,0.2)}.btn-facebook:focus,.btn-facebook.focus{color:#fff;background-color:#2d4373;border-color:rgba(0,0,0,0.2)}
-        .btn-facebook:hover{color:#fff!important;background-color:#2d4373;border-color:rgba(0,0,0,0.2)}
-        .btn-facebook:active,.btn-facebook.active,.open>.dropdown-toggle.btn-facebook{color:#fff;background-color:#2d4373;border-color:rgba(0,0,0,0.2)}.btn-facebook:active:hover,.btn-facebook.active:hover,.open>.dropdown-toggle.btn-facebook:hover,.btn-facebook:active:focus,.btn-facebook.active:focus,.open>.dropdown-toggle.btn-facebook:focus,.btn-facebook:active.focus,.btn-facebook.active.focus,.open>.dropdown-toggle.btn-facebook.focus{color:#fff;background-color:#23345a;border-color:rgba(0,0,0,0.2)}
-        .btn-facebook:active,.btn-facebook.active,.open>.dropdown-toggle.btn-facebook{background-image:none}
-        .btn-facebook.disabled:hover,.btn-facebook[disabled]:hover,fieldset[disabled] .btn-facebook:hover,.btn-facebook.disabled:focus,.btn-facebook[disabled]:focus,fieldset[disabled] .btn-facebook:focus,.btn-facebook.disabled.focus,.btn-facebook[disabled].focus,fieldset[disabled] .btn-facebook.focus{background-color:#3b5998;border-color:rgba(0,0,0,0.2)}
-        .btn-facebook .badge{color:#3b5998;background-color:#fff}
+                    <font size="10" color="white">
+                        {{ categorie }}
+                    </font>
+                </div>
 
-        .btn-google{color:#fff;background-color:#dd4b39;border-color:rgba(0,0,0,0.2)}.btn-google:focus,.btn-google.focus{color:#fff;background-color:#c23321;border-color:rgba(0,0,0,0.2)}
-        .btn-google:hover{color:#fff!important;background-color:#c23321;border-color:rgba(0,0,0,0.2)}
-        .btn-google:active,.btn-google.active,.open>.dropdown-toggle.btn-google{color:#fff;background-color:#c23321;border-color:rgba(0,0,0,0.2)}.btn-google:active:hover,.btn-google.active:hover,.open>.dropdown-toggle.btn-google:hover,.btn-google:active:focus,.btn-google.active:focus,.open>.dropdown-toggle.btn-google:focus,.btn-google:active.focus,.btn-google.active.focus,.open>.dropdown-toggle.btn-google.focus{color:#fff;background-color:#a32b1c;border-color:rgba(0,0,0,0.2)}
-        .btn-google:active,.btn-google.active,.open>.dropdown-toggle.btn-google{background-image:none}
-        .btn-google.disabled:hover,.btn-google[disabled]:hover,fieldset[disabled] .btn-google:hover,.btn-google.disabled:focus,.btn-google[disabled]:focus,fieldset[disabled] .btn-google:focus,.btn-google.disabled.focus,.btn-google[disabled].focus,fieldset[disabled] .btn-google.focus{background-color:#dd4b39;border-color:rgba(0,0,0,0.2)}
-        .btn-google .badge{color:#dd4b39;background-color:#fff}
-    </style>
+            </div>
 
-
-</head>
-<head>
-    <title>Quiz</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="shortcut icon" href="{{ asset('template/images/quiz.ico') }}">
-</head>
-<body>
-
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand"  href="{{ path('index') }}"> Quiz </a>
         </div>
-        <ul class="nav navbar-nav">
-            <li>
-                <span style="color:white;  font-size:40px;cursor:pointer" onclick="openNav()">&#9776;</span>
-            </li>
-
-
-            <li><a href="{{ path('index') }}">Accueil</a></li>
-
-            <style>
-                .dropdown-submenu{position:relative;}
-                .dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
-                .dropdown-submenu:hover>.dropdown-menu{display:block;}
-                .dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
-                .dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
-                .dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
-            </style>
-
-
-            <li class="dropdown-submenu"> <a href="#" tabindex="-1">  Toutes nos catégories</a>
-                <ul class="dropdown-menu">
-
-                    <li>
-                        <a href="{{ path('listerquiz', {'categorie': 'Education'}) }}">
-
-                            Education
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('listerquiz', {'categorie': 'Santé'}) }}">
-
-                            Santé
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="{{ path('listerquiz', {'categorie': 'Ressources Humaines'}) }}">
-
-                            Ressources Humaines
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="{{ path('listerquiz', {'categorie': 'Evenementiel'}) }}">
-
-                            Evenementiel
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="{{ path('listerquiz', {'categorie': 'Autre'}) }}">
-
-                            Autre
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-
-
-        </ul>
-
-
-
     </div>
-</nav>
+    <div class="row">
 
-{% set nb =0 %}
-<div style="padding:; background-color: #f0ad4e">
-    <div style="padding: 20px; background-color:">
-       <div class="row" style="background-color: ">
-
-        <div class="col-sm-5" style="background-color:;">
-
-            <font size="10" color="white">
-                {{ categorie }}
-            </font>
-        </div>
-
-       </div>
-
-    </div>
-</div>
-<div class="row">
-
-    <div style="padding: 80px">
+        <div style="padding: 80px">
 
 
-        {% for q in listquiz %}
-            {% if q.categorie == categorie %}
-                {% set nb = nb + 1 %}
+            {% for q in listquiz %}
+                {% if q.categorie == categorie %}
+                    {% set nb = nb + 1 %}
+                {% endif %}
+            {% endfor %}
+
+            {% if nb == 0 %}
+
+                <h1>Cette categorie est vide :( </h1>
             {% endif %}
-        {% endfor %}
-
-        {% if nb == 0 %}
-
-            <h1>Cette categorie est vide :( </h1>
-        {% endif %}
             <div class="row">
 
                 {% for key ,q in listquiz %}
@@ -292,7 +76,7 @@
                                     <br><br>
                                     <center><label>Entre votre email</label></center>
                                     {{ render(controller(
-                                        'App\\Controller\\ParticipantController::newparticipant',{'quiz':q }
+                                    'App\\Controller\\ParticipantController::newparticipant',{'quiz':q }
 
                                     )) }}
                                 </div>
@@ -313,8 +97,8 @@
 
                                     <img src="{{ asset('uploads/brochures/' ~ q.brochure) }}" alt="Avatar" style="width:150px;height:150px;">
                                 {% endif %}
-                                <p class="titrequiz">{% if q.titre|length > 21 %}{{ q.titre|slice(0, 20) ~ '...' }}{% else %}{{ q.titre }}{% endif %}</p>
-                                <p> {% if q.description|length > 21 %}{{ q.description|slice(0, 20) ~ '...' }}{% else %}{{ q.description }}{% endif %}</p>
+                                <p class="titrequiz">{% if q.titre|length > 17 %}{{ q.titre|slice(0, 16) ~ '...' }}{% else %}{{ q.titre }}{% endif %}</p>
+                                <p> {% if q.description|length > 17 %}{{ q.description|slice(0, 16) ~ '...' }}{% else %}{{ q.description }}{% endif %}</p>
                                 <p><button data-target="#test_{{ key }}  " data-toggle="modal" style="width: px;" class="menu-level-1">Commencer ?
                                     </button></p>
                             </div>
@@ -324,53 +108,10 @@
                 {% endfor %}
             </div>
 
+        </div>
+
     </div>
 
-</div>
 
 
-
-
-<script>
-    function openNav() {
-        document.getElementById("mySidenav").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
-        document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-    }
-
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-        document.getElementById("main").style.marginLeft= "0";
-        document.body.style.backgroundColor = "white";
-    }
-
-
-</script>
-
-
-<script>
-    function myFunction() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-            tr = tr[i].getElementsByTagName("tr")[0];
-            if (tr) {
-                txtValue = tr.textContent || tr.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
-
-
-
-
-
-
+{% endblock %}

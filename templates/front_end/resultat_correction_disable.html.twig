@@ -1,0 +1,62 @@
+{% extends '/front_end/base_front.html.twig' %}
+
+{% block body %}
+<style>
+    .gqwVxY {
+        position: relative;
+        font-family: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 12px 0px;
+        min-height: 48px;
+        background-color: rgb(159, 207, 103);
+        color: rgb(29, 42, 13);
+        transition: background-color 0.2s ease 0s, color 0.2s ease 0s, border-color 0.2s ease 0s, opacity 0.2s ease 0s;
+        outline: none;
+        border-width: 1px;
+        border-style: solid;
+        border-image: initial;
+        padding: 8px 18px;
+        border-color: transparent;
+        border-radius: 4px;
+    }
+    .gqwVxY:hover {
+        position: relative;
+        font-family: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 12px 0px;
+        min-height: 48px;
+        color: rgb(29, 42, 13);
+        background-color: rgb(173, 214, 126);
+        transition: background-color 0.2s ease 0s, color 0.2s ease 0s, border-color 0.2s ease 0s, opacity 0.2s ease 0s;
+        outline: none;
+        border-width: 1px;
+        border-style: solid;
+        border-image: initial;
+        padding: 8px 18px;
+        border-color: transparent;
+        border-radius: 4px;
+    }
+</style>
+    <div style="text-align: center">
+        <div class="">
+            <div class="">
+                <div style="padding-bottom: 30px;">
+                    <img class="" alt="" src="https://images.typeform.com/images/2dpnUBBkz2VN/image/default" style="width: 120px; height: 120px;">
+                </div>
+            </div>
+            <div style="padding-bottom: 30px;">
+                <h3 class="_Text-sc-1t2ribu-0-h1 iHImDD" color="#3D3D3D">Merci d'avoir participé au quiz<br>Vous pouvez <strong>evoluer</strong> ce quiz — C'est simple</h3>
+            </div>
+            <header class="sc-ktHwxA gnJjUH">
+                <div class="Spacer-sc-11bdvt0-0 jZlsIf">
+                        <a href="{{ path('index') }}"><button class="gqwVxY" color="#9FCF67">Retour à la page d'accueil</button></a>
+                </div>
+            </header>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,12 +1,6 @@
 <center><h2>Tentative : {{ t }}</h2></center><br>
+
 {{ dump(resultat) }}
+{{ dump(reponseparticipant) }}
 
 
-{% for i in resultat %}
-
-    {% if i.participantquiz == p and i.tentative == t %}
-        {{ i.tentative }}
-{{ dump(i.tentative) }}
-
-    {% endif %}
-{% endfor %}

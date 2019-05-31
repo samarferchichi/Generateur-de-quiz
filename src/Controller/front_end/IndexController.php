@@ -18,6 +18,8 @@ use App\Repository\QuestionRepository;
 use App\Repository\QuizRepository;
 use App\Repository\ReponseParticipantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/index")
@@ -107,39 +109,37 @@ class IndexController extends Controller
     /**
      * @Route("/resultat/{quiz}/{par}/{tentative}", name="resultat", methods={"GET" , "POST"})
      */
-    public function resultat( Quiz $quiz, $tentative  ,Participant $par,  QuizRepository $quizRepository,ParticipantQuizRepository $participantQuizRepository ,ReponseParticipantRepository $reponseParticipantRepository, \Symfony\Component\HttpFoundation\Request $request)
+    public function resultat( Quiz $quiz, $tentative  ,Participant $par,  QuizRepository $quizRepository,ParticipantQuizRepository $participantQuizRepository ,ReponseParticipantRepository $reponseParticipantRepository, \Symfony\Component\HttpFoundation\Request $request){
 
-{
+        dump($quiz);
+        $quiz->setModeCorrection(false);
+        if($quiz->getModeCorrection()){
 
-        $listquiz= $quizRepository->findAll();
+            $listquiz = $quizRepository->findAll();
 
-        $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->getDoctrine()->getManager();
 
-        $listparticipantquiz= $participantQuizRepository->findAll();
-        $reponseParticipant = $reponseParticipantRepository->findAll();
+            $listparticipantquiz= $participantQuizRepository->findAll();
+            $reponseParticipant = $reponseParticipantRepository->findAll();
 
-       // $max= max($reponseParticipant);
+            return $this->render('front_end/resultat_correction_enable.html.twig',[
+                'quiz'=> $quiz,
+                'listquiz'=> $listquiz,
+                'userconct' => $this->getUser(),
+                'listparticipantquiz' => $listparticipantquiz,
+                'reponseParticipant' => $reponseParticipant,
+                'par'=>$par,
+                'tentative'=>$tentative
+            ]);
+        }else{
 
-
-
-      /*  $p->setResultat(1);
-        $entityManager->persist($p);
-        $entityManager->flush();*/
-
-        return $this->render('front_end/resultat.html.twig',[
-            'quiz'=> $quiz,
-            'listquiz'=> $listquiz,
-            'userconct' => $this->getUser(),
-            'listparticipantquiz' => $listparticipantquiz,
-            'reponseParticipant' => $reponseParticipant,
-            'par'=>$par,
-            'tentative'=>$tentative
-
-
+            return $this->render('front_end/resultat_correction_disable.html.twig',[
+                'quiz'=> $quiz,
+            ]);
+        }
+        exit();
 
 
-
-        ]);
 
     }
 
@@ -151,7 +151,7 @@ class IndexController extends Controller
      */
     public function listerquiz( String $categorie, QuizRepository $quizRepository)
     {
-        $listquiz = $quizRepository->findAll();
+        $listquiz = $quizRepository->findBy(['categorie' => $categorie]);
         return $this->render('front_end/listercategorie.html.twig', ['categorie' => $categorie, 'listquiz' =>$listquiz]);
     }
 
@@ -206,15 +206,9 @@ class IndexController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $typevf = $request->get('typevf');
-            $data = [];
-
-            foreach ($typevf as $key => $tvf){
-                $d = explode('+', $key);
-                array_push($d, $tvf);
-                array_push($data, $d);
-            }
-
+            /* -------------------------------------------------------------------------------------------------------------------------------- */
+            /* ----------- Nouveau ou ancient participent (Si ancient augmenter n° tentative sinon nouveau Participant Quiz) ------------------ */
+            /* -------------------------------------------------------------------------------------------------------------------------------- */
             $ParticipantQuiz = $participantQuizRepository->findBy(['participant' => $par->getId(), 'quiz' => $quiz->getId()]);
             if(count($ParticipantQuiz) == 1){
                 $ParticipantQuiz[0]->setTentative($ParticipantQuiz[0]->getTentative() + 1);
@@ -235,6 +229,18 @@ class IndexController extends Controller
             $resultat->setResultat(20);
 
             $entityManager->persist($resultat);
+            /* -------------------------------------------------------------------------------------------------------------------------------- */
+            /* -------------------------------------------------------------------------------------------------------------------------------- */
+
+            /*  Récuperation et sauvgarde des données TypeVF */
+            $typevf = $request->get('typevf');
+            $data = [];
+
+            foreach ($typevf as $key => $tvf){
+                $d = explode('+', $key);
+                array_push($d, $tvf);
+                array_push($data, $d);
+            }
 
             foreach ($data as $d){
                 $rep_participant = new ReponseParticipant();
@@ -244,13 +250,27 @@ class IndexController extends Controller
                 $rep_participant->setIdQuestion($questionRepository->find($d[0]));
                 $entityManager->persist($rep_participant);
             }
+            /*  --------------------------------------------- */
+            /*  --------------------------------------------- */
 
-//            $entityManager->flush();
+            /*  Récuperation et sauvgarde des données Type */
 
-            exit();
+            /*  --------------------------------------------- */
+            /*  --------------------------------------------- */
+
+            /*  Récuperation et sauvgarde des données Type */
+
+            /*  --------------------------------------------- */
+            /*  --------------------------------------------- */
+
+            $entityManager->flush();
+
+            return $this->redirectToRoute('resultat', [
+                'quiz' => $quiz->getId(),
+                'par' => $par->getId(),
+                'tentative' => $ParticipantQuiz_new->getTentative()
+            ]);
         }
-
-        //TODO => redirect to interface resultat with correction
 
         return $this->render('front_end/quizpublic.html.twig', [
             'quiz' => $quiz,
@@ -259,10 +279,7 @@ class IndexController extends Controller
             'listparticipantquiz' => $listparticipantquiz,
             'par' => $par,
             'form' => $form->createView()
-
-
         ]);
-
     }
 
 
