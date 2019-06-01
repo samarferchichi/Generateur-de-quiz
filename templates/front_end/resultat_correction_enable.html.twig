@@ -246,7 +246,15 @@
 
 
 <div style="background-color: ">
-{{ dump(reponseparticipant) }}
+
+    {% for page in pages %}
+        {#{{ dump(page) }}#}
+        {% for question in page %}
+            {{ dump(question) }}
+        {% endfor %}
+        <hr><hr>
+    {% endfor %}
+
     {% set res=0 %}
 
     <form id="regForm" action="{{ path('index') }}" method="post" >

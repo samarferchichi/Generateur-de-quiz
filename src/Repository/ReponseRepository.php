@@ -19,6 +19,16 @@ class ReponseRepository extends ServiceEntityRepository
         parent::__construct($registry, Reponse::class);
     }
 
+    public function getResultForQuestion($question){
+        $qb = $this->createQueryBuilder('r')
+            ->join('r.question', 'q')
+            ->where('q.id = ?1')
+            ->setParameter(1, $question)
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
+
     // /**
     //  * @return Reponse[] Returns an array of Reponse objects
     //  */

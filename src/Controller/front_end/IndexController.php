@@ -21,6 +21,7 @@ use App\Repository\ResultatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ReponseRepository;
 
 /**
  * @Route("/index")
@@ -110,7 +111,7 @@ class IndexController extends Controller
     /**
      * @Route("/resultat/{quiz}/{par}/{tentative}", name="resultat", methods={"GET" , "POST"})
      */
-    public function resultat( Quiz $quiz, $tentative  ,Participant $par,ParticipantQuizRepository $participantQuizRepository, ReponseParticipantRepository $reponseParticipantRepository, ResultatRepository $resultatrepository,  QuizRepository $quizRepository, \Symfony\Component\HttpFoundation\Request $request){
+    public function resultat( Quiz $quiz, $tentative  ,Participant $par,ParticipantQuizRepository $participantQuizRepository, ReponseParticipantRepository $reponseParticipantRepository, ResultatRepository $resultatrepository, ReponseRepository $reponseRepository, QuizRepository $quizRepository, \Symfony\Component\HttpFoundation\Request $request){
 
         if($quiz->getModeCorrection()){
 
@@ -118,8 +119,64 @@ class IndexController extends Controller
             $resultat = $resultatrepository->findBy(['participantquiz' => $participantquiz, 'tentative' => $tentative]);
             $reponseparticipant = $reponseParticipantRepository->findBy(['resultat' => $resultat]);
 
+            $data = [];
+
+            foreach ($quiz->getPage() as $page){
+                $d = [];
+                foreach ($page->getQuestion() as $question){
+                    $reponsesQuestion = $reponseRepository->getResultForQuestion($question->getId());
+                    $reponsesParticipant = $reponseParticipantRepository->getReponseForQuestion($question->getId(), $par->getId(), $tentative);
+                    if($question->getTypeQuestion() != 'Case à cocher'){
+                        $q = [
+                            'id' => $question->getId(),
+                            'type_question' => $question->getTypeQuestion(),
+                            'text_question' => $question->getTextQuestion(),
+                            'actif' => $question->getActif(),
+                            'reponsesQuestion' => $reponsesQuestion,
+                            'reponsesParticipant' => $reponsesParticipant
+                        ];
+                    }else{
+
+                        $data_reponsesParticipant = [];
+
+                        for($i=0; $i<count($reponsesQuestion); $i++){
+                            if($result = $this->_searchByOrder($reponsesParticipant, $i)){
+                                array_push($data_reponsesParticipant, $result);
+                            }else{
+                                array_push($data_reponsesParticipant, [
+                                    "id" => null,
+                                    "ordre" => $i,
+                                    "reponse" => false
+                                ]);
+                            }
+                        }
+
+                        $data_reponsesValid = [];
+
+                        foreach ($reponsesQuestion as $key => $rep){
+                            array_push($data_reponsesValid, [
+                                'reponse_valide' => $rep['reponse_valide'],
+                                'etatcaseacocher' => $rep['etatcaseacocher'],
+                                'repParticipant' => $data_reponsesParticipant[$key]['reponse']
+                            ]);
+                        }
+
+                        $q = [
+                            'id' => $question->getId(),
+                            'type_question' => $question->getTypeQuestion(),
+                            'text_question' => $question->getTextQuestion(),
+                            'actif' => $question->getActif(),
+                            'reponsesQuestion' => $reponsesQuestion,
+                            'reponsesParticipant' => $data_reponsesParticipant,
+                            'reponseValid' => $data_reponsesValid
+                        ];
+                    }
 
 
+                    array_push($d, $q);
+                }
+                array_push($data, $d);
+            }
 
             return $this->render('front_end/resultat_correction_enable.html.twig',[
                 'quiz'=> $quiz,
@@ -127,7 +184,8 @@ class IndexController extends Controller
                 'par'=>$par,
                 'tentative'=>$tentative,
                 'reponseparticipant' => $reponseparticipant,
-                'resultat' =>$resultat
+                'resultat' =>$resultat,
+                'pages' => $data
             ]);
         }else{
 
@@ -137,6 +195,23 @@ class IndexController extends Controller
         }
 
 
+    }
+
+    private function _searchByOrder($array, $order){
+        $i = 0;
+        $result = null;
+
+        while ($i < count($array) && $result == null){
+            if($array[$i]['ordre'] == $order){
+                $result = $array[$i];
+            }
+            $i++;
+        }
+
+        if ($result)
+            $result['reponse'] = true;
+
+        return $result;
     }
 
 

@@ -32,6 +32,24 @@ class ReponseParticipantRepository extends ServiceEntityRepository
         return $qb->getResult();
     }
 
+    public function getReponseForQuestion($question, $participant, $tentative){
+
+        $qb = $this->createQueryBuilder('r')
+            ->join('r.id_question', 'q')
+            ->join('r.resultat', 'res')
+            ->join('res.participantquiz', 'partQuiz')
+            ->join('partQuiz.participant', 'part')
+            ->where('q.id = ?1')
+            ->andWhere('res.tentative = ?2')
+            ->andWhere('part.id = ?3')
+            ->setParameter(1, $question)
+            ->setParameter(2, $tentative)
+            ->setParameter(3, $participant)
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
+
 
 
     // /**
