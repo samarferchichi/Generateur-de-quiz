@@ -246,7 +246,7 @@
 
 
 <div style="background-color: ">
-
+{{ dump(reponseparticipant) }}
     {% set res=0 %}
 
     <form id="regForm" action="{{ path('index') }}" method="post" >
@@ -279,12 +279,6 @@
         <p>{{ quiz.description }}.</p>
 
 
-
-        <input type="number" hidden id="quiz">
-
-
-
-
             {% for key,  i in quiz.page %}
 
                 <div  class="tab" style="background-color: {{ i.bgColor }}; padding: 20px">
@@ -303,139 +297,74 @@
                         {% endif %}
 
                     </h3>
-                    {% if i.question|length == 0  %}
-                        <h2>Cette page est vide !!</h2>
-                    {% endif %}
+                    {% if i.question|length != 0  %}
+
                     {% for key2, question in i.question  %}
                         <div class="vl">
                         </div>
-                        <br>                                            {% set nb=0 %}
+                        <br>
+                        {% set nb=0 %}
 
-                        {% if question.typeQuestion == 'Réponse courte' and question.actif == 1  %}
+
+
+                        {% if question.typeQuestion == 'Date'   and question.actif == 1  %}
+
+
+                            {% for r in resultat %}
+                                {% for j in r.reponseparticipant %}
+                                    {{ dump(j.reponse) }}
+                                    {% for key, f in j.idQuestion.reponse %}
+                                        {{ f.reponseValide }}
+                                     {% endfor %}
+                                {% endfor %}
+                            {% endfor %}
+
                             <h5><b>Question n°: {{ key2+1 }}</b></h5>
+                            {{ question.textQuestion }}<br>
+                            {{ question.descriptionQuestion }}<br>
 
-                            {% for para in question.parametre %}
-                                {% if para.question == question %}
+                            {% for  key, r in question.reponse %}
 
+                                {% if r.question == question %}
+                                    {{ dump(r.reponseValide) }}
+                                    {{ r.descriptiondate }}
 
+                                    <div style="width: 250px;">
+                                        <input type="date" name="typedate[{{ question.id }}+{{ key }}]" class="form-control">
+                                    </div>
 
-                                    {% if para.formText == 'texte' %}
-
-                                        {{ question.textQuestion }}<br>
-                                        {{ question.descriptionQuestion }}
-                                        {% for user in listparticipantquiz %}
-                                            {% if user.user == userconct %}
-                                                {% set nb=nb + 1 %}
-                                            {% endif %}
-                                        {% endfor %}
-                                        {% for p in reponseParticipant %}
-
-                                            {% if p.idQuestion == question and p.tentative == max.tentative  %}
-                                                    {% for q in question.reponse %}
-                                                      {% if q.reponseValide == p.reponse and p.tentative == max.tentative %}<br>
-                                                          {{ p.reponse  }}
-                                                        <label><font color="green">Reponse correct</font></label>
-                                                          {% set res=res+1 %}
-                                                          {% else %}<br>
-
-                                                              {{ p.reponse  }}
-
-                                                              <label><font color="red">Reponse incorrect !! </font></label>
-
-                                                      {% endif %}
-
-                                                    {% endfor %}
-
-                                            {% endif %}
-                                        {% endfor %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
 
 
-                                    {% endif %}
+                        {% if question.typeQuestion == 'Nombre'   and question.actif == 1  %}
+                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
+                            {{ question.textQuestion }}<br>
+                            {{ question.descriptionQuestion }}<br>
 
-
-
-
-
-                                    {% if para.formText == 'date'  and question.actif == 1 %}
-
-                                        {{ question.textQuestion }}<br>
-                                        {{ question.descriptionQuestion }}
-                                        {% for user in listparticipantquiz %}
-                                            {% if user.user == userconct %}
-                                                {% set nb=nb + 1 %}
-                                            {% endif %}
-                                        {% endfor %}
-                                        {% for p in reponseParticipant %}
-
-                                            {% if p.idQuestion == question and p.tentative == max.tentative  %}
-                                                {% for q in question.reponse %}
-
-                                                    {% if q.reponseValide == p.reponse and p.tentative == max.tentative  %}
-
-                                                        <label><font color="green">Reponse correct</font></label>
-                                                        <p>{{ p.reponse }}</p>
-
-                                                        {% set res=res+1 %}
-                                                    {% else %}<br>
-                                                        <p>{{ p.reponse }}</p>
-
-                                                      <label><font color="red">Reponse incorrect !! </font></label>
-                                                    {% endif %}
-
-                                                {% endfor %}
-
-                                            {% endif %}
-                                        {% endfor %}
-
-
-                                    {% endif %}
-
-
-
-
-
-
-
-
-
-                                    {% if para.formText == 'number' and question.actif == 1 %}
-                                        <br>
-                                        {{ question.textQuestion }}<br>
-                                        {{ question.descriptionQuestion }}<br>
-                                        <label style="padding-left: 77%">Nombre des chiffres maximum sont  {{ para.nbChiffre }}</label>
-
-                                        <input id="cc" onkeyup="showHintnumber(this.value)" type="number" oninput="this.className = ''"   >
-                                        <input id="nbch" class="hidden" type="number" value="{{ para.nbChiffre }}">
-
-                                        <p><span id="txtHintn"></span></p>
-
-
-                                    {% endif %}
-
+                            {% for key, r in question.reponse %}
+                                {% if r.question == question %}
+                                    {{ r.desnumber }}
+                                    <input id="cc" onkeyup="showHintnumber(this.value)" type="number" name="typenumber[{{ question.id }}+{{ key }}]" oninput="this.className = ''"   >
 
                                 {% endif %}
                             {% endfor %}
 
 
                         {% endif %}
+                        <br>
 
-
-
-                        {% if question.typeQuestion == 'Vrai/faux' and question.actif == 1 %}
-
-
-
+                        {% if question.typeQuestion == 'Vrai/faux'   and question.actif == 1  %}
                             <h5><b>Question n°: {{ key2+1 }}</b></h5>
-
                             {{ question.textQuestion }}<br>
                             {{ question.descriptionQuestion }}<br>
-
-                            {% for p in question.reponse %}
+                            {% for key, p in question.reponse %}
                                 {% if p.question == question %}
 
-
                                     {{ p.reponseValide }}
-                                    <select style="width: 150px;" class="form-control">
+                                    <select style="width: 300px;" class="form-control" name="typevf[{{ question.id }}+{{ key }}]">
+
                                         <option>
                                             Vrai
                                         </option>
@@ -448,6 +377,8 @@
                             {% endfor %}
 
                         {% endif %}
+
+
 
 
                         {% if question.typeQuestion =='Liste déroulante' and question.actif == 1 %}
@@ -515,7 +446,7 @@
 
 
                     {% endfor %}
-
+                    {% endif %}
                     {% if key == quiz.page|length %}
                         {{ quiz.pied }}
                     {% endif %}
@@ -561,10 +492,7 @@
             </div>
 
 
-        <input  hidden value="{{ res }}" type="number" name="res" >
-        <a type="button">
 
-        </a>
     </form>
 
 </div>

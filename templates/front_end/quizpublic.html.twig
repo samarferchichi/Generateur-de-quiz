@@ -254,8 +254,17 @@
         </center>
         <p>{{ quiz.description }}.</p>
 
+    {% set ii=1 %}
 
-        {% set ii=1 %}
+    {% if quiz.nbTentative == 1000 %}
+        {% for p in listparticipantquiz %}
+            {% if p.participant == par and p.quiz == quiz %}
+                {% set ii= p.tentative  %}
+            {% endif %}
+
+        {% endfor %}
+        {{ ii }} tentatives.
+    {% else %}
         {% set res=0 %}
 
         {% for p in listparticipantquiz %}
@@ -266,14 +275,11 @@
         {% endfor %}
 
         {% if ii <= quiz.nbTentative %}
-        {{ ii }} /  {{ quiz.nbTentative }} tentatives<br>
+        {{ ii }} /  {{ quiz.nbTentative }} tentatives.<br>
         {% endif %}
-
+    {% endif %}
 
         <input type="number" hidden id="quiz">
-
-
-
 
         {% if ii > quiz.nbTentative  %}
 
@@ -350,14 +356,14 @@
                                         {{ question.textQuestion }}<br>
                                         {{ question.descriptionQuestion }}<br>
 
-                                            {% for r in question.reponse %}
+                                            {% for  key, r in question.reponse %}
                                                 {% if r.question == question %}
                                                     {{ r.descriptiondate }}
 
                                                     <div style="width: 250px;">
                                                         <input  value="{{ question }}" hidden name="nbdate[]">
 
-                                                        <input type="date" name="date[]" class="form-control">
+                                                        <input type="date" name="typedate[{{ question.id }}+{{ key }}]" class="form-control">
                                                     </div>
 
                                                 {% endif %}
@@ -374,10 +380,10 @@
                                         {{ question.textQuestion }}<br>
                                         {{ question.descriptionQuestion }}<br>
 
-                                    {% for r in question.reponse %}
+                                    {% for key, r in question.reponse %}
                                         {% if r.question == question %}
                                             {{ r.desnumber }}
-                                        <input id="cc" onkeyup="showHintnumber(this.value)" type="number" oninput="this.className = ''"   >
+                                        <input id="cc" onkeyup="showHintnumber(this.value)" type="number" name="typenumber[{{ question.id }}+{{ key }}]" oninput="this.className = ''"   >
 
                                         {% endif %}
                                     {% endfor %}
@@ -423,7 +429,7 @@
                             <br>
                             {{ question.descriptionQuestion }}
                             <br>
-                            <select style="width: 350px;" class="form-control">
+                            <select style="width: 350px;" class="form-control" name="typelist[{{ question.id }}+{{ key }}]">
                                 {% for i in question.reponse %}
                                     {% if i.question == question %}
 
@@ -448,12 +454,12 @@
                             <br>
                             {{ question.descriptionQuestion }}
 
-                            {% for p in question.reponse %}
+                            {% for key, p   in question.reponse %}
                                 {% if p.question == question %}
                                     <br>
                                     {{ p.reponseValide }}
 
-                                    <input  type="checkbox">
+                                    <input  type="checkbox" name="typecaseacouche[{{ question.id }}+{{ key }}]">
 
 
 

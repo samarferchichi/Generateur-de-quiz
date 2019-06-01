@@ -17,6 +17,7 @@ use App\Repository\ParticipantRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\QuizRepository;
 use App\Repository\ReponseParticipantRepository;
+use App\Repository\ResultatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -109,27 +110,24 @@ class IndexController extends Controller
     /**
      * @Route("/resultat/{quiz}/{par}/{tentative}", name="resultat", methods={"GET" , "POST"})
      */
-    public function resultat( Quiz $quiz, $tentative  ,Participant $par,  QuizRepository $quizRepository,ParticipantQuizRepository $participantQuizRepository ,ReponseParticipantRepository $reponseParticipantRepository, \Symfony\Component\HttpFoundation\Request $request){
+    public function resultat( Quiz $quiz, $tentative  ,Participant $par,ParticipantQuizRepository $participantQuizRepository, ReponseParticipantRepository $reponseParticipantRepository, ResultatRepository $resultatrepository,  QuizRepository $quizRepository, \Symfony\Component\HttpFoundation\Request $request){
 
-        dump($quiz);
-        $quiz->setModeCorrection(false);
         if($quiz->getModeCorrection()){
 
-            $listquiz = $quizRepository->findAll();
+            $participantquiz = $participantQuizRepository->findBy(['quiz' => $quiz->getId(), 'participant'=>$par->getId()]);
+            $resultat = $resultatrepository->findBy(['participantquiz' => $participantquiz, 'tentative' => $tentative]);
+            $reponseparticipant = $reponseParticipantRepository->findBy(['resultat' => $resultat]);
 
-            $entityManager = $this->getDoctrine()->getManager();
 
-            $listparticipantquiz= $participantQuizRepository->findAll();
-            $reponseParticipant = $reponseParticipantRepository->findAll();
+
 
             return $this->render('front_end/resultat_correction_enable.html.twig',[
                 'quiz'=> $quiz,
-                'listquiz'=> $listquiz,
                 'userconct' => $this->getUser(),
-                'listparticipantquiz' => $listparticipantquiz,
-                'reponseParticipant' => $reponseParticipant,
                 'par'=>$par,
-                'tentative'=>$tentative
+                'tentative'=>$tentative,
+                'reponseparticipant' => $reponseparticipant,
+                'resultat' =>$resultat
             ]);
         }else{
 
@@ -137,8 +135,6 @@ class IndexController extends Controller
                 'quiz'=> $quiz,
             ]);
         }
-        exit();
-
 
 
     }
@@ -234,37 +230,146 @@ class IndexController extends Controller
 
             /*  Récuperation et sauvgarde des données TypeVF */
             $typevf = $request->get('typevf');
-            $data = [];
+           if($typevf != null){
+               $data = [];
 
-            foreach ($typevf as $key => $tvf){
-                $d = explode('+', $key);
-                array_push($d, $tvf);
-                array_push($data, $d);
+               foreach ($typevf as $key => $tvf){
+                   $d = explode('+', $key);
+                   array_push($d, $tvf);
+                   array_push($data, $d);
+               }
+
+               foreach ($data as $d){
+                   $rep_participant = new ReponseParticipant();
+
+                   $rep_participant->setResultat($resultat);
+                   $rep_participant->setReponse($d[2]);
+                   $rep_participant->setIdQuestion($questionRepository->find($d[0]));
+                   $rep_participant->setOrdre($d[1]);
+                   $entityManager->persist($rep_participant);
+               }
+           }
+               /*  --------------------------------------------- */
+               /*  --------------------------------------------- */
+
+
+
+            /*  Récuperation et sauvgarde des données Type case a coucher */
+
+            $typecaseacouche = $request->get('typecaseacouche');
+            if($typecaseacouche != null) {
+
+                $data = [];
+
+                foreach ($typecaseacouche as $key => $tcase) {
+                    $d = explode('+', $key);
+                    array_push($d, $tcase);
+                    array_push($data, $d);
+                }
+
+                foreach ($data as $d){
+                    $rep_participant = new ReponseParticipant();
+
+                    $rep_participant->setResultat($resultat);
+                    $rep_participant->setReponse($d[2]);
+                    $rep_participant->setIdQuestion($questionRepository->find($d[0]));
+                    $rep_participant->setOrdre($d[1]);
+                    $entityManager->persist($rep_participant);
+                }
+
+
+            }
+                /*  --------------------------------------------- */
+                /*  --------------------------------------------- */
+
+
+
+            /*  Récuperation et sauvgarde des données Type list deroulante */
+                 $typelist = $request->get('typelist');
+            if($typelist != null) {
+
+                $data = [];
+
+                foreach ($typelist as $key => $tlist) {
+                    $d = explode('+', $key);
+                    array_push($d, $tlist);
+                    array_push($data, $d);
+                }
+                foreach ($data as $d){
+                    $rep_participant = new ReponseParticipant();
+
+                    $rep_participant->setResultat($resultat);
+                    $rep_participant->setReponse($d[2]);
+                    $rep_participant->setIdQuestion($questionRepository->find($d[0]));
+                    $rep_participant->setOrdre($d[1]);
+                    $entityManager->persist($rep_participant);
+                }
+
             }
 
-            foreach ($data as $d){
-                $rep_participant = new ReponseParticipant();
+            /*  --------------------------------------------- */
+            /*  --------------------------------------------- */
 
-                $rep_participant->setResultat($resultat);
-                $rep_participant->setReponse($d[2]);
-                $rep_participant->setIdQuestion($questionRepository->find($d[0]));
-                $entityManager->persist($rep_participant);
+
+
+            /*  Récuperation et sauvgarde des données Type date */
+            $typedate = $request->get('typedate');
+
+            if($typedate != null) {
+
+                $data = [];
+
+                foreach ($typedate as $key => $tdate) {
+                    $d = explode('+', $key);
+                    array_push($d, $tdate);
+                    array_push($data, $d);
+                }
+                foreach ($data as $d){
+                    $rep_participant = new ReponseParticipant();
+
+                    $rep_participant->setResultat($resultat);
+                    $rep_participant->setReponse($d[2]);
+                    $rep_participant->setIdQuestion($questionRepository->find($d[0]));
+                    $rep_participant->setOrdre($d[1]);
+                    $entityManager->persist($rep_participant);
+                }
+
             }
             /*  --------------------------------------------- */
             /*  --------------------------------------------- */
 
-            /*  Récuperation et sauvgarde des données Type */
 
+
+            /*  Récuperation et sauvgarde des données Type date */
+            $typenumber = $request->get('typenumber');
+
+            if($typenumber != null) {
+
+                $data = [];
+
+                foreach ($typenumber as $key => $tnumber) {
+                    $d = explode('+', $key);
+                    array_push($d, $tnumber);
+                    array_push($data, $d);
+                }
+                foreach ($data as $d){
+                    $rep_participant = new ReponseParticipant();
+
+                    $rep_participant->setResultat($resultat);
+                    $rep_participant->setReponse($d[2]);
+                    $rep_participant->setIdQuestion($questionRepository->find($d[0]));
+                    $rep_participant->setOrdre($d[1]);
+                    $entityManager->persist($rep_participant);
+                }
+
+            }
             /*  --------------------------------------------- */
             /*  --------------------------------------------- */
 
-            /*  Récuperation et sauvgarde des données Type */
 
-            /*  --------------------------------------------- */
-            /*  --------------------------------------------- */
+
 
             $entityManager->flush();
-
             return $this->redirectToRoute('resultat', [
                 'quiz' => $quiz->getId(),
                 'par' => $par->getId(),

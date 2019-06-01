@@ -17,6 +17,14 @@ class ReponseParticipant
     private $id;
 
 
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $ordre;
+
+
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Resultat",inversedBy="reponseparticipant")
      */
@@ -65,8 +73,21 @@ class ReponseParticipant
 
 
 
+    /**
+     * @return mixed
+     */
+    public function getOrdre()
+    {
+        return $this->ordre;
+    }
 
-
+    /**
+     * @param mixed $ordre
+     */
+    public function setOrdre($ordre): void
+    {
+        $this->ordre = $ordre;
+    }
 
 
 
