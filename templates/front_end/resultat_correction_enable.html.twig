@@ -1,579 +1,109 @@
+{% extends '/front_end/base_front.html.twig' %}
+
+{% block body %}
+
 <html lang="en">
 
+
 <head>
-
-    <style>
-        .center {
-            margin: auto;
-            width: 60%;
-            border: 0.5px solid #eeeeee ;
-            padding: 10px;
-        }
-        .img2 {
-            float: right;
-        }
-        body {
-            font-family: "Lato", sans-serif;
-            transition: background-color .5s;
-        }
-        .sidenav {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: #111;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
-        .sidenav a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-        }
-        .sidenav a:hover {
-            color: #2a85a0;
-        }
-        .sidenav .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-        #main {
-            transition: margin-left .5s;
-            padding: 16px;
-        }
-        @media screen and (max-height: 450px) {
-            .sidenav {padding-top: 15px;}
-            .sidenav a {font-size: 18px;}
-        }
-        .pagination a {
-            color: black;
-            float: left;
-            padding: 8px 16px;
-            text-decoration: none;
-            transition: background-color .3s;
-        }
-        .pagination a.active {
-            background-color: dodgerblue;
-            color: white;
-        }
-        .pagination a:hover:not(.active) {background-color: #ddd;}
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            background-color: #f1f1f1;
-        }
-        #regForm {
-            background-color: #ffffff;
-            margin: 100px auto;
-            font-family: Raleway;
-            padding: 40px;
-            width: 70%;
-            min-width: 300px;
-        }
-        h1 {
-            text-align: center;
-        }
-        input {
-            padding: 10px;
-            width: 100%;
-            font-size: 17px;
-            font-family: Raleway;
-            border: 1px solid #aaaaaa;
-        }
-        /* Mark input boxes that gets an error on validation: */
-        input.invalid {
-            background-color: #ffdddd;
-        }
-        /* Hide all steps by default: */
-        .tab {
-            display: none;
-        }
-        button {
-            background-color: #4CAF50;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 17px;
-            font-family: Raleway;
-            cursor: pointer;
-        }
-        button:hover {
-            opacity: 0.8;
-        }
-        #prevBtn {
-            background-color: #bbbbbb;
-        }
-        /* Make circles that indicate the steps of the form: */
-        .step {
-            height: 15px;
-            width: 15px;
-            margin: 0 2px;
-            background-color: #bbbbbb;
-            border: none;
-            border-radius: 50%;
-            display: inline-block;
-            opacity: 0.5;
-        }
-        .step.active {
-            opacity: 1;
-        }
-        /* Mark the steps that are finished and valid: */
-        .step.finish {
-            background-color: #4CAF50;
-        }
-
-
-        .vl {
-            border-bottom: 1px solid gray;
-            height: 1px;
-        }
-    </style>
-
-
-
-    <!-- Scroll Bars -->
-
-</head>
-<head>
-    <title>Resultat de quiz</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="shortcut icon" href="{{ asset('template/images/quiz.ico') }}">
 
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand"  href="{{ path('index') }}"> Quiz </a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li>
-                <span style="color:white;  font-size:40px;cursor:pointer" onclick="openNav()">&#9776;</span>
-            </li>
 
-
-            <li><a href="{{ path('index') }}">Accueil</a></li>
-
-            <style>
-                .dropdown-submenu{position:relative;}
-                .dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
-                .dropdown-submenu:hover>.dropdown-menu{display:block;}
-                .dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
-                .dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
-                .dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
-            </style>
-
-
-            <li class="dropdown-submenu"> <a href="#" tabindex="-1">  Toutes nos catégories</a>
-                <ul class="dropdown-menu">
-
-                    <li>
-                        <a href="{{ path('listerquiz', {'categorie': 'Education'}) }}">
-
-                            Education
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('listerquiz', {'categorie': 'Santé'}) }}">
-
-                            Santé
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="{{ path('listerquiz', {'categorie': 'Ressources Humaines'}) }}">
-
-                            Ressources Humaines
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="{{ path('listerquiz', {'categorie': 'Evenementiel'}) }}">
-
-                            Evenementiel
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="{{ path('listerquiz', {'categorie': 'Autre'}) }}">
-
-                            Autre
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-
-
-        </ul>
-
-
-
-    </div>
-</nav>
-
-<div id="mySidenav" class="sidenav">
-
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-
-
-
-
-    <center>
-        <font color="#7fffd4" >
-            <h2>
-                About
-            </h2>
-        </font>
-    </center>
-
-
-
-</div>
-
-
-
-<div style="background-color: ">
+<div>
+    {% set repv = "" %}
+    {% set rp = "" %}
 
     {% for page in pages %}
-        {#{{ dump(page) }}#}
-        {% for question in page %}
+
+        {% for key,question in page %}
+            Question n° {{ key+1 }} : <br>
+            {{ question.text_question }}<br>
+            {% if question.type_question =="Case à cocher" %}
+                {% for v in question.reponseValid %}
+                {{ v.reponse_valide }}
+                    {% if v.etatcaseacocher == v.repParticipant %}
+                   <font color="green">true</font>
+                    {% else %}
+
+                        <font color="red">false</font>
+
+                    {% endif %}
+                    <br>
+
+                {% endfor %}
+            {% endif %}
+
+
+            {% if question.type_question =="Liste déroulante" %}
+
+
+            La bonne reponse est :
+                {% for key, q in question.reponsesQuestion %}
+
+                    {% if  q.etatlist == true %}
+                        <font color="green"> {{ q.reponse_valide }}</font>
+                        {% set repv =  q.reponse_valide  %}
+                    {% endif %}
+
+                {% endfor %}
+<br>
+                <select>
+                {% for key, q in question.reponsesQuestion %}
+
+                    <option>
+
+                            {{ q.reponse_valide }}
+
+                    </option>
+
+
+                {% endfor %}
+                </select>
+                <br>  Votre reponse :
+                {% for l in question.reponsesParticipant %}
+                    <font color="green"> {{ (l.reponse) }}</font>
+                    {% set rp = l.reponse %}
+                {% endfor %}
+
+                {% if rp == repv %}
+                    Correcte
+                {% else %}
+                    Incorrecte
+                {% endif %}
+            {% endif %}
+
+
+            {% if question.type_question =="Date" %}
+            Votre Reponse :<br>
+            {% for key,l in question.reponsesParticipant %}
+
+                {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
+                    <font color="green">{{ (l.reponse) }}</font> &nbsp; &nbsp;<b>Correcte</b>
+                    {% else %}
+                        <font color="red">{{ (l.reponse) }}</font> &nbsp; &nbsp;<b>Incorrecte</b><br>
+
+                {% endif %}
+                {% set rp = l.reponse %}
+            {% endfor %}
+
+
+
+            {% endif %}
+
             {{ dump(question) }}
+
         {% endfor %}
+
+
         <hr><hr>
+
     {% endfor %}
 
-    {% set res=0 %}
-
-    <form id="regForm" action="{{ path('index') }}" method="post" >
-
-        <input value="{{ quiz.timequiz }}" hidden id="timequiz">
-        <center>
-            <h1>  <font size="" color="{{ quiz.colorTitre }}">
-                 Correction de quiz
-                    {% if quiz.gras and quiz.italique %}
-                        <b><i>  "{{ quiz.titre }}"</i></b>
-                    {% else %}
-                        {% if quiz.gras %}
-                            <b> "{{ quiz.titre }}"</b>
-                        {% else %}
-                            {% if quiz.italique %}
-                                <i> "{{ quiz.titre }}"</i>
-                            {% else %}
-                                "{{ quiz.titre }}"
-                            {% endif %}
-                        {% endif %}
-                    {% endif %}
-                </font>
-                {% if quiz.brochure != "null" %}
-
-                <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
-                {% endif %}
-
-            </h1>
-        </center>
-        <p>{{ quiz.description }}.</p>
-
-
-            {% for key,  i in quiz.page %}
-
-                <div  class="tab" style="background-color: {{ i.bgColor }}; padding: 20px">
-
-                    {% if key ==0  %}
-                        {{ quiz.entete }}
-                    {% endif %}
-
-                    <h2>page : {{ key + 1 }}</h2>
-                    <h3>
-                        {% if i.titrePage == "Vide" %}
-                        {% else %}
-                            <font color="{{ i.colorTitrePage }} ">
-                                {{ i.titrePage   }}
-                            </font>
-                        {% endif %}
-
-                    </h3>
-                    {% if i.question|length != 0  %}
-
-                    {% for key2, question in i.question  %}
-                        <div class="vl">
-                        </div>
-                        <br>
-                        {% set nb=0 %}
-
-
-
-                        {% if question.typeQuestion == 'Date'   and question.actif == 1  %}
-
-
-                            {% for r in resultat %}
-                                {% for j in r.reponseparticipant %}
-                                    {{ dump(j.reponse) }}
-                                    {% for key, f in j.idQuestion.reponse %}
-                                        {{ f.reponseValide }}
-                                     {% endfor %}
-                                {% endfor %}
-                            {% endfor %}
-
-                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                            {{ question.textQuestion }}<br>
-                            {{ question.descriptionQuestion }}<br>
-
-                            {% for  key, r in question.reponse %}
-
-                                {% if r.question == question %}
-                                    {{ dump(r.reponseValide) }}
-                                    {{ r.descriptiondate }}
-
-                                    <div style="width: 250px;">
-                                        <input type="date" name="typedate[{{ question.id }}+{{ key }}]" class="form-control">
-                                    </div>
-
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-
-
-                        {% if question.typeQuestion == 'Nombre'   and question.actif == 1  %}
-                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                            {{ question.textQuestion }}<br>
-                            {{ question.descriptionQuestion }}<br>
-
-                            {% for key, r in question.reponse %}
-                                {% if r.question == question %}
-                                    {{ r.desnumber }}
-                                    <input id="cc" onkeyup="showHintnumber(this.value)" type="number" name="typenumber[{{ question.id }}+{{ key }}]" oninput="this.className = ''"   >
-
-                                {% endif %}
-                            {% endfor %}
-
-
-                        {% endif %}
-                        <br>
-
-                        {% if question.typeQuestion == 'Vrai/faux'   and question.actif == 1  %}
-                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
-                            {{ question.textQuestion }}<br>
-                            {{ question.descriptionQuestion }}<br>
-                            {% for key, p in question.reponse %}
-                                {% if p.question == question %}
-
-                                    {{ p.reponseValide }}
-                                    <select style="width: 300px;" class="form-control" name="typevf[{{ question.id }}+{{ key }}]">
-
-                                        <option>
-                                            Vrai
-                                        </option>
-                                        <option>
-                                            Faux
-                                        </option>
-                                    </select>
-
-                                {% endif %}
-                            {% endfor %}
-
-                        {% endif %}
-
-
-
-
-                        {% if question.typeQuestion =='Liste déroulante' and question.actif == 1 %}
-                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
-
-                            {{ question.textQuestion }}
-                            <br>
-                            {{ question.descriptionQuestion }}
-                            <br>
-                            <select style="width: 350px;" class="form-control">
-                                {% for i in question.reponse %}
-                                    {% if i.question == question %}
-
-                                        <option>
-                                            {{ i.reponseValide }}
-                                        </option>
-
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                        {% endif %}
-
-
-
-                        {% if question.typeQuestion == 'Case à cocher' and question.actif == 1 %}
-                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
-
-                            {{ question.textQuestion }}
-                            <br>
-                            {{ question.descriptionQuestion }}
-
-                            {% for p in question.reponse %}
-                                {% if p.question == question %}
-                                    <br>
-                                    {{ p.reponseValide }}
-
-                                    <input  type="checkbox">
-
-
-
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-
-
-
-                        {% if question.typeQuestion =='Calculée' and question.actif == 1 %}
-                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
-
-                            {{ question.textQuestion }}
-                            <br>
-                            {{ question.descriptionQuestion }}<br>
-
-                            {% for p in question.reponse %}
-                                {% if p.question == question %}
-                                    {{ p.descriptionformule }}<br>
-                                    Formule:<br>
-                                    <input  class="form-control" type="text">
-                                    Resultat:
-                                    <input class="form-control" type="text">
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
-
-
-
-                    {% endfor %}
-                    {% endif %}
-                    {% if key == quiz.page|length %}
-                        {{ quiz.pied }}
-                    {% endif %}
-
-                </div>
-
-
-
-
-            {% endfor %}
-        {% set o=0 %}
-        {% for q in quiz.page %}
-        {% for p in q.question %}
-            {% set o=o+1 %}
-        {% endfor %}
-        {% endfor %}
-
-        {% if res < o/2 %}
-        <center>
-            <h2><font color="red">   {{ quiz.messageE }}</font></h2>
-        </center>
-      <h1><font color="red"> Votre score est :  {{ res }} / {{ o }} point/s</font></h1>
-{% else %}
-   <center>
-       <h2><font color="#4169e1">   {{ quiz.messageS }}</font></h2>
-   </center>
-
-    <h1><font color="green"> Votre score est :  {{ res }} / {{ o }} point/s</font></h1>
-
-        {% endif %}
-            <div style="overflow:auto;">
-                <div style="float:right;">
-                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
-                </div>
-            </div>
-
-
-            <div style="text-align:center;margin-top:40px;">
-                {% for  i in quiz.page %}
-                    <span class="step"></span>
-                {% endfor %}
-            </div>
-
-
-
-    </form>
 
 </div>
 
-<script>
-
-    function openNav() {
-        document.getElementById("mySidenav").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
-        document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-    }
-
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-        document.getElementById("main").style.marginLeft= "0";
-        document.body.style.backgroundColor = "white";
-    }
-
-    var currentTab = 0;
-    showTab(currentTab);
-
-    function showTab(n) {
-        var x = document.getElementsByClassName("tab");
-        x[n].style.display = "block";
-        if (n == 0) {
-            document.getElementById("prevBtn").style.display = "none";
-        } else {
-            document.getElementById("prevBtn").style.display = "inline";
-        }
-        if (n == (x.length - 1)) {
-            document.getElementById("nextBtn").innerHTML ='Retour';
-
-        } else {
-            document.getElementById("nextBtn").innerHTML = "Next";
-        }
-        fixStepIndicator(n)
-    }
-
-    function nextPrev(n) {
-        var x = document.getElementsByClassName("tab");
-        if (n == 1 && !validateForm())
-            return false;
-        x[currentTab].style.display = "none";
-        currentTab = currentTab + n;
-        if (currentTab >= x.length) {
-            alert('Votre score serra enregistrer dans votre historique !!');
-            document.getElementById("regForm").submit();
-            // return false;
-        }
-        showTab(currentTab);
-    }
-
-    function validateForm() {
-        var x, y, i, valid = true;
-        x = document.getElementsByClassName("tab");
-
-        if (valid)
-            document.getElementsByClassName("step")[currentTab].className += " finish";
-
-        return valid;
-    }
-
-    function fixStepIndicator(n) {
-        var i, x = document.getElementsByClassName("step");
-        for (i = 0; i < x.length; i++) {
-            x[i].className = x[i].className.replace(" active", "");
-        }
-        x[n].className += " active";
-    }
-
-
-
-</script>
-<br><br>
 </body>
 </html>
+{% endblock %}
