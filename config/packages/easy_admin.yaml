@@ -64,6 +64,8 @@ easy_admin:
           - { property: 'nb_tentative', label: 'Nombre de tentative' }
           - { property: 'brochure', label: 'Logo' }
           - { property: 'melange_question', label: 'Mélanger les questions' }
+          - { property: 'mode_correction', label: 'Mode correction et score' }
+
 
 
       action:

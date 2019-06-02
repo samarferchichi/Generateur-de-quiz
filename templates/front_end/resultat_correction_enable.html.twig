@@ -7,130 +7,359 @@
 
 <head>
 
+<style>
+    .quiz-score-nb span {
+        display: inline-block;
+        border-radius: 50%;
+        background: #626262;
+        padding: 0;
+        color: #fff;
+        width: 2.6em;
+        height: 2.6em;
+        line-height: 2.6em;
+        text-align: center;
+    }
+
+</style>
 </head>
-<body>
+<body style="background-color: #f3f3f3">
 
 
-<div>
+<div style="background-color: #f3f3f3">
     {% set repv = "" %}
     {% set rp = "" %}
 
+    <h1><b> Résultats du Quiz {{ quiz }}</b>  </h1>
+
+    {% set score = 0 %}
+    {% set totale = 0 %}
+
+    {% for i in quiz.page %}
+         {% for j in i.question %}
+   {% set totale = totale +1 %}
+    {% endfor %}
+    {% endfor %}
+    <div class="quiz-eval">
+
+        <div class="quiz-score">
+            <h1>  <p class="quiz-score-nb"> Score <span>{{ score }} / {{ totale }}</span></p></h1>
+
+        </div>
+    </div>
+
     {% for page in pages %}
-
+    <div  class="tab" style="background-color:; padding: 20px">
         {% for key,question in page %}
-            Question n° {{ key+1 }} : <br>
-            {{ question.text_question }}<br>
+
+
             {% if question.type_question =="Case à cocher" %}
-                {% for v in question.reponseValid %}
-                {{ v.reponse_valide }}
-                    {% if v.etatcaseacocher == v.repParticipant %}
-                   <font color="green">true</font>
-                    {% else %}
+                <div style="background-color: white; padding: 20px">
+                    <b> Question n° {{ key+1 }} </b><br>
 
-                        <font color="red">false</font>
+                    {{ question.text_question }}<br>
+                    <ul style="    list-style-type: circle;">
+                    {% for v in question.reponseValid %}
 
-                    {% endif %}
-                    <br>
+                        {% if v.etatcaseacocher != v.repParticipant %}
+                            <li><b> <font style="text-decoration: line-through;" color="red"> {{ v.reponse_valide }}</font> <font color="red">&nbsp;(faux)</font> </b></li>
 
-                {% endfor %}
-            {% endif %}
 
+                        {% endif %}
+
+                        {% if v.etatcaseacocher == v.repParticipant and v.etatcaseacocher == true %}
+                            <b>  <li><font color="#87a800"> {{ v.reponse_valide }} &nbsp; (correct)</font></li></b>
+                        {% endif %}
+
+
+                        <!-- {% if v.etatcaseacocher != v.repParticipant and v.repParticipant == false %}
+                            c'est la bonne reponse
+                        {% endif %}-->
+
+
+                        {% if v.etatcaseacocher == v.repParticipant and v.etatcaseacocher == false %}
+                           <li>
+                                   <font color=""> {{ v.reponse_valide }}</font>
+                               </li>
+                        {% endif %}
+
+
+                        <br>
+
+                    {% endfor %}
+                    </ul>
+                    <div style="background-color: #f3f3f3; padding: 20px ">
+
+                        La bonne reponse est :
+                        <ul>
+
+
+                        {% for key, k in question.reponseValid %}
+                            {% if k.etatcaseacocher  == true %}
+                                <br>  <li>  {{ (k.reponse_valide) }}&nbsp; Correcte</li>
+
+                            {% endif %}
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    </div>
+                {% endif %}
 
             {% if question.type_question =="Liste déroulante" %}
+{% set repcorrect=null %}
+{% set repincorrect=null %}
+    <div style="background-color: white">
 
+        <div style="background-color: white; padding: 20px">
+            <b> Question n° {{ key+1 }} </b><br>
 
-            La bonne reponse est :
+            {{ question.text_question }}<br>
+            <ul style="list-style-type: circle;">
                 {% for key, q in question.reponsesQuestion %}
 
-                    {% if  q.etatlist == true %}
-                        <font color="green"> {{ q.reponse_valide }}</font>
-                        {% set repv =  q.reponse_valide  %}
+                    {% if  q.etatlist == true and q.reponse_valide == question.reponsesParticipant[0].reponse %}
+                        {% set repcorrect =  q.reponse_valide %}
+                        {% else %}
+                    {% set repincorrect =   q.reponse_valide  %}
+
                     {% endif %}
-
                 {% endfor %}
-<br>
-                <select>
-                {% for key, q in question.reponsesQuestion %}
-
-                    <option>
-
-                            {{ q.reponse_valide }}
-
-                    </option>
-
-
-                {% endfor %}
-                </select>
-                <br>  Votre reponse :
-                {% for l in question.reponsesParticipant %}
-                    <font color="green"> {{ (l.reponse) }}</font>
-                    {% set rp = l.reponse %}
-                {% endfor %}
-
-                {% if rp == repv %}
-                    Correcte
+                {% if repcorrect != null %}
+                    <b> <li>  <font color="#87a800">{{ repcorrect }} </font></li></b>
                 {% else %}
-                    Incorrecte
+                    <li>  <b> <font style="text-decoration: line-through;" color="red"> {{ repincorrect }}</font></b></li>
                 {% endif %}
+            </ul>
+
+
+            <div style="background-color: #f3f3f3; padding: 20px ">
+
+                La bonne reponse est :
+
+                    <select class="form-control">
+                        {% for key, q in question.reponsesQuestion %}
+
+                              {% if q.etatlist == true and q.reponse_valide == question.reponsesParticipant[0].reponse %}
+                                  <option style="text-decoration-color: green">
+                                  {{ q.reponse_valide }}
+                                   </option>
+                                {% else %}
+                                    <option>  {{ q.reponse_valide }}</option>
+                              {% endif %}
+
+                        {% endfor %}
+                    </select>
+                </div>
+        </div>
             {% endif %}
 
-
             {% if question.type_question =="Date" %}
-            Votre Reponse :<br>
+    <div style="background-color: white">
+        <div style="background-color: white; padding: 20px">
+            <b> Question n° {{ key+1 }} </b><br>
+
+            {{ question.text_question }}<br>
+            <ul style="list-style-type: circle;">
             {% for key,l in question.reponsesParticipant %}
 
                 {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
-                    <font color="green">{{ (l.reponse) }}</font> &nbsp; &nbsp;<b>Date Correcte</b>
+                    <b> <li>    <font color="#87a800">{{ (l.reponse) }}&nbsp; (correct)</font></li></b>
                     {% else %}
-                        <font color="red">{{ (l.reponse) }}</font> &nbsp; &nbsp;<b>Date incorrecte</b><br>
+                        <li><b> <font style="text-decoration: line-through;" color="red">{{ (l.reponse) }}</font> <font color="red">&nbsp;(faux)</font> </b></li>
 
                 {% endif %}
                 {% set rp = l.reponse %}
             {% endfor %}
+            </ul>
+
+            <div style="background-color: #f3f3f3; padding: 20px ">
+                La bonne reponse est :
 
 
+                <ul>
+                    {% for k in question.reponsesQuestion %}
+                        <br>
+                        <li> {{ k.reponse_valide }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
 
+</div>
             {% endif %}
 
-
-
             {% if question.type_question =="Nombre" %}
-                Votre Reponse :
+                <div style="background-color: white; padding: 20px">
+                    <b> Question n° {{ key+1 }} </b><br>
+
+                    {{ question.text_question }}<br>
+                    <ul style="    list-style-type: circle;">
+
                 {% for key,l in question.reponsesParticipant %}
 <br>
                     {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
-                        <font color="green">{{ (l.reponse) }}</font> &nbsp; &nbsp;<b>Correcte</b>
+                    <li>
+                       <b> <font color="#87a800">{{ (l.reponse) }} &nbsp;(correct)</font></b>
+                    </li>
                     {% else %}
-                        <font color="red">{{ (l.reponse) }}</font> &nbsp; &nbsp;<b>Incorrecte</b><br>
+                        <li><b><font color="red">{{ (l.reponse) }}</font>  &nbsp;<font color="red">(faux)</font></b> </li>
+
 
                     {% endif %}
                     {% set rp = l.reponse %}
                 {% endfor %}
 
+                    </ul>
+                    <div style="background-color: #f3f3f3; padding: 20px ">
 
+                        La bonne reponse est :
+                        <ul>
+                            {% for key, m in question.reponsesQuestion %}
+                            <li>
+                                {{ (question.reponsesQuestion[key].reponse_valide) }}
+                            </li>
+                            {% endfor %}
+                        </ul>
 
+                    </div>
+</div>
             {% endif %}
 
             {% if question.type_question =="Vrai/faux" %}
-                Votre Reponse :
-               {% for k in question.reponsesQuestion %}
-                    {{ dump(k.etatvf) }}
+    <div style="background-color: white; padding: 20px">
+        <b> Question n° {{ key+1 }} </b><br>
+
+        {{ question.text_question }}<br>
+        <ul style="list-style-type: circle;">
+
+
+               {% for key, k in question.reponsesQuestion %}
+
+              {% if question.reponsesParticipant[key].reponse =="Vrai" and k.etatvf == true and  k.etatvf == true %}
+                  <b><li>  <font color="#87a800"> {{ (k.reponse_valide) }}  &nbsp;(correct)</font></li>
+
+                   {% endif %}
+
+
+                   {% if question.reponsesParticipant[key].reponse =="Faux" and k.etatvf == true  %}
+                       <li> <b><font color="red" style="text-decoration: line-through;"> {{ (k.reponse_valide) }}</font>  &nbsp;<font color="red">(faux)</font> </b></li>
+
+                   {% endif %}
+
+
+                   {% if question.reponsesParticipant[key].reponse =="Vrai" and k.etatvf != true  %}
+                       <li> <b><font color="red" style="text-decoration: line-through;"> {{ (k.reponse_valide) }}</font> &nbsp;<font color="red">(faux)</font></b></li>
+
+                   {% endif %}
+
+
+                   <!--on peut changer la color-->
+                   {% if question.reponsesParticipant[key].reponse !="Vrai" and k.etatvf != true  %}
+                       <li>  <b>   <font color="#87a800"> {{ (k.reponse_valide) }}  &nbsp;(correct)</font></b></li>
+
+                   {% endif %}
+                   </b>
+                   <br>
+
+
                {% endfor %}
+        </ul>
 
+        <div style="background-color: #f3f3f3; padding: 20px ">
 
+              La bonne reponse est :
+            <ul>
+               {% for key, k in question.reponsesQuestion %}
+                   {% if k.etatvf  == 1 %}
+                       <br> <li>   {{ (k.reponse_valide) }}&nbsp;</li>
+                   {% endif %}
+               {% endfor %}
+            </ul>
+        </div>
+
+    </div>
             {% endif %}
-            {{ dump(question) }}
 
         {% endfor %}
+    </div>
 
 
         <hr><hr>
 
+
     {% endfor %}
 
+        <div style="overflow:auto;">
+            <div style="float:right;">
+                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+            </div>
+        </div>
+
+
+        <div style="text-align:center;margin-top:40px;">
+            {% for  i in quiz.page %}
+                <span class="step"></span>
+            {% endfor %}
+        </div>
 
 </div>
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+            document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+        }
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginLeft= "0";
+            document.body.style.backgroundColor = "white";
+        }
+        var currentTab = 0;
+        showTab(currentTab);
+        function showTab(n) {
+            var x = document.getElementsByClassName("tab");
+            x[n].style.display = "block";
+            if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
+            if (n == (x.length - 1)) {
+                document.getElementById("nextBtn").innerHTML ='valider';
+            } else {
+                document.getElementById("nextBtn").innerHTML = "Next";
+            }
+            fixStepIndicator(n)
+        }
+        function nextPrev(n) {
+            var x = document.getElementsByClassName("tab");
+            if (n == 1 && !validateForm())
+                return false;
+            x[currentTab].style.display = "none";
+            currentTab = currentTab + n;
+            if (currentTab >= x.length) {
+                alert('Are you sur !!');
+                document.getElementById("regForm").submit();
+                // return false;
+            }
+            showTab(currentTab);
+        }
+        function validateForm() {
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tab");
+            y = x[currentTab].getElementsByTagName("input");
+            return valid;
+        }
+        function fixStepIndicator(n) {
+            var i, x = document.getElementsByClassName("step");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+            }
+            x[n].className += " active";
+        }
 
+    </script>
+</div>
 </body>
 </html>
 {% endblock %}

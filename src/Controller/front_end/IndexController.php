@@ -96,8 +96,6 @@ class IndexController extends Controller
 
 
 
-
-
     /**
      * @Route("/saveparticipant/", name="saveparticipant", methods={"GET" , "POST"})
      */

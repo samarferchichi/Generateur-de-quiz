@@ -1,55 +1,13 @@
+{% extends '/front_end/base_front.html.twig' %}
+{% block body %}
+
 <html lang="en">
 
 <head>
 
     <style>
-        .center {
-            margin: auto;
-            width: 60%;
-            border: 0.5px solid #eeeeee ;
-            padding: 10px;
-        }
-        .img2 {
-            float: right;
-        }
-        body {
-            font-family: "Lato", sans-serif;
-            transition: background-color .5s;
-        }
-        .sidenav {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: #111;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
-        .sidenav a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-        }
-        .sidenav a:hover {
-            color: #2a85a0;
-        }
-        .sidenav .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-        #main {
-            transition: margin-left .5s;
-            padding: 16px;
-        }
+
+
         @media screen and (max-height: 450px) {
             .sidenav {padding-top: 15px;}
             .sidenav a {font-size: 18px;}
@@ -70,18 +28,11 @@
             box-sizing: border-box;
         }
         body {
-            background-color: #f1f1f1;
+            background-color: ;
         }
-        #regForm {
-            background-color: #ffffff;
-            margin: 100px auto;
-            font-family: Raleway;
-            padding: 40px;
-            width: 70%;
-            min-width: 300px;
-        }
+
         h1 {
-            text-align: center;
+            text-align: ;
         }
         input {
             padding: 10px;
@@ -138,101 +89,24 @@
     </style>
 
 
-
-    <!-- Scroll Bars -->
-
 </head>
 <head>
     <title>Quiz</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="shortcut icon" href="{{ asset('template/images/quiz.ico') }}">
 
 </head>
-<body>
-
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand"  href="{{ path('index') }}">Quiz </a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li>
-                <span style="color:white;  font-size:40px;cursor:pointer" onclick="openNav()">&#9776;</span>
-            </li>
-
-
-
-            <style>
-                .dropdown-submenu{position:relative;}
-                .dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
-                .dropdown-submenu:hover>.dropdown-menu{display:block;}
-                .dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
-                .dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
-                .dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
-            </style>
-
-
-            <li><a href="{{ path('index') }}">Accueil</a></li>
-
-            <li class="dropdown-submenu"> <a href="#" tabindex="-1">  Categories quiz</a>
-                <ul class="dropdown-menu">
-
-                    <li>
-                        <a href="{{ path('listerquiz', {'categorie': 'Education'}) }}">
-
-                            Education
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('listerquiz', {'categorie': 'Santé'}) }}">
-
-                            Santé
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="{{ path('listerquiz', {'categorie': 'Ressources Humaines'}) }}">
-
-                            Ressources Humaines
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="{{ path('listerquiz', {'categorie': 'Evenementiel'}) }}">
-
-                            Evenementiel
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="{{ path('listerquiz', {'categorie': 'Autre'}) }}">
-
-                            Autre
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-        </ul>
-
-    </div>
-</nav>
-
-
-
-
-
-<div style="background-color: ">
-
+<body style="background-color: ">
 
     {#<form id="regForm"  action="{{ path('quizpublic', {'quiz':quiz.id, 'par':par.id}) }}" method="post" >#}
 {{ form_start(form, {'attr': {'id': 'regForm'}}) }}
 
         <input value="{{ quiz.timequiz }}" hidden id="timequiz">
-        <center>
-            <h1>  <font size="" color="{{ quiz.colorTitre }}">
-                    Titre de quiz
+
+            <h1>
+                {% if quiz.brochure != "null" %}
+                    <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
+                {% endif %}
+                <font size="" color="{{ quiz.colorTitre }}">
+                   Titre de quiz
                     {% if quiz.gras and quiz.italique %}
                         <b><i>  "{{ quiz.titre }}"</i></b>
                     {% else %}
@@ -247,12 +121,10 @@
                         {% endif %}
                     {% endif %}
                 </font>
-                {% if quiz.brochure != "null" %}
-                <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
-                {% endif %}
+
             </h1>
-        </center>
-        <p>{{ quiz.description }}.</p>
+
+        <h3>{{ quiz.description }}.</h3>
 
     {% set ii=1 %}
 
@@ -263,7 +135,9 @@
             {% endif %}
 
         {% endfor %}
-        {{ ii }} tentatives.
+       <h2>
+           {{ ii }} tentatives.
+       </h2>
     {% else %}
         {% set res=0 %}
 
@@ -279,18 +153,18 @@
         {% endif %}
     {% endif %}
 
-        <input type="number" hidden id="quiz">
 
         {% if ii > quiz.nbTentative  %}
 
-            <center>
+
              <h2>
                  {{ ii-1 }} /  {{ quiz.nbTentative }} tentatives<br>
              </h2>
 
                 <h2>Vos ete terminé le nombre de tentatives autouriser   </h2>  <br>
                 <a class="btn btn-success" href="{{ path('index') }}"> Retour </a>
-            </center>
+
+
         {% else %}
         {% if quiz.tempsDispo == 1 and quiz.timequiz != 0 %}
         <img width="50" height="50" src="{{ asset('logoFB_Gmail/time.png' ) }}">
@@ -319,11 +193,11 @@
                 }
             </script>
         {% else %}
-        {% if quiz.tempsDispo == 0  %}
+      <!--  {% if quiz.tempsDispo == 0 %}
             Temps disponible pour passer le quiz est :<font color="blue"><b> Illimiter   </b></font><br>
         {% else %}
 
-        {% endif %}
+        {% endif %}-->
         {% endif %}
 
             {% for key,  i in quiz.page %}
@@ -346,44 +220,66 @@
                     {% if i.question|length == 0  %}
                         <h2>Cette page est vide !!</h2>
                     {% endif %}
+
                     {% for key2, question in i.question  %}
-                        <div class="vl">
+
+                        <div style="border-bottom: 1px solid green;">
+
                         </div>
 
-
                         {% if question.typeQuestion == 'Date'   and question.actif == 1  %}
+                                    <div style="background-color: ; padding: 20px">
                                         <h5><b>Question n°: {{ key2+1 }}</b></h5>
                                         {{ question.textQuestion }}<br>
                                         {{ question.descriptionQuestion }}<br>
 
                                             {% for  key, r in question.reponse %}
                                                 {% if r.question == question %}
-                                                    {{ r.descriptiondate }}
+                                        <div  class="row" >
+                                            <div class="col-sm-6" style="background-color:;">
+                                                {{ r.descriptiondate }}
 
-                                                    <div style="width: 250px;">
-                                                        <input  value="{{ question }}" hidden name="nbdate[]">
+                                            </div>
 
-                                                        <input type="date" name="typedate[{{ question.id }}+{{ key }}]" class="form-control">
-                                                    </div>
+                                            <div class="col-sm-4" style="background-color:;">
+                                                <input type="date" name="typedate[{{ question.id }}+{{ key }}]" class="form-control">
+
+                                            </div>
+
+                                        </div>
+
 
                                                 {% endif %}
                                             {% endfor %}
+
+
                                         {% if question.infoBulle != '' %}
                                             <br>
                                             <a href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
                                         {% endif %}
-                                    {% endif %}
+                                    </div>
+                                        {% endif %}
 
 
                         {% if question.typeQuestion == 'Nombre'   and question.actif == 1  %}
-                                        <h5><b>Question n°: {{ key2+1 }}</b></h5>
+                    <div style="padding: 20px">
+
+                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
                                         {{ question.textQuestion }}<br>
                                         {{ question.descriptionQuestion }}<br>
 
                                     {% for key, r in question.reponse %}
                                         {% if r.question == question %}
-                                            {{ r.desnumber }}
-                                        <input id="cc" onkeyup="showHintnumber(this.value)" type="number" name="typenumber[{{ question.id }}+{{ key }}]" oninput="this.className = ''"   >
+
+                                        <div  class="row" >
+                                            <div class="col-sm-6" style="background-color:;">
+                                                {{ r.desnumber }}
+                                            </div>
+                                            <div class="col-sm-4" style="background-color:;">
+                                                <input id="cc" onkeyup="showHintnumber(this.value)" type="number" name="typenumber[{{ question.id }}+{{ key }}]" oninput="this.className = ''"   >
+
+                                            </div>
+                                        </div>
 
                                         {% endif %}
                                     {% endfor %}
@@ -391,28 +287,38 @@
                                             <br>
                                             <a href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
                                         {% endif %}
-
+                    </div>
                                     {% endif %}
-                                  <br>
 
                         {% if question.typeQuestion == 'Vrai/faux'   and question.actif == 1  %}
-                            <input type="number"   name="question[]"  value="{{ question.id }}">
-                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
+                    <div style="background-color: ; padding: 20px">
+
+                    <h5><b>Question n°: {{ key2+1 }}</b></h5>
                             {{ question.textQuestion }}<br>
                             {{ question.descriptionQuestion }}<br>
                             {% for key, p in question.reponse %}
                                 {% if p.question == question %}
 
-                                    {{ p.reponseValide }}
-                                    <select style="width: 300px;" class="form-control" name="typevf[{{ question.id }}+{{ key }}]">
 
-                                        <option>
-                                            Vrai
-                                        </option>
-                                        <option>
-                                            Faux
-                                        </option>
-                                    </select>
+                                 <div  class="row" >
+                                    <div class="col-sm-6" style="background-color:;">
+                                        {{ p.reponseValide }}
+
+                                    </div>
+                                     <div class="col-sm-4" style="background-color:;">
+                                         <select style="width: 300px; height: 40px" class="form-control" name="typevf[{{ question.id }}+{{ key }}]">
+
+                                             <option>
+                                                 Vrai
+                                             </option>
+                                             <option>
+                                                 Faux
+                                             </option>
+                                         </select>
+                                     </div>
+                                 </div>
+
+
 
                                 {% endif %}
                             {% endfor %}
@@ -420,35 +326,51 @@
 
                                 <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
                             {% endif %}
+                    </div>
                         {% endif %}
 
 
                         {% if question.typeQuestion =='Liste déroulante'   and question.actif == 1  %}
-                            <h5><b>Question n°: {{ key2+1 }}</b></h5>
+                    <div style="padding: 20px">
+
+                    <h5><b>Question n°: {{ key2+1 }}</b></h5>
                             {{ question.textQuestion }}
                             <br>
-                            {{ question.descriptionQuestion }}
-                            <br>
-                            <select style="width: 350px;" class="form-control" name="typelist[{{ question.id }}+{{ key }}]">
-                                {% for i in question.reponse %}
-                                    {% if i.question == question %}
 
-                                        <option>
-                                            {{ i.reponseValide }}
-                                        </option>
+                        <div  class="row" >
+                            <div class="col-sm-6" style="background-color:;">
+                                {{ question.descriptionQuestion }}
+                            </div>
+                            <div class="col-sm-4">
 
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
+                                <select style="width: 350px;height: 40px;" class="form-control" name="typelist[{{ question.id }}+{{ key }}]">
+                                    {% for i in question.reponse %}
+                                        {% if i.question == question %}
+
+                                            <option>
+                                                {{ i.reponseValide }}
+                                            </option>
+
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+
+
                             {% if question.infoBulle != '' %}
 
                                 <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
                             {% endif %}
+                    </div>
                         {% endif %}
 
 
 
                         {% if question.typeQuestion == 'Case à cocher'  and question.actif == 1  %}
+                           <div style="padding: 20px">
+
                             <h5><b>Question n°: {{ key2+1 }}</b></h5>
                             {{ question.textQuestion }}
                             <br>
@@ -457,9 +379,17 @@
                             {% for key, p   in question.reponse %}
                                 {% if p.question == question %}
                                     <br>
-                                    {{ p.reponseValide }}
+                               <div  class="row" >
+                                   <div class="col-sm-6" style="background-color:;">
+                                       {{ p.reponseValide }}
 
-                                    <input  type="checkbox" name="typecaseacouche[{{ question.id }}+{{ key }}]">
+                                   </div>
+                                   <div class="col-sm-4">
+                                       <input  type="checkbox" name="typecaseacouche[{{ question.id }}+{{ key }}]">
+
+                                   </div>
+                               </div>
+
 
 
 
@@ -469,6 +399,8 @@
 
                                 <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
                             {% endif %}
+                           </div>
+
                         {% endif %}
 
 
@@ -509,8 +441,8 @@
 
             <div style="overflow:auto;">
                 <div style="float:right;">
-                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Précédent</button>
+                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Suivant</button>
                 </div>
             </div>
 
@@ -530,12 +462,7 @@
     {#</form>#}
     {{ form_end(form) }}
 
-</div>
-</div>
 
-
-
-</div>
 
 <script>
     function openNav() {
@@ -559,9 +486,9 @@
             document.getElementById("prevBtn").style.display = "inline";
         }
         if (n == (x.length - 1)) {
-            document.getElementById("nextBtn").innerHTML ='valider';
+            document.getElementById("nextBtn").innerHTML ='Terminer';
         } else {
-            document.getElementById("nextBtn").innerHTML = "Next";
+            document.getElementById("nextBtn").innerHTML = "Suivant";
         }
         fixStepIndicator(n)
     }
@@ -621,3 +548,4 @@
 <br><br>
 </body>
 </html>
+{% endblock %}
