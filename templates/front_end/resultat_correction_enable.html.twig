@@ -80,9 +80,9 @@
             {% for key,l in question.reponsesParticipant %}
 
                 {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
-                    <font color="green">{{ (l.reponse) }}</font> &nbsp; &nbsp;<b>Correcte</b>
+                    <font color="green">{{ (l.reponse) }}</font> &nbsp; &nbsp;<b>Date Correcte</b>
                     {% else %}
-                        <font color="red">{{ (l.reponse) }}</font> &nbsp; &nbsp;<b>Incorrecte</b><br>
+                        <font color="red">{{ (l.reponse) }}</font> &nbsp; &nbsp;<b>Date incorrecte</b><br>
 
                 {% endif %}
                 {% set rp = l.reponse %}
@@ -92,6 +92,33 @@
 
             {% endif %}
 
+
+
+            {% if question.type_question =="Nombre" %}
+                Votre Reponse :
+                {% for key,l in question.reponsesParticipant %}
+<br>
+                    {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
+                        <font color="green">{{ (l.reponse) }}</font> &nbsp; &nbsp;<b>Correcte</b>
+                    {% else %}
+                        <font color="red">{{ (l.reponse) }}</font> &nbsp; &nbsp;<b>Incorrecte</b><br>
+
+                    {% endif %}
+                    {% set rp = l.reponse %}
+                {% endfor %}
+
+
+
+            {% endif %}
+
+            {% if question.type_question =="Vrai/faux" %}
+                Votre Reponse :
+               {% for k in question.reponsesQuestion %}
+                    {{ dump(k.etatvf) }}
+               {% endfor %}
+
+
+            {% endif %}
             {{ dump(question) }}
 
         {% endfor %}
