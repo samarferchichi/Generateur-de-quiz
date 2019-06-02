@@ -10,15 +10,19 @@ namespace App\Controller\front_end;
 use App\Entity\Participant;
 use App\Entity\ParticipantQuiz;
 use App\Entity\Quiz;
+use App\Entity\Rate;
 use App\Entity\ReponseParticipant;
 use App\Entity\Resultat;
 use App\Repository\ParticipantQuizRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\QuestionRepository;
 use App\Repository\QuizRepository;
+use App\Repository\RateRepository;
 use App\Repository\ReponseParticipantRepository;
 use App\Repository\ResultatRepository;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ReponseRepository;
@@ -111,7 +115,10 @@ class IndexController extends Controller
     /**
      * @Route("/resultat/{quiz}/{par}/{tentative}", name="resultat", methods={"GET" , "POST"})
      */
-    public function resultat( Quiz $quiz, $tentative  ,Participant $par,ParticipantQuizRepository $participantQuizRepository, ReponseParticipantRepository $reponseParticipantRepository, ResultatRepository $resultatrepository, ReponseRepository $reponseRepository, QuizRepository $quizRepository, \Symfony\Component\HttpFoundation\Request $request){
+    public function resultat( Quiz $quiz, $tentative  ,Participant $par,ParticipantQuizRepository $participantQuizRepository, ReponseParticipantRepository $reponseParticipantRepository, ResultatRepository $resultatrepository, ReponseRepository $reponseRepository, RateRepository $rateRepository, QuizRepository $quizRepository, \Symfony\Component\HttpFoundation\Request $request){
+
+//        $quiz->setModeCorrection(false);
+        $rate = $rateRepository->findBy(['quiz' => $quiz->getId(), 'participant' => $par->getId()]);
 
         if($quiz->getModeCorrection()){
 
@@ -185,12 +192,15 @@ class IndexController extends Controller
                 'tentative'=>$tentative,
                 'reponseparticipant' => $reponseparticipant,
                 'resultat' =>$resultat,
-                'pages' => $data
+                'pages' => $data,
+                'rate' => $rate ? $rate[0] : null
             ]);
         }else{
 
             return $this->render('front_end/resultat_correction_disable.html.twig',[
                 'quiz'=> $quiz,
+                'par'=>$par,
+                'rate' => $rate ? $rate[0] : null
             ]);
         }
 
@@ -215,6 +225,22 @@ class IndexController extends Controller
     }
 
 
+    /**
+     * @Route("/rate/Quiz/{quiz}/{participant}/{rate}", name="rate_quiz", methods={"POST"})
+     */
+    public function rateQuiz(Quiz $quiz, Participant $participant, $rate)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $rateObject = new Rate();
+        $rateObject->setQuiz($quiz);
+        $rateObject->setParticipant($participant);
+        $rateObject->setRate($rate);
+        $em->persist($rateObject);
+
+        $em->flush();
+
+        return new JsonResponse(true);
+    }
 
 
     /**
