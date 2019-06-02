@@ -40,6 +40,30 @@
         border-color: transparent;
         border-radius: 4px;
     }
+    .star-rating {
+        direction: rtl;
+        display: inline-block;
+        padding: 20px
+    }
+
+    .star-rating input[type=radio] {
+        display: none
+    }
+
+    .star-rating label {
+        color: #bbb;
+        font-size: 18px;
+        padding: 0;
+        cursor: pointer;
+        -webkit-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input[type=radio]:checked ~ label {
+        color: #f2b600
+    }
 </style>
     <div style="text-align: center">
         <div class="">
@@ -48,9 +72,107 @@
                     <img class="" alt="" src="https://images.typeform.com/images/2dpnUBBkz2VN/image/default" style="width: 120px; height: 120px;">
                 </div>
             </div>
-            <div style="padding-bottom: 30px;">
+            <div>
                 <h3 class="_Text-sc-1t2ribu-0-h1 iHImDD" color="#3D3D3D">Merci d'avoir participé au quiz<br>Vous pouvez <strong>evoluer</strong> ce quiz — C'est simple</h3>
             </div>
+
+            <div class="star-rating">
+                <input type="hidden" id="participant" data-id="{{ par.id }}">
+                <input type="hidden" id="quiz" data-id="{{ quiz.id }}">
+                <input type="hidden" id="rating" data-id="{{ rate ? rate.rate : 0 }}">
+
+                {% if(rate) %}
+                    <input id="star-5" type="radio" name="rating" value="star-5" {% if(rate.rate == 5) %}checked{% endif %}>
+                    <label for="star-5" title="5 stars" class="rate" data-rate="5">
+                        <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                    <input id="star-4" type="radio" name="rating" value="star-4" {% if(rate.rate == 4) %}checked{% endif %}>
+                    <label for="star-4" title="4 stars" class="rate" data-rate="4">
+                        <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                    <input id="star-3" type="radio" name="rating" value="star-3" {% if(rate.rate == 3) %}checked{% endif %}>
+                    <label for="star-3" title="3 stars" class="rate" data-rate="3">
+                        <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                    <input id="star-2" type="radio" name="rating" value="star-2" {% if(rate.rate == 2) %}checked{% endif %}>
+                    <label for="star-2" title="2 stars" class="rate" data-rate="2">
+                        <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                    <input id="star-1" type="radio" name="rating" value="star-1" {% if(rate.rate == 1) %}checked{% endif %}>
+                    <label for="star-1" title="1 star" class="rate" data-rate="1">
+                        <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                {% else %}
+                    <input id="star-5" type="radio" name="rating" value="star-5">
+                    <label for="star-5" title="5 stars" class="rate" data-rate="5">
+                        <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                    <input id="star-4" type="radio" name="rating" value="star-4">
+                    <label for="star-4" title="4 stars" class="rate" data-rate="4">
+                        <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                    <input id="star-3" type="radio" name="rating" value="star-3">
+                    <label for="star-3" title="3 stars" class="rate" data-rate="3">
+                        <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                    <input id="star-2" type="radio" name="rating" value="star-2">
+                    <label for="star-2" title="2 stars" class="rate" data-rate="2">
+                        <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                    <input id="star-1" type="radio" name="rating" value="star-1">
+                    <label for="star-1" title="1 star" class="rate" data-rate="1">
+                        <i class="active fa fa-star" aria-hidden="true"></i>
+                    </label>
+                {% endif %}
+
+
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="ratingModal-alredy" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background: #5bc0de; color: #fff;">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Info !</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Vous avez déjà évolué ce quiz.</p>
+                            <p>Merci <i class="fa fa-smile-o" aria-hidden="true"></i></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal fade" id="ratingModal-success" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background: #5bc0de; color: #fff;">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Info !</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>votre note a été enregistré avec succès.</p>
+                            <p>Merci <i class="fa fa-smile-o" aria-hidden="true"></i></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ---- -->
+
             <header class="sc-ktHwxA gnJjUH">
                 <div class="Spacer-sc-11bdvt0-0 jZlsIf">
                         <a href="{{ path('index') }}"><button class="gqwVxY" color="#9FCF67">Retour à la page d'accueil</button></a>
@@ -59,4 +181,33 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block js %}
+    <script>
+        $( ".rate" ).click(function() {
+            var quiz = $('#quiz').data('id');
+            var participant = $('#participant').data('id');
+            var rate = $(this).data('rate');
+
+            var url = '{{ path('rate_quiz', {'quiz': 'quiz_id', 'participant': 'participant_id', 'rate': 'rate_value'}) }}';
+            url = url.replace("quiz_id", quiz);
+            url = url.replace("participant_id", participant);
+            url = url.replace("rate_value", rate);
+
+            var rating = $('#rating').data('id');
+
+            if(rating == 0){
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    success: function(result){
+                        $('#ratingModal-success').modal('show');
+                    }
+                });
+            }else{
+                $('#ratingModal-alredy').modal('show');
+            }
+        });
+    </script>
 {% endblock %}
