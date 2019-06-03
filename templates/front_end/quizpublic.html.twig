@@ -189,7 +189,8 @@
                 });
                 function SessionExpireEvent()
                 { clearInterval(myInterval);
-                    window.location.pathname = '/index/test' ;
+                    document.getElementById("regForm").submit();
+//                    window.location.pathname = '/index/test' ;
                 }
             </script>
         {% else %}
@@ -307,7 +308,7 @@
                                     </div>
                                      <div class="col-sm-4" style="background-color:;">
                                          <select style="width: 300px; height: 40px" class="form-control" name="typevf[{{ question.id }}+{{ key }}]">
-
+                                            
                                              <option>
                                                  Vrai
                                              </option>
