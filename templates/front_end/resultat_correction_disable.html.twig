@@ -79,52 +79,52 @@
             <div class="star-rating">
                 <input type="hidden" id="participant" data-id="{{ par.id }}">
                 <input type="hidden" id="quiz" data-id="{{ quiz.id }}">
-                <input type="hidden" id="rating" data-id="{{ rate ? rate.rate : 0 }}">
-
-                {% if(rate) %}
-                    <input id="star-5" type="radio" name="rating" value="star-5" {% if(rate.rate == 5) %}checked{% endif %}>
-                    <label for="star-5" title="5 stars" class="rate" data-rate="5">
-                        <i class="active fa fa-star" aria-hidden="true"></i>
-                    </label>
-                    <input id="star-4" type="radio" name="rating" value="star-4" {% if(rate.rate == 4) %}checked{% endif %}>
-                    <label for="star-4" title="4 stars" class="rate" data-rate="4">
-                        <i class="active fa fa-star" aria-hidden="true"></i>
-                    </label>
-                    <input id="star-3" type="radio" name="rating" value="star-3" {% if(rate.rate == 3) %}checked{% endif %}>
-                    <label for="star-3" title="3 stars" class="rate" data-rate="3">
-                        <i class="active fa fa-star" aria-hidden="true"></i>
-                    </label>
-                    <input id="star-2" type="radio" name="rating" value="star-2" {% if(rate.rate == 2) %}checked{% endif %}>
-                    <label for="star-2" title="2 stars" class="rate" data-rate="2">
-                        <i class="active fa fa-star" aria-hidden="true"></i>
-                    </label>
-                    <input id="star-1" type="radio" name="rating" value="star-1" {% if(rate.rate == 1) %}checked{% endif %}>
-                    <label for="star-1" title="1 star" class="rate" data-rate="1">
-                        <i class="active fa fa-star" aria-hidden="true"></i>
-                    </label>
-                {% else %}
-                    <input id="star-5" type="radio" name="rating" value="star-5">
-                    <label for="star-5" title="5 stars" class="rate" data-rate="5">
-                        <i class="active fa fa-star" aria-hidden="true"></i>
-                    </label>
-                    <input id="star-4" type="radio" name="rating" value="star-4">
-                    <label for="star-4" title="4 stars" class="rate" data-rate="4">
-                        <i class="active fa fa-star" aria-hidden="true"></i>
-                    </label>
-                    <input id="star-3" type="radio" name="rating" value="star-3">
-                    <label for="star-3" title="3 stars" class="rate" data-rate="3">
-                        <i class="active fa fa-star" aria-hidden="true"></i>
-                    </label>
-                    <input id="star-2" type="radio" name="rating" value="star-2">
-                    <label for="star-2" title="2 stars" class="rate" data-rate="2">
-                        <i class="active fa fa-star" aria-hidden="true"></i>
-                    </label>
-                    <input id="star-1" type="radio" name="rating" value="star-1">
-                    <label for="star-1" title="1 star" class="rate" data-rate="1">
-                        <i class="active fa fa-star" aria-hidden="true"></i>
-                    </label>
-                {% endif %}
-
+                <input type="hidden" id="rating" data-id="{{ rate ? rate.rate : 0 }}" value="{{ rate ? rate.rate : 0 }}">
+                <div id="rating-block">
+                    {% if(rate) %}
+                        <input id="star-5" type="radio" name="rating" value="star-5" {% if(rate.rate == 5) %}checked{% endif %}>
+                        <label for="star-5" title="5 stars" class="rate" data-rate="5">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-4" type="radio" name="rating" value="star-4" {% if(rate.rate == 4) %}checked{% endif %}>
+                        <label for="star-4" title="4 stars" class="rate" data-rate="4">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-3" type="radio" name="rating" value="star-3" {% if(rate.rate == 3) %}checked{% endif %}>
+                        <label for="star-3" title="3 stars" class="rate" data-rate="3">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-2" type="radio" name="rating" value="star-2" {% if(rate.rate == 2) %}checked{% endif %}>
+                        <label for="star-2" title="2 stars" class="rate" data-rate="2">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-1" type="radio" name="rating" value="star-1" {% if(rate.rate == 1) %}checked{% endif %}>
+                        <label for="star-1" title="1 star" class="rate" data-rate="1">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                    {% else %}
+                        <input id="star-5" type="radio" name="rating" value="star-5">
+                        <label for="star-5" title="5 stars" class="rate" data-rate="5">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-4" type="radio" name="rating" value="star-4">
+                        <label for="star-4" title="4 stars" class="rate" data-rate="4">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-3" type="radio" name="rating" value="star-3">
+                        <label for="star-3" title="3 stars" class="rate" data-rate="3">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-2" type="radio" name="rating" value="star-2">
+                        <label for="star-2" title="2 stars" class="rate" data-rate="2">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-1" type="radio" name="rating" value="star-1">
+                        <label for="star-1" title="1 star" class="rate" data-rate="1">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                    {% endif %}
+                </div>
 
             </div>
 
@@ -185,7 +185,7 @@
 
 {% block js %}
     <script>
-        $( ".rate" ).click(function() {
+        $( ".rate" ).on('click', function() {
             var quiz = $('#quiz').data('id');
             var participant = $('#participant').data('id');
             var rate = $(this).data('rate');
@@ -195,19 +195,23 @@
             url = url.replace("participant_id", participant);
             url = url.replace("rate_value", rate);
 
-            var rating = $('#rating').data('id');
-
+            var rating = $('#rating').val();
             if(rating == 0){
                 $.ajax({
                     url: url,
                     method: 'POST',
                     success: function(result){
                         $('#ratingModal-success').modal('show');
+                        $('#rating').val(rate);
                     }
                 });
             }else{
                 $('#ratingModal-alredy').modal('show');
             }
         });
+
+        $('#ratingModal-alredy').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
     </script>
 {% endblock %}

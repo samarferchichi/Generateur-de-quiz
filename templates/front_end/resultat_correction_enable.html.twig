@@ -2,11 +2,6 @@
 
 {% block body %}
 
-<html lang="en">
-
-
-<head>
-
 <style>
     .quiz-score-nb span {
         display: inline-block;
@@ -19,9 +14,69 @@
         line-height: 2.6em;
         text-align: center;
     }
+    .gqwVxY {
+        position: relative;
+        font-family: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 12px 0px;
+        min-height: 48px;
+        background-color: rgb(159, 207, 103);
+        color: rgb(29, 42, 13);
+        transition: background-color 0.2s ease 0s, color 0.2s ease 0s, border-color 0.2s ease 0s, opacity 0.2s ease 0s;
+        outline: none;
+        border-width: 1px;
+        border-style: solid;
+        border-image: initial;
+        padding: 8px 18px;
+        border-color: transparent;
+        border-radius: 4px;
+    }
+    .gqwVxY:hover {
+        position: relative;
+        font-family: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 12px 0px;
+        min-height: 48px;
+        color: rgb(29, 42, 13);
+        background-color: rgb(173, 214, 126);
+        transition: background-color 0.2s ease 0s, color 0.2s ease 0s, border-color 0.2s ease 0s, opacity 0.2s ease 0s;
+        outline: none;
+        border-width: 1px;
+        border-style: solid;
+        border-image: initial;
+        padding: 8px 18px;
+        border-color: transparent;
+        border-radius: 4px;
+    }
+    .star-rating {
+        direction: rtl;
+        display: inline-block;
+        padding: 20px
+    }
 
+    .star-rating input[type=radio] {
+        display: none
+    }
+
+    .star-rating label {
+        color: #bbb;
+        font-size: 50px;
+        padding: 0;
+        cursor: pointer;
+        -webkit-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out
+    }
+
+    .star-rating label:hover,
+    .star-rating label:hover ~ label,
+    .star-rating input[type=radio]:checked ~ label {
+        color: #f2b600
+    }
 </style>
-</head>
 <body style="background-color: #f3f3f3">
 
 
@@ -29,7 +84,7 @@
     {% set repv = "" %}
     {% set rp = "" %}
 
-    <h1><b> Résultats du Quiz {{ quiz }}</b>  </h1>
+    <h1><b> Résultats du Quiz {{ quiz }}</b></h1>
 
     {% set score = 0 %}
     {% set totale = 0 %}
@@ -47,8 +102,119 @@
         </div>
     </div>
 
+    <div style="text-align: center">
+        <div class="">
+            <div class="">
+                <div style="padding-bottom: 30px;">
+                    <img class="" alt="" src="https://images.typeform.com/images/2dpnUBBkz2VN/image/default" style="width: 120px; height: 120px;">
+                </div>
+            </div>
+            <div>
+                <h3 class="_Text-sc-1t2ribu-0-h1 iHImDD" color="#3D3D3D">Merci d'avoir participé au quiz<br>Vous pouvez <strong>evoluer</strong> ce quiz — C'est simple</h3>
+            </div>
+
+            <div class="star-rating">
+                <input type="hidden" id="participant" data-id="{{ par.id }}">
+                <input type="hidden" id="quiz" data-id="{{ quiz.id }}">
+                <input type="hidden" id="rating" data-id="{{ rate ? rate.rate : 0 }}" value="{{ rate ? rate.rate : 0 }}">
+                <div id="rating-block">
+                    {% if(rate) %}
+                        <input id="star-5" type="radio" name="rating" value="star-5" {% if(rate.rate == 5) %}checked{% endif %}>
+                        <label for="star-5" title="5 stars" class="rate" data-rate="5">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-4" type="radio" name="rating" value="star-4" {% if(rate.rate == 4) %}checked{% endif %}>
+                        <label for="star-4" title="4 stars" class="rate" data-rate="4">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-3" type="radio" name="rating" value="star-3" {% if(rate.rate == 3) %}checked{% endif %}>
+                        <label for="star-3" title="3 stars" class="rate" data-rate="3">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-2" type="radio" name="rating" value="star-2" {% if(rate.rate == 2) %}checked{% endif %}>
+                        <label for="star-2" title="2 stars" class="rate" data-rate="2">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-1" type="radio" name="rating" value="star-1" {% if(rate.rate == 1) %}checked{% endif %}>
+                        <label for="star-1" title="1 star" class="rate" data-rate="1">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                    {% else %}
+                        <input id="star-5" type="radio" name="rating" value="star-5">
+                        <label for="star-5" title="5 stars" class="rate" data-rate="5">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-4" type="radio" name="rating" value="star-4">
+                        <label for="star-4" title="4 stars" class="rate" data-rate="4">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-3" type="radio" name="rating" value="star-3">
+                        <label for="star-3" title="3 stars" class="rate" data-rate="3">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-2" type="radio" name="rating" value="star-2">
+                        <label for="star-2" title="2 stars" class="rate" data-rate="2">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                        <input id="star-1" type="radio" name="rating" value="star-1">
+                        <label for="star-1" title="1 star" class="rate" data-rate="1">
+                            <i class="active fa fa-star" aria-hidden="true"></i>
+                        </label>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="ratingModal-alredy" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background: #5bc0de; color: #fff;">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Info !</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>Vous avez déjà évolué ce quiz.</p>
+                            <p>Merci <i class="fa fa-smile-o" aria-hidden="true"></i></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal fade" id="ratingModal-success" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background: #5bc0de; color: #fff;">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Info !</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>votre note a été enregistré avec succès.</p>
+                            <p>Merci <i class="fa fa-smile-o" aria-hidden="true"></i></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ---- -->
+
+        </div>
+    </div>
+
     {% for page in pages %}
-    <div  class="tab" style="background-color:; padding: 20px">
+    <div  class="tab" style="display: none ;padding: 20px">
         {% for key,question in page %}
 
 
@@ -57,134 +223,125 @@
                     <b> Question n° {{ key+1 }} </b><br>
 
                     {{ question.text_question }}<br>
-                    <ul style="    list-style-type: circle;">
-                    {% for v in question.reponseValid %}
+                    <ul style="list-style-type: circle;">
+                        {% for v in question.reponseValid %}
 
-                        {% if v.etatcaseacocher != v.repParticipant %}
-                            <li><b> <font style="text-decoration: line-through;" color="red"> {{ v.reponse_valide }}</font> <font color="red">&nbsp;(faux)</font> </b></li>
+                            {% if v.etatcaseacocher != v.repParticipant %}
+                                <li><b> <font style="text-decoration: line-through;" color="red"> {{ v.reponse_valide }}</font> <font color="red">&nbsp;(faux)</font> </b></li>
 
-
-                        {% endif %}
-
-                        {% if v.etatcaseacocher == v.repParticipant and v.etatcaseacocher == true %}
-                            <b>  <li><font color="#87a800"> {{ v.reponse_valide }} &nbsp; (correct)</font></li></b>
-                        {% endif %}
-
-
-                        <!-- {% if v.etatcaseacocher != v.repParticipant and v.repParticipant == false %}
-                            c'est la bonne reponse
-                        {% endif %}-->
-
-
-                        {% if v.etatcaseacocher == v.repParticipant and v.etatcaseacocher == false %}
-                           <li>
-                                   <font color=""> {{ v.reponse_valide }}</font>
-                               </li>
-                        {% endif %}
-
-
-                        <br>
-
-                    {% endfor %}
-                    </ul>
-                    <div style="background-color: #f3f3f3; padding: 20px ">
-
-                        La bonne reponse est :
-                        <ul>
-
-
-                        {% for key, k in question.reponseValid %}
-                            {% if k.etatcaseacocher  == true %}
-                                <br>  <li>  {{ (k.reponse_valide) }}&nbsp; Correcte</li>
 
                             {% endif %}
+
+                            {% if v.etatcaseacocher == v.repParticipant and v.etatcaseacocher == true %}
+                                <b>  <li><font color="#87a800"> {{ v.reponse_valide }} &nbsp; (correct)</font></li></b>
+                            {% endif %}
+
+
+                            <!-- {% if v.etatcaseacocher != v.repParticipant and v.repParticipant == false %}
+                                c'est la bonne reponse
+                            {% endif %}-->
+
+
+                            {% if v.etatcaseacocher == v.repParticipant and v.etatcaseacocher == false %}
+                               <li>
+                                       <font color=""> {{ v.reponse_valide }}</font>
+                                   </li>
+                            {% endif %}
+
+
+                            <br>
+
                         {% endfor %}
+                    </ul>
+                    <div style="background-color: #f3f3f3; padding: 20px ">
+                        La bonne reponse est :
+                        <ul>
+                            {% for key, k in question.reponseValid %}
+                                {% if k.etatcaseacocher  == true %}
+                                    <br>  <li>  {{ (k.reponse_valide) }}&nbsp; Correcte</li>
+
+                                {% endif %}
+                            {% endfor %}
                         </ul>
                     </div>
                     </div>
-                {% endif %}
+            {% endif %}
 
             {% if question.type_question =="Liste déroulante" %}
-{% set repcorrect=null %}
-{% set repincorrect=null %}
-    <div style="background-color: white">
+                {% set repcorrect=null %}
+                {% set repincorrect=null %}
+                {#<div style="background-color: white">#}
 
-        <div style="background-color: white; padding: 20px">
-            <b> Question n° {{ key+1 }} </b><br>
+                <div style="background-color: white; padding: 20px">
+                    <b> Question n° {{ key+1 }} </b><br>
 
-            {{ question.text_question }}<br>
-            <ul style="list-style-type: circle;">
-                {% for key, q in question.reponsesQuestion %}
-
-                    {% if  q.etatlist == true and q.reponse_valide == question.reponsesParticipant[0].reponse %}
-                        {% set repcorrect =  q.reponse_valide %}
-                        {% else %}
-                    {% set repincorrect =   q.reponse_valide  %}
-
-                    {% endif %}
-                {% endfor %}
-                {% if repcorrect != null %}
-                    <b> <li>  <font color="#87a800">{{ repcorrect }} </font></li></b>
-                {% else %}
-                    <li>  <b> <font style="text-decoration: line-through;" color="red"> {{ repincorrect }}</font></b></li>
-                {% endif %}
-            </ul>
-
-
-            <div style="background-color: #f3f3f3; padding: 20px ">
-
-                La bonne reponse est :
-
-                    <select class="form-control">
+                    {{ question.text_question }}<br>
+                    <ul style="list-style-type: circle;">
                         {% for key, q in question.reponsesQuestion %}
 
-                              {% if q.etatlist == true and q.reponse_valide == question.reponsesParticipant[0].reponse %}
-                                  <option style="text-decoration-color: green">
-                                  {{ q.reponse_valide }}
-                                   </option>
+                            {% if  q.etatlist == true and q.reponse_valide == question.reponsesParticipant[0].reponse %}
+                                {% set repcorrect =  q.reponse_valide %}
                                 {% else %}
-                                    <option>  {{ q.reponse_valide }}</option>
-                              {% endif %}
+                            {% set repincorrect =   q.reponse_valide  %}
 
+                            {% endif %}
                         {% endfor %}
-                    </select>
+                        {% if repcorrect != null %}
+                            <b> <li>  <font color="#87a800">{{ repcorrect }} </font></li></b>
+                        {% else %}
+                            <li>  <b> <font style="text-decoration: line-through;" color="red"> {{ repincorrect }}</font></b></li>
+                        {% endif %}
+                    </ul>
+
+
+                    <div style="background-color: #f3f3f3; padding: 20px ">
+                    La bonne reponse est :
+                        <select class="form-control">
+                            {% for key, q in question.reponsesQuestion %}
+
+                                  {% if q.etatlist == true and q.reponse_valide == question.reponsesParticipant[0].reponse %}
+                                      <option style="text-decoration-color: green">
+                                      {{ q.reponse_valide }}
+                                       </option>
+                                    {% else %}
+                                        <option>  {{ q.reponse_valide }}</option>
+                                  {% endif %}
+
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
-        </div>
             {% endif %}
 
             {% if question.type_question =="Date" %}
-    <div style="background-color: white">
-        <div style="background-color: white; padding: 20px">
-            <b> Question n° {{ key+1 }} </b><br>
+                <div style="background-color: white">
+                    <div style="background-color: white; padding: 20px">
+                        <b> Question n° {{ key+1 }} </b><br>
+                        {{ question.text_question }}<br>
+                        <ul style="list-style-type: circle;">
+                            {% for key,l in question.reponsesParticipant %}
 
-            {{ question.text_question }}<br>
-            <ul style="list-style-type: circle;">
-            {% for key,l in question.reponsesParticipant %}
+                                {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
+                                    <b> <li>    <font color="#87a800">{{ (l.reponse) }}&nbsp; (correct)</font></li></b>
+                                    {% else %}
+                                        <li><b> <font style="text-decoration: line-through;" color="red">{{ (l.reponse) }}</font> <font color="red">&nbsp;(faux)</font> </b></li>
 
-                {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
-                    <b> <li>    <font color="#87a800">{{ (l.reponse) }}&nbsp; (correct)</font></li></b>
-                    {% else %}
-                        <li><b> <font style="text-decoration: line-through;" color="red">{{ (l.reponse) }}</font> <font color="red">&nbsp;(faux)</font> </b></li>
+                                {% endif %}
+                                {% set rp = l.reponse %}
+                            {% endfor %}
+                        </ul>
 
-                {% endif %}
-                {% set rp = l.reponse %}
-            {% endfor %}
-            </ul>
-
-            <div style="background-color: #f3f3f3; padding: 20px ">
-                La bonne reponse est :
-
-
-                <ul>
-                    {% for k in question.reponsesQuestion %}
-                        <br>
-                        <li> {{ k.reponse_valide }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </div>
-
-</div>
+                        <div style="background-color: #f3f3f3; padding: 20px ">
+                            La bonne reponse est :
+                            <ul>
+                                {% for k in question.reponsesQuestion %}
+                                    <br>
+                                    <li> {{ k.reponse_valide }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             {% endif %}
 
             {% if question.type_question =="Nombre" %}
@@ -193,24 +350,19 @@
 
                     {{ question.text_question }}<br>
                     <ul style="    list-style-type: circle;">
-
-                {% for key,l in question.reponsesParticipant %}
-<br>
-                    {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
-                    <li>
-                       <b> <font color="#87a800">{{ (l.reponse) }} &nbsp;(correct)</font></b>
-                    </li>
-                    {% else %}
-                        <li><b><font color="red">{{ (l.reponse) }}</font>  &nbsp;<font color="red">(faux)</font></b> </li>
-
-
-                    {% endif %}
-                    {% set rp = l.reponse %}
-                {% endfor %}
-
+                        {% for key,l in question.reponsesParticipant %}
+                            <br>
+                            {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
+                            <li>
+                               <b> <font color="#87a800">{{ (l.reponse) }} &nbsp;(correct)</font></b>
+                            </li>
+                            {% else %}
+                                <li><b><font color="red">{{ (l.reponse) }}</font>  &nbsp;<font color="red">(faux)</font></b> </li>
+                            {% endif %}
+                            {% set rp = l.reponse %}
+                        {% endfor %}
                     </ul>
                     <div style="background-color: #f3f3f3; padding: 20px ">
-
                         La bonne reponse est :
                         <ul>
                             {% for key, m in question.reponsesQuestion %}
@@ -219,90 +371,109 @@
                             </li>
                             {% endfor %}
                         </ul>
-
                     </div>
-</div>
+                </div>
             {% endif %}
 
             {% if question.type_question =="Vrai/faux" %}
-    <div style="background-color: white; padding: 20px">
-        <b> Question n° {{ key+1 }} </b><br>
+                <div style="background-color: white; padding: 20px">
+                    <b> Question n° {{ key+1 }} </b><br>
+                    {{ question.text_question }}<br>
+                    <ul style="list-style-type: circle;">
+                        {% for key, k in question.reponsesQuestion %}
+                            {% if question.reponsesParticipant[key].reponse =="Vrai" and k.etatvf == true and  k.etatvf == true %}
+                                <b><li>  <font color="#87a800"> {{ (k.reponse_valide) }}  &nbsp;(correct)</font></li>
+                            {% endif %}
 
-        {{ question.text_question }}<br>
-        <ul style="list-style-type: circle;">
+                            {% if question.reponsesParticipant[key].reponse =="Faux" and k.etatvf == true  %}
+                                <li> <b><font color="red" style="text-decoration: line-through;"> {{ (k.reponse_valide) }}</font>  &nbsp;<font color="red">(faux)</font> </b></li>
+                            {% endif %}
+                            {% if question.reponsesParticipant[key].reponse =="Vrai" and k.etatvf != true  %}
+                                <li> <b><font color="red" style="text-decoration: line-through;"> {{ (k.reponse_valide) }}</font> &nbsp;<font color="red">(faux)</font></b></li>
+                            {% endif %}
+                               <!--on peut changer la color-->
+                            {% if question.reponsesParticipant[key].reponse !="Vrai" and k.etatvf != true  %}
+                                <li>  <b>   <font color="#87a800"> {{ (k.reponse_valide) }}  &nbsp;(correct)</font></b></li>
+                            {% endif %}
+                               </b>
+                               <br>
+                        {% endfor %}
+                    </ul>
 
-
-               {% for key, k in question.reponsesQuestion %}
-
-              {% if question.reponsesParticipant[key].reponse =="Vrai" and k.etatvf == true and  k.etatvf == true %}
-                  <b><li>  <font color="#87a800"> {{ (k.reponse_valide) }}  &nbsp;(correct)</font></li>
-
-                   {% endif %}
-
-
-                   {% if question.reponsesParticipant[key].reponse =="Faux" and k.etatvf == true  %}
-                       <li> <b><font color="red" style="text-decoration: line-through;"> {{ (k.reponse_valide) }}</font>  &nbsp;<font color="red">(faux)</font> </b></li>
-
-                   {% endif %}
-
-
-                   {% if question.reponsesParticipant[key].reponse =="Vrai" and k.etatvf != true  %}
-                       <li> <b><font color="red" style="text-decoration: line-through;"> {{ (k.reponse_valide) }}</font> &nbsp;<font color="red">(faux)</font></b></li>
-
-                   {% endif %}
-
-
-                   <!--on peut changer la color-->
-                   {% if question.reponsesParticipant[key].reponse !="Vrai" and k.etatvf != true  %}
-                       <li>  <b>   <font color="#87a800"> {{ (k.reponse_valide) }}  &nbsp;(correct)</font></b></li>
-
-                   {% endif %}
-                   </b>
-                   <br>
-
-
-               {% endfor %}
-        </ul>
-
-        <div style="background-color: #f3f3f3; padding: 20px ">
-
-              La bonne reponse est :
-            <ul>
-               {% for key, k in question.reponsesQuestion %}
-                   {% if k.etatvf  == 1 %}
-                       <br> <li>   {{ (k.reponse_valide) }}&nbsp;</li>
-                   {% endif %}
-               {% endfor %}
-            </ul>
-        </div>
-
-    </div>
+                    <div style="background-color: #f3f3f3; padding: 20px ">
+                          La bonne reponse est :
+                        <ul>
+                           {% for key, k in question.reponsesQuestion %}
+                               {% if k.etatvf  == 1 %}
+                                   <br> <li>   {{ (k.reponse_valide) }}&nbsp;</li>
+                               {% endif %}
+                           {% endfor %}
+                        </ul>
+                    </div>
+                </div>
             {% endif %}
 
         {% endfor %}
     </div>
-
-
-        <hr><hr>
-
-
     {% endfor %}
 
-        <div style="overflow:auto;">
-            <div style="float:right;">
-                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+    <hr><hr>
+
+
+
+
+        <div>
+            <button type="button" id="prevBtn" class="btn btn-warning" style="float: left;" onclick="nextPrev(-1)">Page précédente</button>
+            <button type="button" id="nextBtn" class="btn btn-warning" style="float: right;" onclick="nextPrev(1)">Page suivante</button>
+        </div>
+
+    <br><br>
+    <div style="text-align: center">
+        <header class="sc-ktHwxA gnJjUH">
+            <div class="Spacer-sc-11bdvt0-0 jZlsIf">
+                <a href="{{ path('index') }}"><button class="gqwVxY" color="#9FCF67">Retour à la page d'accueil</button></a>
             </div>
-        </div>
-
-
-        <div style="text-align:center;margin-top:40px;">
-            {% for  i in quiz.page %}
-                <span class="step"></span>
-            {% endfor %}
-        </div>
+        </header>
+    </div>
 
 </div>
+
+</div>
+</body>
+</html>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $( ".rate" ).on('click', function() {
+            var quiz = $('#quiz').data('id');
+            var participant = $('#participant').data('id');
+            var rate = $(this).data('rate');
+
+            var url = '{{ path('rate_quiz', {'quiz': 'quiz_id', 'participant': 'participant_id', 'rate': 'rate_value'}) }}';
+            url = url.replace("quiz_id", quiz);
+            url = url.replace("participant_id", participant);
+            url = url.replace("rate_value", rate);
+
+            var rating = $('#rating').val();
+            if(rating == 0){
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    success: function(result){
+                        $('#ratingModal-success').modal('show');
+                        $('#rating').val(rate);
+                    }
+                });
+            }else{
+                $('#ratingModal-alredy').modal('show');
+            }
+        });
+
+        $('#ratingModal-alredy').on('hidden.bs.modal', function (e) {
+            location.reload();
+        })
+    </script>
     <script>
         function openNav() {
             document.getElementById("mySidenav").style.width = "250px";
@@ -325,11 +496,12 @@
                 document.getElementById("prevBtn").style.display = "inline";
             }
             if (n == (x.length - 1)) {
-                document.getElementById("nextBtn").innerHTML ='valider';
+                $('#nextBtn').css('display', 'none');
+//                document.getElementById("nextBtn").innerHTML ='valider';
             } else {
-                document.getElementById("nextBtn").innerHTML = "Next";
+                $('#nextBtn').css('display', 'inline');
+                document.getElementById("nextBtn").innerHTML = "Page suivante";
             }
-            fixStepIndicator(n)
         }
         function nextPrev(n) {
             var x = document.getElementsByClassName("tab");
@@ -350,16 +522,6 @@
             y = x[currentTab].getElementsByTagName("input");
             return valid;
         }
-        function fixStepIndicator(n) {
-            var i, x = document.getElementsByClassName("step");
-            for (i = 0; i < x.length; i++) {
-                x[i].className = x[i].className.replace(" active", "");
-            }
-            x[n].className += " active";
-        }
 
     </script>
-</div>
-</body>
-</html>
 {% endblock %}
