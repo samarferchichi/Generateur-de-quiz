@@ -4,25 +4,17 @@
 
 
     {% set nb =0 %}
-    <div style="padding:; background-color: #f0ad4e">
-        <div style="padding: 20px; background-color:">
-            <div class="row" style="background-color: ">
-
-                <div class="col-sm-5" style="background-color:;">
-
-                    <font size="10" color="white">
-                        {{ categorie }}
-                    </font>
-                </div>
-
+    <div class="col-md-12" style="margin-top: -40px; margin-bottom: -20px;">
+        <div class="nav-tabs-custom">
+            <div class="tab-content" style="text-align: center;">
+                <div class="alert alert-warning">{{ categorie }}</div>
             </div>
-
         </div>
     </div>
+
     <div class="row">
 
         <div style="padding: 80px">
-
 
             {% for q in listquiz %}
                 {% if q.categorie == categorie %}
@@ -32,7 +24,11 @@
 
             {% if nb == 0 %}
 
-                <h1>Cette categorie est vide :( </h1>
+                <div style="text-align: center">
+                    <h1>Il n'y a pas des quiz avec cette catégorie pour le moment !</h1>
+                    <h3>Merci <i class="fa fa-smile-o" aria-hidden="true"></i></h3>
+                </div>
+
             {% endif %}
             <div class="row">
 
