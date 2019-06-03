@@ -21,7 +21,7 @@ class QuestionType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                 ],
-                'required' =>  false,
+                'required' =>  true,
                 'label' => 'Titre de votre question',
                 'label_attr' => [
                     'class' => ''

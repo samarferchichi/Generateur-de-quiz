@@ -16,14 +16,26 @@
 <br>
     {% if quiz.tempsDispo %}
         <form action="{{ path('insert', {'quiz' : quiz.id} ) }}" method="post" >
-          QUIZ:  {{ quiz.titre }}<br>
+            <h2>QUIZ:  {{ quiz.titre }}</h2>
 
             {% if quiz.modeCorrection %}
-                mode correction activé
+                <center>
+                    <h4>Mode correction activé</h4>
+                    <img width="50" height="50" src="{{ asset('logoFB_Gmail/time.png' ) }}">
+                </center>
             {% endif %}
-            <br>
-        le temps disponible est activé <input type="number" name="timequiz" value="0">
-        <input type="submit"  class="btn btn-warning" value="Ajouter un compteur a votre quiz"  >
+
+            <div>
+                <div style="text-align: center">
+                    <label style="    align-self: self-start;color: var(--text-color);flex: 30% 0 0;font-size: var(--font-size-base);font-weight: 400;margin: 5px 5px 0 0;text-align: right;" for="quiz_timequiz">Préciser le temps nécessaire pour passer le quiz</label><br>
+                    <div class="form-widget">
+                        <br><center><input type="number" name="timequiz" value="0" class="form-control"></center>
+                    </div>
+                </div>
+                <br>
+
+            </div>
+            <center><input type="submit"  class="btn btn-warning" value="Ajouter un compteur a votre quiz"  ></center>
         </form>
     {% endif %}
 

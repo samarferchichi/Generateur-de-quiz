@@ -27,7 +27,9 @@ class ReponseType extends AbstractType
             ->add('descriptionformule',null,[
                 'label' => 'Description formule :'
             ])
-            ->add('reponse_valide')
+            ->add('reponse_valide', null, [
+                'required' =>  true
+            ])
             ->add('etatvf')
             ->add('etatlist')
             ->add('etatcaseacocher')
