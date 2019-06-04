@@ -62,7 +62,7 @@
             opacity: 0.8;
         }
         #prevBtn {
-            background-color: #bbbbbb;
+            background-color: #4CAF50;
         }
         /* Make circles that indicate the steps of the form: */
         .step {
@@ -94,9 +94,8 @@
     <title>Quiz</title>
 
 </head>
-<body style="background-color: ">
+<body>
 
-    {#<form id="regForm"  action="{{ path('quizpublic', {'quiz':quiz.id, 'par':par.id}) }}" method="post" >#}
 {{ form_start(form, {'attr': {'id': 'regForm'}}) }}
 
         <input value="{{ quiz.timequiz }}" hidden id="timequiz">
@@ -256,7 +255,7 @@
 
                                         {% if question.infoBulle != '' %}
                                             <br>
-                                            <a href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                                            <a href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO</a>
                                         {% endif %}
                                     </div>
                                         {% endif %}
@@ -286,7 +285,7 @@
                                     {% endfor %}
                                         {% if question.infoBulle != '' %}
                                             <br>
-                                            <a href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                                            <a href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;"></i></a>
                                         {% endif %}
                     </div>
                                     {% endif %}
@@ -325,7 +324,7 @@
                             {% endfor %}
                             {% if question.infoBulle != '' %}
 
-                                <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                                <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO</a>
                             {% endif %}
                     </div>
                         {% endif %}
@@ -362,7 +361,7 @@
 
                             {% if question.infoBulle != '' %}
 
-                                <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                                <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO</a>
                             {% endif %}
                     </div>
                         {% endif %}
@@ -398,7 +397,7 @@
                             {% endfor %}
                             {% if question.infoBulle != '' %}
 
-                                <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                                <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO</a>
                             {% endif %}
                            </div>
 
@@ -423,7 +422,7 @@
                             {% endfor %}
                             {% if question.infoBulle != '' %}
 
-                                <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO<i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                                <a  href="#" class="fa fa-info-circle" data-toggle="popover" title="{{ question.infoBulle }}" >INfO</a>
                             {% endif %}
                         {% endif %}
 
@@ -456,11 +455,6 @@
 
 
         {% endif %}
-
-
-
-
-    {#</form>#}
     {{ form_end(form) }}
 
 

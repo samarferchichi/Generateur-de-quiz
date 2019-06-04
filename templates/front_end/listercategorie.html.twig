@@ -81,25 +81,50 @@
                         </div>
 
                     </div>
-                    {% if  q.terminer == 1 %}
-                        <div class="col-sm-3" >
+                    {% if q.terminer == 1 %}
 
 
-                            <div class="card">
-                                {% if q.brochure == "null" %}
-                                    <img width="150" height="150" src="{{ asset('logoquiz/logonull.png' ) }}">
+                        {% if q.ouvrireQuiz <= date() and date() < q.fermerQuiz  %}
 
-                                {% else %}
+                            <div class="col-sm-3" >
+                                <div class="card">
+                                    {% if q.brochure == "null" %}
+                                        <img width="150" height="150" src="{{ asset('logoquiz/logonull.png' ) }}">
 
-                                    <img src="{{ asset('uploads/brochures/' ~ q.brochure) }}" alt="Avatar" style="width:150px;height:150px;">
-                                {% endif %}
-                                <p class="titrequiz">{% if q.titre|length > 17 %}{{ q.titre|slice(0, 16) ~ '...' }}{% else %}{{ q.titre }}{% endif %}</p>
-                                <p> {% if q.description|length > 17 %}{{ q.description|slice(0, 16) ~ '...' }}{% else %}{{ q.description }}{% endif %}</p>
-                                <p><button data-target="#test_{{ key }}  " data-toggle="modal" style="width: px;" class="menu-level-1">Commencer ?
-                                    </button></p>
+                                    {% else %}
+
+                                        <img src="{{ asset('uploads/brochures/' ~ q.brochure) }}" alt="Avatar" style="width:150px;height:150px;">
+                                    {% endif %}
+                                    <p class="titrequiz">{% if q.titre|length > 17 %}{{ q.titre|slice(0, 16) ~ '...' }}{% else %}{{ q.titre }}{% endif %}</p>
+                                    <p> {% if q.description|length > 17 %}{{ q.description|slice(0, 16) ~ '...' }}{% else %}{{ q.description }}{% endif %}</p>
+                                    <p><button data-target="#test_{{ key }}  " data-toggle="modal" style="width: px;" class="menu-level-1">Commencer ?
+                                        </button></p>
+                                </div>
+
                             </div>
 
-                        </div>
+                        {% endif %}
+
+
+                        {% if q.ouvrireQuiz <= date() and q.fermerQuiz == null and q.ouvrireQuiz != null %}
+                            <div class="col-sm-3" >
+                                <div class="card">
+                                    {% if q.brochure == "null" %}
+                                        <img width="150" height="150" src="{{ asset('logoquiz/logonull.png' ) }}">
+
+                                    {% else %}
+
+                                        <img src="{{ asset('uploads/brochures/' ~ q.brochure) }}" alt="Avatar" style="width:150px;height:150px;">
+                                    {% endif %}
+                                    <p class="titrequiz">{% if q.titre|length > 17 %}{{ q.titre|slice(0, 16) ~ '...' }}{% else %}{{ q.titre }}{% endif %}</p>
+                                    <p> {% if q.description|length > 17 %}{{ q.description|slice(0, 16) ~ '...' }}{% else %}{{ q.description }}{% endif %}</p>
+                                    <p><button data-target="#test_{{ key }}  " data-toggle="modal" style="width: px;" class="menu-level-1">Commencer ?
+                                        </button></p>
+                                </div>
+
+                            </div>
+                        {% endif %}
+
                     {% endif %}
                 {% endfor %}
             </div>

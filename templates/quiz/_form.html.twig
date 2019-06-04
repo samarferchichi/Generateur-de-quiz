@@ -356,17 +356,10 @@
 
 
 
-                            <br>
-                            <br>
-
-
-
-
 
                     </div>
 
                         <div class="col-sm-5">
-                            <div class="">
                                 <div class="form-group col">
                                     <div class="col-xs-2">
 
@@ -442,23 +435,16 @@
                                                     </small>
                                                 </div>
 
-                            </div>
-                                <div class="form-group col">
-                                    <center>
-                                        &nbsp; &nbsp; &nbsp;
-                                        &nbsp; &nbsp; &nbsp;
-                                        &nbsp; &nbsp; &nbsp;
-                                        &nbsp; &nbsp; &nbsp;
-                                        &nbsp; &nbsp; &nbsp;
-                                        &nbsp; &nbsp; &nbsp;
 
-                                        <button class="btn btn-success">{{ button_label|default('Confirmer') }}</button>
-
-                                    </center>
-                                </div>
                             </div>
 
                         </div>
+                    <br>
+                    <br>
+                    
+                    <center>
+                            <button class="btn btn-success" style="width: 400px; ">{{ button_label|default('Confirmer') }}</button>
+                    </center>
                     {{ form_widget(form._token) }}
                 </div>
 
