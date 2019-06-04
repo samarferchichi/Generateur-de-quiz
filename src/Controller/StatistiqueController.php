@@ -22,6 +22,7 @@ use App\Repository\PageRepository;
 use App\Repository\ParametreRepository;
 use App\Repository\ParticipantQuizRepository;
 use App\Repository\QuestionRepository;
+use App\Repository\RateRepository;
 use App\Repository\ReponseRepository;
 use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManager;
@@ -47,11 +48,16 @@ use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 /**
  * Common features needed in admin controllers.
  *
  * @internal
+ *
+ * @Security("is_granted('ROLE_USER')")
  *
  * @author Javier Eguiluz <javier.eguiluz@gmail.com>
  */
@@ -61,16 +67,17 @@ class StatistiqueController extends EasyAdminController
     /**
      * @Route("/statistique", name="statistique")
      */
-    public function statistique( QuizRepository $quizRepository, ParticipantQuizRepository $participantQuizRepository )
+    public function statistique( QuizRepository $quizRepository, ParticipantQuizRepository $participantQuizRepository, RateRepository $rateRepository )
     {
 
         $participants = $participantQuizRepository->getParticipants($this->getUser()->getId());
         $tentatives = $participantQuizRepository->getMaxTentatives($this->getUser()->getId());
-
-        dump($tentatives);
-        exit();
+        $ratings = $rateRepository->getRatingByUser($this->getUser()->getId());
 
         $data = [];
+        $data2 = [];
+        $rating_names = [];
+        $rating_notes = [];
 
         foreach ($participants as $p){
             $d = [
@@ -80,10 +87,28 @@ class StatistiqueController extends EasyAdminController
             array_push($data, $d);
         }
 
+        foreach ($tentatives as $key => $t){
+            $d = [
+                'name' => $t['titleQuiz'],
+                'y'    => intval($t['NbTentatives'])
+            ];
+            if($key == 0){
+                $d['sliced'] =  true;
+            }
+            array_push($data2, $d);
+        }
+
+        foreach ($ratings as $r){
+            array_push($rating_names, $r['titleQuiz']);
+            array_push($rating_notes, $r['rate']/$r['total']);
+        }
+
         return $this->render('quiz/statistique.html.twig',
             [
                 'userquiz' => json_encode($data),
-                'participant' => [],
+                'tentativesquiz' => json_encode($data2),
+                'ratings_names' => json_encode($rating_names),
+                'ratings_notes' => json_encode($rating_notes)
             ]);
     }
 

@@ -19,6 +19,19 @@ class RateRepository extends ServiceEntityRepository
         parent::__construct($registry, Rate::class);
     }
 
+    public function getRatingByUser($user){
+        $qb = $this->createQueryBuilder('r')
+            ->select('r AS Rating, SUM(r.rate) AS rate, COUNT(r.rate) AS total, q.titre AS titleQuiz, q.id AS idQuiz')
+            ->join('r.quiz', 'q')
+            ->join('q.user', 'u')
+            ->where('u.id = ?1')
+            ->setParameter(1, $user)
+            ->groupBy('q')
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
+
     // /**
     //  * @return Rate[] Returns an array of Rate objects
     //  */

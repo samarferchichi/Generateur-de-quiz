@@ -19,7 +19,10 @@
 <br>
 <br>
 
-    <input type="hidden" id="userquiz" data-chart="{{userquiz}}" />
+    <input type="hidden" id="userquiz" data-chart="{{ userquiz }}" />
+    <input type="hidden" id="tentativesquiz" data-chart="{{ tentativesquiz }}" />
+    <input type="hidden" id="ratings_names" data-chart="{{ ratings_names }}" />
+    <input type="hidden" id="ratings_notes" data-chart="{{ ratings_notes }}" />
 
     <div id="container" style="min-width: 310px; height: 400px; margin-left: 5%; margin-right: 5%"></div>
     <br><hr><br>
@@ -28,10 +31,6 @@
         <div id="dd" style="min-width: 310px; height: 400px; margin: 0 auto" class="col-6"></div>
     </div>
 
-    {% set nb=0 %}
-{% for i in participant %}
-    {% set nb=nb+i %}
-{% endfor %}
     <script>
         var userquiz = $('#userquiz').data('chart');
         // Create the chart
@@ -86,6 +85,7 @@
 
 
 <script>
+        var tentativesquiz = $('#tentativesquiz').data('chart');
         Highcharts.chart('cc', {
             chart: {
                 type: 'pie',
@@ -114,20 +114,8 @@
             },
             series: [{
                 type: 'pie',
-                name: 'Browser share',
-                data: [
-                    ['Firefox', 45.0],
-                    ['IE', 26.8],
-                    {
-                        name: 'Chrome',
-                        y: 12.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    ['Safari', 8.5],
-                    ['Opera', 6.2],
-                    ['Others', 0.7]
-                ]
+                name: 'Pourcentage Tentatives',
+                data: tentativesquiz
             }]
         });
 </script>
@@ -135,48 +123,64 @@
 
 
     <script>
-    Highcharts.chart('dd', {
-        chart: {
-            type: 'pie',
-            options3d: {
-                enabled: true,
-                alpha: 45,
-                beta: 0
-            }
-        },
-        title: {
-            text: '***'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                depth: 35,
+        var ratings_names = $('#ratings_names').data('chart');
+        var ratings_notes = $('#ratings_notes').data('chart');
+
+        var dataRatings = [];
+
+        ratings_names.forEach(function(element, key) {
+            dataRatings.push([element, ratings_notes[key]]);
+        });
+
+        Highcharts.chart('dd', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Évaluation des quiz (note / 5)'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                type: 'category',
+                labels: {
+                    rotation: -45,
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Moyenne sur 5'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            tooltip: {
+                pointFormat: 'Moyenne des note: <b>{point.y:.1f}</b>/5'
+            },
+            series: [{
+                name: 'Population',
+                data: dataRatings,
                 dataLabels: {
                     enabled: true,
-                    format: '{point.name}'
+                    rotation: -90,
+                    color: '#FFFFFF',
+                    align: 'right',
+                    format: '{point.y:.1f}', // one decimal
+                    y: 10, // 10 pixels down from the top
+                    style: {
+                        fontSize: '13px',
+                        fontFamily: 'Verdana, sans-serif'
+                    }
                 }
-            }
-        },
-        series: [{
-            type: 'pie',
-            name: 'Browser share',
-            data: [
-                ['Firefox', 45.0],
-                ['IE', 26.8],
-                {
-                    name: 'Chrome',
-                    y: 12.8,
-                    sliced: true,
-                    selected: true
-                },
-
-            ]
-        }]
-    });
+            }]
+        });
 </script>
 
 {% endblock %}
