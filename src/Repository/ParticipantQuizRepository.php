@@ -36,13 +36,13 @@ class ParticipantQuizRepository extends ServiceEntityRepository
 
     public function getMaxTentatives ($user){
         $qb = $this->createQueryBuilder('p')
-                   ->select('p')
+                   ->select('p AS Part, SUM(p.tentative) AS NbTentatives, q.titre AS titleQuiz, q.id AS idQuiz')
                    ->join('p.quiz', 'q')
                    ->join('q.user', 'u')
                    ->where('u.id = ?1')
                    ->setParameter(1, $user)
-//                   ->groupBy('q')
-//                   ->orderBy('NbParticipant', 'desc')
+                   ->groupBy('q')
+                   ->orderBy('NbTentatives', 'desc')
                    ->setMaxResults(10)
                    ->getQuery();
 
