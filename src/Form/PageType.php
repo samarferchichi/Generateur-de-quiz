@@ -33,7 +33,6 @@ class PageType extends AbstractType
                 'required' =>  false,
                 'attr' => [
                     'class' => 'form-control',
-                    'value' => 	'#FFFFFF',
 
                 ],
 
