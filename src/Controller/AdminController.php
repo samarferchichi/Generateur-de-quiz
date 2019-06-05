@@ -549,9 +549,6 @@ class AdminController extends EasyAdminController
 
         $listpage = $pageRepository->findAll();
 
-
-
-
         return $this->render('quiz/list.html.twig',[
                'listequiz' => $listquiz,
             'user' => $user,
@@ -626,9 +623,6 @@ class AdminController extends EasyAdminController
             'to' => $to
         ]);
     }
-
-
-
 
 
 
