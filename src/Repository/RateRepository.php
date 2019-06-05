@@ -32,6 +32,18 @@ class RateRepository extends ServiceEntityRepository
         return $qb->getArrayResult();
     }
 
+    public function getTotalRatingByUser($user){
+        $qb = $this->createQueryBuilder('r')
+            ->select('COALESCE(SUM(r.rate), 0) AS rate, COUNT(r.rate) AS total')
+            ->join('r.quiz', 'q')
+            ->join('q.user', 'u')
+            ->where('u.id = ?1')
+            ->setParameter(1, $user)
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
+
     // /**
     //  * @return Rate[] Returns an array of Rate objects
     //  */

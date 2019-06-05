@@ -53,9 +53,9 @@ class ParticipantQuizController extends EasyAdminController
         ]);
 
 
-            $queryBuilder->andWhere('entity.quiz = :role')->setParameter('role', $this->getUser() );
-
-
+            $queryBuilder->join('entity.quiz', 'q');
+            $queryBuilder->join('q.user', 'u');
+            $queryBuilder->andWhere('u.id = :user')->setParameter('user', $this->getUser() );
 
 
         return $this->get('easyadmin.paginator')->createOrmPaginator($queryBuilder, $page, $maxPerPage);

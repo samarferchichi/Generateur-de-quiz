@@ -34,6 +34,18 @@ class ParticipantQuizRepository extends ServiceEntityRepository
         return $qb->getArrayResult();
     }
 
+    public function getTotalParticipants ($user){
+        $qb = $this->createQueryBuilder('p')
+            ->select('count(q) AS NbParticipant')
+            ->join('p.quiz', 'q')
+            ->join('q.user', 'u')
+            ->where('u.id = ?1')
+            ->setParameter(1, $user)
+            ->getQuery();
+
+        return $qb->getArrayResult();
+    }
+
     public function getMaxTentatives ($user){
         $qb = $this->createQueryBuilder('p')
                    ->select('p AS Part, SUM(p.tentative) AS NbTentatives, q.titre AS titleQuiz, q.id AS idQuiz')
