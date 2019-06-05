@@ -20,7 +20,16 @@ class QuizRepository extends ServiceEntityRepository
     }
 
 
+    public function getTotalByUser($user){
+        $qb = $this->createQueryBuilder('q')
+            ->select('COUNT(q) AS quizs')
+            ->join('q.user', 'u')
+            ->where('u.id = ?1')
+            ->setParameter(1, $user)
+            ->getQuery();
 
+        return $qb->getResult();
+    }
 
 
     // /**

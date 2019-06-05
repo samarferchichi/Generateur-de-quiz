@@ -367,14 +367,14 @@
             <!-- small box -->
             <div class="small-box bg-green">
                 <div class="inner">
-                    <h3>12.5<sup style="font-size: 20px">%</sup></h3>
+                    <h3>{{ tentatives }}</h3>
 
                     <p>Tontatives Totales</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
                 </div>
-                <a href="/app_dev.php/admin/Rating-Service/" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{ path('historique') }}" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -389,7 +389,7 @@
                 <div class="icon">
                     <i class="ion ion-person-add"></i>
                 </div>
-                <a href="/app_dev.php/admin/register/" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{ path('easyadmin', {'entity': 'ParticipantQuiz', 'action': 'list'}) }}" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->
@@ -397,14 +397,14 @@
             <!-- small box -->
             <div class="small-box bg-red">
                 <div class="inner">
-                    <h3>0</h3>
+                    <h3>{{ quizs }}</h3>
 
-                    <p>Contacts</p>
+                    <p>Quiz</p>
                 </div>
                 <div class="icon">
                     <i class="ion-chatbubbles"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+                <a href="{{ path('list_quiz') }}" class="small-box-footer">Plus d'info <i class="fa fa-arrow-circle-right"></i></a>
             </div>
         </div>
         <!-- ./col -->

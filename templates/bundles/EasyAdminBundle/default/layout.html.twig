@@ -344,9 +344,7 @@
                                     {% if easyadmin_config('user.display_avatar') %}
                                         {% set _avatar_image_path = easyadmin_read_property(app.user, easyadmin_config('user.avatar_property_path')) %}
                                         {% if null == _avatar_image_path %}
-                                            <!--  <i class="fa {{ app.user is not null ? 'fa-user-circle' : 'fa-user-times' }} user-avatar"></i>-->
-                                            {#<img class="img-circle" src="{{ asset('logoquiz/admin3.png' ) }} ">#}
-                                            <img class="img-circle" src="{{ asset('uploads/brochures/' ~ app.user.avatar) }} " >
+                                            <img class="img-circle" src="{{ asset('template/images/no-person.png' ) }}" >
                                         {% else %}
                                             <img class="img-circle" src="{{ _avatar_image_path }}" />
                                         {% endif %}

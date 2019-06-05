@@ -48,7 +48,11 @@
                         <center>
 
                                 <div class="photo">
-                                    <img src='{{ asset('uploads/brochures/' ~ profile.avatar) }}' width="300px"height="300px" style="border: 1px solid #4bb5c1; border-radius: 4px;"/>
+                                    {% if null == profile.avatar %}
+                                        <img src="{{ asset('template/images/no-person.png' ) }}" width="300px"height="300px" style="border: 1px solid #4bb5c1; border-radius: 4px;">
+                                    {% else %}
+                                        <img src='{{ asset('uploads/brochures/' ~ profile.avatar) }}' width="300px"height="300px" style="border: 1px solid #4bb5c1; border-radius: 4px;"/>
+                                    {% endif %}
                                 </div>
                                 <br>
 

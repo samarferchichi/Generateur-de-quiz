@@ -77,13 +77,15 @@ class RegistrationController extends Controller
                 $event = new FormEvent($form, $request);
                 $this->eventDispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
-                $file = $user->getAvatar();
-                $fileName = md5(uniqid()).'.'.$file->guessExtension();
-                $file->move(
-                    $this->getParameter('brochures_directory'),
-                    $fileName
-                );
-                $user->setAvatar($fileName);
+                if($user->getAvatar()){
+                    $file = $user->getAvatar();
+                    $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                    $file->move(
+                        $this->getParameter('brochures_directory'),
+                        $fileName
+                    );
+                    $user->setAvatar($fileName);
+                }
 
                 $this->userManager->updateUser($user);
 

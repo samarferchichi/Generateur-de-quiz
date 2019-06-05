@@ -61,6 +61,18 @@ class ParticipantQuizRepository extends ServiceEntityRepository
         return $qb->getResult();
     }
 
+    public function getTotalTentatives ($user){
+        $qb = $this->createQueryBuilder('p')
+                   ->select('COALESCE(SUM(p.tentative), 0) AS tentatives')
+                   ->join('p.quiz', 'q')
+                   ->join('q.user', 'u')
+                   ->where('u.id = ?1')
+                   ->setParameter(1, $user)
+                   ->getQuery();
+
+        return $qb->getResult();
+    }
+
 
     public function getAllParticipants ($user){
         $qb = $this->createQueryBuilder('p')

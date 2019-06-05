@@ -23,7 +23,9 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('numerotel', TelType::class)
-            ->add('avatar', FileType::class);
+            ->add('avatar', FileType::class, [
+                'required' => false
+            ]);
 
     }
 
