@@ -6,18 +6,6 @@ App\Entity\Quiz:
     description:
       - NotBlank:
           message: Description obligatoire.
-    entete:
-      - NotBlank:
-          message: Description obligatoire.
-    pied:
-      - NotBlank:
-          message: Description obligatoire.
-    message_s:
-      - NotBlank:
-          message: Description obligatoire.
-    message_e:
-      - NotBlank:
-          message: Description obligatoire.
 
 
 App\Entity\Question:

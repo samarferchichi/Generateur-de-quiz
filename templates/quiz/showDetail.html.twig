@@ -1,6 +1,16 @@
-<center><h2>Tentative : {{ t }}</h2></center><br>
+<h2>Tentative : {{ t }}</h2><br>
 
 {{ dump(resultat) }}
-{{ dump(reponseparticipant) }}
+{{ dump(reponseparticipant)}}
 
 
+{{ dump(resultat.participantquiz) }}
+
+//***********************************************************
+
+{% for i in resultat.participantquiz.resultat %}
+
+    {% if i.tentative == t %}
+    {{ dump(i) }}
+    {% endif %}
+{% endfor %}

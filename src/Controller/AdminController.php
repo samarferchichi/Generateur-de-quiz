@@ -498,7 +498,7 @@ class AdminController extends EasyAdminController
             $page->setQuiz($quiz);
             $page->setBgColor($page->getBgColor());
             $page->setColorTitrePage('');
-            $page->setTitrePage('Vide');
+            $page->setTitrePage('');
             $ordre = $pageRepository->getMaxOrdre($quiz->getId());
             $page->setOrdre(($ordre[0]['maxOrdre'])+1);
 
@@ -548,9 +548,6 @@ class AdminController extends EasyAdminController
 
 
         $listpage = $pageRepository->findAll();
-
-
-
 
         return $this->render('quiz/list.html.twig',[
                'listequiz' => $listquiz,
@@ -626,9 +623,6 @@ class AdminController extends EasyAdminController
             'to' => $to
         ]);
     }
-
-
-
 
 
 
@@ -882,9 +876,9 @@ $quizs=$quizRepository->findAll();
 
             $page = new Page();
             $page->setQuiz($quiz);
-            $page->setBgColor('	');
+            $page->setBgColor('');
             $page->setColorTitrePage('');
-            $page->setTitrePage('Vide');
+            $page->setTitrePage('');
             $page->setOrdre(1);
 
             $entityManager->persist($page);
@@ -1528,7 +1522,8 @@ $quizs=$quizRepository->findAll();
             $page->setQuiz($quiz);
             $page->setBgColor('');
             $page->setColorTitrePage('');
-            $page->setTitrePage('Vide');
+
+            $page->setTitrePage('');
             $ordre = $pageRepository->getMaxOrdre($quiz->getId());
             $page->setOrdre(($ordre[0]['maxOrdre'])+1);
 

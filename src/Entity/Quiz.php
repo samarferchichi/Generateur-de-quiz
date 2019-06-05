@@ -262,19 +262,19 @@ private $categorie;
      */
     private $imprime_pdf;
     /**
-     * @ORM\Column(type="string", length=1000)
+     * @ORM\Column(type="string", length=1000, nullable=true)
      */
     private $entete;
     /**
-     * @ORM\Column(type="string", length=1000)
+     * @ORM\Column(type="string", length=1000, nullable=true)
      */
     private $pied;
     /**
-     * @ORM\Column(type="string", length=1000)
+     * @ORM\Column(type="string", length=1000, nullable=true)
      */
     private $message_s;
     /**
-     * @ORM\Column(type="string", length=1000)
+     * @ORM\Column(type="string", length=1000, nullable=true)
      */
     private $message_e;
 
