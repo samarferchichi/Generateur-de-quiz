@@ -2,19 +2,12 @@
 
 {% block main %}
     <style>
-        .aa {
-            width: 35px;
-            height: 4px;
-            background-color: #1f6377;
-            margin: 6px 0;
-        }
+
         div.sticky {
-            position: -webkit-sticky;
             position: sticky;
-            top: 0;
+            bottom: 0;
             padding: 5px;
-            background-color: #cae8ca;
-            border: 2px solid #4CAF50;
+            background-color: #abdde5;
         }
         input[type=text]:focus {
             background-color: lightblue;
@@ -61,9 +54,6 @@
 
         }
 
-
-
-
     </style>
 
     <meta charset="utf-8">
@@ -77,13 +67,11 @@
 
 
 
-    <div class="panel panel-success">
+    <div  class="top-container">
         <div class="card bg-info text-white">
-            <div class="card-body"><h2><font color="white"> QUIZ / Créer quiz</font> </h2></div>
+            <div class="card-body"><h2><font color="white"  > QUIZ / Créer quiz</font> </h2></div>
         </div>
         <div class="panel-body">
-       <div class="row">
-                <div class="col">
                     <div class="row">
                         <div class="col-sm-7">
 
@@ -151,7 +139,7 @@
 
 
 
-<div style="background-color:;" id="importe">
+<div  id="importe">
     <button href="#"  onclick="importe()" style="width: 100%" class="btn btn-outline-info">Importer question d'un autre quiz</button>
 <br>
 <br>
@@ -230,68 +218,69 @@
                                                          '<div style="background-color: "><label>Choix réponses de votre question</label></div>' +
 
                                                          '<div id="hide_0"  class="row">' +
-                                                         '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix :</font></label></div>' +
+                                                         '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Réponse 1</font></label></div>' +
                                                          '    <div class="col-sm-6" style="background-color:;"><input name="vf[]"  type="text" class="form-control"></textarea> </div>' +
                                                          '    <div class="col-sm-3" style="background-color:;"><select class="form-control"  name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select></div>' +
-                                                         '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+                                                         '    <div style="background-color:;"><font size="5" color="red"><a><i  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
                                                          ' <br><br>' +
                                                          ' </div>' +
                                                          '<div id="showPlus"> </div>' +
 
-                                                         '<font size="6" color=#228b22><a><i type="button" onclick="fonctiontypevraioufaux()" class="fa fa-plus-square"></i></a></font>' +
-                                                         '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                         '<font size="6" color=#228b22><a><i  onclick="fonctiontypevraioufaux()" class="fa fa-plus-square"></i></a></font>' +
+                                                         '<label><font size="2"> &nbsp &nbsp<u>Ajouter un élément de réponse</u></font></label>' +
                                                          '</div>');
                                                  }
                                              else {
                                                  if (x=='Case à cocher') {
                                                      $('#showType').html('<div id="demo" style="background-color: ">' +
-                                                         '<div  style="background-color: "><label>Choix des réponses afficher</label></div>' +
-
-
-                                                         '<div id="hide_0" ><label><font size="3"> Repanse correcte n° :</font></label>' +
-                                                         '<div class=""><input name="case[]"  type="text" class="form-control"></div>'+
-                                                         '<div style="width: 150px">' +
-                                                         '<select class="form-control" name="etatcase[]"><option value="1">Correcte</option><option value="0">Incorrecte</option></select></div>' +
-                                                         '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div> <br>' +
-                                                         ' </div>' +
+                                                         '<div  style="background-color: "><label>Choix réponses de votre question</label></div>' +
+                                                         '<div id="hide_0" class="row">' +
+                                                         '<div class="col-sm-2" style="background-color:;"><label><font size="3"> Répanse 1</font></label></div>' +
+                                                         '<div class="col-sm-6"><input name="case[]"  type="text" class="form-control"></div>'+
+                                                         '<div style="width: 150px" class="col-sm-3">' +
+                                                         '<select class="form-control" name="etatcase[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
+                                                         '<font size="5" color=red> <a><i  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
+                                                         '<br> <br></div>' +
                                                          '<div id="showPlus"> </div>' +
 
-                                                         '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncaseacocher()" class="fa fa-plus-square"></i></a></font>' +
-                                                         '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                         '<font size="6" color=#228b22><a><i  onclick="fonctioncaseacocher()" class="fa fa-plus-square"></i></a></font>' +
+                                                         '<label><font size="2"> &nbsp &nbsp  <u>Ajouter un élément de réponse</u></font></label>' +
 
                                                          '<div id="divPlus"></div>' +
                                                          '</div>');
                                                  }else{
                                                      if (x=='Liste déroulante') {
                                                              $('#showType').html('<div id="demo" style="background-color: ">' +
-                                                                 '<div  id="test" style="background-color: "><label>Choix réponses de votre liste</label>' +
+                                                                 '<div style="background-color: "><label>Choix réponses de votre question</label></div>' +
                                                                  '<div id="hide_0"  class="row" >' +
-
-                                                                 '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix réponse  :</font></label></div>' +
+                                                                 '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Répanse 1</font></label></div>' +
                                                                  '    <div class="col-sm-6" style="background-color:;"><input name="list[]"  type="text" class="form-control"></div>' +
-                                                                 '    <div class="col-sm-3" style="background-color:;"><select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
-                                                                 '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+                                                                 '    <div class="col-sm-3" style="background-color:;">' +
+                                                                 '<select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
+                                                                 '    <font size="5" color=red><a><i  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
                                                                  ' <br><br>' +
                                                                  ' </div>'+
                                                                  '<div id="showPlus"> </div>' +
 
-                                                                 '<font size="6" color=#228b22><a><i type="button" onclick="fonctionliste()" class="fa fa-plus-square"></i></a></font>' +
-                                                                 '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                                 '<font size="6" color=#228b22><a><i onclick="fonctionliste()" class="fa fa-plus-square"></i></a></font>' +
+                                                                 '<label><font size="2"> &nbsp &nbsp  <u>Ajouter un élément de réponse</u></font></label>' +
 
                                                                  '<div id="divPlus"></div>' +
-                                                                 '</div></div>');
+                                                                 '</div>');
                                                          }else {
                                                              if (x=='Calculée') {
                                                                  $('#showType').html('<div id="demo" style="background-color: ">' +
+                                                                     '<div style="background-color: "><label>Choix réponses de votre question</label></div>' +
+
                                                                      '<div  style="background-color: "><label>Question calculée</label>' +
 
 
                                                                      '<div id="hide_0" >' +
                                                                      '<div  class="row" >' +
 
-                                                                     '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Description formule n° :</font></label></div>' +
-                                                                     '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Formule :</font></label></div>' +
-                                                                     '    <div class="col-sm-3" style="background-color:;"><label><font size="2"> Resultat :</font></label></div>' +
+                                                                     '    <div class="col-sm-4" style="background-color:;"><label><font size="3"> Description formule 1 </font></label></div>' +
+                                                                     '    <div class="col-sm-4" style="background-color:;"><label><font size="3"> Formule </font></label></div>' +
+                                                                     '    <div class="col-sm-3" style="background-color:;"><label><font size="3"> Resultat</font></label></div>' +
 
                                                                         '</div>'+
 
@@ -301,7 +290,7 @@
                                                                      '    <div class="col-sm-4" style="background-color:;"><input  name="descriptionF[]" type="text" class="form-control"></div>' +
                                                                      '    <div class="col-sm-4" style="background-color:;"><input  name="formule[]" type="text" class="form-control"></div>' +
                                                                      '    <div class="col-sm-3" style="background-color:;"><input  name="resultatF[]" type="text" class="form-control"></div>' +
-                                                                     '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+                                                                     '    <div style="background-color:;"><font size="5" color=red><a><i  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
 
                                                                      '</div>'+
 
@@ -310,56 +299,65 @@
 
                                                                      '<div id="showPlus"> </div>' +
 
-                                                                     '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncalcule()" class="fa fa-plus-square"></i></a></font>' +
-                                                                     '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                                     '<font size="6" color=#228b22><a><i" onclick="fonctioncalcule()" class="fa fa-plus-square"></i></a></font>' +
+                                                                     '<label><font size="2">  &nbsp &nbsp  <u>Ajouter un élément de réponse</u></font></label>' +
 
                                                                      '<div id="divPlus"></div>' +
                                                                      '</div></div>');
 
                                                              }else {
                                                                  if (x=='Nombre') {
-                                                                     $('#showType').html('<br><div id="demo" style="background-color: ">' +
+                                                                     $('#showType').html('<div id="demo" style="background-color: ">' +
+
+                                                                         '<div style="background-color: "><label>Choix réponses de votre question</label></div>' +
 
 
-                                                                         '<div id="hide_0" ><br>' +
 
-                                                                         ' <div  class="row">' +
-                                                                         '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Description :</font></label></div>' +
-                                                                         '    <div class="col-sm-8" style="background-color:;"><textarea  name="desnum[]" type="text" class="form-control"></textarea> </div>' +
-                                                                         '  </div><br>' +
-                                                                         '<div class="row"><br>' +
-                                                                         ' <div class="col-sm-4" style="background-color:;"><label><font size="3"> Reponse correcte n° :</font></label></div>' +
-                                                                         ' <div class="col-sm-4" style="background-color:;"><input  name="number[]" type="number" class="form-control"></div>' +
-                                                                         ' <div class="col-sm-" style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+                                                                         '<div id="hide_0" >' +
+                                                                         '<div  class="row" >' +
+                                                                         '    <div class="col-sm-7" style="background-color:;"><label><font size="3"> Description de nombre 1</font></label></div>' +
+                                                                         ' <div class="col-sm-3" style="background-color:;"><label><font size="3"> Réponse correcte </font></label></div>' +
 
-                                                                         '</div>' +
                                                                          '</div>'+
-                                                                         '<div id="showPlus"> </div>' +
-                                                                         '<font size="6" color=#228b22><a><i type="button" onclick="fonctionnumber()" class="fa fa-plus-square"></i></a></font>' +
-                                                                         '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
 
-                                                                         '</div></div> ');
+
+                                                                         '<div  class="row" >' +
+                                                                         '    <div class="col-sm-7" style="background-color:;"><input  name="desnum[]" type="text" class="form-control"></div>' +
+                                                                         ' <div class="col-sm-3" style="background-color:;"><input  name="number[]" type="number" class="form-control"></div>' +
+                                                                         ' <div class="col-sm-" style="background-color:;"><font size="5" color=red><a><i  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+
+                                                                         '</div><br>'+
+
+                                                                         ' </div>'+
+
+                                                                         '<div id="showPlus"> </div>' +
+
+                                                                         '<font size="6" color=#228b22><a><i  onclick="fonctionnumber()" class="fa fa-plus-square"></i></a></font>' +
+                                                                         '<label><font size="2">  &nbsp &nbsp  <u>Ajouter un élément de réponse</u></font></label>' +
+
+                                                                         '<div id="divPlus"></div>' +
+                                                                         '</div>'+
+                                                                            '</div> ');
 
                                                                  }
                                                                  else {
                                                                      if (x == 'Date') {
-                                                                         $('#showType').html('<br><div id="demo" style="background-color: ">' +
+                                                                         $('#showType').html('<div id="demo" style="background-color: ">' +
+                                                                             '<div style="background-color: "><label>Choix réponses de votre question</label></div>' +
 
                                                                              ' <div id="hide_0" class="row"><br><br>' +
-                                                                             '    <div class="col-sm-2" style="background-color:;"><label><font size="3">Description date :</font></label></div>' +
-                                                                             '    <div class="col-sm-6" style="background-color:;"><textarea  type="text" name="desc[]"  class="form-control"></textarea> </div>' +
+                                                                             '    <div class="col-sm-3" style="background-color:;"><label><font size="3">Description date 1</font></label></div>' +
+                                                                             '    <div class="col-sm-5" style="background-color:;"><input  type="text" name="desc[]"  class="form-control"> </div>' +
                                                                              '    <div class="col-sm-3" style="background-color:;"><input name="date[]" type="date" class="form-control"></i></a></font></div>' +
-                                                                             '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
-                                                                             ' <br><br><br><br> </div>'+
-
-
+                                                                             '    <div style="background-color:;"><font size="5" color=red><a><i   onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+                                                                             ' <br><br> </div>'+
 
 
                                                                              '</div>' +
                                                                              '<div id="showPlus"> </div>' +
 
-                                                                             '<font size="6" color=#228b22><a><i type="button" onclick="fonctiondate()" class="fa fa-plus-square"></i></a></font>' +
-                                                                             '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                                             '<font size="6" color=#228b22><a><i  onclick="fonctiondate()" class="fa fa-plus-square"></i></a></font>' +
+                                                                             '<label><font size="2">  &nbsp &nbsp  <u>Ajouter un élément de réponse</u></font></label>' +
 
                                                                              '<div id="divPlus"></div>' +
                                                                              '</div></div>');
@@ -387,7 +385,7 @@
                                          nbr = nbr +1;
                                          var innerHTML =
                                              '<div id="hide_'+nbr+'" class="row"><br><br>' +
-                                             '    <div class="col-sm-3" style="background-color:;"><label><font size="3"> Reponse correcte :</font></label></div>' +
+                                             '    <div class="col-sm-3" style="background-color:;"><label><font size="3"> Réponse correcte :</font></label></div>' +
                                              '    <div class="col-sm-8" style="background-color:;"><input name="test[]" type="text" class="form-control"></div>' +
                                              '    <div class="col-sm-" style="background-color:;"><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
                                              '  </div>' ;
@@ -399,14 +397,16 @@
                                      {
                                          var nbr = $("#showPlus").children('div').length;
                                          nbr = nbr +1;
+                                         totale = nbr +1;
+
                                          var innerHTML =
                                              ' <div id="hide_'+nbr+'" class="row">' +
                                              '' +
-                                             '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Date :</font></label></div>' +
-                                             '    <div class="col-sm-6" style="background-color:;"><textarea  type="text" name="desc[]"  class="form-control"></textarea> </div>' +
+                                             '    <div class="col-sm-3" style="background-color:;"><label><font size="3"> Description date '+totale+'</font></label></div>' +
+                                             '    <div class="col-sm-5" style="background-color:;"><input type="text" name="desc[]"  class="form-control"></div>' +
                                              '    <div class="col-sm-3" style="background-color:;"><input name="date[]" type="date" class="form-control"></i></a></font></div>' +
-                                             '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
-                                             ' <br><br><br><br> </div>' ;
+                                             '    <div style="background-color:;"><font size="5" color=red><a><i   onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+                                             ' <br><br> </div>' ;
                                          $("#showPlus").append(innerHTML);
                                      }
 
@@ -414,18 +414,22 @@
                                      {
                                          var nbr = $("#showPlus").children('div').length;
                                          nbr = nbr +1;
-                                         var innerHTML ='<div id="hide_'+nbr+'"><br>' +
+                                         totale = nbr +1;
 
-                                             ' <div  class="row">' +
-                                             '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Description  :</font></label></div>' +
-                                             '    <div class="col-sm-8" style="background-color:;"><textarea name="desnum[]" type="text" class="form-control"> </textarea></div><br>' +
-                                             '  </div><br>' +
-                                             '<div class="row"><br><br>' +
-                                             ' <div class="col-sm-4" style="background-color:;"><label><font size="3"> Reponse correcte n° :</font></label></div>' +
-                                             ' <div class="col-sm-4" style="background-color:;"><input  name="number[]" type="number" class="form-control"></div>' +
-                                             ' <div class="col-sm-" style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+                                         var innerHTML ='<div id="hide_'+nbr+'" >' +
+                                             '<div  class="row" >' +
+                                             ' <div class="col-sm-7" style="background-color:;"><label><font size="3"> Description des nombre '+totale+'</font></label></div>' +
+                                             ' <div class="col-sm-3" style="background-color:;"><label><font size="3"> Réponse correcte </font></label></div>' +
+                                             '</div>'+
 
-                                             '</div>' +
+
+                                             '<div  class="row" >' +
+                                             '    <div class="col-sm-7" style="background-color:;"><input  name="desnum[]" type="text" class="form-control"></div>' +
+                                             ' <div class="col-sm-3" style="background-color:;"><input  name="number[]" type="number" class="form-control"></div>' +
+                                             ' <div class="col-sm-" style="background-color:;"><font size="5" color=red><a><i onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+
+                                             '</div><br>'+
+
                                              '</div>' ;
                                          $("#showPlus").append(innerHTML);
                                      }
@@ -436,13 +440,16 @@
                                      {
                                          var nbr = $("#showPlus").children('div').length;
                                          nbr = nbr +1;
+
+                                         totale = nbr +1;
+
                                          var innerHTML =
 
                                              '<div id="hide_'+nbr+'"  class="row">' +
-                                             '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix :</font></label></div>' +
+                                             '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Réponse '+totale+'</font></label></div>' +
                                              '    <div class="col-sm-6" style="background-color:;"><input name="vf[]"  type="text" class="form-control"></textarea> </div>' +
                                              '    <div class="col-sm-3" style="background-color:;"><select class="form-control"  name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select></div>' +
-                                             '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+                                             '    <div style="background-color:;"><font size="5" color="red"><a><i  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
                                              ' <br><br>' +
                                              ' </div>' ;
                                          ;
@@ -454,12 +461,17 @@
                                      {
                                          var nbr = $("#showPlus").children('div').length;
                                          nbr = nbr +1;
+                                         totale = nbr +1;
+
                                          var innerHTML =
-                                             '<div id="hide_'+nbr+'" ><label><font size="3"> Repanse correcte  :</font></label>' +
-                                             '<div class=""><input name="case[]"  type="text" class="form-control"></div>'+
-                                             '<div style="width: 150px">' +
-                                             '<select class="form-control" name="etatcase[]"><option value="1">Correcte</option><option value="0">Incorrecte</option></select></div>' +
-                                             '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' ;
+                                             '<div id="hide_'+nbr+'" class="row">' +
+                                             '<div class="col-sm-2"><label><font size="3"> Répanse '+totale+'</font></label></div>' +
+                                             '<div class="col-sm-6"><input name="case[]"  type="text" class="form-control"></div>'+
+                                             '<div  class="col-sm-3">' +
+                                             '<select class="form-control" name="etatcase[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
+                                             ' <div style="background-color:;"><font size="5" color=red> <a><i  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+                                             '<br><br>' +
+                                             '</div>' ;
                                          $("#showPlus").append(innerHTML);
                                      }
 
@@ -467,14 +479,17 @@
                                      {
                                          var nbr = $("#showPlus").children('div').length;
                                          nbr = nbr +1;
+                                         totale = nbr +1;
+
                                          var innerHTML =
                                              '<div id="hide_'+nbr+'"  class="row" >' +
 
-                                             '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix réponse  :</font></label></div>' +
-                                             '    <div class="col-sm-6" style="background-color:;"><input name="list[]"  type="text" class="form-control"></div>' +
-                                             '    <div class="col-sm-3" style="background-color:;"><select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
-                                             '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
-                                             ' <br><br>' +
+                                             '    <div class="col-sm-2"><label><font size="3"> Réponse '+totale+'</font></label></div>' +
+                                             '    <div class="col-sm-6" ><input name="list[]"  type="text" class="form-control"></div>' +
+                                             '    <div class="col-sm-3" >' +
+                                             '<select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
+                                             '    <div><font size="5" color="red"><a> <i  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a><font></div>' +
+                                             '<br><br>' +
                                              ' </div>' ;
 
                                          $("#showPlus").append(innerHTML);
@@ -485,14 +500,16 @@
                                      {
                                          var nbr = $("#showPlus").children('div').length;
                                          nbr = nbr +1;
+                                         totale = nbr +1;
+
                                          var innerHTML =
 
                                              '<div id="hide_'+nbr+'">' +
                                              '<div  class="row" >' +
 
-                                             '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Description formule n° :</font></label></div>' +
-                                             '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Formule :</font></label></div>' +
-                                             '    <div class="col-sm-3" style="background-color:;"><label><font size="2"> Resultat :</font></label></div>' +
+                                             '    <div class="col-sm-4" style="background-color:;"><label><font size="3"> Description de formule '+totale+'</font></label></div>' +
+                                             '    <div class="col-sm-4" style="background-color:;"><label><font size="3"> Formule </font></label></div>' +
+                                             '    <div class="col-sm-3" style="background-color:;"><label><font size="3"> Résultat </font></label></div>' +
 
                                              '</div>'+
 
@@ -501,7 +518,7 @@
                                              '    <div class="col-sm-4" style="background-color:;"><input  name="descriptionF[]" type="text" class="form-control"></div>' +
                                              '    <div class="col-sm-4" style="background-color:;"><input  name="formule[]" type="text" class="form-control"></div>' +
                                              '    <div class="col-sm-3" style="background-color:;"><input  name="resultatF[]" type="text" class="form-control"></div>' +
-                                             '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+                                             '    <div style="background-color:;"><font size="5" color=red><a><i  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
 
                                              '</div>'+
 
@@ -600,7 +617,7 @@
 
                         </div>
 
-                        <div class="row" style=" width: 690px;border-left: 1.5px solid ;
+                        <div class="col-sm-5" style=" width: 690px;border-left: 1.5px solid ;
                              color: #3a87ad;
                                 border-right: 1.5px solid ;
                                 border-bottom: 1.5px solid;
@@ -609,71 +626,69 @@
                                 overflow: scroll;
                                 ">
 
-                            {% if quiz.brochure != "null" %}
-                                <div class="col-sm-1" style="background-color: ">
-                                    <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
-                                </div>
-                            {% endif %}
+                               <div class="row">
+                                   <div class="col-sm-2">
+                                       {% if quiz.brochure != "null" %}
+                                               <img width="70" height="70" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
+                                       {% endif %}
+                                   </div>
+                                   <div class="col-sm-">
+                                       {% if quiz.gras == 1 and quiz.italique==1 %}
+                                           <center>
+                                               <b>
+                                                   <i>
 
-                                <div class="col-sm-9" style="background-color: ">
+                                                       <font color="{{ quiz.colorTitre }}" >
+                                                           <h2>     {{ quiz.titre }}</h2></font>
+                                                   </i>
+                                               </b>
+                                           </center>
 
+                                       {% else %}
+                                           {% if  quiz.gras == 1 and quiz.italique==0 %}
+                                               <center>
+                                                   <b>
+                                                       <font color="{{ quiz.colorTitre }}" >
+                                                           <h2>     {{ quiz.titre }}</h2></font>
 
-                                    {% if quiz.gras == 1 and quiz.italique==1 %}
-                                    <center>
-                                        <b>
-                                            <i>
+                                                   </b>
+                                               </center>
+                                           {% else %}
+                                               {% if  quiz.gras == 0 and quiz.italique==1 %}
+                                                   <center>
+                                                       <i>
+                                                           <font color="{{ quiz.colorTitre }}" >
+                                                               <h2>     {{ quiz.titre }}</h2></font>
 
-                                                <font color="{{ quiz.colorTitre }}" >
-                                                    <h1>     {{ quiz.titre }}</h1></font>
-                                            </i>
-                                        </b>
-                                    </center>
+                                                       </i>
+                                                   </center>
+                                               {% else %}
+                                                   {% if  quiz.gras == 0 and quiz.italique== 0 %}
+                                                       <center>
+                                                           <font color="{{ quiz.colorTitre }}" >
+                                                               <h2>     {{ quiz.titre }}</h2>    </font>
+                                                       </center>
+                                                   {% endif %}
+                                               {% endif %}
+                                           {% endif %}
+                                       {% endif %}
 
-                                    {% else %}
-                                        {% if  quiz.gras == 1 and quiz.italique==0 %}
-                                    <center>
-                                            <b>
-                                                <font color="{{ quiz.colorTitre }}" >
-                                                    <h1>     {{ quiz.titre }}</h1></font>
-
-                                            </b>
-                                    </center>
-                                        {% else %}
-                                            {% if  quiz.gras == 0 and quiz.italique==1 %}
-                                    <center>
-                                                <i>
-                                                    <font color="{{ quiz.colorTitre }}" >
-                                                        <h1>     {{ quiz.titre }}</h1></font>
-
-                                                </i>
-                                    </center>
-                                            {% else %}
-                                                {% if  quiz.gras == 0 and quiz.italique== 0 %}
-                                    <center>
-                                                    <font color="{{ quiz.colorTitre }}" >
-                                               <h1>     {{ quiz.titre }}</h1>    </font>
-                                    </center>
-                                                {% endif %}
-                                            {% endif %}
-                                        {% endif %}
-                                    {% endif %}
-                                </div>
-
-
+                                   </div>
+                               </div>
 
                                 <div class="col-sm-6" >
-                                    <div class="list-group">
+                                    <div class="list-group" style="width: 630px">
                                         {% if pos == 1 %}
-                                            <br>
                                             <label>
-
+                                                <br>
+                                                {{ quiz.description }}
+<br>
                                                 <font color="black">
 
                                                     {{ quiz.entete }}
 
                                                 </font>
                                             </label>
-                                            <br>
                                         {% endif %}
                                         <label>
                                             <font color="{{ page.colorTitrePage }}" >
@@ -687,194 +702,259 @@
 
                                     </div>
                                 </div>
+                            <div style="border-bottom: 1px solid grey;">
+
+                            </div><br>
+
                                 {% if page.question|length == 0 %}
-                                    <label>
-                                        Page vide !
-                                    </label>
+                                    <center>
+                                       <h3>
+                                           <label>
+                                               <br>
+                                               <font color="#1e90ff" >Page vide !</font>
+                                           </label>
+                                       </h3>
+                                    </center>
                                 {% else %}
                                     {% for key, j in listquestion %}
-                                        <div class="col-sm-11"  >
+
+                                        <div class="col-sm-12"  >
                                             <div class="list-group">
 
-                                                <div  style="background-color: #e1edf7" class="list-group-item list-group-item-action ">
-                                                    <b>
-                                                        <a data-target="#myModalDelete" data-toggle="modal">
-                                                            Question n° : {{ key + 1 }}
-                                                        </a>
-                                                    </b>
+                                                <div class="row">
+                                                    <div class="col-sm-11">
+                                                        <div  style="background-color: #e1edf7" class="list-group-item">
+                                                            <font color="black">
 
-                                                    <br>
+                                                             <b>
+                                                                <a data-target="#myModalDelete" data-toggle="modal">
+                                                                    Question n°  {{ key + 1 }}
+                                                                </a>
+                                                            </b>
 
-                                                    {% if j.typeQuestion =='Date' %}
-                                                        {{ j.textQuestion }}
-                                                        <br>
-                                                        {{ j.descriptionQuestion }}
-                                                        <br>
-                                                        {% for p in listreponse %}
-                                                            {% if p.question == j %}
-                                                                <label>{{ p.descriptiondate }}</label>
-                                                                <input type="date" class="form-control">
+                                                            <br>
 
-                                                            {% endif %}
-                                                        {% endfor %}
+                                                            {% if j.typeQuestion =='Date' %}
+                                                                {{ j.textQuestion }}
+                                                                <br>
+                                                                {{ j.descriptionQuestion }}
+                                                                <br>
+                                                                {% for p in listreponse %}
+                                                                    {% if p.question == j %}
+                                                                        <label>{{ p.descriptiondate }}</label>
+                                                                        <input type="date" class="form-control">
 
-                                                    {% endif %}
-
-                                                    {% if j.typeQuestion =='Nombre' %}
-                                                        {{ j.textQuestion }}
-                                                        <br>
-                                                        {{ j.descriptionQuestion }}
-                                                        <br>
-                                                        {% for p in listreponse %}
-                                                            {% if p.question == j %}
-                                                                <label>{{ p.desnumber }}</label>
-                                                                <input type="number" class="form-control">
+                                                                    {% endif %}
+                                                                {% endfor %}
 
                                                             {% endif %}
-                                                        {% endfor %}
 
-                                                    {% endif %}
+                                                            {% if j.typeQuestion =='Nombre' %}
+                                                                {{ j.textQuestion }}
+                                                                <br>
+                                                                {{ j.descriptionQuestion }}
+                                                                <br>
+                                                                {% for p in listreponse %}
+                                                                    {% if p.question == j %}
+                                                                        <label>{{ p.desnumber }}</label>
+                                                                        <input type="number" class="form-control">
 
+                                                                    {% endif %}
+                                                                {% endfor %}
 
-                                                    {% if j.typeQuestion =='Vrai/faux' %}
-                                                      <label>
-                                                          <b>Répondre par vrai ou faux</b>
-                                                      </label>
-                                                        <br>
-                                                        {{ j.textQuestion }}
-                                                        <br>
-                                                        {{ j.descriptionQuestion }}
-
-                                                        {% for p in listreponse %}
-                                                            {% if p.question == j %}
-
-                                                    <div  class="row" >
-
-                                                        <div class="col-sm-8" style="background-color:;">
-                                                                                  <li>{{ p.reponseValide }}</li>
-                                                        </div>
-                                                        <div class="col-sm-4" style="background-color:;">
-
-                                                                                    <select style="width: 150px;" class="form-control">
-                                                                                        <option>
-                                                                                            Vrai
-                                                                                        </option>
-                                                                                        <option>
-                                                                                            Faux
-                                                                                        </option>
-                                                                                    </select>
-                                                        </div>
-
-                                                                                </div>
                                                             {% endif %}
-                                                        {% endfor %}
-
-                                                    {% endif %}
 
 
-                                                    {% if j.typeQuestion =='Liste déroulante' %}
-                                                        {{ j.textQuestion }}
-                                                        <br>
+                                                            {% if j.typeQuestion =='Vrai/faux' %}
+                                                                <label>
+                                                                    <b>Répondre par vrai ou faux</b>
+                                                                </label>
+                                                                <br>
+                                                                {{ j.textQuestion }}
+                                                                <br>
+                                                                {{ j.descriptionQuestion }}
 
-                                                        {{ j.descriptionQuestion }}
+                                                                {% for p in listreponse %}
+                                                                    {% if p.question == j %}
 
-                                                        <table>
-                                                            <tr>
-                                                                <td colspan="3">
-                                                                    <div style="width: 100px;">
-                                                                        <select style="width: 350px;" class="form-control">
-                                                                            {% for i in listreponse %}
-                                                                                {% if i.question == j %}
+                                                                        <div  class="row" >
 
+                                                                            <div class="col-sm-8" style="background-color:;">
+                                                                                <li>{{ p.reponseValide }}</li>
+                                                                            </div>
+                                                                            <div class="col-sm-4" style="background-color:;">
+
+                                                                                <select style="width: 150px;" class="form-control">
                                                                                     <option>
-                                                                                        {{ i.reponseValide }}
+                                                                                        Vrai
                                                                                     </option>
+                                                                                    <option>
+                                                                                        Faux
+                                                                                    </option>
+                                                                                </select>
+                                                                            </div>
 
-                                                                                {% endif %}
-                                                                            {% endfor %}
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-
-                                                    {% endif %}
-
-
-
-                                                    {% if j.typeQuestion == 'Case à cocher' %}
-                                                        {{ j.textQuestion }}
-                                                        <br>
-                                                        {{ j.descriptionQuestion }}
-
-                                                        {% for p in listreponse %}
-                                                            {% if p.question == j %}
-                                                    <div  class="row" >
-
-                                                        <div class="col-sm-8" style="background-color:;">
-                                                            <li>{{ p.reponseValide }}</li>
-                                                        </div>
-                                                        <div class="col-sm-4" style="background-color:;">
-                                                            <input type="checkbox" >
-
-                                                        </div>
-                                                        </div>
-
+                                                                        </div>
+                                                                    {% endif %}
+                                                                {% endfor %}
 
                                                             {% endif %}
-                                                        {% endfor %}
-                                                    {% endif %}
 
-                                                    {% if j.typeQuestion =='Calculée' %}
-                                                        {{ j.textQuestion }}
-                                                        <br>
-                                                        {{ j.descriptionQuestion }}
 
-                                                        {% for p in listreponse %}
-                                                            {% if p.question == j %}
+                                                            {% if j.typeQuestion =='Liste déroulante' %}
+                                                                {{ j.textQuestion }}
+                                                                <br>
+
+                                                                {{ j.descriptionQuestion }}
+
                                                                 <table>
                                                                     <tr>
                                                                         <td colspan="3">
-                                                                            {{ p.descriptionformule }}
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            Formule:
-                                                                        </td>
-                                                                        <td colspan="3">
-                                                                            <input  style="width: 400px;" class="form-control" type="text">
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            Resultat:
-                                                                        </td>
-                                                                        <td>
-                                                                            <input style="width: 400px;" class="form-control" type="text">
+                                                                            <div style="width: 100px;">
+                                                                                <select style="width: 350px;" class="form-control">
+                                                                                    {% for i in listreponse %}
+                                                                                        {% if i.question == j %}
+
+                                                                                            <option>
+                                                                                                {{ i.reponseValide }}
+                                                                                            </option>
+
+                                                                                        {% endif %}
+                                                                                    {% endfor %}
+                                                                                </select>
+                                                                            </div>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
+
                                                             {% endif %}
-                                                        {% endfor %}
-                                                    {% endif %}
 
 
 
+                                                            {% if j.typeQuestion == 'Case à cocher' %}
+                                                                {{ j.textQuestion }}
+                                                                <br>
+                                                                {{ j.descriptionQuestion }}
+
+                                                                {% for p in listreponse %}
+                                                                    {% if p.question == j %}
+                                                                        <div  class="row" >
+
+                                                                            <div class="col-sm-8" style="background-color:;">
+                                                                                <li>{{ p.reponseValide }}</li>
+                                                                            </div>
+                                                                            <div class="col-sm-4" style="background-color:;">
+                                                                                <input type="checkbox" >
+
+                                                                            </div>
+                                                                        </div>
 
 
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            {% endif %}
 
+                                                            {% if j.typeQuestion =='Calculée' %}
+                                                                {{ j.textQuestion }}
+                                                                <br>
+                                                                {{ j.descriptionQuestion }}
 
+                                                                {% for p in listreponse %}
+                                                                    {% if p.question == j %}
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td colspan="3">
+                                                                                    {{ p.descriptionformule }}
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    Formule:
+                                                                                </td>
+                                                                                <td colspan="3">
+                                                                                    <input  style="width: 400px;" class="form-control" type="text">
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    Resultat:
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input style="width: 400px;" class="form-control" type="text">
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            {% endif %}
 
+                                                            {% if j.infoBulle != '' %}
 
-                                                    {% if j.infoBulle != '' %}
+                                                                <div style="padding-left: 500px;" class="container">
+                                                                    <a href="#" data-toggle="popover" title="INFO !" data-content="{{ j.infoBulle }}"><i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
+                                                                </div>
+                                                            {% endif %}
+                                                            </font>
 
-                                                        <div style="padding-left: 530px;" class="container">
-                                                            <a href="#" data-toggle="popover" title="INFO !" data-content="{{ j.infoBulle }}"><i style="color:#4bb1cf;" class="fa fa-info-circle"></i></a>
                                                         </div>
-                                                    {% endif %}
 
-                                                </div><br>
+                                                    </div>
+
+                                                    <div class="col-sm-1">
+
+                                                        <div>
+
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        <font size="3">
+                                                                            <a href="#" data-target="#editequestion-{{ j.id  }}" data-toggle="modal" class="fa fa-pencil"></a>
+                                                                        </font>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <font size="3">
+                                                                            <a style="color: red!important;" href="#" data-target="#removequestion-{{ j.id }}" data-toggle="modal" class="fa fa-trash-o" ></a>
+                                                                        </font>
+
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td>
+                                                                        <font size="3">
+                                                                            {% if page.question|length < page.quiz.nbQuestion %}
+                                                                                <a class="fa fa-file-o"   href="{{ path('question_dep', {'question': j.id} )}}"></a>
+                                                                            {% else %}
+                                                                                <i style="color: grey" class="fa fa-file-o" href="{{ path('question_dep', {'question': j.id} )}}"></i>
+                                                                            {% endif %}
+                                                                        </font>
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>
+                                                                        <font size="3">
+                                                                            {% if j.actif == false  %}
+                                                                                <a class="fa fa-circle" href="{{ path('actif', {'question': j.id} )}}" style="color:grey"  ></a>
+                                                                            {% else %}
+
+                                                                                <a class="fa fa-circle" href="{{ path('actif', {'question': j.id} )}}"  style="color: #18835a"></a>
+
+                                                                            {% endif %}
+                                                                        </font>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <br>
                                                 <div  class="modal fade" id="editequestion-{{ j.id }}" role="dialog">
                                                     <div  class="modal-dialog modal-xl">
 
@@ -924,62 +1004,21 @@
                                                                 )) }}
                                                             </div>
                                                         </div>
+
                                                     </div>
 
                                                 </div>
+
                                             </div>
-                                        </div>
-                                        <div>
-
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <font size="3">
-                                                            <a href="#" data-target="#editequestion-{{ j.id  }}" data-toggle="modal" class="fa fa-pencil"></a>
-                                                        </font>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                       <font size="3">
-                                                           <a href="#" data-target="#removequestion-{{ j.id }}" data-toggle="modal" class="fa fa-trash-o" ></a>
-                                                       </font>
-
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>
-                                                        <font size="3">
-                                                        {% if page.question|length < page.quiz.nbQuestion %}
-                                                            <a class="fa fa-file-o" href="{{ path('question_dep', {'question': j.id} )}}"></a>
-                                                        {% else %}
-                                                            <i style="color: grey" class="fa fa-file-o" href="{{ path('question_dep', {'question': j.id} )}}"></i>
-                                                        {% endif %}
-                                                        </font>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <font size="3">
-                                                        {% if j.actif == false  %}
-                                                            <a class="fa fa-circle" href="{{ path('actif', {'question': j.id} )}}" style="color:grey"  ></a>
-                                                        {% else %}
-
-                                                            <a class="fa fa-circle" href="{{ path('actif', {'question': j.id} )}}"  style="color: #18835a"></a>
-
-                                                        {% endif %}
-                                                        </font>
-                                                    </td>
-                                                </tr>
-                                            </table>
 
                                         </div>
+
 
                                     {% endfor %}
 
                                 {% endif %}
+
+
 
                             {% if pos >= quiz.nbPage  %}
                             <div class="col-sm-12"   >
@@ -997,7 +1036,6 @@
 
                         {% endif %}
 
-                            <!-- Modal -->
                             <div class="modal fade" id="myModal" role="dialog">
                                 <div class="modal-dialog">
 
@@ -1015,103 +1053,19 @@
                                 </div>
                             </div>
 
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
 
                             <style>
-                                body {margin:0;}
-
-                                .navbar {
-                                    overflow: hidden;
-                                    background-color: #333;
-                                    position: fixed;
+                                div.sticky {
+                                    position: sticky;
                                     bottom: 0;
-                                    width: 100%;
-                                }
-
-                                .navbar a {
-                                    float: left;
-                                    display: block;
-                                    color: #f2f2f2;
-                                    text-align: center;
-                                    padding: 14px 16px;
-                                    text-decoration: none;
-                                    font-size: 17px;
-                                }
-
-                                .navbar a:hover {
-                                    background-color: #ddd;
-                                    color: black;
-                                }
-
-                                .navbar a.active {
-                                    background-color: #4CAF50;
-                                    color: white;
-                                }
-
-                                .navbar .icon {
-                                    display: none;
-                                }
-
-                                @media screen and (max-width: 600px) {
-                                    .navbar a:not(:first-child) {display: none;}
-                                    .navbar a.icon {
-                                        float: right;
-                                        display: block;
-                                    }
-                                }
-
-                                @media screen and (max-width: 600px) {
-                                    .navbar.responsive .icon {
-                                        position: absolute;
-                                        right: 0;
-                                        bottom:0;
-                                    }
-                                    .navbar.responsive a {
-                                        float: none;
-                                        display: block;
-                                        text-align: left;
-                                    }
 
                                 }
                             </style>
-                            <div>
 
-                                <div   style=" width: 650px; height:52px; border-left: 1.5px solid ;
-                             color: #3a87ad; background-color: #9acfea ; border-radius: 5px; " >
 
-                                    <!-- Trigger the modal with a button -->
-                                    <div class="form-group row" >
+                                <div class="sticky"  >
+
+                                    <div>
                                         <div class="col-xs-2">
                                             &nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -1128,7 +1082,7 @@
                                                     {{ pos }} / {{ quiz.nbPage}} page
                                                         {% else %}
                                                           Page  {{ pos }}
-{% endif %}
+                                                    {% endif %}
 
                                                     {% if pos < quiz.nbPage %}
                                                         <a class="fa fa-chevron-circle-right" href="{{ path('creatNextPage', {'quiz':quiz.id, 'page': page.id}) }}"></a>
@@ -1151,8 +1105,7 @@
                                             &nbsp;&nbsp;&nbsp;
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            &nbsp;&nbsp;&nbsp;
+
 
 
 
@@ -1161,18 +1114,17 @@
                                             </font>
                                                 &nbsp;
                                             <font size="4">
-                                                <a href="{{ path("page_ajout", { 'id': quiz.id, 'page': page.id } ) }}" class="fa fa-plus-square-o" ></a>
+                                                <a style="color: green!important;" href="{{ path("page_ajout", { 'id': quiz.id, 'page': page.id } ) }}" class="fa fa-plus-square-o" ></a>
                                             </font>
                                                 &nbsp;
                                             <font size="4">
-                                                <a href="#"  data-target="#removepage-{{ page.id }}" data-toggle="modal"  class="fa fa-trash-o" ></a>
+                                                <a href="#" style="color: red!important;"   data-target="#removepage-{{ page.id }}" data-toggle="modal"  class="fa fa-trash-o" ></a>
                                             </font>
                                         </div>
 
                                     </div>
                                 </div>
 
-                            </div>
                             <div class="modal fade" id="removepage-{{ page.id }}" role="dialog">
                                 <div class="modal-dialog">
 
@@ -1193,19 +1145,15 @@
 
                             </div>
 
-                        </div>
 
-
-                    </div>
-
-                </div>
-
-
-
-            </div>
 
         </div>
+
         </div>
+
+    </div>
+    </div>
+
 
 
 

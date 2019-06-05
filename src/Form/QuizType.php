@@ -34,6 +34,7 @@ class QuizType extends AbstractType
 
             ->add('color_titre', ColorType::class,[
                 'required' =>  false,
+                'label'=> 'Couleur ',
 
             ])
             ->add('police', ChoiceType::class, [
@@ -73,13 +74,12 @@ class QuizType extends AbstractType
                         ],
 
                 'required' =>  false,
-                'label' => 'Description de quiz',
+                'label' => 'Description de votre quiz',
 
 
             ])
             ->add('mode_correction',null, [
-                'label'=> 'Activer le mode correction sur votre quiz: la bonne réponse sera affichée aux répondants aprés qu\'ils aient réponduus.
-                Activer le mode score sur votre quiz :le scrore des répondants sera calculé en fonction de leurs réponses',
+                'label'=> 'Le type Quiz: modes correction et score',
                 'label_attr' => [
                     'style' => 'margin-left: 17px;'
                 ],
@@ -87,7 +87,9 @@ class QuizType extends AbstractType
                     'data-toggle' => "toggle",
                     'data-onstyle' => "success",
                     'data-on' => "Oui",
-                    'data-off' => "Non"
+                    'data-off' => "Non",
+                    'style' => 'margin-left: 16px;'
+
                 ],
                 'data' => true
             ])
@@ -121,7 +123,7 @@ class QuizType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ],
-                'label' => 'Nombres des questions par pages',
+                'label' => 'Nombre des questions par page',
                 'label_attr' => [
                     'style' => 'margin-left: 16px;'
                 ]
@@ -145,7 +147,7 @@ class QuizType extends AbstractType
                     'class' => 'form-control'
                 ],
 
-                'label' => 'Nombres des pages ',
+                'label' => 'Nombre de pages ',
                 'label_attr' => [
                     'style' => 'margin-left: 5px;'
                 ]
@@ -153,7 +155,7 @@ class QuizType extends AbstractType
             ])
             ->add('melange_question',null,[
                 'required' =>  false,
-                'label' => 'Melanger les questions',
+                'label' => 'Mélanger les questions',
                 'attr' => [
                     'data-toggle' => "toggle",
                     'data-onstyle' => "info",
@@ -166,6 +168,8 @@ class QuizType extends AbstractType
 
             ->add('ouvrire_quiz', TextType::class,[
                 'required' =>false,
+                'label'=> 'Date de lancement de quiz '
+,
                 'attr' => [
                     'class' => 'form-control',
                     'autocomplete' => "off",
@@ -174,6 +178,7 @@ class QuizType extends AbstractType
             ])
             ->add('fermer_quiz',TextType::class,[
                 'required' =>false,
+                'label' => 'Date de fermeture de quiz ',
                 'attr' => [
                     'class' => 'form-control',
                     'autocomplete' => "off",
@@ -197,7 +202,7 @@ class QuizType extends AbstractType
             ])
             ->add('imprime_pdf',null,[
                 'required' =>  false,
-                'label' => 'Imprimer le quiz en pdf',
+                'label' => 'Imprimer le quiz en PDF',
                 'attr' => [
                     'data-toggle' => "toggle",
                     'data-onstyle' => "info",
@@ -216,7 +221,7 @@ class QuizType extends AbstractType
                     ],
 
                 'required' =>  false,
-                'label' => 'Entéte de votre quiz :',
+                'label' => 'Entête de votre quiz',
 
             ])
             ->add('pied',TextareaType::class, [
@@ -226,7 +231,7 @@ class QuizType extends AbstractType
                     ],
 
                 'required' =>  false,
-                'label' => 'Pied de votre quiz :',
+                'label' => 'Pied de votre quiz ',
 
             ])
 
@@ -238,7 +243,7 @@ class QuizType extends AbstractType
                     ],
 
                 'required' =>  false,
-                'label' => 'Message de succés :',
+                'label' => 'Message de succés',
 
             ])
             ->add('message_e',TextareaType::class, [
@@ -248,7 +253,7 @@ class QuizType extends AbstractType
                     ],
 
                 'required' =>  false,
-                'label' => 'Message d\'erreur :',
+                'label' => 'Message d\'échec',
 
             ])
 
@@ -274,7 +279,7 @@ class QuizType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ],
-                'label' => 'Nombres des tentatives autorisées',
+                'label' => 'Nombre des tentatives autorisées',
                 'label_attr' => [
                     'style' => 'margin-left: 16px;'
                 ]
@@ -299,7 +304,7 @@ class QuizType extends AbstractType
                     'Ressources Humaines' => "Ressources Humaines",
                     'Evenementiel' => "Evenementiel",
                    ],
-                'label' => 'Categorie',
+                'label' => 'Sélectionnez une catégorie',
                 'attr' => [
                     'class' => 'form-control',
                 ],
