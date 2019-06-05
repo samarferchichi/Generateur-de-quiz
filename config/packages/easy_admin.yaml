@@ -28,6 +28,7 @@ easy_admin:
 
     ParticipantQuiz:
       class: App\Entity\ParticipantQuiz
+      controller: App\Controller\ParticipantQuizController
 
       disabled_actions: ['edit','delete']
 

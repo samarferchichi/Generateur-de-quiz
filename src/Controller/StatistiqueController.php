@@ -74,6 +74,9 @@ class StatistiqueController extends EasyAdminController
         $tentatives = $participantQuizRepository->getMaxTentatives($this->getUser()->getId());
         $ratings = $rateRepository->getRatingByUser($this->getUser()->getId());
 
+        $total_ratings = $rateRepository->getTotalRatingByUser($this->getUser()->getId());
+        $total_participants = $participantQuizRepository->getTotalParticipants($this->getUser()->getId());
+
         $data = [];
         $data2 = [];
         $rating_names = [];
@@ -108,7 +111,9 @@ class StatistiqueController extends EasyAdminController
                 'userquiz' => json_encode($data),
                 'tentativesquiz' => json_encode($data2),
                 'ratings_names' => json_encode($rating_names),
-                'ratings_notes' => json_encode($rating_notes)
+                'ratings_notes' => json_encode($rating_notes),
+                'total_ratings' => ((int)$total_ratings[0]['rate'] != 0) ? ((int)$total_ratings[0]['rate']/(int)$total_ratings[0]['total']) : 0,
+                'total_participants' => $total_participants[0]['NbParticipant']
             ]);
     }
 
