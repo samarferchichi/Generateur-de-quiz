@@ -498,7 +498,7 @@ class AdminController extends EasyAdminController
             $page->setQuiz($quiz);
             $page->setBgColor($page->getBgColor());
             $page->setColorTitrePage('');
-            $page->setTitrePage('');
+            $page->setTitrePage();
             $ordre = $pageRepository->getMaxOrdre($quiz->getId());
             $page->setOrdre(($ordre[0]['maxOrdre'])+1);
 
@@ -878,7 +878,7 @@ $quizs=$quizRepository->findAll();
             $page->setQuiz($quiz);
             $page->setBgColor('');
             $page->setColorTitrePage('');
-            $page->setTitrePage('');
+            $page->setTitrePage();
             $page->setOrdre(1);
 
             $entityManager->persist($page);
@@ -1396,8 +1396,10 @@ $quizs=$quizRepository->findAll();
         $question=$page->getQuestion();
 
         $form = $this->createForm(PageType::class, $page);
-        if ($page->getTitrePage())
+
+        if($page->getTitrePage() == null )
             $page->setTitrePage($page->getTitrePage());
+
 
         $form->handleRequest($request);
 
@@ -1523,7 +1525,8 @@ $quizs=$quizRepository->findAll();
             $page->setBgColor('');
             $page->setColorTitrePage('');
 
-            $page->setTitrePage('');
+            if($page->getTitrePage())
+            $page->setTitrePage($page->getTitrePage());
             $ordre = $pageRepository->getMaxOrdre($quiz->getId());
             $page->setOrdre(($ordre[0]['maxOrdre'])+1);
 
