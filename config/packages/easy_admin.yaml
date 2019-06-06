@@ -16,6 +16,7 @@ easy_admin:
       class: App\Entity\Participant
 
       list:
+
       action:
         fields:
           - { property: 'email', type: 'text' }
@@ -34,6 +35,7 @@ easy_admin:
 
       label: 'Participants'
       list:
+
         fields:
           - { property: 'participant' , type: 'email' , label: 'Email participant'}
           - { property: 'quiz', type: 'text' , label: 'Quiz '}
@@ -155,7 +157,7 @@ easy_admin:
         icon: 'users'
         children:
           - { entity: 'ParticipantQuiz', icon: 'user', label: 'Participants'  }
-      - { label: 'Statiqtique',route: 'statistique', icon: 'fa fa-pie-chart' }
+      - { label: 'Statistique',route: 'statistique', icon: 'fa fa-pie-chart' }
       - { label: 'Historiques',route: 'historique', icon: 'history' ,css_class: 'text-bold' }
     assets:
       css:

@@ -105,17 +105,16 @@
                     <img width="60" height="60" src="{{ asset('uploads/brochures/' ~ quiz.brochure) }}">
                 {% endif %}
                 <font size="" color="{{ quiz.colorTitre }}">
-                   Titre de quiz
                     {% if quiz.gras and quiz.italique %}
-                        <b><i>  "{{ quiz.titre }}"</i></b>
+                        <b><i>  {{ quiz.titre }}</i></b>
                     {% else %}
                         {% if quiz.gras %}
-                            <b> "{{ quiz.titre }}"</b>
+                            <b> {{ quiz.titre }}</b>
                         {% else %}
                             {% if quiz.italique %}
-                                <i> "{{ quiz.titre }}"</i>
+                                <i> {{ quiz.titre }}</i>
                             {% else %}
-                                "{{ quiz.titre }}"
+                                {{ quiz.titre }}
                             {% endif %}
                         {% endif %}
                     {% endif %}
@@ -135,7 +134,7 @@
 
         {% endfor %}
        <h2>
-           {{ ii }} tentatives.
+           Tentative n° {{ ii }} .
        </h2>
     {% else %}
         {% set res=0 %}
@@ -207,8 +206,8 @@
                     {% if key ==0  %}
                         {{ quiz.entete }}
                     {% endif %}
-
-                    <h2>page : {{ key + 1 }}</h2>
+<br>
+                    <h2>page : {{ key + 1 }}</h2><br>
                     <h3>
                         {% if i.titrePage == "Vide" %}
                         {% else %}
