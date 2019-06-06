@@ -342,11 +342,10 @@
                             <div class="user-panel text-center" data-toggle="popover" data-placement="bottom" data-container=".user-menu-wrapper" data-content="{{ _user_menu_content|e('html_attr') }}" data-html="true">
                                 <div class="image">
                                     {% if easyadmin_config('user.display_avatar') %}
-                                        {% set _avatar_image_path = easyadmin_read_property(app.user, easyadmin_config('user.avatar_property_path')) %}
-                                        {% if null == _avatar_image_path %}
+                                        {% if null == app.user.avatar %}
                                             <img class="img-circle" src="{{ asset('template/images/no-person.png' ) }}" >
                                         {% else %}
-                                            <img class="img-circle" src="{{ _avatar_image_path }}" />
+                                            <img class="img-circle" src="{{ asset('uploads/brochures/' ~ app.user.avatar) }}" />
                                         {% endif %}
                                     {% endif %}
                                 </div>
