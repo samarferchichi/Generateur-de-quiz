@@ -496,9 +496,9 @@ class AdminController extends EasyAdminController
 
             $page = new Page();
             $page->setQuiz($quiz);
-            $page->setBgColor($page->getBgColor());
-            $page->setColorTitrePage('');
-            $page->setTitrePage('');
+          //  $page->setBgColor($page->getBgColor());
+           // $page->setColorTitrePage('');
+           // $page->setTitrePage();
             $ordre = $pageRepository->getMaxOrdre($quiz->getId());
             $page->setOrdre(($ordre[0]['maxOrdre'])+1);
 
@@ -765,7 +765,7 @@ $quizs=$quizRepository->findAll();
                 $newpage->setBgColor($par->getBgColor());
             if($par->getOrdre())
                 $newpage->setOrdre($par->getOrdre());
-            if($par->getTitrePage())
+          //  if($par->getTitrePage())
                 $newpage->setTitrePage($par->getTitrePage());
             if($par->getColorTitrePage())
                 $newpage->setColorTitrePage($par->getColorTitrePage());
@@ -1397,9 +1397,8 @@ $quizs=$quizRepository->findAll();
 
         $form = $this->createForm(PageType::class, $page);
 
-        if($page->getTitrePage() == null )
-            $page->setTitrePage($page->getTitrePage());
-
+        if($page->getTitrePage() == null)
+            $page->setTitrePage("vide");
 
         $form->handleRequest($request);
 
@@ -1522,11 +1521,10 @@ $quizs=$quizRepository->findAll();
         if($quiz->getNbPage() > count($quiz->getPage())){
             $page = new Page();
             $page->setQuiz($quiz);
-            $page->setBgColor('');
-            $page->setColorTitrePage('');
+           // $page->setBgColor('');
+           // $page->setColorTitrePage('');
 
-            if($page->getTitrePage())
-            $page->setTitrePage($page->getTitrePage());
+          //  $page->setTitrePage();
             $ordre = $pageRepository->getMaxOrdre($quiz->getId());
             $page->setOrdre(($ordre[0]['maxOrdre'])+1);
 
