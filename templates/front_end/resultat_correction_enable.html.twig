@@ -393,7 +393,7 @@
                             {% endif %}
                                <!--on peut changer la color-->
                             {% if question.reponsesParticipant[key].reponse !="Vrai" and k.etatvf != true  %}
-                                <li>  <b>   <font color="#87a800"> {{ (k.reponse_valide) }}  &nbsp;(correct)</font></b></li>
+                                <li>  <b>   <font color=""> {{ (k.reponse_valide) }}  </font></b></li>
                             {% endif %}
                                </b>
                                <br>
@@ -438,7 +438,6 @@
 
 </div>
 
-</div>
 </body>
 </html>
 {% endblock %}
