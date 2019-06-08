@@ -105,7 +105,7 @@ class Page
         return $this->titre_page;
     }
 
-    public function setTitrePage(string $titre_page)
+    public function setTitrePage($titre_page)
     {
         $this->titre_page = $titre_page;
 

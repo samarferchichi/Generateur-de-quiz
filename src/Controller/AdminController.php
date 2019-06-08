@@ -1397,17 +1397,18 @@ $quizs=$quizRepository->findAll();
 
         $form = $this->createForm(PageType::class, $page);
 
-        if($page->getTitrePage() == null)
-            $page->setTitrePage("vide");
-
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
-
+            if(empty(trim($page->getTitrePage()))){
+                $page->setTitrePage(null);
+            }
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('list_quiz');
+            return $this->redirectToRoute('modifier_page', [
+                'quiz' => $quiz->getId(),
+                'page' => $page->getId()
+            ]);
         }
 
         return $this->render('quiz/modifierPage.html.twig', [
