@@ -44,15 +44,21 @@
     </style>
     <div class="tab">
         {% for key, p in quiz.page %}
-        <button class="tablinks" onclick="openCity(event, '{{ p.ordre }}')" id="defaultOpen">Titre page {{ key+1 }}: {{ p.titrePage }}  </button>
+        <button class="tablinks" onclick="openCity(event, '{{ p.ordre }}')" id="defaultOpen">Titre page {{ key+1 }}:
+            {% if p.titrePage %}
+            {{ p.titrePage }}
+        {% else %}
+            Vide
+            {% endif %}</button>
          {% endfor %}
     </div>
     {% for aa in quiz.page %}
 
     <div id="{{ aa.ordre }}" class="tabcontent" >
-        {% if aa %}
-        <center><h3> <font color=""> </font></h3></center>
+        {% if aa.titrePage  %}
+        <center><h3> <font color=""> {{ aa.TitrePage }}</font></h3></center>
             {% else %}
+
             <center><h3>Titre de page : Vide</h3></center>
         {% endif %}
                 {% for p in quiz.page %}

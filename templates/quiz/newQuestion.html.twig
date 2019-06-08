@@ -137,7 +137,7 @@
             <br>
 
             <div id="importe">
-                <button href="#" type="button" onclick="importe()" style="width: 100%" class="btn btn-outline-info">Importer question d'un autre quiz</button>
+                <button href="#" type="button" onclick="importe()" style="width: 100%" class="btn btn-outline-info">Importer une question d'un autre quiz</button>
                 <br>
                 <br>
                 <br>
@@ -147,15 +147,15 @@
                     <tr>
                         <td>
                             {% if page.question|length < page.quiz.nbQuestion %}
-                                <i>Question n° {{ (page.question|length)+1 }} : </i>
+                                <b>Question n° {{ (page.question|length)+1 }}  </b>
                             {% else %}
-                                <i>Page n°{{ pos }} est épuisé</i>
+                                <b>Page n°{{ pos }} est épuisé</b>
                             {% endif %}
                             &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
-                            &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
 
+                            &nbsp;&nbsp; &nbsp; &nbsp;
                         </td>
                         <td colspan="">
                             {% if quiz.nbQuestion == 1000 %}
@@ -194,7 +194,7 @@
                     </small>
                 </div>
 
-
+<br>
 
                 <script>
 
@@ -210,68 +210,69 @@
                                     '<div style="background-color: "><label>Choix réponses de votre question</label></div>' +
 
                                     '<div id="hide_0"  class="row">' +
-                                    '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix :</font></label></div>' +
+                                    '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Réponse 1</font></label></div>' +
                                     '    <div class="col-sm-6" style="background-color:;"><input name="vf[]"  type="text" class="form-control"></textarea> </div>' +
                                     '    <div class="col-sm-3" style="background-color:;"><select class="form-control"  name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select></div>' +
-                                    '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+                                    '    <div style="background-color:;"><font size="5" color="red"><a><i  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
                                     ' <br><br>' +
                                     ' </div>' +
                                     '<div id="showPlus"> </div>' +
 
-                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonctiontypevraioufaux()" class="fa fa-plus-square"></i></a></font>' +
-                                    '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                    '<font size="6" color=#228b22><a><i  onclick="fonctiontypevraioufaux()" class="fa fa-plus-square"></i></a></font>' +
+                                    '<label><font size="2"> &nbsp &nbsp<u>Ajouter un élément de réponse</u></font></label>' +
                                     '</div>');
                             }
                             else {
                                 if (x=='Case à cocher') {
                                     $('#showType').html('<div id="demo" style="background-color: ">' +
-                                        '<div  style="background-color: "><label>Choix des réponses afficher</label></div>' +
-
-
-                                        '<div id="hide_0" ><label><font size="3"> Repanse correcte n° :</font></label>' +
-                                        '<div class=""><input name="case[]"  type="text" class="form-control"></div>'+
-                                        '<div style="width: 150px">' +
-                                        '<select class="form-control" name="etatcase[]"><option value="1">Correcte</option><option value="0">Incorrecte</option></select></div>' +
-                                        '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div> <br>' +
-                                        ' </div>' +
+                                        '<div  style="background-color: "><label>Choix réponses de votre question</label></div>' +
+                                        '<div id="hide_0" class="row">' +
+                                        '<div class="col-sm-2" style="background-color:;"><label><font size="3"> Répanse 1</font></label></div>' +
+                                        '<div class="col-sm-6"><input name="case[]"  type="text" class="form-control"></div>'+
+                                        '<div style="width: 150px" class="col-sm-3">' +
+                                        '<select class="form-control" name="etatcase[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
+                                        '<font size="5" color=red> <a><i  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
+                                        '<br> <br></div>' +
                                         '<div id="showPlus"> </div>' +
 
-                                        '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncaseacocher()" class="fa fa-plus-square"></i></a></font>' +
-                                        '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                        '<font size="6" color=#228b22><a><i  onclick="fonctioncaseacocher()" class="fa fa-plus-square"></i></a></font>' +
+                                        '<label><font size="2"> &nbsp &nbsp  <u>Ajouter un élément de réponse</u></font></label>' +
 
                                         '<div id="divPlus"></div>' +
                                         '</div>');
                                 }else{
                                     if (x=='Liste déroulante') {
                                         $('#showType').html('<div id="demo" style="background-color: ">' +
-                                            '<div  id="test" style="background-color: "><label>Choix réponses de votre liste</label>' +
+                                            '<div style="background-color: "><label>Choix réponses de votre question</label></div>' +
                                             '<div id="hide_0"  class="row" >' +
-
-                                            '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix réponse  :</font></label></div>' +
+                                            '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Répanse 1</font></label></div>' +
                                             '    <div class="col-sm-6" style="background-color:;"><input name="list[]"  type="text" class="form-control"></div>' +
-                                            '    <div class="col-sm-3" style="background-color:;"><select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
-                                            '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+                                            '    <div class="col-sm-3" style="background-color:;">' +
+                                            '<select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
+                                            '    <font size="5" color=red><a><i  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font>' +
                                             ' <br><br>' +
                                             ' </div>'+
                                             '<div id="showPlus"> </div>' +
 
-                                            '<font size="6" color=#228b22><a><i type="button" onclick="fonctionliste()" class="fa fa-plus-square"></i></a></font>' +
-                                            '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                            '<font size="6" color=#228b22><a><i onclick="fonctionliste()" class="fa fa-plus-square"></i></a></font>' +
+                                            '<label><font size="2"> &nbsp &nbsp  <u>Ajouter un élément de réponse</u></font></label>' +
 
                                             '<div id="divPlus"></div>' +
-                                            '</div></div>');
+                                            '</div>');
                                     }else {
                                         if (x=='Calculée') {
                                             $('#showType').html('<div id="demo" style="background-color: ">' +
+                                                '<div style="background-color: "><label>Choix réponses de votre question</label></div>' +
+
                                                 '<div  style="background-color: "><label>Question calculée</label>' +
 
 
                                                 '<div id="hide_0" >' +
                                                 '<div  class="row" >' +
 
-                                                '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Description formule n° :</font></label></div>' +
-                                                '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Formule :</font></label></div>' +
-                                                '    <div class="col-sm-3" style="background-color:;"><label><font size="2"> Resultat :</font></label></div>' +
+                                                '    <div class="col-sm-4" style="background-color:;"><label><font size="3"> Description formule 1 </font></label></div>' +
+                                                '    <div class="col-sm-4" style="background-color:;"><label><font size="3"> Formule </font></label></div>' +
+                                                '    <div class="col-sm-3" style="background-color:;"><label><font size="3"> Resultat</font></label></div>' +
 
                                                 '</div>'+
 
@@ -281,7 +282,7 @@
                                                 '    <div class="col-sm-4" style="background-color:;"><input  name="descriptionF[]" type="text" class="form-control"></div>' +
                                                 '    <div class="col-sm-4" style="background-color:;"><input  name="formule[]" type="text" class="form-control"></div>' +
                                                 '    <div class="col-sm-3" style="background-color:;"><input  name="resultatF[]" type="text" class="form-control"></div>' +
-                                                '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+                                                '    <div style="background-color:;"><font size="5" color=red><a><i  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
 
                                                 '</div>'+
 
@@ -290,57 +291,65 @@
 
                                                 '<div id="showPlus"> </div>' +
 
-                                                '<font size="6" color=#228b22><a><i type="button" onclick="fonctioncalcule()" class="fa fa-plus-square"></i></a></font>' +
-                                                '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                '<font size="6" color=#228b22><a><i" onclick="fonctioncalcule()" class="fa fa-plus-square"></i></a></font>' +
+                                                '<label><font size="2">  &nbsp &nbsp  <u>Ajouter un élément de réponse</u></font></label>' +
 
                                                 '<div id="divPlus"></div>' +
                                                 '</div></div>');
 
                                         }else {
                                             if (x=='Nombre') {
-                                                $('#showType').html('<br><div id="demo" style="background-color: ">' +
+                                                $('#showType').html('<div id="demo" style="background-color: ">' +
+
+                                                    '<div style="background-color: "><label>Choix réponses de votre question</label></div>' +
 
 
 
-                                                    '<div id="hide_0" ><br>' +
+                                                    '<div id="hide_0" >' +
+                                                    '<div  class="row" >' +
+                                                    '    <div class="col-sm-7" style="background-color:;"><label><font size="3"> Description de nombre 1</font></label></div>' +
+                                                    ' <div class="col-sm-3" style="background-color:;"><label><font size="3"> Réponse correcte </font></label></div>' +
 
-                                                    ' <div  class="row">' +
-                                                    '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Description :</font></label></div>' +
-                                                    '    <div class="col-sm-8" style="background-color:;"><textarea  name="desnum[]" type="text" class="form-control"></textarea> </div>' +
-                                                    '  </div><br>' +
-                                                    '<div class="row"><br>' +
-                                                    ' <div class="col-sm-4" style="background-color:;"><label><font size="3"> Reponse correcte n° :</font></label></div>' +
-                                                    ' <div class="col-sm-4" style="background-color:;"><input  name="number[]" type="number" class="form-control"></div>' +
-                                                    ' <div class="col-sm-" style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
-
-                                                    '</div>' +
                                                     '</div>'+
-                                                    '<div id="showPlus"> </div>' +
-                                                    '<font size="6" color=#228b22><a><i type="button" onclick="fonctionnumber()" class="fa fa-plus-square"></i></a></font>' +
-                                                    '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
 
-                                                    '</div></div> ');
+
+                                                    '<div  class="row" >' +
+                                                    '    <div class="col-sm-7" style="background-color:;"><input  name="desnum[]" type="text" class="form-control"></div>' +
+                                                    ' <div class="col-sm-3" style="background-color:;"><input  name="number[]" type="number" class="form-control"></div>' +
+                                                    ' <div class="col-sm-" style="background-color:;"><font size="5" color=red><a><i  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+
+                                                    '</div><br>'+
+
+                                                    ' </div>'+
+
+                                                    '<div id="showPlus"> </div>' +
+
+                                                    '<font size="6" color=#228b22><a><i  onclick="fonctionnumber()" class="fa fa-plus-square"></i></a></font>' +
+                                                    '<label><font size="2">  &nbsp &nbsp  <u>Ajouter un élément de réponse</u></font></label>' +
+
+                                                    '<div id="divPlus"></div>' +
+                                                    '</div>'+
+                                                    '</div> ');
 
                                             }
                                             else {
                                                 if (x == 'Date') {
-                                                    $('#showType').html('<br><div id="demo" style="background-color: ">' +
+                                                    $('#showType').html('<div id="demo" style="background-color: ">' +
+                                                        '<div style="background-color: "><label>Choix réponses de votre question</label></div>' +
 
                                                         ' <div id="hide_0" class="row"><br><br>' +
-                                                        '    <div class="col-sm-2" style="background-color:;"><label><font size="3">Description date :</font></label></div>' +
-                                                        '    <div class="col-sm-6" style="background-color:;"><textarea  type="text" name="desc[]"  class="form-control"></textarea> </div>' +
+                                                        '    <div class="col-sm-3" style="background-color:;"><label><font size="3">Description date 1</font></label></div>' +
+                                                        '    <div class="col-sm-5" style="background-color:;"><input  type="text" name="desc[]"  class="form-control"> </div>' +
                                                         '    <div class="col-sm-3" style="background-color:;"><input name="date[]" type="date" class="form-control"></i></a></font></div>' +
-                                                        '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
-                                                        ' <br><br><br><br> </div>'+
-
-
+                                                        '    <div style="background-color:;"><font size="5" color=red><a><i   onclick="fonctionhide(0)" class="fa fa-trash-o"></i></a></font></div>' +
+                                                        ' <br><br> </div>'+
 
 
                                                         '</div>' +
                                                         '<div id="showPlus"> </div>' +
 
-                                                        '<font size="6" color=#228b22><a><i type="button" onclick="fonctiondate()" class="fa fa-plus-square"></i></a></font>' +
-                                                        '<label><font size="2"> <i><u>Cliquez pour ajouter une autre élément</u></i></font></label>' +
+                                                        '<font size="6" color=#228b22><a><i  onclick="fonctiondate()" class="fa fa-plus-square"></i></a></font>' +
+                                                        '<label><font size="2">  &nbsp &nbsp  <u>Ajouter un élément de réponse</u></font></label>' +
 
                                                         '<div id="divPlus"></div>' +
                                                         '</div></div>');
@@ -368,7 +377,7 @@
                         nbr = nbr +1;
                         var innerHTML =
                             '<div id="hide_'+nbr+'" class="row"><br><br>' +
-                            '    <div class="col-sm-3" style="background-color:;"><label><font size="3"> Reponse correcte :</font></label></div>' +
+                            '    <div class="col-sm-3" style="background-color:;"><label><font size="3"> Réponse correcte :</font></label></div>' +
                             '    <div class="col-sm-8" style="background-color:;"><input name="test[]" type="text" class="form-control"></div>' +
                             '    <div class="col-sm-" style="background-color:;"><font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
                             '  </div>' ;
@@ -380,14 +389,16 @@
                     {
                         var nbr = $("#showPlus").children('div').length;
                         nbr = nbr +1;
+                        totale = nbr +1;
+
                         var innerHTML =
                             ' <div id="hide_'+nbr+'" class="row">' +
                             '' +
-                            '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Date :</font></label></div>' +
-                            '    <div class="col-sm-6" style="background-color:;"><textarea  type="text" name="desc[]"  class="form-control"></textarea> </div>' +
+                            '    <div class="col-sm-3" style="background-color:;"><label><font size="3"> Description date '+totale+'</font></label></div>' +
+                            '    <div class="col-sm-5" style="background-color:;"><input type="text" name="desc[]"  class="form-control"></div>' +
                             '    <div class="col-sm-3" style="background-color:;"><input name="date[]" type="date" class="form-control"></i></a></font></div>' +
-                            '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
-                            ' <br><br><br><br> </div>' ;
+                            '    <div style="background-color:;"><font size="5" color=red><a><i   onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+                            ' <br><br> </div>' ;
                         $("#showPlus").append(innerHTML);
                     }
 
@@ -395,18 +406,22 @@
                     {
                         var nbr = $("#showPlus").children('div').length;
                         nbr = nbr +1;
-                        var innerHTML ='<div id="hide_'+nbr+'"><br>' +
+                        totale = nbr +1;
 
-                            ' <div  class="row">' +
-                            '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Description  :</font></label></div>' +
-                            '    <div class="col-sm-8" style="background-color:;"><textarea name="desnum[]" type="text" class="form-control"> </textarea></div><br>' +
-                            '  </div><br>' +
-                            '<div class="row"><br><br>' +
-                            ' <div class="col-sm-4" style="background-color:;"><label><font size="3"> Reponse correcte n° :</font></label></div>' +
-                            ' <div class="col-sm-4" style="background-color:;"><input  name="number[]" type="number" class="form-control"></div>' +
-                            ' <div class="col-sm-" style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+                        var innerHTML ='<div id="hide_'+nbr+'" >' +
+                            '<div  class="row" >' +
+                            ' <div class="col-sm-7" style="background-color:;"><label><font size="3"> Description des nombre '+totale+'</font></label></div>' +
+                            ' <div class="col-sm-3" style="background-color:;"><label><font size="3"> Réponse correcte </font></label></div>' +
+                            '</div>'+
 
-                            '</div>' +
+
+                            '<div  class="row" >' +
+                            '    <div class="col-sm-7" style="background-color:;"><input  name="desnum[]" type="text" class="form-control"></div>' +
+                            ' <div class="col-sm-3" style="background-color:;"><input  name="number[]" type="number" class="form-control"></div>' +
+                            ' <div class="col-sm-" style="background-color:;"><font size="5" color=red><a><i onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+
+                            '</div><br>'+
+
                             '</div>' ;
                         $("#showPlus").append(innerHTML);
                     }
@@ -417,13 +432,16 @@
                     {
                         var nbr = $("#showPlus").children('div').length;
                         nbr = nbr +1;
+
+                        totale = nbr +1;
+
                         var innerHTML =
 
                             '<div id="hide_'+nbr+'"  class="row">' +
-                            '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix :</font></label></div>' +
+                            '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Réponse '+totale+'</font></label></div>' +
                             '    <div class="col-sm-6" style="background-color:;"><input name="vf[]"  type="text" class="form-control"></textarea> </div>' +
                             '    <div class="col-sm-3" style="background-color:;"><select class="form-control"  name="etat[]"><option value="1">Vrai</option><option value="0">Faux</option></select></div>' +
-                            '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+                            '    <div style="background-color:;"><font size="5" color="red"><a><i  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
                             ' <br><br>' +
                             ' </div>' ;
                         ;
@@ -435,12 +453,17 @@
                     {
                         var nbr = $("#showPlus").children('div').length;
                         nbr = nbr +1;
+                        totale = nbr +1;
+
                         var innerHTML =
-                            '<div id="hide_'+nbr+'" ><label><font size="3"> Repanse correcte  :</font></label>' +
-                            '<div class=""><input name="case[]"  type="text" class="form-control"></div>'+
-                            '<div style="width: 150px">' +
-                            '<select class="form-control" name="etatcase[]"><option value="1">Correcte</option><option value="0">Incorrecte</option></select></div>' +
-                            '<font size="5" color=#00bfff> <a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' ;
+                            '<div id="hide_'+nbr+'" class="row">' +
+                            '<div class="col-sm-2"><label><font size="3"> Répanse '+totale+'</font></label></div>' +
+                            '<div class="col-sm-6"><input name="case[]"  type="text" class="form-control"></div>'+
+                            '<div  class="col-sm-3">' +
+                            '<select class="form-control" name="etatcase[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
+                            ' <div style="background-color:;"><font size="5" color=red> <a><i  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+                            '<br><br>' +
+                            '</div>' ;
                         $("#showPlus").append(innerHTML);
                     }
 
@@ -448,14 +471,17 @@
                     {
                         var nbr = $("#showPlus").children('div').length;
                         nbr = nbr +1;
+                        totale = nbr +1;
+
                         var innerHTML =
                             '<div id="hide_'+nbr+'"  class="row" >' +
 
-                            '    <div class="col-sm-2" style="background-color:;"><label><font size="3"> Choix réponse  :</font></label></div>' +
-                            '    <div class="col-sm-6" style="background-color:;"><input name="list[]"  type="text" class="form-control"></div>' +
-                            '    <div class="col-sm-3" style="background-color:;"><select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
-                            '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
-                            ' <br><br>' +
+                            '    <div class="col-sm-2"><label><font size="3"> Réponse '+totale+'</font></label></div>' +
+                            '    <div class="col-sm-6" ><input name="list[]"  type="text" class="form-control"></div>' +
+                            '    <div class="col-sm-3" >' +
+                            '<select class="form-control" name="etatlist[]"><option value="1">Choix correcte</option><option value="0">Choix incorrecte</option></select></div>' +
+                            '    <div><font size="5" color="red"><a> <i  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a><font></div>' +
+                            '<br><br>' +
                             ' </div>' ;
 
                         $("#showPlus").append(innerHTML);
@@ -466,14 +492,16 @@
                     {
                         var nbr = $("#showPlus").children('div').length;
                         nbr = nbr +1;
+                        totale = nbr +1;
+
                         var innerHTML =
 
                             '<div id="hide_'+nbr+'">' +
                             '<div  class="row" >' +
 
-                            '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Description formule n° :</font></label></div>' +
-                            '    <div class="col-sm-4" style="background-color:;"><label><font size="2"> Formule :</font></label></div>' +
-                            '    <div class="col-sm-3" style="background-color:;"><label><font size="2"> Resultat :</font></label></div>' +
+                            '    <div class="col-sm-4" style="background-color:;"><label><font size="3"> Description de formule '+totale+'</font></label></div>' +
+                            '    <div class="col-sm-4" style="background-color:;"><label><font size="3"> Formule </font></label></div>' +
+                            '    <div class="col-sm-3" style="background-color:;"><label><font size="3"> Résultat </font></label></div>' +
 
                             '</div>'+
 
@@ -482,7 +510,7 @@
                             '    <div class="col-sm-4" style="background-color:;"><input  name="descriptionF[]" type="text" class="form-control"></div>' +
                             '    <div class="col-sm-4" style="background-color:;"><input  name="formule[]" type="text" class="form-control"></div>' +
                             '    <div class="col-sm-3" style="background-color:;"><input  name="resultatF[]" type="text" class="form-control"></div>' +
-                            '    <div style="background-color:;"><font size="5" color=#00bfff><a><i type="button"  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
+                            '    <div style="background-color:;"><font size="5" color=red><a><i  onclick="fonctionhide('+nbr+')" class="fa fa-trash-o"></i></a></font></div>' +
 
                             '</div>'+
 
@@ -501,6 +529,7 @@
                     }
 
                 </script>
+
                 <div id="showType"></div>
 
 
