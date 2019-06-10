@@ -73,6 +73,7 @@
         }
     </style>
 
+
     <div style="background-color: ">
         {% set repv = "" %}
         {% set rp = "" %}
@@ -89,246 +90,6 @@
                 {% set totale = totale +1 %}
             {% endfor %}
         {% endfor %}
-
-        {% set key = 0 %}
-
-        {% set repc =0 %}
-        {% set repd =0 %}
-
-        <div>
-            <button type="button" id="prevBtn" class="btn btn-info" style="float: left;" onclick="nextPrev(-1)">Page précédente</button>
-            <button type="button" id="nextBtn" class="btn btn-info" style="float: right;" onclick="nextPrev(1)">Page suivante</button>
-        </div>
-        {% for page in pages %}
-            <div  class="tab" style="display: none ;padding: 20px">
-
-                {% if page|length != 0 %}
-                    {% set key = key + 1 %}
-                    <h2>Page {{ key }}</h2>
-                    {% for key2, question in page %}
-
-
-                        {% if question.type_question =="Case à cocher" %}
-                            <div style="background-color: white; padding: 20px">
-                                <b> Question n° {{ key2+1 }} </b><br>
-
-                                {{ question.text_question }}<br>
-                                <ul style="list-style-type: circle;">
-                                    {% for v in question.reponseValid %}
-
-                                        {% if v.etatcaseacocher != v.repParticipant %}
-                                            <li><b> <font style="text-decoration: line-through;" color="red"> {{ v.reponse_valide }}</font> <font color="red">&nbsp;(faux)</font> </b></li>
-
-
-                                        {% endif %}
-
-                                        {% if v.etatcaseacocher == v.repParticipant and v.etatcaseacocher == true %}
-                                            <b>  <li><font color="#87a800"> {{ v.reponse_valide }} &nbsp; (correct)</font></li></b>
-                                            {% set repd =repd+1 %}
-
-                                        {% endif %}
-
-
-
-                                        {% if v.etatcaseacocher == v.repParticipant and v.etatcaseacocher == false %}
-                                            <li>
-                                                <font color=""> {{ v.reponse_valide }}</font>
-                                            </li>
-                                        {% endif %}
-
-                                        {% if v.etatcaseacocher == true %}
-                                            {% set repc =repc +1 %}
-
-                                        {% endif %}
-
-
-                                        <br>
-
-                                    {% endfor %}
-                                </ul>
-                                <div style="background-color: #f3f3f3; padding: 20px ">
-                                    La bonne reponse est :
-                                    <ul>
-                                        {% for key, k in question.reponseValid %}
-                                            {% if k.etatcaseacocher  == true %}
-                                                <br>  <li>  {{ (k.reponse_valide) }}&nbsp; Correcte</li>
-
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        {% endif %}
-
-                        {% if repc == repd %}
-                        {% set score = score+1 %}
-                        {% else %}
-                            {% set score = 1/repc + score %}
-                            {% endif %}
-
-                        {% if question.type_question =="Liste déroulante" %}
-                            {% set repcorrect=null %}
-                            {% set repincorrect=null %}
-                            {#<div style="background-color: white">#}
-
-                            <div style="background-color: white; padding: 20px">
-                                <b> Question n° {{ key2+1 }} </b><br>
-
-                                {{ question.text_question }}<br>
-                                <ul style="list-style-type: circle;">
-                                    {% for key, q in question.reponsesQuestion %}
-
-
-                                        {% if  q.etatlist == true and q.reponse_valide == question.reponsesParticipant[0].reponse %}
-                                            {% set repcorrect =  q.reponse_valide %}
-                                        {% else %}
-                                            {% set repincorrect =   q.reponse_valide  %}
-
-                                        {% endif %}
-                                    {% endfor %}
-                                    {% if repcorrect != null %}
-                                        <b> <li>  <font color="#87a800">{{ repcorrect }} </font></li></b>
-                                        {% set score = score+1 %}
-
-                                    {% else %}
-                                        <li>  <b> <font style="text-decoration: line-through;" color="red"> {{ repincorrect }}</font></b></li>
-                                    {% endif %}
-                                </ul>
-
-
-                                <div style="background-color: #f3f3f3; padding: 20px ">
-                                    La bonne reponse est :
-                                    <select class="form-control">
-                                        {% for key, q in question.reponsesQuestion %}
-
-                                            {% if q.etatlist == true and q.reponse_valide == question.reponsesParticipant[0].reponse %}
-                                                <option style="text-decoration-color: green">
-                                                    {{ q.reponse_valide }}
-                                                </option>
-                                            {% else %}
-                                                <option>  {{ q.reponse_valide }}</option>
-                                            {% endif %}
-
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                        {% endif %}
-
-                        {% if question.type_question =="Date" %}
-                            <div style="background-color: white">
-                                <div style="background-color: white; padding: 20px">
-                                    <b> Question n° {{ key2+1 }} </b><br>
-                                    {{ question.text_question }}<br>
-                                    <ul style="list-style-type: circle;">
-                                        {% for key,l in question.reponsesParticipant %}
-
-                                            {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
-                                                <b> <li>    <font color="#87a800">{{ (l.reponse) }}&nbsp; (correct)</font></li></b>
-                                                {% set score = score+1 %}
-
-                                            {% else %}
-                                                <li><b> <font style="text-decoration: line-through;" color="red">{{ (l.reponse) }}</font> <font color="red">&nbsp;(faux)</font> </b></li>
-
-                                            {% endif %}
-                                            {% set rp = l.reponse %}
-                                        {% endfor %}
-                                    </ul>
-
-                                    <div style="background-color: #f3f3f3; padding: 20px ">
-                                        La bonne reponse est :
-                                        <ul>
-                                            {% for k in question.reponsesQuestion %}
-                                                <br>
-                                                <li> {{ k.reponse_valide }}</li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endif %}
-
-                        {% if question.type_question =="Nombre" %}
-                            <div style="background-color: white; padding: 20px">
-                                <b> Question n° {{ key2+1 }} </b><br>
-
-                                {{ question.text_question }}<br>
-                                <ul style="    list-style-type: circle;">
-                                    {% for key,l in question.reponsesParticipant %}
-                                        <br>
-                                        {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
-                                            <li>
-                                                <b> <font color="#87a800">{{ (l.reponse) }} &nbsp;(correct)</font></b>
-                                            </li>
-                                            {% set score = score+1 %}
-
-                                        {% else %}
-                                            <li><b><font color="red">{{ (l.reponse) }}</font>  &nbsp;<font color="red">(faux)</font></b> </li>
-                                        {% endif %}
-                                        {% set rp = l.reponse %}
-                                    {% endfor %}
-                                </ul>
-                                <div style="background-color: #f3f3f3; padding: 20px ">
-                                    La bonne reponse est :
-                                    <ul>
-                                        {% for key, m in question.reponsesQuestion %}
-                                            <li>
-                                                {{ (question.reponsesQuestion[key].reponse_valide) }}
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        {% endif %}
-
-                        {% if question.type_question =="Vrai/faux" %}
-                            <div style="background-color: white; padding: 20px">
-                                <b> Question n° {{ key2+1 }} </b><br>
-                                {{ question.text_question }}<br>
-                                <ul style="list-style-type: circle;">
-                                    {% for key, k in question.reponsesQuestion %}
-                                        {% if question.reponsesParticipant[key].reponse =="Vrai" and k.etatvf == true and  k.etatvf == true %}
-                                            <b><li>  <font color="#87a800"> {{ (k.reponse_valide) }}  &nbsp;(correct)</font></li>
-                                            {% set score = score+1 %}
-
-                                        {% endif %}
-
-                                        {% if question.reponsesParticipant[key].reponse =="Faux" and k.etatvf == true  %}
-                                            <li> <b><font color="red" style="text-decoration: line-through;"> {{ (k.reponse_valide) }}</font>  &nbsp;<font color="red">(faux)</font> </b></li>
-                                        {% endif %}
-                                        {% if question.reponsesParticipant[key].reponse =="Vrai" and k.etatvf != true  %}
-                                            <li> <b><font color="red" style="text-decoration: line-through;"> {{ (k.reponse_valide) }}</font> &nbsp;<font color="red">(faux)</font></b></li>
-                                        {% endif %}
-                                        <!--on peut changer la color-->
-                                        {% if question.reponsesParticipant[key].reponse !="Vrai" and k.etatvf != true  %}
-                                            <li>  <b>   <font color=""> {{ (k.reponse_valide) }} </font></b></li>
-                                        {% endif %}
-                                        </b>
-                                        <br>
-                                    {% endfor %}
-                                </ul>
-
-                                <div style="background-color: #f3f3f3; padding: 20px ">
-                                    La bonne reponse est :
-                                    <ul>
-                                        {% for key, k in question.reponsesQuestion %}
-                                            {% if k.etatvf  == 1 %}
-                                                <br> <li>   {{ (k.reponse_valide) }}&nbsp;</li>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            </div>
-                        {% endif %}
-
-                    {% endfor %}
-                {% else  %}
-                    {% set key = key + 1 %}
-                    <center><h2>Page {{ key }} est vide !</h2></center>
-                {% endif %}
-            </div>
-
-        {% endfor %}
         <div class="quiz-eval">
 
             <div class="quiz-score">
@@ -336,7 +97,218 @@
 
             </div>
         </div>
-        <hr><hr>
+        {% set key = 0 %}
+
+        <div>
+            <button type="button" id="prevBtn" class="btn btn-info" style="float: left;" onclick="nextPrev(-1)">Page précédente</button>
+            <button type="button" id="nextBtn" class="btn btn-info" style="float: right;" onclick="nextPrev(1)">Page suivante</button>
+        </div>
+        <br>
+
+        {% for page in pages %}
+            <div  class="tab" style="display: none ;padding: 20px">
+                {% for key,question in page %}
+
+
+                    {% if question.type_question =="Case à cocher" %}
+                        <div style="background-color: white; padding: 20px">
+                            <b> Question n° {{ key+1 }} </b><br>
+
+                            {{ question.text_question }}<br>
+                            <ul style="list-style-type: circle;">
+                                {% for v in question.reponseValid %}
+
+                                    {% if v.etatcaseacocher != v.repParticipant %}
+                                        <li><b> <font style="text-decoration: line-through;" color="red"> {{ v.reponse_valide }}</font> <font color="red">&nbsp;(faux)</font> </b></li>
+
+
+                                    {% endif %}
+
+                                    {% if v.etatcaseacocher == v.repParticipant and v.etatcaseacocher == true %}
+                                        <b>  <li><font color="#87a800"> {{ v.reponse_valide }} &nbsp; (correct)</font></li></b>
+                                    {% endif %}
+
+
+                                    <!-- {% if v.etatcaseacocher != v.repParticipant and v.repParticipant == false %}
+                                c'est la bonne reponse
+                            {% endif %}-->
+
+
+                                    {% if v.etatcaseacocher == v.repParticipant and v.etatcaseacocher == false %}
+                                        <li>
+                                            <font color=""> {{ v.reponse_valide }}</font>
+                                        </li>
+                                    {% endif %}
+
+
+                                    <br>
+
+                                {% endfor %}
+                            </ul>
+                            <div style="background-color: #f3f3f3; padding: 20px ">
+                                La bonne reponse est :
+                                <ul>
+                                    {% for key, k in question.reponseValid %}
+                                        {% if k.etatcaseacocher  == true %}
+                                            <br>  <li>  {{ (k.reponse_valide) }}&nbsp; Correcte</li>
+
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if question.type_question =="Liste déroulante" %}
+                        {% set repcorrect=null %}
+                        {% set repincorrect=null %}
+                        {#<div style="background-color: white">#}
+
+                        <div style="background-color: white; padding: 20px">
+                            <b> Question n° {{ key+1 }} </b><br>
+
+                            {{ question.text_question }}<br>
+                            <ul style="list-style-type: circle;">
+                                {% for key, q in question.reponsesQuestion %}
+
+                                    {% if  q.etatlist == true and q.reponse_valide == question.reponsesParticipant[0].reponse %}
+                                        {% set repcorrect =  q.reponse_valide %}
+                                    {% else %}
+                                        {% set repincorrect =   q.reponse_valide  %}
+
+                                    {% endif %}
+                                {% endfor %}
+                                {% if repcorrect != null %}
+                                    <b> <li>  <font color="#87a800">{{ repcorrect }} </font></li></b>
+                                {% else %}
+                                    <li>  <b> <font style="text-decoration: line-through;" color="red"> {{ repincorrect }}</font></b></li>
+                                {% endif %}
+                            </ul>
+
+
+                            <div style="background-color: #f3f3f3; padding: 20px ">
+                                La bonne reponse est :
+                                <select class="form-control">
+                                    {% for key, q in question.reponsesQuestion %}
+
+                                        {% if q.etatlist == true and q.reponse_valide == question.reponsesParticipant[0].reponse %}
+                                            <option style="text-decoration-color: green">
+                                                {{ q.reponse_valide }}
+                                            </option>
+                                        {% else %}
+                                            <option>  {{ q.reponse_valide }}</option>
+                                        {% endif %}
+
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if question.type_question =="Date" %}
+                        <div style="background-color: white">
+                            <div style="background-color: white; padding: 20px">
+                                <b> Question n° {{ key+1 }} </b><br>
+                                {{ question.text_question }}<br>
+                                <ul style="list-style-type: circle;">
+                                    {% for key,l in question.reponsesParticipant %}
+
+                                        {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
+                                            <b> <li>    <font color="#87a800">{{ (l.reponse) }}&nbsp; (correct)</font></li></b>
+                                        {% else %}
+                                            <li><b> <font style="text-decoration: line-through;" color="red">{{ (l.reponse) }}</font> <font color="red">&nbsp;(faux)</font> </b></li>
+
+                                        {% endif %}
+                                        {% set rp = l.reponse %}
+                                    {% endfor %}
+                                </ul>
+
+                                <div style="background-color: #f3f3f3; padding: 20px ">
+                                    La bonne reponse est :
+                                    <ul>
+                                        {% for k in question.reponsesQuestion %}
+                                            <br>
+                                            <li> {{ k.reponse_valide }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if question.type_question =="Nombre" %}
+                        <div style="background-color: white; padding: 20px">
+                            <b> Question n° {{ key+1 }} </b><br>
+
+                            {{ question.text_question }}<br>
+                            <ul style="    list-style-type: circle;">
+                                {% for key,l in question.reponsesParticipant %}
+                                    <br>
+                                    {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
+                                        <li>
+                                            <b> <font color="#87a800">{{ (l.reponse) }} &nbsp;(correct)</font></b>
+                                        </li>
+                                    {% else %}
+                                        <li><b><font color="red">{{ (l.reponse) }}</font>  &nbsp;<font color="red">(faux)</font></b> </li>
+                                    {% endif %}
+                                    {% set rp = l.reponse %}
+                                {% endfor %}
+                            </ul>
+                            <div style="background-color: #f3f3f3; padding: 20px ">
+                                La bonne reponse est :
+                                <ul>
+                                    {% for key, m in question.reponsesQuestion %}
+                                        <li>
+                                            {{ (question.reponsesQuestion[key].reponse_valide) }}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if question.type_question =="Vrai/faux" %}
+                        <div style="background-color: white; padding: 20px">
+                            <b> Question n° {{ key+1 }} </b><br>
+                            {{ question.text_question }}<br>
+                            <ul style="list-style-type: circle;">
+                                {% for key, k in question.reponsesQuestion %}
+                                    {% if question.reponsesParticipant[key].reponse =="Vrai" and k.etatvf == true and  k.etatvf == true %}
+                                        <b><li>  <font color="#87a800"> {{ (k.reponse_valide) }}  &nbsp;(correct)</font></li>
+                                    {% endif %}
+
+                                    {% if question.reponsesParticipant[key].reponse =="Faux" and k.etatvf == true  %}
+                                        <li> <b><font color="red" style="text-decoration: line-through;"> {{ (k.reponse_valide) }}</font>  &nbsp;<font color="red">(faux)</font> </b></li>
+                                    {% endif %}
+                                    {% if question.reponsesParticipant[key].reponse =="Vrai" and k.etatvf != true  %}
+                                        <li> <b><font color="red" style="text-decoration: line-through;"> {{ (k.reponse_valide) }}</font> &nbsp;<font color="red">(faux)</font></b></li>
+                                    {% endif %}
+                                    <!--on peut changer la color-->
+                                    {% if question.reponsesParticipant[key].reponse !="Vrai" and k.etatvf != true  %}
+                                        <li>  <b>   <font color=""> {{ (k.reponse_valide) }}  </font></b></li>
+                                    {% endif %}
+                                    </b>
+                                    <br>
+                                {% endfor %}
+                            </ul>
+
+                            <div style="background-color: #f3f3f3; padding: 20px ">
+                                La bonne reponse est :
+                                <ul>
+                                    {% for key, k in question.reponsesQuestion %}
+                                        {% if k.etatvf  == 1 %}
+                                            <br> <li>   {{ (k.reponse_valide) }}&nbsp;</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                {% endfor %}
+            </div>
+        {% endfor %}
+
 
     </div>
 

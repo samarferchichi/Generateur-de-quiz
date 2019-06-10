@@ -63,99 +63,81 @@ class HistoriqueController  extends EasyAdminController
      */
     public function infoparticipant(ParticipantQuiz $participantquiz, $tentative, ReponseParticipantRepository $reponseparticipantrepository ,ParticipantQuizRepository $participantQuizRepository, ReponseParticipantRepository $reponseParticipantRepository, ResultatRepository $resultatrepository, ReponseRepository $reponseRepository, QuizRepository $quizRepository, \Symfony\Component\HttpFoundation\Request $request)
     {
+
+        $quiz = $participantquiz->getQuiz();
+        $par = $participantquiz->getParticipant();
+
+        $participantquiz = $participantQuizRepository->findBy(['quiz' => $quiz->getId(), 'participant'=>$par->getId()]);
+        $resultat = $resultatrepository->findBy(['participantquiz' => $participantquiz, 'tentative' => $tentative]);
+        $reponseparticipant = $reponseParticipantRepository->findBy(['resultat' => $resultat]);
+
         $data = [];
 
-        $quiz=$participantquiz->getQuiz();
-            $par=$participantquiz->getParticipant();
-        $resultat = $resultatrepository->findBy(['participantquiz' => $participantquiz->getId(), 'tentative' => $tentative]);
-        $reponseparticipant = $reponseparticipantrepository->findBy(['resultat' => $resultat[0]->getId()]);
+        foreach ($quiz->getPage() as $page){
+            $d = [];
+            foreach ($page->getQuestion() as $question){
+                $reponsesQuestion = $reponseRepository->getResultForQuestion($question->getId());
+                $reponsesParticipant = $reponseParticipantRepository->getReponseForQuestion($question->getId(), $par->getId(), $tentative);
+                if($question->getTypeQuestion() != 'Case à cocher'){
+                    $q = [
+                        'id' => $question->getId(),
+                        'type_question' => $question->getTypeQuestion(),
+                        'text_question' => $question->getTextQuestion(),
+                        'actif' => $question->getActif(),
+                        'reponsesQuestion' => $reponsesQuestion,
+                        'reponsesParticipant' => $reponsesParticipant
+                    ];
+                }else{
 
+                    $data_reponsesParticipant = [];
 
-            $participantquiz = $participantQuizRepository->findBy(['quiz' => $quiz->getId(), 'participant'=>$par->getId()]);
-            $resultat = $resultatrepository->findBy(['participantquiz' => $participantquiz, 'tentative' => $tentative]);
-            $reponseparticipant = $reponseParticipantRepository->findBy(['resultat' => $resultat]);
-
-
-            foreach ($quiz->getPage() as $page){
-
-                $d = [];
-                foreach ($page->getQuestion() as $question){
-                    $reponsesQuestion = $reponseRepository->getResultForQuestion($question->getId());
-                    $reponsesParticipant = $reponseParticipantRepository->getReponseForQuestion($question->getId(), $par->getId(), $tentative);
-                    if($question->getTypeQuestion() != 'Case à cocher'){
-                        $q = [
-                            'id' => $question->getId(),
-                            'type_question' => $question->getTypeQuestion(),
-                            'text_question' => $question->getTextQuestion(),
-                            'actif' => $question->getActif(),
-                            'reponsesQuestion' => $reponsesQuestion,
-                            'reponsesParticipant' => $reponsesParticipant
-                        ];
-                    }else{
-
-                        $data_reponsesParticipant = [];
-
-                        for($i=0; $i<count($reponsesQuestion); $i++){
-                            if($result = $this->_searchByOrder($reponsesParticipant, $i)){
-                                array_push($data_reponsesParticipant, $result);
-                            }else{
-                                array_push($data_reponsesParticipant, [
-                                    "id" => null,
-                                    "ordre" => $i,
-                                    "reponse" => false
-                                ]);
-                            }
-                        }
-
-                        $data_reponsesValid = [];
-
-                        foreach ($reponsesQuestion as $key => $rep){
-                            array_push($data_reponsesValid, [
-                                'reponse_valide' => $rep['reponse_valide'],
-                                'etatcaseacocher' => $rep['etatcaseacocher'],
-                                'repParticipant' => $data_reponsesParticipant[$key]['reponse']
+                    for($i=0; $i<count($reponsesQuestion); $i++){
+                        if($result = $this->_searchByOrder($reponsesParticipant, $i)){
+                            array_push($data_reponsesParticipant, $result);
+                        }else{
+                            array_push($data_reponsesParticipant, [
+                                "id" => null,
+                                "ordre" => $i,
+                                "reponse" => false
                             ]);
                         }
-
-                        $q = [
-                            'id' => $question->getId(),
-                            'type_question' => $question->getTypeQuestion(),
-                            'text_question' => $question->getTextQuestion(),
-                            'actif' => $question->getActif(),
-                            'reponsesQuestion' => $reponsesQuestion,
-                            'reponsesParticipant' => $data_reponsesParticipant,
-                            'reponseValid' => $data_reponsesValid
-                        ];
                     }
 
+                    $data_reponsesValid = [];
 
-                    array_push($d, $q);
+                    foreach ($reponsesQuestion as $key => $rep){
+                        array_push($data_reponsesValid, [
+                            'reponse_valide' => $rep['reponse_valide'],
+                            'etatcaseacocher' => $rep['etatcaseacocher'],
+                            'repParticipant' => $data_reponsesParticipant[$key]['reponse']
+                        ]);
+                    }
+
+                    $q = [
+                        'id' => $question->getId(),
+                        'type_question' => $question->getTypeQuestion(),
+                        'text_question' => $question->getTextQuestion(),
+                        'actif' => $question->getActif(),
+                        'reponsesQuestion' => $reponsesQuestion,
+                        'reponsesParticipant' => $data_reponsesParticipant,
+                        'reponseValid' => $data_reponsesValid
+                    ];
                 }
-                array_push($data, $d);
-            
 
-            return $this->render('quiz/showDetail.html.twig',[
-                'quiz'=> $quiz,
-                'userconct' => $this->getUser(),
-                'par'=>$par,
-                'tentative'=>$tentative,
-                'reponseparticipant' => $reponseparticipant,
-                'resultat' =>$resultat,
-                'pages' => $data,
-            ]);
+
+                array_push($d, $q);
+            }
+            array_push($data, $d);
         }
 
-
-
-
-
-
-
         return $this->render('quiz/showDetail.html.twig', [
-            'p' => $participantquiz,
-            't' => $tentative,
-            "reponseparticipant" => $reponseparticipant[0],
-            "resultat" => $resultat[0]
+            'quiz'=> $quiz,
+            'userconct' => $this->getUser(),
+            'par'=>$par,
+            'tentative'=>$tentative,
+            'reponseparticipant' => $reponseparticipant,
+            'resultat' =>$resultat,
+            'pages' => $data,
         ]);
     }
 
