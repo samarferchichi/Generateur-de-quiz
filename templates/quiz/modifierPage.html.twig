@@ -153,12 +153,11 @@
 
                         </div><br>
                        <center>
-                           <button class="btn btn-outline-info">Modifier</button>
-                           <button href="{{ path('get_info_quiz', {'quiz': quiz} )}}" class="btn btn-outline-info">Retour</button>
+                           <input type="submit" class="btn btn-outline-info" value="Modifier"/>
 
                        </center>
                         {{ form_end(form) }}<br>
-
+                        <center><a href="{{ path('list_quiz' )}}"><button class="btn btn-outline-info">Retour</button></a></center>
                     </div>
                 </div>
             </div>
