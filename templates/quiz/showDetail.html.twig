@@ -73,7 +73,6 @@
         }
     </style>
 
-
     <div style="background-color: ">
         {% set repv = "" %}
         {% set rp = "" %}
@@ -90,14 +89,11 @@
                 {% set totale = totale +1 %}
             {% endfor %}
         {% endfor %}
-        <div class="quiz-eval">
 
-            <div class="quiz-score">
-                <h3>  <p class="quiz-score-nb"> Score <span>{{ score }} / {{ totale }}</span></p></h3>
-
-            </div>
-        </div>
         {% set key = 0 %}
+
+        {% set repc =0 %}
+        {% set repd =0 %}
 
         <div>
             <button type="button" id="prevBtn" class="btn btn-info" style="float: left;" onclick="nextPrev(-1)">Page précédente</button>
@@ -128,18 +124,21 @@
 
                                         {% if v.etatcaseacocher == v.repParticipant and v.etatcaseacocher == true %}
                                             <b>  <li><font color="#87a800"> {{ v.reponse_valide }} &nbsp; (correct)</font></li></b>
+                                            {% set repd =repd+1 %}
+
                                         {% endif %}
 
-
-                                        <!-- {% if v.etatcaseacocher != v.repParticipant and v.repParticipant == false %}
-                                c'est la bonne reponse
-                            {% endif %}-->
 
 
                                         {% if v.etatcaseacocher == v.repParticipant and v.etatcaseacocher == false %}
                                             <li>
                                                 <font color=""> {{ v.reponse_valide }}</font>
                                             </li>
+                                        {% endif %}
+
+                                        {% if v.etatcaseacocher == true %}
+                                            {% set repc =repc +1 %}
+
                                         {% endif %}
 
 
@@ -160,6 +159,12 @@
                                 </div>
                             </div>
                         {% endif %}
+
+                        {% if repc == repd %}
+                        {% set score = score+1 %}
+                        {% else %}
+                            {% set score = 1/repc + score %}
+                            {% endif %}
 
                         {% if question.type_question =="Liste déroulante" %}
                             {% set repcorrect=null %}
@@ -183,6 +188,8 @@
                                     {% endfor %}
                                     {% if repcorrect != null %}
                                         <b> <li>  <font color="#87a800">{{ repcorrect }} </font></li></b>
+                                        {% set score = score+1 %}
+
                                     {% else %}
                                         <li>  <b> <font style="text-decoration: line-through;" color="red"> {{ repincorrect }}</font></b></li>
                                     {% endif %}
@@ -218,6 +225,8 @@
 
                                             {% if question.reponsesQuestion[key].reponse_valide ==l.reponse %}
                                                 <b> <li>    <font color="#87a800">{{ (l.reponse) }}&nbsp; (correct)</font></li></b>
+                                                {% set score = score+1 %}
+
                                             {% else %}
                                                 <li><b> <font style="text-decoration: line-through;" color="red">{{ (l.reponse) }}</font> <font color="red">&nbsp;(faux)</font> </b></li>
 
@@ -251,6 +260,8 @@
                                             <li>
                                                 <b> <font color="#87a800">{{ (l.reponse) }} &nbsp;(correct)</font></b>
                                             </li>
+                                            {% set score = score+1 %}
+
                                         {% else %}
                                             <li><b><font color="red">{{ (l.reponse) }}</font>  &nbsp;<font color="red">(faux)</font></b> </li>
                                         {% endif %}
@@ -278,6 +289,8 @@
                                     {% for key, k in question.reponsesQuestion %}
                                         {% if question.reponsesParticipant[key].reponse =="Vrai" and k.etatvf == true and  k.etatvf == true %}
                                             <b><li>  <font color="#87a800"> {{ (k.reponse_valide) }}  &nbsp;(correct)</font></li>
+                                            {% set score = score+1 %}
+
                                         {% endif %}
 
                                         {% if question.reponsesParticipant[key].reponse =="Faux" and k.etatvf == true  %}
@@ -316,7 +329,13 @@
             </div>
 
         {% endfor %}
+        <div class="quiz-eval">
 
+            <div class="quiz-score">
+                <h3>  <p class="quiz-score-nb"> Score <span>{{ score }} / {{ totale }}</span></p></h3>
+
+            </div>
+        </div>
         <hr><hr>
 
     </div>
