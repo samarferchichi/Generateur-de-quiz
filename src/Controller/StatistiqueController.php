@@ -114,7 +114,7 @@ class StatistiqueController extends EasyAdminController
                 'tentativesquiz' => json_encode($data2),
                 'ratings_names' => json_encode($rating_names),
                 'ratings_notes' => json_encode($rating_notes),
-                'total_ratings' => ((int)$total_ratings[0]['rate'] != 0) ? ((int)$total_ratings[0]['rate']/(int)$total_ratings[0]['total']) : 0,
+                'total_ratings' => round(((int)$total_ratings[0]['rate'] != 0) ? ((int)$total_ratings[0]['rate']/(int)$total_ratings[0]['total']) : 0, 2),
                 'total_participants' => $total_participants[0]['NbParticipant'],
                 'quizs' => $quizs[0]['quizs'],
                 'tentatives' => $tentatives_Totales[0]['tentatives']

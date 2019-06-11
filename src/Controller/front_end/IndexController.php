@@ -125,6 +125,9 @@ class IndexController extends Controller
             $reponseparticipant = $reponseParticipantRepository->findBy(['resultat' => $resultat]);
 
             $data = [];
+            $data_question = [];
+            $data_score = [];
+            $score = 0;
 
             foreach ($quiz->getPage() as $page){
                 $d = [];
@@ -179,8 +182,72 @@ class IndexController extends Controller
 
 
                     array_push($d, $q);
+                    array_push($data_question, $q);
                 }
                 array_push($data, $d);
+            }
+
+            foreach ($data_question as $d){
+
+                if($d['type_question'] == 'Vrai/faux'){
+                    $total = count($d['reponsesQuestion']);
+                    $totalValid = 0;
+                    foreach ($d['reponsesQuestion'] as $key => $repQuest){
+                        $repQuestPart = ($d['reponsesParticipant'][$key]['reponse'] == 'Vrai') ? true : false;
+                        if($repQuestPart == $repQuest['etatvf'])
+                            $totalValid++;
+                    }
+
+                }elseif($d['type_question'] == 'Case à cocher'){
+                    $total = count($d['reponsesQuestion']);
+                    $totalValid = 0;
+                    foreach ($d['reponseValid'] as $repValid){
+                        if($repValid['etatcaseacocher'] == $repValid['repParticipant'])
+                            $totalValid++;
+                    }
+
+                }elseif($d['type_question'] == 'Liste déroulante'){
+                    $total = 1;
+                    $totalValid = 0;
+                    $repValid = null;
+                    foreach ($d['reponsesQuestion'] as $repQuest){
+                        if($repQuest['etatlist'] == true)
+                            $repValid = $repQuest['reponse_valide'];
+                    }
+                    if($repValid == $d['reponsesParticipant'][0]['reponse'])
+                        $totalValid++;
+
+                }elseif($d['type_question'] == 'Date'){
+                    $total = count($d['reponsesQuestion']);
+                    $totalValid = 0;
+                    foreach ($d['reponsesQuestion'] as $key => $repQuest){
+                        if($repQuest['reponse_valide'] == $d['reponsesParticipant'][$key]['reponse'])
+                            $totalValid++;
+                    }
+
+                }elseif($d['type_question'] == 'Nombre'){
+                    $total = count($d['reponsesQuestion']);
+                    $totalValid = 0;
+                    foreach ($d['reponsesQuestion'] as $key => $repQuest){
+                        if($repQuest['reponse_valide'] == $d['reponsesParticipant'][$key]['reponse'])
+                            $totalValid++;
+                    }
+
+                }elseif($d['type_question'] == 'Calculée'){
+                    $total = 1;
+                    $totalValid = 0;
+                }
+
+                $d = [
+                    'type' => $d['type_question'],
+                    'total' => $total,
+                    'totalValid' => $totalValid,
+                ];
+                array_push($data_score, $d);
+            }
+
+            foreach ($data_score as $d_s){
+                $score += round((($d_s['totalValid']*100/$d_s['total'])/100), 2);
             }
 
             return $this->render('front_end/resultat_correction_enable.html.twig',[
@@ -191,7 +258,9 @@ class IndexController extends Controller
                 'reponseparticipant' => $reponseparticipant,
                 'resultat' =>$resultat,
                 'pages' => $data,
-                'rate' => $rate ? $rate[0] : null
+                'rate' => $rate ? $rate[0] : null,
+                'totale' => count($data_score),
+                'score' => $score
             ]);
         }else{
 
@@ -201,8 +270,6 @@ class IndexController extends Controller
                 'rate' => $rate ? $rate[0] : null
             ]);
         }
-
-
     }
 
     private function _searchByOrder($array, $order){
