@@ -667,7 +667,7 @@ class AdminController extends EasyAdminController
             // Create a message
             $body = $this->renderView(
             // templates/emails/registration.html.twig
-                'emails/send_quiz.html.twig', ['quiz' => $quiz, 'message' =>$des]);
+                'emails/send_quiz.html.twig', ['quiz' => $quiz, 'message' =>$des,'par' => $form->getData()['email']]);
             $message = (new \Swift_Message('Quiz'))
                 ->setFrom(['samarferchichi61@gmail.com' => 'Quiz'])
                 ->setTo([$to])

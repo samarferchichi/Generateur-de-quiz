@@ -174,7 +174,7 @@
                         {% for quiz in listquiz %}
                             {% if quiz.terminer == 1 %}
                                 {% if quiz.ouvrireQuiz <= date() and date() < quiz.fermerQuiz %}
-                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id, 'par':par.id }) }}" onclick="MyFunction()">{{ quiz.titre }}</a></li>
+                                    <li style="width: 350px;" class="menu-level-1"><a href="{{ path('quizpublic', {'quiz': quiz.id, 'par':1 }) }}" onclick="MyFunction()">{{ quiz.titre }}</a></li>
 
                                 {% endif %}
                                 {% if quiz.ouvrireQuiz <= date() and quiz.fermerQuiz == null %}

@@ -1,230 +1,7 @@
-<html lang="en">
+{% extends '/front_end/base_front.html.twig' %}
+{% block body %}
 
-<head>
-
-    <style>
-        .center {
-            margin: auto;
-            width: 60%;
-            border: 0.5px solid #eeeeee ;
-            padding: 10px;
-        }
-        .img2 {
-            float: right;
-        }
-        body {
-            font-family: "Lato", sans-serif;
-            transition: background-color .5s;
-        }
-        .sidenav {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            z-index: 1;
-            top: 0;
-            left: 0;
-            background-color: #111;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-        }
-        .sidenav a {
-            padding: 8px 8px 8px 32px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-            transition: 0.3s;
-        }
-        .sidenav a:hover {
-            color: #2a85a0;
-        }
-        .sidenav .closebtn {
-            position: absolute;
-            top: 0;
-            right: 25px;
-            font-size: 36px;
-            margin-left: 50px;
-        }
-        #main {
-            transition: margin-left .5s;
-            padding: 16px;
-        }
-        @media screen and (max-height: 450px) {
-            .sidenav {padding-top: 15px;}
-            .sidenav a {font-size: 18px;}
-        }
-        .pagination a {
-            color: black;
-            float: left;
-            padding: 8px 16px;
-            text-decoration: none;
-            transition: background-color .3s;
-        }
-        .pagination a.active {
-            background-color: dodgerblue;
-            color: white;
-        }
-        .pagination a:hover:not(.active) {background-color: #ddd;}
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            background-color: #f1f1f1;
-        }
-        #regForm {
-            background-color: #ffffff;
-            margin: 100px auto;
-            font-family: Raleway;
-            padding: 40px;
-            width: 70%;
-            min-width: 300px;
-        }
-        h1 {
-            text-align: center;
-        }
-        input {
-            padding: 10px;
-            width: 100%;
-            font-size: 17px;
-            font-family: Raleway;
-            border: 1px solid #aaaaaa;
-        }
-        /* Mark input boxes that gets an error on validation: */
-        input.invalid {
-            background-color: #ffdddd;
-        }
-        /* Hide all steps by default: */
-        .tab {
-            display: none;
-        }
-        button {
-            background-color: #4CAF50;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 17px;
-            font-family: Raleway;
-            cursor: pointer;
-        }
-        button:hover {
-            opacity: 0.8;
-        }
-        #prevBtn {
-            background-color: #bbbbbb;
-        }
-        /* Make circles that indicate the steps of the form: */
-        .step {
-            height: 15px;
-            width: 15px;
-            margin: 0 2px;
-            background-color: #bbbbbb;
-            border: none;
-            border-radius: 50%;
-            display: inline-block;
-            opacity: 0.5;
-        }
-        .step.active {
-            opacity: 1;
-        }
-        /* Mark the steps that are finished and valid: */
-        .step.finish {
-            background-color: #4CAF50;
-        }
-    </style>
-
-
-
-    <!-- Scroll Bars -->
-
-</head>
-<head>
-    <title>Bootstrap Example</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="shortcut icon" href="{{ asset('template/images/quiz.ico') }}">
-
-</head>
-<body>
-
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand"  href="{{ path('index') }}"> Quiz </a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li>
-                <span style="color:white;  font-size:40px;cursor:pointer" onclick="openNav()">&#9776;</span>
-            </li>
-
-
-            <li><a href="{{ path('index') }}">Accueil</a></li>
-
-            <style>
-                .dropdown-submenu{position:relative;}
-                .dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
-                .dropdown-submenu:hover>.dropdown-menu{display:block;}
-                .dropdown-submenu>a:after{display:block;content:" ";float:right;width:0;height:0;border-color:transparent;border-style:solid;border-width:5px 0 5px 5px;border-left-color:#cccccc;margin-top:5px;margin-right:-10px;}
-                .dropdown-submenu:hover>a:after{border-left-color:#ffffff;}
-                .dropdown-submenu.pull-left{float:none;}.dropdown-submenu.pull-left>.dropdown-menu{left:-100%;margin-left:10px;-webkit-border-radius:6px 0 6px 6px;-moz-border-radius:6px 0 6px 6px;border-radius:6px 0 6px 6px;}
-            </style>
-
-
-            <li class="dropdown-submenu"> <a href="#" tabindex="-1">  Toutes nos catégories</a>
-                <ul class="dropdown-menu">
-
-                    <li>
-                        <a href="{{ path('listerquiz', {'categorie': 'Education'}) }}">
-
-                            Education
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('listerquiz', {'categorie': 'Santé'}) }}">
-
-                            Santé
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="{{ path('listerquiz', {'categorie': 'Ressources Humaines'}) }}">
-
-                            Ressources Humaines
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="{{ path('listerquiz', {'categorie': 'Evenementiel'}) }}">
-
-                            Evenementiel
-                        </a>
-                    </li>
-                    <li>
-                        <a  href="{{ path('listerquiz', {'categorie': 'Autre'}) }}">
-
-                            Autre
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-
-
-        </ul>
-
-
-
-    </div>
-</nav>
-
-<div id="mySidenav" class="sidenav">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="#">About</a>
-    <a href="#">Services</a>
-    <a href="#">Clients</a>
-    <a href="#">Contact</a>
-</div>
+<html>
 
 
 
@@ -233,12 +10,12 @@
 
 
 <center>
-    wfe lwa9et :p
+    <img width="300" height="300" src="{{ asset('logoquiz/war.png') }}"><br><br>
+    <h2>Le temps est terminé</h2>
+
     <br>
     <br>
-    <br>
-    <br>
-<input type="button" value="back">
+    <a class="nav-link" href="{{ path('index') }}">Accueil</a>
 </center>
 
 </div>
@@ -359,3 +136,5 @@
 <br><br>
 </body>
 </html>
+
+{% endblock %}

@@ -533,8 +533,6 @@ class IndexController extends Controller
             /*  --------------------------------------------- */
 
 
-
-
             $entityManager->flush();
             return $this->redirectToRoute('resultat', [
                 'quiz' => $quiz->getId(),
